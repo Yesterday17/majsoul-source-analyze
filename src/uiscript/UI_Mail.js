@@ -1,6 +1,8 @@
-module.exports = function(uiscript) {
-  let newMail = (function() {
-    function mail(i) {
+// TODO: Check this file
+
+let newMail = (() => {
+  class mail {
+    constructor(i) {
       this.items = [];
       this.select_index = -1;
       this.right_btn_cd = 0;
@@ -36,20 +38,9 @@ module.exports = function(uiscript) {
       }
     }
 
-    Object.defineProperty(mail, "haveRedPoint", {
-      get: function() {
-        for (let i = 0; i < this.mails.length; i++) {
-          if (this.mails[i].state == 0) return true;
-        }
-        return false;
-      },
-      enumerable: true,
-      configurable: true
-    });
-
-    mail.Init = function() {
+    static Init() {
       let _this = this;
-      app.NetAgent.sendReq2Lobby("Lobby", "fetchMailInfo", {}, function(e, n) {
+      app.NetAgent.sendReq2Lobby("Lobby", "fetchMailInfo", {}, (e, n) => {
         if (e || n.error) {
           uiscript.UIMgr.Inst.showNetReqError("fetchMailInfo", e, n);
         } else {
@@ -59,7 +50,7 @@ module.exports = function(uiscript) {
               _this.mails.push(n.mails[i]);
             }
           }
-          _this.mails = _this.mails.sort(function(t, e) {
+          _this.mails = _this.mails.sort((t, e) => {
             let create_time = t.create_time || 0;
             let n = e.create_time;
             return n || -create_time;
@@ -70,7 +61,7 @@ module.exports = function(uiscript) {
         "NotifyNewMail",
         Laya.Handler.create(
           this,
-          function(t) {
+          t => {
             _this.mails.unshift(t.mail);
           },
           null,
@@ -81,18 +72,18 @@ module.exports = function(uiscript) {
         "NotifyDeleteMail",
         Laya.Handler.create(
           this,
-          function(t) {
-            for (let i = 0; i < t.mail_id_list.length; i++) {
+          ({ mail_id_list }) => {
+            for (let i = 0; i < mail_id_list.length; i++) {
               if (_this.Inst) {
-                _this.Inst.onDelMail(t.mail_id_list[i]);
+                _this.Inst.onDelMail(mail_id_list[i]);
               } else {
                 let pos = -1;
                 for (let j = 0; j < mail.mails.length; j++)
-                  if (mail.mails[j].mail_id == t.mail_id_list[j]) {
+                  if (mail.mails[j].mail_id == mail_id_list[j]) {
                     pos = j;
                     break;
                   }
-                for (var k = pos; k < mail.mails.length - 1; k++) {
+                for (let k = pos; k < mail.mails.length - 1; k++) {
                   mail.mails[k] = mail.mails[k + 1];
                 }
                 mail.mails.pop();
@@ -103,9 +94,9 @@ module.exports = function(uiscript) {
           false
         )
       );
-    };
+    }
 
-    mail.prototype.show = function() {
+    show() {
       this.left_sroll.reset();
       this.right_btn_cd = 0;
       this.select_index = 0;
@@ -121,9 +112,9 @@ module.exports = function(uiscript) {
         this.container_nomail.visible = true;
         this.me.visible = true;
       }
-    };
+    }
 
-    mail.prototype.onDelMail = function(i) {
+    onDelMail(i) {
       let pos = -1;
       for (let i = 0; i < mail.mails.length; i++)
         if (mail.mails[i].mail_id == i) {
@@ -131,12 +122,12 @@ module.exports = function(uiscript) {
           break;
         }
 
-      for (var j = pos; j < mail.mails.length - 1; j++) {
+      for (let j = pos; j < mail.mails.length - 1; j++) {
         mail.mails[j] = mail.mails[j + 1];
       }
 
       if ((mail.mails.pop(), uiscript.UI_Activity.Inst.enable)) {
-        var selected = this.select_index;
+        let selected = this.select_index;
         if (mail.mails.length == selected) {
           selected--;
           this.left_sroll.delItem(pos);
@@ -153,19 +144,19 @@ module.exports = function(uiscript) {
           }
         }
       }
-    };
+    }
 
-    mail.prototype.hide = function() {
+    hide() {
       this.me.visible = false;
       this.left_sroll.reset();
-    };
+    }
 
-    mail.prototype._renderLeft = function(t) {
-      let _this = this,
-        index = t.index,
-        container = t.container,
-        mail = mail.mails[index],
-        bg = container.getChildByName("bg");
+    _renderLeft(t) {
+      let _this = this;
+      let index = t.index;
+      let container = t.container;
+      let mail = mail.mails[index];
+      let bg = container.getChildByName("bg");
       bg.skin = game.Tools.localUISrc(
         this.select_index == index
           ? "myres/lobby/act_choosed.png"
@@ -181,7 +172,7 @@ module.exports = function(uiscript) {
 
       container.clickHandler = Laya.Handler.create(
         this,
-        function() {
+        () => {
           if (_this.select_index != index) {
             let selected_index = _this.select_index;
             _this._renderRight(index, false);
@@ -197,14 +188,14 @@ module.exports = function(uiscript) {
         false
       );
       container.getChildByName("title").text = mail.title;
-    };
+    }
 
-    mail.prototype._renderRight = function(i, n) {
+    _renderRight(i, n) {
       let _this = this;
       if (n || this.select_index != i) {
-        let mail = mail.mails[i],
-          attachment = false,
-          list = [];
+        let mail = mail.mails[i];
+        let attachment = false;
+        let list = [];
         this.select_index = i;
         this.title.text = mail.title;
         this.content.text = mail.content;
@@ -219,10 +210,10 @@ module.exports = function(uiscript) {
             if (index < list.length) {
               _mail.me.visible = true;
               let id = _mail.id;
-              let count = _mail.count;
+              let count_num = _mail.count;
               _mail.me.getChildByName("btn").clickHandler = Laya.Handler.create(
                 this,
-                function() {
+                () => {
                   uiscript.UI_ItemDetail.Inst.show(id);
                 },
                 null,
@@ -231,11 +222,11 @@ module.exports = function(uiscript) {
               _mail.icon.setSkin(game.GameUtility.get_item_view(id).icon);
 
               let count = _mail.me.getChildByName("count");
-              if (count <= 1) {
+              if (count_num <= 1) {
                 count.visible = false;
               } else {
                 count.visible = true;
-                count.text = count.toString();
+                count.text = count_num.toString();
               }
 
               _mail.me.getChildByName("getted").visible = !attachment;
@@ -246,7 +237,7 @@ module.exports = function(uiscript) {
             }
           });
         } else {
-          this.items.forEach(item => (item.me.visible = false));
+          this.items.forEach(({ me }) => (me.visible = false));
         }
 
         this.btn_get.visible = attachment;
@@ -259,7 +250,7 @@ module.exports = function(uiscript) {
             {
               mail_id: mail.mail_id
             },
-            function() {}
+            () => {}
           );
 
           mail.state = 1;
@@ -267,7 +258,7 @@ module.exports = function(uiscript) {
           this.right_btn_cd = 0;
           this.btn_get.clickHandler = Laya.Handler.create(
             this,
-            function() {
+            () => {
               if (Laya.timer.currTimer >= _this.right_btn_cd) {
                 _this.right_btn_cd = Laya.timer.currTimer + 1e3;
                 app.NetAgent.sendReq2Lobby(
@@ -276,7 +267,7 @@ module.exports = function(uiscript) {
                   {
                     mail_id: mail.mail_id
                   },
-                  function(e, i) {
+                  (e, i) => {
                     if (((_this.right_btn_cd = 0), e || i.error))
                       uiscript.UIMgr.Inst.showNetReqError(
                         "takeAttachmentFromMail",
@@ -287,7 +278,7 @@ module.exports = function(uiscript) {
                       _this.btn_get.visible = !attachment;
                       _this.btn_del.visible = attachment;
                       mail.take_attachment = true;
-                      for (var n = 0; n < _this.items.length; n++) {
+                      for (let n = 0; n < _this.items.length; n++) {
                         if (_this.items[n].me.visible) {
                           _this.items[n].me.getChildByName(
                             "getted"
@@ -303,7 +294,7 @@ module.exports = function(uiscript) {
             false
           );
 
-          this.btn_del.clickHandler = Laya.Handler.create(this, function() {
+          this.btn_del.clickHandler = Laya.Handler.create(this, () => {
             if (Laya.timer.currTimer >= _this.right_btn_cd) {
               _this.right_btn_cd = Laya.timer.currTimer + 1e3;
               app.NetAgent.sendReq2Lobby(
@@ -312,7 +303,7 @@ module.exports = function(uiscript) {
                 {
                   mail_id: mail.mail_id
                 },
-                function(e, i) {
+                (e, i) => {
                   _this.right_btn_cd = 0;
                   if (!e) {
                     if (i.error) {
@@ -327,16 +318,28 @@ module.exports = function(uiscript) {
           });
         }
       }
-    };
+    }
 
-    mail.prototype.onReadStateChange = function() {
+    onReadStateChange() {
       uiscript.UI_Lobby.Inst.top.refreshRedpoint();
       uiscript.UI_Activity.Inst.refresh_redpoint();
-    };
+    }
+  }
 
-    mail.Inst = null;
-    mail.mails = [];
-    return mail;
-  })();
-  uiscript.UI_Mail = newMail;
-};
+  Object.defineProperty(mail, "haveRedPoint", {
+    get() {
+      for (let i = 0; i < this.mails.length; i++) {
+        if (this.mails[i].state == 0) return true;
+      }
+      return false;
+    },
+    enumerable: true,
+    configurable: true
+  });
+
+  mail.Inst = null;
+  mail.mails = [];
+  return mail;
+})();
+
+export default uiscript => (uiscript.UI_Mail = newMail);

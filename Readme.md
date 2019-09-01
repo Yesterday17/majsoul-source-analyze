@@ -8,6 +8,7 @@
 ## Guide
 - `!1` -> `false`
 - `!0` -> `true`
+- `void expression` -> `expression, undefined`
 - `return a, b, c` -> `a;b;return c;`
 - `"" != a` -> `a != ""`
 - `a && b && c` -> `if (a && b) c`

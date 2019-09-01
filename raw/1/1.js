@@ -4,7 +4,7 @@ var uiscript;
     function t(t) {
       (this.change_id = 0),
         (this.skin_path = ''),
-        (this.loaded = !1),
+        (this.loaded = false),
         (this.me = t),
         (this.img = t);
     }
@@ -22,27 +22,27 @@ var uiscript;
               r = game.LoadMgr.getResImageSkin(n);
             '' == r
               ? ((this.img.skin = ''),
-                (this.loaded = !1),
+                (this.loaded = false),
                 game.LoadMgr.loadResImage(
                   [this.skin_path],
                   Laya.Handler.create(this, function() {
                     a == e.change_id &&
-                      ((e.loaded = !0),
+                      ((e.loaded = true),
                       (e.img.skin = game.LoadMgr.getResImageSkin(e.skin_path)));
                   })
                 ))
-              : ((this.loaded = !0), (this.img.skin = r));
+              : ((this.loaded = true), (this.img.skin = r));
           }
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (t.prototype.clear = function() {
         this.change_id++,
           this.loaded &&
             '' != this.skin_path &&
             (Laya.loader.clearTextureRes(this.skin_path),
-            (this.loaded = !1),
+            (this.loaded = false),
             (this.skin_path = ''));
       }),
       t

@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -30,7 +7,7 @@ let uiscript;
     return __extends(i, e),
     (i.show = function(e) {
       if (!this._inited) {
-        (this._complete = e), (this._inited = !0);
+        (this._complete = e), (this._inited = true);
         const n = new i();
         t.UIMgr.Inst.AddLobbyUI(n),
           Laya.timer.frameOnce(5, this, () => {
@@ -60,33 +37,33 @@ let uiscript;
                   t,
                   () => {
                     Laya.LocalStorage.setItem('lang', t.lst[i].language),
-                      (t.enable = !1),
-                      t.me.destroy(!0),
+                      (t.enable = false),
+                      t.me.destroy(true),
                       Laya.Browser.window.conch ||
                         (Laya.Browser.window.location.href =
                           GameMgr.Inst.link_url);
                   },
                   null,
-                  !1
+                  false
                 ));
             },
             null,
-            !1
+            false
           )
         ),
         (this.me.getChildByName('jump').clickHandler = Laya.Handler.create(
           this,
           () => {
-            (t.enable = !1),
-              t.me.destroy(!0),
+            (t.enable = false),
+              t.me.destroy(true),
               i._complete && i._complete.run();
           },
           null,
-          !1
+          false
         ));
     }),
     (i.prototype._show = function() {
-      (this.enable = !0),
+      (this.enable = true),
         this.scorllview.reset(),
         this.scorllview.addItem(this.lst.length);
       let t = '当前语言：';
@@ -109,7 +86,7 @@ let uiscript;
       this.me.getChildByName('now').text = t;
     }),
     (i._ips = []),
-    (i._inited = !1),
+    (i._inited = false),
     (i._complete = null),
     i
   ;

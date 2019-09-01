@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -33,7 +8,7 @@ var __extends =
         (t.title = null),
         (t.tabs = []),
         (t.nolimitlist = null),
-        (t.locking = !1),
+        (t.locking = false),
         (t.usedskin = []),
         (t.container_self = null),
         (t.self_head = null),
@@ -55,14 +30,14 @@ var __extends =
             'capsui.NoLimitList'
           ]),
           this.nolimitlist.init_nolimitlist(
-            Laya.Handler.create(this, this._loadInfo, null, !1),
+            Laya.Handler.create(this, this._loadInfo, null, false),
             Laya.Handler.create(
               this,
               function(t) {
                 e.setItemValue(t.index, t.container, t.cache_data);
               },
               null,
-              !1
+              false
             )
           ),
           (this.root.getChildByName(
@@ -73,7 +48,7 @@ var __extends =
               e.locking || e.close(null);
             },
             null,
-            !1
+            false
           )),
           (this.container_self = this.root.getChildByName('self')),
           (this.self_head = new t.UI_Head(
@@ -88,7 +63,7 @@ var __extends =
           (this.self_name = this.container_self
             .getChildByName('self')
             .getChildByName('name')),
-          (this.container_self.visible = !1),
+          (this.container_self.visible = false),
           this.datas.push({
             items: [],
             self_rank: 0,
@@ -123,13 +98,13 @@ var __extends =
           var r = i.getChildByName('rank_img'),
             s = i.getChildByName('rankno');
           e < 3
-            ? ((s.visible = !1),
-              (r.visible = !0),
+            ? ((s.visible = false),
+              (r.visible = true),
               (r.skin = game.Tools.localUISrc(
                 'myres/lobby/rank_' + (e + 1).toString() + '.png'
               )))
-            : ((s.visible = !0),
-              (r.visible = !1),
+            : ((s.visible = true),
+              (r.visible = false),
               (s.text = (e + 1).toString()));
           var o = this.datas[this.tab_index].items[e].detail;
           n.hasOwnProperty('head') ||
@@ -157,31 +132,31 @@ var __extends =
                 t.UI_OtherPlayerInfo.Inst.show(o.account_id, a.tab_index + 1);
               },
               null,
-              !1
+              false
             ));
         }
       }),
       (i.prototype.show = function() {
         var e = this;
         this.nolimitlist.reset(),
-          (this.enable = !0),
-          (this.locking = !0),
+          (this.enable = true),
+          (this.locking = true),
           (this.usedskin = []),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              e.locking = !1;
+              e.locking = false;
             })
           ),
           this.change_tab(0);
       }),
       (i.prototype.close = function(e) {
         var i = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (i.locking = !1), (i.enable = !1), e && e.run();
+              (i.locking = false), (i.enable = false), e && e.run();
             })
           );
       }),
@@ -197,7 +172,7 @@ var __extends =
             0 == this.tab_index ? 2796 : 2795
           )),
           this.nolimitlist.reset(),
-          (this.container_self.visible = !1);
+          (this.container_self.visible = false);
         for (var n = 0; n < this.tabs.length; n++)
           (this.tabs[n].btn.mouseEnabled = e != n),
             (this.tabs[n].btn.skin = game.Tools.localUISrc(
@@ -210,7 +185,7 @@ var __extends =
           ? ((this.datas[e].fetch_time = Laya.timer.currTimer),
             (this.datas[e].items = []),
             this.datas[e].version++,
-            (this.datas[e].during_load = !1),
+            (this.datas[e].during_load = false),
             (this.datas[e].load_index = 0),
             app.NetAgent.sendReq2Lobby(
               'Lobby',
@@ -226,18 +201,18 @@ var __extends =
                     i.tab_index == e &&
                       ((i.nolimitlist.total_count = i.datas[e].items.length),
                       i.setMeRank(),
-                      (i.container_self.visible = !0));
+                      (i.container_self.visible = true));
                 }
               }
             ))
           : ((this.nolimitlist.total_count = this.datas[e].items.length),
             this.setMeRank(),
-            (this.container_self.visible = !0));
+            (this.container_self.visible = true));
       }),
       (i.prototype._loadInfo = function(e) {
         var i = this;
         if (e >= this.datas[this.tab_index].items.length)
-          this.nolimitlist.loadOver(!1, 0);
+          this.nolimitlist.loadOver(false, 0);
         else {
           var n = this.datas[this.tab_index];
           if (!n.during_load) {
@@ -245,12 +220,12 @@ var __extends =
               r = n.load_index,
               s = e + 20;
             if ((s > n.items.length && (s = n.items.length), s <= r))
-              this.nolimitlist.loadOver(!0, s - e);
+              this.nolimitlist.loadOver(true, s - e);
             else {
               for (var o = r; o < s; o++)
                 o >= n.load_index && a.push(n.items[o].account_id);
               var l = n.version;
-              (n.during_load = !0),
+              (n.during_load = true),
                 app.NetAgent.sendReq2Lobby(
                   'Lobby',
                   'fetchMultiAccountBrief',
@@ -262,10 +237,10 @@ var __extends =
                         e,
                         a
                       ),
-                        i.nolimitlist.loadOver(!1, 0);
+                        i.nolimitlist.loadOver(false, 0);
                     else {
                       if (n.version != l) return;
-                      n.during_load = !1;
+                      n.during_load = false;
                       for (
                         var s = -1, o = a.players.length, h = 0;
                         h < o;
@@ -285,8 +260,8 @@ var __extends =
                               (s + 1).toString()
                             ])
                           ),
-                          i.nolimitlist.loadOver(!1, 0))
-                        : ((n.load_index += o), i.nolimitlist.loadOver(!0, o));
+                          i.nolimitlist.loadOver(false, 0))
+                        : ((n.load_index += o), i.nolimitlist.loadOver(true, o));
                     }
                   }
                 );
@@ -295,16 +270,16 @@ var __extends =
         }
       }),
       (i.prototype._addusedskin = function(t) {
-        for (var e = !1, i = 0; i < this.usedskin.length; i++)
+        for (var e = false, i = 0; i < this.usedskin.length; i++)
           if (t == this.usedskin[i]) {
-            e = !0;
+            e = true;
             break;
           }
         e || this.usedskin.push(t);
       }),
       (i.prototype.setMeRank = function() {
         if (this.enable) {
-          this.container_self.visible = !0;
+          this.container_self.visible = true;
           var t = this.container_self
               .getChildByName('self')
               .getChildByName('rank_img'),
@@ -313,20 +288,20 @@ var __extends =
               .getChildByName('rankno'),
             i = this.datas[this.tab_index].self_rank;
           i <= 0
-            ? ((e.visible = !1), (t.visible = !1))
+            ? ((e.visible = false), (t.visible = false))
             : i <= 3
-            ? ((e.visible = !1),
-              (t.visible = !0),
+            ? ((e.visible = false),
+              (t.visible = true),
               (t.skin = game.Tools.localUISrc(
                 'myres/lobby/rank_' + i.toString() + '.png'
               )))
             : i <= 999
-            ? ((e.visible = !0),
-              (t.visible = !1),
+            ? ((e.visible = true),
+              (t.visible = false),
               (e.text = i.toString()),
               (e.fontSize = 60))
-            : ((e.visible = !0),
-              (t.visible = !1),
+            : ((e.visible = true),
+              (t.visible = false),
               (e.text = '999+'),
               (e.fontSize = 45)),
             (this.self_head.id = GameMgr.Inst.account_data.avatar_id),

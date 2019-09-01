@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  view;
+var view;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -39,7 +14,7 @@ var __extends =
           (t.DesktopMgr.Inst.index_ju = e.ju),
           (t.DesktopMgr.Inst.index_ben = e.ben),
           (t.DesktopMgr.Inst.index_player = e.ju),
-          (t.DesktopMgr.Inst.gameing = !0),
+          (t.DesktopMgr.Inst.gameing = true),
           (t.DesktopMgr.Inst.left_tile_count = 69),
           t.DesktopMgr.Inst.rule_mode == t.ERuleMode.Liqi4
             ? (t.DesktopMgr.Inst.left_tile_count = 69)
@@ -47,10 +22,10 @@ var __extends =
               (t.DesktopMgr.Inst.left_tile_count = 50),
           e.left_tile_count &&
             (t.DesktopMgr.Inst.left_tile_count = e.left_tile_count),
-          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !1),
-          t.DesktopMgr.Inst.setAutoHule(!1),
-          t.DesktopMgr.Inst.setAutoMoQie(!1),
-          t.DesktopMgr.Inst.setAutoNoFulu(!1),
+          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = false),
+          t.DesktopMgr.Inst.setAutoHule(false),
+          t.DesktopMgr.Inst.setAutoMoQie(false),
+          t.DesktopMgr.Inst.setAutoNoFulu(false),
           uiscript.UI_DesktopInfo.Inst.resetFunc(),
           uiscript.UI_TingPai.Inst.reset(),
           t.DesktopMgr.Inst.SetChangJuShow(
@@ -58,7 +33,7 @@ var __extends =
             t.DesktopMgr.Inst.index_ju
           ),
           uiscript.UI_DesktopInfo.Inst.setBen(t.DesktopMgr.Inst.index_ben),
-          uiscript.UI_DesktopInfo.Inst.setZhenting(!1),
+          uiscript.UI_DesktopInfo.Inst.setZhenting(false),
           uiscript.UI_DesktopInfo.Inst.reset_rounds(),
           uiscript.UI_DesktopInfo.Inst.setLiqibang(e.liqibang);
         for (var n = 0; n < 4; n++)
@@ -72,19 +47,19 @@ var __extends =
           (t.DesktopMgr.Inst.md5 = e.md5),
           (t.DesktopMgr.Inst.choosed_pai = null),
           (t.DesktopMgr.Inst.dora = []);
-        var a = !1;
-        void 0 != e.al && null != e.al && (a = e.al),
+        var a = false;
+        undefined != e.al && null != e.al && (a = e.al),
           a && uiscript.UI_AL.Show(),
           Laya.timer.once(a ? 1300 : 0, this, function() {
             for (var n = [], a = 0; a < e.tiles.length; a++)
               n.push(mjcore.MJPai.Create(e.tiles[a]));
-            t.DesktopMgr.Inst.mainrole.NewGame(n, !1);
+            t.DesktopMgr.Inst.mainrole.NewGame(n, false);
             for (a = 1; a < 4; a++) {
               var r = t.DesktopMgr.Inst.localPosition2Seat(a);
               -1 != r &&
                 t.DesktopMgr.Inst.players[a].NewGame(
                   13 + (r == t.DesktopMgr.Inst.index_ju ? 1 : 0),
-                  !1
+                  false
                 );
             }
             Laya.timer.once(1200, i, function() {
@@ -102,11 +77,11 @@ var __extends =
                 uiscript.UI_TingPai.Inst.setData0(n);
               } else {
                 var n = { tingpais: e.tingpais1 };
-                uiscript.UI_TingPai.Inst.setData1(n, !1);
+                uiscript.UI_TingPai.Inst.setData1(n, false);
               }
               t.DesktopMgr.Inst.ActionRunComplete();
             }),
-              void 0 != e.operation &&
+              undefined != e.operation &&
                 Laya.timer.once(1e3, i, function() {
                   t.ActionOperation.play(e.operation);
                 });
@@ -121,7 +96,7 @@ var __extends =
           (t.DesktopMgr.Inst.index_ju = e.ju),
           (t.DesktopMgr.Inst.index_ben = e.ben),
           (t.DesktopMgr.Inst.index_player = e.ju),
-          (t.DesktopMgr.Inst.gameing = !0),
+          (t.DesktopMgr.Inst.gameing = true),
           (t.DesktopMgr.Inst.left_tile_count = 69),
           t.DesktopMgr.Inst.rule_mode == t.ERuleMode.Liqi4
             ? (t.DesktopMgr.Inst.left_tile_count = 69)
@@ -129,10 +104,10 @@ var __extends =
               (t.DesktopMgr.Inst.left_tile_count = 50),
           e.left_tile_count &&
             (t.DesktopMgr.Inst.left_tile_count = e.left_tile_count),
-          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !1),
-          t.DesktopMgr.Inst.setAutoHule(!1),
-          t.DesktopMgr.Inst.setAutoMoQie(!1),
-          t.DesktopMgr.Inst.setAutoNoFulu(!1),
+          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = false),
+          t.DesktopMgr.Inst.setAutoHule(false),
+          t.DesktopMgr.Inst.setAutoMoQie(false),
+          t.DesktopMgr.Inst.setAutoNoFulu(false),
           uiscript.UI_DesktopInfo.Inst.resetFunc(),
           uiscript.UI_TingPai.Inst.reset(),
           t.DesktopMgr.Inst.SetChangJuShow(
@@ -140,7 +115,7 @@ var __extends =
             t.DesktopMgr.Inst.index_ju
           ),
           uiscript.UI_DesktopInfo.Inst.setBen(t.DesktopMgr.Inst.index_ben),
-          uiscript.UI_DesktopInfo.Inst.setZhenting(!1),
+          uiscript.UI_DesktopInfo.Inst.setZhenting(false),
           uiscript.UI_DesktopInfo.Inst.reset_rounds(),
           uiscript.UI_DesktopInfo.Inst.setLiqibang(e.liqibang);
         for (a = 0; a < 4; a++)
@@ -156,13 +131,13 @@ var __extends =
           (t.DesktopMgr.Inst.dora = []);
         for (var n = [], a = 0; a < e.tiles.length; a++)
           n.push(mjcore.MJPai.Create(e.tiles[a]));
-        t.DesktopMgr.Inst.mainrole.NewGame(n, !0);
+        t.DesktopMgr.Inst.mainrole.NewGame(n, true);
         for (a = 1; a < 4; a++) {
           var r = t.DesktopMgr.Inst.localPosition2Seat(a);
           -1 != r &&
             t.DesktopMgr.Inst.players[a].NewGame(
               13 + (r == t.DesktopMgr.Inst.index_ju ? 1 : 0),
-              !0
+              true
             );
         }
         e.dora &&
@@ -175,7 +150,7 @@ var __extends =
           uiscript.UI_TingPai.Inst.setData0(s);
         } else {
           var s = { tingpais: e.tingpais1 };
-          uiscript.UI_TingPai.Inst.setData1(s, !0);
+          uiscript.UI_TingPai.Inst.setData1(s, true);
         }
         e.operation &&
           -1 != i &&
@@ -184,7 +159,7 @@ var __extends =
           });
       }),
       (i.record = function(e, i) {
-        void 0 === i && (i = 0),
+        undefined === i && (i = 0),
           app.Log.log('ActionNewRound record data:' + JSON.stringify(e)),
           t.DesktopMgr.Inst.ClearOperationShow(),
           t.BgmListMgr.PlayMJBgm(),
@@ -192,7 +167,7 @@ var __extends =
           (t.DesktopMgr.Inst.index_ju = e.ju),
           (t.DesktopMgr.Inst.index_ben = e.ben),
           (t.DesktopMgr.Inst.index_player = e.ju),
-          (t.DesktopMgr.Inst.gameing = !0),
+          (t.DesktopMgr.Inst.gameing = true),
           (t.DesktopMgr.Inst.left_tile_count = 69),
           t.DesktopMgr.Inst.rule_mode == t.ERuleMode.Liqi4
             ? (t.DesktopMgr.Inst.left_tile_count = 69)
@@ -200,7 +175,7 @@ var __extends =
               (t.DesktopMgr.Inst.left_tile_count = 50),
           e.left_tile_count &&
             (t.DesktopMgr.Inst.left_tile_count = e.left_tile_count),
-          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !1),
+          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = false),
           (t.DesktopMgr.Inst.tingpais = [[], [], [], []]),
           uiscript.UI_TingPai.Inst.reset(),
           uiscript.UI_Replay.Inst.reset(),
@@ -209,7 +184,7 @@ var __extends =
             t.DesktopMgr.Inst.index_ju
           ),
           uiscript.UI_DesktopInfo.Inst.setBen(t.DesktopMgr.Inst.index_ben),
-          uiscript.UI_DesktopInfo.Inst.setZhenting(!1),
+          uiscript.UI_DesktopInfo.Inst.setZhenting(false),
           uiscript.UI_DesktopInfo.Inst.setLiqibang(e.liqibang);
         for (s = 0; s < 4; s++)
           t.DesktopMgr.Inst.players[s].setSeat(
@@ -261,7 +236,7 @@ var __extends =
         );
       }),
       (i.fastrecord = function(e, i) {
-        void 0 === i && (i = -1),
+        undefined === i && (i = -1),
           app.Log.log('ActionNewRound fastrecord data:' + JSON.stringify(e)),
           t.BgmListMgr.PlayMJBgm(),
           t.DesktopMgr.Inst.ClearOperationShow(),
@@ -269,7 +244,7 @@ var __extends =
           (t.DesktopMgr.Inst.index_ju = e.ju),
           (t.DesktopMgr.Inst.index_ben = e.ben),
           (t.DesktopMgr.Inst.index_player = e.ju),
-          (t.DesktopMgr.Inst.gameing = !0),
+          (t.DesktopMgr.Inst.gameing = true),
           (t.DesktopMgr.Inst.left_tile_count = 69),
           t.DesktopMgr.Inst.rule_mode == t.ERuleMode.Liqi4
             ? (t.DesktopMgr.Inst.left_tile_count = 69)
@@ -277,7 +252,7 @@ var __extends =
               (t.DesktopMgr.Inst.left_tile_count = 50),
           e.left_tile_count &&
             (t.DesktopMgr.Inst.left_tile_count = e.left_tile_count),
-          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !1),
+          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = false),
           (t.DesktopMgr.Inst.tingpais = [[], [], [], []]),
           uiscript.UI_TingPai.Inst.reset(),
           uiscript.UI_Replay.Inst.reset(),
@@ -286,7 +261,7 @@ var __extends =
             t.DesktopMgr.Inst.index_ju
           ),
           uiscript.UI_DesktopInfo.Inst.setBen(t.DesktopMgr.Inst.index_ben),
-          uiscript.UI_DesktopInfo.Inst.setZhenting(!1),
+          uiscript.UI_DesktopInfo.Inst.setZhenting(false),
           uiscript.UI_DesktopInfo.Inst.setLiqibang(e.liqibang);
         for (s = 0; s < 4; s++)
           t.DesktopMgr.Inst.players[s].setSeat(

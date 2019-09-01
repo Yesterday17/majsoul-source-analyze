@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   let e;
@@ -137,7 +114,7 @@ let uiscript;
         i < this.skin_cells.length;
         i++
       )
-        e.push(!1);
+        e.push(false);
       for (const n = this.container_chooses.width / 2, i = 0; i <= 6; i++) {
         const a = t + 30 * i;
         const r = a - this.current_angle;
@@ -145,11 +122,11 @@ let uiscript;
           const s = a / 30;
           const o = s % this.skin_cells.length;
           if (s >= 0 && s < this.goods_lst.length) {
-            e[o] = !0;
+            e[o] = true;
             const l = this.skin_cells[o];
             if (this.skin_cells[o].goods_index != s) {
               const h = this.goods_lst[s];
-              (l.me.visible = !0),
+              (l.me.visible = true),
                 (l.goods_index = s),
                 game.LoadMgr.setImgSkin(l.icon, `${h.icon}/waitingroom.png`);
             }
@@ -170,16 +147,16 @@ let uiscript;
       for (i = 0; i < this.skin_cells.length; i++)
         e[i] ||
           ((this.skin_cells[i].goods_index = -1),
-          (this.skin_cells[i].me.visible = !1),
+          (this.skin_cells[i].me.visible = false),
           (this.skin_cells[i].me.width = 0));
     }),
     (n.prototype.refresh_price = (t, e, i) => {
       const n = t.getChildByName('container_origin_price');
       const a = t.getChildByName('container_discount');
-      if (((n.visible = !1), (a.visible = !1), i >= 1))
-        (n.visible = !0), (n.getChildByName('now_price').text = e.toString());
+      if (((n.visible = false), (a.visible = false), i >= 1))
+        (n.visible = true), (n.getChildByName('now_price').text = e.toString());
       else {
-        (a.visible = !0),
+        (a.visible = true),
           (a.getChildByName('discount').text =
             `-${100 - Math.ceil(100 * i)}%`);
         const r = a.getChildByName('now_price');
@@ -200,21 +177,21 @@ let uiscript;
       if (t.UI_Sushe.skin_owned(i.item_id))
         (this.container_buy.getChildByName(
           'container_discount'
-        ).visible = !1),
+        ).visible = false),
           (this.container_buy.getChildByName(
             'container_origin_price'
-          ).visible = !1),
-          (this.container_buy.getChildByName('btn_buy').visible = !1),
-          (this.container_buy.getChildByName('owned').visible = !0);
+          ).visible = false),
+          (this.container_buy.getChildByName('btn_buy').visible = false),
+          (this.container_buy.getChildByName('owned').visible = true);
       else {
-        (this.container_buy.getChildByName('owned').visible = !1),
+        (this.container_buy.getChildByName('owned').visible = false),
           this.refresh_price(
             this.container_buy,
             i.price,
             t.UI_Shop.goods_discount_value(i.id)
           );
         const n = this.container_buy.getChildByName('btn_buy');
-        (n.visible = !0),
+        (n.visible = true),
           (n.clickHandler = Laya.Handler.create(
             this,
             () => {
@@ -234,7 +211,7 @@ let uiscript;
                       )
                     },
                     (a, r) => {
-                      game.Tools.setGrayDisable(n, !1),
+                      game.Tools.setGrayDisable(n, false),
                         a || r.error
                           ? t.UIMgr.Inst.showNetReqError('buyFromShop', a, r)
                           : (view.AudioMgr.PlayAudio(106),
@@ -249,7 +226,7 @@ let uiscript;
               );
             },
             null,
-            !1
+            false
           ));
       }
       Laya.Tween.clearAll(this.container_buy),
@@ -316,7 +293,7 @@ let uiscript;
     }),
     (n.prototype.show = function(i) {
       const n = this;
-      void 0 === i && (i = -1),
+      undefined === i && (i = -1),
         (this.goods_lst = []),
         (this.current_angle = 0),
         (this.choosed_goods_index = 0),
@@ -334,33 +311,33 @@ let uiscript;
               (n.current_angle = 30 * n.choosed_goods_index)));
         }),
         (this.target_angle = this.current_angle),
-        (this.enable = !0),
+        (this.enable = true),
         this.onCenterCharacterChange(),
         this.refresh_scroll(),
         (this.mouse_state = e.none),
         Laya.timer.clearAll(this),
         Laya.timer.frameLoop(1, this, this.update_anim),
-        (this.locking = !0),
+        (this.locking = true),
         t.UIBase.anim_alpha_in(this.container_right, { x: 100 }, 200),
         Laya.timer.once(350, this, () => {
-          n.locking = !1;
+          n.locking = false;
         });
     }),
     (n.prototype.close = function() {
       const e = this;
       Laya.timer.clearAll(this),
-        (this.locking = !0),
+        (this.locking = true),
         t.UIBase.anim_alpha_out(this.container_right, { x: 100 }, 200),
         t.UIBase.anim_alpha_out(this.container_illust, { x: -100 }, 200),
         t.UIBase.anim_alpha_out(this.container_info, { x: -100 }, 200),
         Laya.timer.once(200, this, () => {
-          (e.locking = !1), (e.enable = !1), t.UI_Shop.Inst.show(4);
+          (e.locking = false), (e.enable = false), t.UI_Shop.Inst.show(4);
         });
     }),
     (n.prototype.onDisable = function() {
       for (t = 0; t < this.skin_cells.length; t++)
         (this.skin_cells[t].icon.skin = ''),
-          (this.skin_cells[t].me.visible = !1),
+          (this.skin_cells[t].me.visible = false),
           (this.skin_cells[t].me.width = 0),
           (this.skin_cells[t].mask.width = 0),
           (this.skin_cells[t].goods_index = -1);

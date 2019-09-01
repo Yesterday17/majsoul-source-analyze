@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -29,7 +6,7 @@ let uiscript;
       return (
         (t.func_cancel = null),
         (t.func_confirm = null),
-        (t.locking = !1),
+        (t.locking = false),
         (i.Inst = t),
         t
       );
@@ -50,7 +27,7 @@ let uiscript;
               (t.func_confirm = null));
           },
           null,
-          !1
+          false
         )),
         (this.root.getChildByName(
           'btn_cancel'
@@ -64,7 +41,7 @@ let uiscript;
               (t.func_confirm = null));
           },
           null,
-          !1
+          false
         )),
         (this.root.getChildByName('btn_cancel').filters = [
           new Laya.ColorFilter([
@@ -91,14 +68,14 @@ let uiscript;
           ])
         ]),
         (this.desc = this.root.getChildByName('desc')),
-        (this.locking = !1);
+        (this.locking = false);
     }),
     (i.prototype.show = function(e, i, n, a, r) {
       const s = this;
-      void 0 === i && (i = null),
-        void 0 === n && (n = null),
-        void 0 === a && (a = 960),
-        void 0 === r && (r = 560),
+      undefined === i && (i = null),
+        undefined === n && (n = null),
+        undefined === a && (a = 960),
+        undefined === r && (r = 560),
         (this.func_cancel = n),
         (this.func_confirm = i),
         (this.desc.text = e),
@@ -106,43 +83,43 @@ let uiscript;
         (this.root.y = r),
         (this.root.getChildByName('btn_confirm').x = 114),
         (this.root.getChildByName('btn_cancel').x = 339),
-        (this.root.getChildByName('btn_cancel').visible = !0),
-        (this.locking = !0),
-        (this.enable = !0),
+        (this.root.getChildByName('btn_cancel').visible = true),
+        (this.locking = true),
+        (this.enable = true),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            s.locking = !1;
+            s.locking = false;
           })
         );
     }),
     (i.prototype.show_only_confirm = function(e, i, n, a) {
       const r = this;
-      void 0 === i && (i = null),
-        void 0 === n && (n = 960),
-        void 0 === a && (a = 560),
+      undefined === i && (i = null),
+        undefined === n && (n = 960),
+        undefined === a && (a = 560),
         (this.func_confirm = i),
         (this.desc.text = e),
         (this.root.x = n),
         (this.root.y = a),
         (this.root.getChildByName('btn_confirm').x = 226),
-        (this.root.getChildByName('btn_cancel').visible = !1),
-        (this.locking = !0),
-        (this.enable = !0),
+        (this.root.getChildByName('btn_cancel').visible = false),
+        (this.locking = true),
+        (this.enable = true),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            r.locking = !1;
+            r.locking = false;
           })
         );
     }),
     (i.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.enable = !1);
+            (e.locking = false), (e.enable = false);
           })
         );
     }),

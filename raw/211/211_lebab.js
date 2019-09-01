@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -28,7 +5,7 @@ let uiscript;
       const t = e.call(this, new ui.lobby.skin_yulanUI()) || this;
       return (
         (t.scale = 1),
-        (t.during_move = !1),
+        (t.during_move = false),
         (t.mouse_start_x = 0),
         (t.mouse_start_y = 0),
         (i.Inst = t),
@@ -44,7 +21,7 @@ let uiscript;
         )),
         (this.container_move = this.me.getChildByName('move')),
         this.container_move.on('mousedown', this, () => {
-          (e.during_move = !0),
+          (e.during_move = true),
             (e.mouse_start_x = e.container_move.mouseX),
             (e.mouse_start_y = e.container_move.mouseY);
         }),
@@ -58,10 +35,10 @@ let uiscript;
             (e.mouse_start_y = e.container_move.mouseY));
         }),
         this.container_move.on('mouseup', this, () => {
-          e.during_move = !1;
+          e.during_move = false;
         }),
         this.container_move.on('mouseout', this, () => {
-          e.during_move = !1;
+          e.during_move = false;
         }),
         (this.btn_big = this.me.getChildByName('btn_big')),
         (this.btn_big.clickHandler = Laya.Handler.create(
@@ -70,7 +47,7 @@ let uiscript;
             e.locking || e.bigger();
           },
           null,
-          !1
+          false
         )),
         (this.btn_small = this.me.getChildByName('btn_small')),
         (this.btn_small.clickHandler = Laya.Handler.create(
@@ -79,7 +56,7 @@ let uiscript;
             e.locking || e.smaller();
           },
           null,
-          !1
+          false
         )),
         (this.btn_close = this.me.getChildByName('btn_close')),
         (this.btn_close.clickHandler = Laya.Handler.create(
@@ -88,7 +65,7 @@ let uiscript;
             e.locking || e.close();
           },
           null,
-          !1
+          false
         )),
         (this.container_info = this.me.getChildByName('container_info')),
         (this.label_name = this.container_info.getChildByName('name')),
@@ -115,8 +92,8 @@ let uiscript;
           a.character_id
         )[`name_${GameMgr.client_language}`]),
         (this.label_desc.text = a[`desc_${GameMgr.client_language}`]),
-        (this.enable = !0),
-        (this.locking = !0),
+        (this.enable = true),
+        (this.locking = true),
         t.UIBase.anim_pop_out(this.btn_big, null),
         t.UIBase.anim_pop_out(this.btn_small, null),
         t.UIBase.anim_pop_out(this.btn_close, null),
@@ -135,22 +112,22 @@ let uiscript;
           200,
           Laya.Ease.backOut
         ),
-        (this.during_move = !1),
+        (this.during_move = false),
         Laya.timer.once(250, this, () => {
-          n.locking = !1;
+          n.locking = false;
         });
     }),
     (i.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         Laya.Tween.to(this.illust, { alpha: 0 }, 200),
         Laya.Tween.to(this.container_info, { alpha: 0 }, 200),
         t.UIBase.anim_pop_hide(this.btn_big, null),
         t.UIBase.anim_pop_hide(this.btn_small, null),
         t.UIBase.anim_pop_hide(this.btn_close, null),
         Laya.timer.once(250, this, () => {
-          (e.locking = !1),
-            (e.enable = !1),
+          (e.locking = false),
+            (e.enable = false),
             e.when_close && e.when_close.run();
         });
     }),
@@ -167,8 +144,8 @@ let uiscript;
           null,
           null,
           0,
-          !0,
-          !0
+          true,
+          true
         ));
     }),
     (i.prototype.smaller = function() {
@@ -181,8 +158,8 @@ let uiscript;
           null,
           null,
           0,
-          !0,
-          !0
+          true,
+          true
         ));
     }),
     (i.prototype.move = function(t, e) {

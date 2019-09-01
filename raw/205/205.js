@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -80,7 +55,7 @@ var __extends =
             this,
             this.onBtnConfirm,
             null,
-            !1
+            false
           ));
         this.container_arrow.getChildByName('nums');
         this.label_waitingother = this.me.getChildByName('waitingother');
@@ -88,7 +63,7 @@ var __extends =
       (i.prototype.show = function(t) {
         var e = this;
         if (view.DesktopMgr.Inst.mode != view.EMJMode.paipu) {
-          (this.enable = !0),
+          (this.enable = true),
             (this.black_mask.alpha = 0),
             Laya.Tween.to(this.black_mask, { alpha: 0.5 }, 120);
           for (var i = [], n = [], a = 0; a < t.length; a++)
@@ -104,14 +79,14 @@ var __extends =
                 i
               );
             }));
-          for (var r = !1, a = 0; a < this.viewplayers.length; a++) {
-            this.viewplayers[a].container.visible = !1;
+          for (var r = false, a = 0; a < this.viewplayers.length; a++) {
+            this.viewplayers[a].container.visible = false;
           }
           for (
             var s = function(a) {
                 var s = view.DesktopMgr.Inst.seat2LocalPosition(a),
                   l = o.viewplayers[s];
-                l.container.visible = !0;
+                l.container.visible = true;
                 var h = 0,
                   c = 0;
                 switch (s) {
@@ -153,7 +128,7 @@ var __extends =
                     p = f + 1;
                     break;
                   }
-                (l.container_rank0.visible = !0),
+                (l.container_rank0.visible = true),
                   (l.container_rank0.x = l.rank_x),
                   (l.container_rank0.y = l.rank_y),
                   (l.rank0.skin = game.Tools.localUISrc(
@@ -167,15 +142,15 @@ var __extends =
                       '.png'
                   )),
                   (l.container_rank0.alpha = 1),
-                  (l.txt_delta.visible = !1),
+                  (l.txt_delta.visible = false),
                   0 != _.delta &&
-                    ((r = !0),
+                    ((r = true),
                     _.delta > 0
                       ? ((l.txt_delta.text = '+' + _.delta),
                         (l.txt_delta.color = '#64cf42'))
                       : ((l.txt_delta.text = _.delta.toString()),
                         (l.txt_delta.color = '#d61111')),
-                    (l.txt_delta.visible = !0),
+                    (l.txt_delta.visible = true),
                     (l.txt_delta.alpha = 0),
                     Laya.Tween.to(
                       l.txt_delta,
@@ -185,7 +160,7 @@ var __extends =
                       null,
                       250
                     )),
-                  (l.container_rank1.visible = !1),
+                  (l.container_rank1.visible = false),
                   Laya.timer.once(2500, o, function() {
                     r &&
                       (Laya.Tween.to(
@@ -214,7 +189,7 @@ var __extends =
                           1 == p
                             ? (view.AudioMgr.PlayAudio(218),
                               Laya.timer.once(70, e, function() {
-                                (l.container_rank1.visible = !0),
+                                (l.container_rank1.visible = true),
                                   (l.rank1.skin = game.Tools.localUISrc(
                                     'myres/mjdesktop/s_1.png'
                                   )),
@@ -243,15 +218,15 @@ var __extends =
             a++
           )
             s(a);
-          this.container_arrow.visible = !0;
+          this.container_arrow.visible = true;
           for (a = 0; a < 4; a++)
             for (var l = a + 1; l < 4; l++)
               (this.container_arrow.getChildByName(
                 a.toString() + l.toString()
-              ).visible = !1),
+              ).visible = false),
                 (this.container_arrow.getChildByName(
                   l.toString() + a.toString()
-                ).visible = !1);
+                ).visible = false);
           if (
             (Laya.timer.once(250, this, function() {
               e.change_num = [];
@@ -261,7 +236,7 @@ var __extends =
                   s = a.toString() + r.toString(),
                   o = e.container_arrow.getChildByName(s);
                 (o.alpha = 0),
-                  (o.visible = !0),
+                  (o.visible = true),
                   Laya.Tween.to(o, { alpha: 1 }, 100);
               }
             }),
@@ -278,15 +253,15 @@ var __extends =
                       var s = t[n].delta - r;
                       e.viewplayers[a].txt_delta.text =
                         s > 0 ? '+' + s : s.toString();
-                    } else e.viewplayers[a].txt_delta.visible = !1;
+                    } else e.viewplayers[a].txt_delta.visible = false;
                     e.setScore(e.viewplayers[a].img_scores, t[n].old_score + r);
                   }
               });
-          (this.btn_confirm.visible = !1),
-            (this.label_waitingother.visible = !1);
+          (this.btn_confirm.visible = false),
+            (this.label_waitingother.visible = false);
           var c = r ? 4500 : 1200;
           Laya.timer.once(c, this, function() {
-            (e.btn_confirm.visible = !0),
+            (e.btn_confirm.visible = true),
               (e.btn_confirm.alpha = 0),
               Laya.Tween.to(e.btn_confirm, { alpha: 1 }, 100);
             for (var i = [], n = 0; n < t.length; n++)
@@ -316,10 +291,10 @@ var __extends =
         } else this.onBtnConfirm();
       }),
       (i.prototype.setScore = function(t, e) {
-        for (var i = e.toString(), n = 0; n < t.length; n++) t[n].visible = !1;
+        for (var i = e.toString(), n = 0; n < t.length; n++) t[n].visible = false;
         for (n = 0; n < i.length && n < t.length; n++) {
           var a = t[n];
-          a.visible = !0;
+          a.visible = true;
           var r = i.charAt(i.length - 1 - n);
           a.skin =
             '-' == r
@@ -362,11 +337,11 @@ var __extends =
       (i.prototype.onBtnConfirm = function() {
         var e = this;
         if (
-          ((this.btn_confirm.visible = !1),
+          ((this.btn_confirm.visible = false),
           view.DesktopMgr.Inst.mode == view.EMJMode.play)
         )
           if (null != view.DesktopMgr.Inst.gameEndResult)
-            t.UIMgr.Inst.ShowGameEnd(), (this.enable = !1);
+            t.UIMgr.Inst.ShowGameEnd(), (this.enable = false);
           else {
             view.DesktopMgr.Inst.Reset(),
               Laya.timer.once(200, this, function() {
@@ -388,7 +363,7 @@ var __extends =
                       function(t, e) {}
                     );
               }),
-              (this.label_waitingother.visible = !0);
+              (this.label_waitingother.visible = true);
             var i = 0;
             Laya.timer.loop(500, this, function() {
               for (
@@ -401,10 +376,10 @@ var __extends =
             });
           }
         else if (view.DesktopMgr.Inst.mode == view.EMJMode.paipu)
-          t.UI_Replay.Inst.nextStep(!0), (this.enable = !1);
+          t.UI_Replay.Inst.nextStep(true), (this.enable = false);
         else if (view.DesktopMgr.Inst.mode == view.EMJMode.live_broadcast) {
           t.UI_Live_Broadcast.Inst.onScoreChangeConfirm(),
-            (this.label_waitingother.visible = !0);
+            (this.label_waitingother.visible = true);
           var n = 0;
           Laya.timer.loop(500, this, function() {
             for (var t = game.Tools.strOfLocalization(2180), i = 0; i < n; i++)

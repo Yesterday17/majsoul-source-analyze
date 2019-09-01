@@ -33,7 +33,7 @@ var uiscript;
             1 != e.tab_index && e.change_tab(1);
           },
           null,
-          !1
+          false
         )),
         (this.btn_cardback = t
           .getChildByName('items')
@@ -44,7 +44,7 @@ var uiscript;
             2 != e.tab_index && e.change_tab(2);
           },
           null,
-          !1
+          false
         )),
         (this.btn_lobby_bg = t
           .getChildByName('items')
@@ -60,7 +60,7 @@ var uiscript;
           this,
           this.save_change,
           null,
-          !1
+          false
         ));
     }
     return (
@@ -88,20 +88,20 @@ var uiscript;
             3 == cfg.item_definition.item.get(a[n].item_id).type &&
             !this.seen_lobby_bg_map[a[n].item_id]
           )
-            return !0;
+            return true;
         }
-        return !1;
+        return false;
       }),
       (e.prototype.show = function() {
-        (this.me.visible = !0),
-          (this.btn_save.visible = !1),
+        (this.me.visible = true),
+          (this.btn_save.visible = false),
           this.change_tab(1),
           (this.btn_lobby_bg.getChildByName(
             'redpoint'
           ).visible = this.have_red_point());
       }),
       (e.prototype.close = function() {
-        (this.me.visible = !1),
+        (this.me.visible = false),
           (this.items = []),
           this.scrollview.reset(),
           Laya.loader.clearTextureRes(this.img_desktop.skin),
@@ -117,11 +117,11 @@ var uiscript;
           ((this.tab_index = e),
           (this.items = []),
           1 == e
-            ? this.items.push({ item_id: this.desktop_default, owned: !0 })
+            ? this.items.push({ item_id: this.desktop_default, owned: true })
             : 2 == e
-            ? this.items.push({ item_id: this.mjp_defalut, owned: !0 })
+            ? this.items.push({ item_id: this.mjp_defalut, owned: true })
             : 3 == e &&
-              this.items.push({ item_id: this.lobby_bg_default, owned: !0 }),
+              this.items.push({ item_id: this.lobby_bg_default, owned: true }),
           this.scrollview.reset(),
           (this.select_index = 0),
           (this.btn_tablecloth.getChildByName('inchoose').visible = 1 == e),
@@ -139,7 +139,7 @@ var uiscript;
               n[a].item_id != this.mjp_defalut
             ) {
               cfg.item_definition.item.get(n[a].item_id).type == e &&
-                (this.items.push({ item_id: n[a].item_id, owned: !0 }),
+                (this.items.push({ item_id: n[a].item_id, owned: true }),
                 n[a].item_id == game.GameUtility.get_common_view_id(e) &&
                   (this.select_index = this.items.length - 1));
             }
@@ -162,7 +162,7 @@ var uiscript;
           this._on_select_change(),
           3 == e)
         ) {
-          (this.btn_lobby_bg.getChildByName('redpoint').visible = !1),
+          (this.btn_lobby_bg.getChildByName('redpoint').visible = false),
             t.UI_Bag.Inst.clear_desktop_btn_redpoint();
           for (var a = 0; a < this.items.length; a++)
             this.items[a].owned &&
@@ -183,7 +183,7 @@ var uiscript;
           s = this.items[n],
           o = cfg.item_definition.item.get(s.item_id),
           l = a.getChildByName('btn').getChildByName('inchoose');
-        this.select_index == n ? (l.visible = !0) : (l.visible = !1);
+        this.select_index == n ? (l.visible = true) : (l.visible = false);
         var h = a.getChildByName('btn');
         h.clickHandler = Laya.Handler.create(
           this,
@@ -191,7 +191,7 @@ var uiscript;
             if (i.select_index != n) {
               var e = i.select_index;
               (i.select_index = n),
-                (l.visible = !0),
+                (l.visible = true),
                 e >= 0 &&
                   e < i.items.length &&
                   i.scrollview.wantToRefreshItem(e),
@@ -199,7 +199,7 @@ var uiscript;
             } else t.UI_ItemDetail.Inst.show(s.item_id);
           },
           null,
-          !1
+          false
         );
         var c = a.getChildByName('useing'),
           u = GameMgr.Inst.commonview_slot[this.tab_index];
@@ -209,7 +209,7 @@ var uiscript;
             : 2 == this.tab_index
             ? (u = this.mjp_defalut)
             : 3 == this.tab_index && (u = this.lobby_bg_default)),
-          u == s.item_id ? (c.visible = !0) : (c.visible = !1),
+          u == s.item_id ? (c.visible = true) : (c.visible = false),
           (h.getChildByName('lock').visible = !s.owned),
           r.skin || (r.skin = new t.UI_Item_Skin(h.getChildByName('icon'))),
           r.skin.setSkin(o.icon);
@@ -230,12 +230,12 @@ var uiscript;
                 ? (e = this.mjp_defalut)
                 : 3 == this.tab_index && (e = this.lobby_bg_default)),
               e == t.item_id
-                ? (this.btn_save.visible = !1)
-                : ((this.btn_save.visible = !0),
+                ? (this.btn_save.visible = false)
+                : ((this.btn_save.visible = true),
                   (this.btn_save.getChildByName(
                     'info'
                   ).text = game.Tools.strOfLocalization(2035)));
-          } else this.btn_save.visible = !1;
+          } else this.btn_save.visible = false;
           1 == this.tab_index
             ? (this._show_desktop_preview(t.item_id),
               this._show_mjp_preview(
@@ -248,7 +248,7 @@ var uiscript;
               ))
             : 3 == this.tab_index && this._show_lobby_bg_preview(t.item_id);
         } else
-          (this.btn_save.visible = !1),
+          (this.btn_save.visible = false),
             1 == this.tab_index
               ? (this._show_desktop_preview(0),
                 this._show_mjp_preview(

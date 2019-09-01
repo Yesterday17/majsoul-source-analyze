@@ -1,32 +1,9 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let game;
 !(t => {
   const e = (e => {
     function i() {
       const t = e.call(this) || this;
-      return (t.inited = !1), (i.Inst = t), t;
+      return (t.inited = false), (i.Inst = t), t;
     }
     return __extends(i, e),
     (i.on_getSkuDetails = function(t) {
@@ -182,7 +159,7 @@ let game;
           e = n[a].product_id;
           break;
         }
-      if ('' == e) return !1;
+      if ('' == e) return false;
       for (
         const r = t => {
                   if (i.orders[t].sku == e) {
@@ -214,7 +191,7 @@ let game;
                         }
                       }
                     ),
-                    { value: !0 }
+                    { value: true }
                   ;
                   }
                 },
@@ -225,7 +202,7 @@ let game;
         const s = r(a);
         if ('object' == typeof s) return s.value;
       }
-      return !1;
+      return false;
     }),
     (i.prototype.getGoodsInfo = t => {
       for (

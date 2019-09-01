@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -40,12 +15,12 @@ var __extends =
       (i.prototype.show = function() {
         var e = this;
         if (!this.enable) {
-          (this.enable = !0),
+          (this.enable = true),
             view.DesktopMgr.Inst.mode == view.EMJMode.play
-              ? ((this.blackbg.visible = !0),
+              ? ((this.blackbg.visible = true),
                 (this.blackbg.alpha = 0),
                 Laya.Tween.to(this.blackbg, { alpha: 0.3 }, 200))
-              : (this.blackbg.visible = !1),
+              : (this.blackbg.visible = false),
             (this.root.scaleX = this.root.scaleY = 1),
             t.UIBase.anim_pop_out(this.root, null),
             Laya.timer.clearAll(this);
@@ -57,7 +32,7 @@ var __extends =
         }
       }),
       (i.prototype.close = function() {
-        (this.enable = !1), Laya.timer.clearAll(this);
+        (this.enable = false), Laya.timer.clearAll(this);
       }),
       i
     );

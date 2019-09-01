@@ -7,15 +7,15 @@ var game;
         get: function() {
           return this._version;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (e.init = function(e) {
         (this._manifest = {}),
           t.LoadMgr.httpload(
             'version.json',
             'json',
-            !0,
+            true,
             Laya.Handler.create(this, this.onManifestLoaded, [e])
           ),
           (Laya.URL.customFormat = this.formatURL);
@@ -28,7 +28,7 @@ var game;
             t.LoadMgr.httpload(
               'resversion' + this._version + '.json',
               'json',
-              !1,
+              false,
               Laya.Handler.create(this, this.onResVersionLoaded, [e])
             );
         } else app.Log.log('version.json加载失败'), e.run();

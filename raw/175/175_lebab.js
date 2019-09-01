@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => {
@@ -40,12 +17,12 @@ let uiscript;
           )),
           (this.money = new t.UI_Money(
             e,
-            Laya.Handler.create(h.Inst, h.Inst.Hide, null, !1),
+            Laya.Handler.create(h.Inst, h.Inst.Hide, null, false),
             Laya.Handler.create(
               this,
               () => h.Inst.locking,
               null,
-              !1
+              false
             )
           )),
           (n.getChildByName('btn_info').clickHandler = Laya.Handler.create(
@@ -55,7 +32,7 @@ let uiscript;
                 GameMgr.Inst.BehavioralStatistics(13);
             },
             null,
-            !1
+            false
           )),
           (e.getChildByName('btn_activity').clickHandler = Laya.Handler.create(
             this,
@@ -65,7 +42,7 @@ let uiscript;
                 GameMgr.Inst.BehavioralStatistics(18));
             },
             null,
-            !1
+            false
           )),
           (e.getChildByName('btn_rank').clickHandler = Laya.Handler.create(
             this,
@@ -74,7 +51,7 @@ let uiscript;
                 (t.UI_Rank.Inst.show(), GameMgr.Inst.BehavioralStatistics(18));
             },
             null,
-            !1
+            false
           )),
           (e.getChildByName('btn_info').clickHandler = Laya.Handler.create(
             this,
@@ -82,7 +59,7 @@ let uiscript;
               h.Inst.locking || t.UI_Info.Inst.show();
             },
             null,
-            !1
+            false
           )),
           (e.getChildByName('btn_set').clickHandler = Laya.Handler.create(
             this,
@@ -90,7 +67,7 @@ let uiscript;
               h.Inst.locking || t.UI_Config.Inst.show();
             },
             null,
-            !1
+            false
           )),
           (e.getChildByName('btn_help').clickHandler = Laya.Handler.create(
             this,
@@ -98,7 +75,7 @@ let uiscript;
               h.Inst.locking || t.UI_Rules.Inst.show();
             },
             null,
-            !1
+            false
           )),
           (e.getChildByName(
             'btn_xinshouyindao'
@@ -116,14 +93,14 @@ let uiscript;
                         t.UI_XinShouYinDao.Inst.show(
                           0,
                           Laya.Handler.create(i, () => {
-                            h.Inst.enable = !0;
+                            h.Inst.enable = true;
                           })
                         );
                       })
                     ));
             },
             null,
-            !1
+            false
           )),
           (n.getChildByName('btn_small_rank').clickHandler = new Laya.Handler(
             this,
@@ -181,7 +158,7 @@ let uiscript;
             h.Inst.setPage(1), GameMgr.Inst.BehavioralStatistics(1);
           },
           null,
-          !1
+          false
         )),
         (this.btn_yourenfang.clickHandler = Laya.Handler.create(
           this,
@@ -189,7 +166,7 @@ let uiscript;
             h.Inst.setPage(2), GameMgr.Inst.BehavioralStatistics(2);
           },
           null,
-          !1
+          false
         )),
         (this.btn_dajiangsai.clickHandler = Laya.Handler.create(
           this,
@@ -203,14 +180,14 @@ let uiscript;
                 );
           },
           null,
-          !1
+          false
         ));
     }
     return (e.prototype.onEnable = function(e) {
       const i = this;
-      (this.btn_yibanchang.visible = !1),
-        (this.btn_dajiangsai.visible = !1),
-        (this.btn_yourenfang.visible = !1),
+      (this.btn_yibanchang.visible = false),
+        (this.btn_dajiangsai.visible = false),
+        (this.btn_yourenfang.visible = false),
         (this.btn_yibanchang.alpha = 1),
         (this.btn_dajiangsai.alpha = 1),
         (this.btn_yourenfang.alpha = 1),
@@ -220,7 +197,7 @@ let uiscript;
             (i.btn_yibanchang.y = 405),
             (i.btn_yibanchang.scaleX = 0.2),
             (i.btn_yibanchang.scaleY = 0.2),
-            (i.btn_yibanchang.visible = !0),
+            (i.btn_yibanchang.visible = true),
             (i.btn_yibanchang.alpha = 0),
             Laya.Tween.to(
               i.btn_yibanchang,
@@ -235,7 +212,7 @@ let uiscript;
             (i.btn_dajiangsai.y = 530),
             (i.btn_dajiangsai.scaleX = 0.2),
             (i.btn_dajiangsai.scaleY = 0.2),
-            (i.btn_dajiangsai.visible = !0),
+            (i.btn_dajiangsai.visible = true),
             (i.btn_dajiangsai.alpha = 0),
             Laya.Tween.to(
               i.btn_dajiangsai,
@@ -250,7 +227,7 @@ let uiscript;
             (i.btn_yourenfang.y = 634),
             (i.btn_yourenfang.scaleX = 0.2),
             (i.btn_yourenfang.scaleY = 0.2),
-            (i.btn_yourenfang.visible = !0),
+            (i.btn_yourenfang.visible = true),
             (i.btn_yourenfang.alpha = 0),
             Laya.Tween.to(
               i.btn_yourenfang,
@@ -259,7 +236,7 @@ let uiscript;
               (t, e, i, n) => Laya.Ease.backOut(t, e, i, n, 1)
             );
         });
-      let n = !1;
+      let n = false;
       if (t.UI_Activity.activity_is_running(1011)) {
         const a = Laya.LocalStorage.getItem(
             `art0_1011_${GameMgr.Inst.account_id}`
@@ -269,7 +246,7 @@ let uiscript;
         a && '' != a && (r = parseInt(a)), (n = Date.now() > r + 864e6);
       }
       (this.btn_dajiangsai.getChildByName('redpoint').visible = n),
-        (this.me.visible = !0);
+        (this.me.visible = true);
     }),
     (e.prototype.onDisable = function(e) {
       const i = this;
@@ -298,7 +275,7 @@ let uiscript;
           Laya.Ease.backIn
         ),
         Laya.timer.once(200 + e, this, () => {
-          i.me.visible = !1;
+          i.me.visible = false;
         });
     }),
     e
@@ -309,7 +286,7 @@ let uiscript;
     function t(t) {
       const e = this;
       (this.me = t),
-        (this.me.visible = !1),
+        (this.me.visible = false),
         (this.btn_back = t.getChildByName('btn_back')),
         (this.btn_back.clickHandler = new Laya.Handler(this, () => {
           e.func_back && e.func_back.run();
@@ -322,19 +299,19 @@ let uiscript;
           this.title,
           345,
           this.title.width,
-          !0
+          true
         ),
         (this.func_back = e),
         this.me.visible ||
-          ((this.me.visible = !0), h.Inst.me.page_title_in.play(0, !1)),
+          ((this.me.visible = true), h.Inst.me.page_title_in.play(0, false)),
         Laya.timer.clearAll(this);
     }),
     (t.prototype.close = function() {
       const t = this;
       this.me.visible &&
-        (h.Inst.me.page_title_out.play(0, !1),
+        (h.Inst.me.page_title_out.play(0, false),
         Laya.timer.once(200, this, () => {
-          t.me.visible = !1;
+          t.me.visible = false;
         }));
     }),
     t
@@ -344,11 +321,11 @@ let uiscript;
   const a = (() => {
     function e(e) {
       const i = this;
-      (this.locking = !1),
+      (this.locking = false),
         (this.me = e),
-        (this.me.visible = !1),
+        (this.me.visible = false),
         (this.p0 = e.getChildByName('p0')),
-        (this.p0.getChildByName('content').vScrollBar.visible = !1),
+        (this.p0.getChildByName('content').vScrollBar.visible = false),
         (this.content0 = this.p0.getChildByName('content'));
       for (
         let n = GameMgr.Inst.account_data,
@@ -361,23 +338,23 @@ let uiscript;
               c = e < 4 ? 1 + 3 * e : 15;
               const u = cfg.desktop.matchmode.find(c);
               u.is_open
-                ? ((o.mouseEnabled = !0),
+                ? ((o.mouseEnabled = true),
                   (s.filters = []),
-                  (l.visible = !1),
+                  (l.visible = false),
                   (o.clickHandler = Laya.Handler.create(
                     r,
                     () => {
                       if (!i.locking) {
-                        let a = !0, r = '';
+                        let a = true, r = '';
                         a &&
                           !u.is_open &&
-                          ((a = !1), (r = game.Tools.strOfLocalization(1306)));
-                        let s = !0;
-                        let o = !0;
-                        let l = !0;
-                        let c = !0;
-                        let _ = !0;
-                        let d = !0;
+                          ((a = false), (r = game.Tools.strOfLocalization(1306)));
+                        let s = true;
+                        let o = true;
+                        let l = true;
+                        let c = true;
+                        let _ = true;
+                        let d = true;
                         const f = n.level.id;
                         const p = n.level3.id;
                         const m = n.gold;
@@ -386,29 +363,29 @@ let uiscript;
                           5 == i && (i = 6),
                             t.room == i &&
                               ((!t.glimit_floor || m >= t.glimit_floor) &&
-                                (_ = !1),
+                                (_ = false),
                               (-1 == t.glimit_ceil || m <= t.glimit_ceil) &&
-                                (d = !1),
+                                (d = false),
                               t.mode < 10
                                 ? ((!t.level_limit || f >= t.level_limit) &&
-                                    (s = !1),
+                                    (s = false),
                                   (!t.level_limit_ceil ||
                                     f <= t.level_limit_ceil) &&
-                                    (o = !1))
+                                    (o = false))
                                 : ((!t.level_limit || p >= t.level_limit) &&
-                                    (l = !1),
+                                    (l = false),
                                   (!t.level_limit_ceil ||
                                     p <= t.level_limit_ceil) &&
-                                    (c = !1)));
+                                    (c = false)));
                         }),
                           (s || o) && (l || c)
-                            ? ((a = !1),
+                            ? ((a = false),
                               (r = game.Tools.strOfLocalization(103)))
                             : _
-                            ? ((a = !1),
+                            ? ((a = false),
                               (r = game.Tools.strOfLocalization(101)))
                             : d &&
-                              ((a = !1),
+                              ((a = false),
                               (r = game.Tools.strOfLocalization(102))),
                           a
                             ? (i.close(),
@@ -419,11 +396,11 @@ let uiscript;
                       }
                     },
                     null,
-                    !1
+                    false
                   )))
-                : ((o.mouseEnabled = !1),
+                : ((o.mouseEnabled = false),
                   (s.filters = [new Laya.ColorFilter(t.GRAY_FILTER)]),
-                  (l.visible = !0)),
+                  (l.visible = true)),
                 (s.getChildByName(
                   'btn_tips'
                 ).clickHandler = Laya.Handler.create(
@@ -435,7 +412,7 @@ let uiscript;
                       );
                   },
                   null,
-                  !1
+                  false
                 ));
             },
             r = this,
@@ -449,8 +426,8 @@ let uiscript;
       const t = this;
       (this.content0.vScrollBar.value = 0),
         view.AudioMgr.PlayAudio(102),
-        (this.me.visible = !0),
-        (this.locking = !0),
+        (this.me.visible = true),
+        (this.locking = true),
         h.Inst.page_title.show(
           game.Tools.strOfLocalization(2079),
           Laya.Handler.create(
@@ -459,29 +436,29 @@ let uiscript;
               t.locking || h.Inst.setPage(0);
             },
             null,
-            !1
+            false
           )
         ),
         (this.p0.alpha = 1),
-        (this.p0.visible = !1);
+        (this.p0.visible = false);
       for (let e = 0; e < 5; e++)
         this.p0
           .getChildByName('content')
           .getChildByName(`btn${e}`).alpha = 1;
       Laya.timer.once(100, this, () => {
-        (t.p0.visible = !0), h.Inst.me.rank_in.play(0, !1);
+        (t.p0.visible = true), h.Inst.me.rank_in.play(0, false);
       }),
         Laya.timer.once(300, this, () => {
-          t.locking = !1;
+          t.locking = false;
         });
     }),
     (e.prototype.close = function() {
       const t = this;
       this.me.visible &&
-        ((this.locking = !0),
-        h.Inst.me.rank_out.play(0, !1),
+        ((this.locking = true),
+        h.Inst.me.rank_out.play(0, false),
         Laya.timer.once(200, this, () => {
-          (t.me.visible = !1), (t.locking = !1), Laya.timer.clearAll(t);
+          (t.me.visible = false), (t.locking = false), Laya.timer.clearAll(t);
         }));
     }),
     e
@@ -491,9 +468,9 @@ let uiscript;
   const r = (() => {
     function e(e) {
       const i = this;
-      (this.locking = !1),
+      (this.locking = false),
         (this.me = e),
-        (this.me.visible = !1),
+        (this.me.visible = false),
         (this.btn_create_room = e
           .getChildByName('content')
           .getChildByName('btn0')
@@ -508,7 +485,7 @@ let uiscript;
               GameMgr.Inst.BehavioralStatistics(10);
           },
           null,
-          !1
+          false
         )),
         (this.btn_add_room = e
           .getChildByName('content')
@@ -523,7 +500,7 @@ let uiscript;
             t.UI_InfoLite.Inst.show(game.Tools.strOfLocalization(9));
           },
           null,
-          !1
+          false
         )),
         (this.btn_create_room.clickHandler = Laya.Handler.create(
           this,
@@ -541,7 +518,7 @@ let uiscript;
                   ));
           },
           null,
-          !1
+          false
         )),
         (this.btn_add_room.clickHandler = Laya.Handler.create(
           this,
@@ -561,7 +538,7 @@ let uiscript;
                       (e, i) => {
                         e || i.error
                           ? t.UIMgr.Inst.showNetReqError('joinRoom', e, i)
-                          : ((h.Inst.enable = !1),
+                          : ((h.Inst.enable = false),
                             t.UI_WaitingRoom.Inst.updateData(i.room),
                             t.UIMgr.Inst.ShowWaitingRoom());
                       }
@@ -572,17 +549,17 @@ let uiscript;
                 GameMgr.Inst.BehavioralStatistics(11));
           },
           null,
-          !1
+          false
         )),
         'chs' != GameMgr.client_language &&
           ((e
             .getChildByName('content')
             .getChildByName('btn0')
-            .getChildByName('del').visible = !1),
+            .getChildByName('del').visible = false),
           (e
             .getChildByName('content')
             .getChildByName('btn1')
-            .getChildByName('del').visible = !1));
+            .getChildByName('del').visible = false));
     }
     return (e.prototype.show = function() {
       const t = this;
@@ -594,27 +571,27 @@ let uiscript;
             t.locking || h.Inst.setPage(0);
           },
           null,
-          !1
+          false
         )
       ),
         (this.btn_add_room.alpha = 1),
         (this.btn_create_room.alpha = 1),
-        (this.btn_create_room.visible = !0),
-        (this.btn_add_room.visible = !0),
-        (this.me.visible = !0),
+        (this.btn_create_room.visible = true),
+        (this.btn_add_room.visible = true),
+        (this.me.visible = true),
         view.AudioMgr.PlayAudio(102),
-        h.Inst.me.friend_in.play(0, !1),
+        h.Inst.me.friend_in.play(0, false),
         Laya.timer.once(150, this, () => {
-          t.locking = !1;
+          t.locking = false;
         });
     }),
     (e.prototype.close = function() {
       const t = this;
       this.me.visible &&
-        ((this.locking = !0),
-        h.Inst.me.friend_out.play(0, !1),
+        ((this.locking = true),
+        h.Inst.me.friend_out.play(0, false),
         Laya.timer.once(200, this, () => {
-          (t.locking = !1), (t.me.visible = !1);
+          (t.locking = false), (t.me.visible = false);
         }));
     }),
     e
@@ -626,7 +603,7 @@ let uiscript;
       const i = this;
       (this.btns = []),
         (this.me = e),
-        (e.visible = !1),
+        (e.visible = false),
         (this.content = e.getChildByName('content'));
       for (
         let n = e => {
@@ -659,7 +636,7 @@ let uiscript;
                             ));
                     },
                     null,
-                    !1
+                    false
                   )),
                   (n
                     .getChildByName('container')
@@ -680,7 +657,7 @@ let uiscript;
                             ));
                     },
                     null,
-                    !1
+                    false
                   ));
               },
             a = this,
@@ -700,13 +677,13 @@ let uiscript;
             e.locking || h.Inst.setPage(0);
           },
           null,
-          !1
+          false
         )
       );
       for (let i = 0; i < this.btns.length; i++) this.btns[i].alpha = 1;
-      let n = !1;
+      let n = false;
       if (t.UI_Activity.activity_is_running(1011)) {
-        this.btns[1].visible = !0;
+        this.btns[1].visible = true;
 
         const a = Laya.LocalStorage.getItem(
             `art1_1011_${GameMgr.Inst.account_id}`
@@ -716,21 +693,21 @@ let uiscript;
         a && '' != a && (r = parseInt(a)),
           (n = Date.now() > r + 864e6),
           (this.btns[1].getChildByName('redpoint').visible = n);
-      } else this.btns[1].visible = !1;
-      (this.locking = !0),
+      } else this.btns[1].visible = false;
+      (this.locking = true),
         view.AudioMgr.PlayAudio(102),
-        (this.me.visible = !0),
-        h.Inst.me.match_in.play(0, !1),
+        (this.me.visible = true),
+        h.Inst.me.match_in.play(0, false),
         Laya.timer.once(150, this, () => {
-          e.locking = !1;
+          e.locking = false;
         });
     }),
     (e.prototype.close = function() {
       const t = this;
       this.me.visible &&
-        (h.Inst.me.match_out.play(0, !1),
+        (h.Inst.me.match_out.play(0, false),
         Laya.timer.once(200, this, () => {
-          t.me.visible = !1;
+          t.me.visible = false;
         }));
     }),
     e
@@ -740,16 +717,16 @@ let uiscript;
   const o = (() => {
     function e(e) {
       const i = this;
-      (this.locking = !1),
+      (this.locking = false),
         (this.room_type = -1),
         (this.list_mode = []),
         (this._last_fetch_time = 0),
-        (this._last_fetch_success = !1),
+        (this._last_fetch_success = false),
         (this.me = e),
-        (this.me.visible = !1);
+        (this.me.visible = false);
       GameMgr.Inst.account_data;
       (this.p1 = e.getChildByName('p1')),
-        (this.p1.getChildByName('content').vScrollBar.visible = !1),
+        (this.p1.getChildByName('content').vScrollBar.visible = false),
         (this.content1 = this.p1.getChildByName('content'));
       for (
         let n = e => {
@@ -767,12 +744,12 @@ let uiscript;
                       t.UI_PiPeiYuYue.Inst.matchYuYued(i.list_mode[e].id)
                         ? t.UI_PiPeiYuYue.Inst.cancelPiPei(i.list_mode[e].id)
                         : (t.UI_PiPeiYuYue.Inst.addMatch(i.list_mode[e].id),
-                          (n.visible = !0)),
+                          (n.visible = true)),
                         GameMgr.Inst.BehavioralStatistics(8 + e);
                     }
                   },
                   null,
-                  !1
+                  false
                 )),
                   (a.p1
                     .getChildByName('content')
@@ -801,7 +778,7 @@ let uiscript;
                       }
                     },
                     null,
-                    !1
+                    false
                   ));
               },
             a = this,
@@ -816,14 +793,14 @@ let uiscript;
             (i.p1
               .getChildByName('content')
               .getChildByName(`btn${e}`)
-              .getChildByName('flag_yuyue').visible = !1);
+              .getChildByName('flag_yuyue').visible = false);
       }),
         t.UI_PiPeiYuYue.Inst.me.on('pipeiover', this, () => {
           for (let t = 0; t < 4; t++)
             i.p1
               .getChildByName('content')
               .getChildByName(`btn${t}`)
-              .getChildByName('flag_yuyue').visible = !1;
+              .getChildByName('flag_yuyue').visible = false;
         });
     }
     return (e.prototype.show = function(e) {
@@ -845,14 +822,14 @@ let uiscript;
                   : h.Inst.page_rank.show());
             },
             null,
-            !1
+            false
           )
         ),
         (this.room_type = e),
         (this.content1.vScrollBar.value = 0),
         view.AudioMgr.PlayAudio(102),
-        (this.me.visible = !0),
-        (this.locking = !0);
+        (this.me.visible = true),
+        (this.locking = true);
       for (a = 0; a < 4; a++)
         (this.p1
           .getChildByName('content')
@@ -861,28 +838,28 @@ let uiscript;
           (this.p1
             .getChildByName('content')
             .getChildByName(`btn${a}`).alpha = 1);
-      h.Inst.me.east_north_in.play(0, !1),
+      h.Inst.me.east_north_in.play(0, false),
         Laya.timer.once(150, this, () => {
-          i.locking = !1;
+          i.locking = false;
         }),
         Laya.timer.loop(1e3, this, this._fetchPlayerCount),
         (this.content1.vScrollBar.value = 0),
         (this.list_mode = []),
         cfg.desktop.matchmode.forEach((t, e) => {
           if (0 != t.mode && i.room_type == t.room) {
-            let n = !0;
+            let n = true;
 
             const a =
               GameMgr.Inst.account_data[t.mode < 10 ? 'level' : 'level3']
                 .id;
 
-            t.level_limit && a < t.level_limit && (n = !1),
-              t.level_limit_ceil && a > t.level_limit_ceil && (n = !1),
+            t.level_limit && a < t.level_limit && (n = false),
+              t.level_limit_ceil && a > t.level_limit_ceil && (n = false),
               i.list_mode.push({ mode: t.mode, id: t.id, met: n });
           }
         }),
         (this._last_fetch_time = 0),
-        (this._last_fetch_success = !0),
+        (this._last_fetch_success = true),
         this._fetchPlayerCount();
       for (var a = 0; a < this.list_mode.length; a++) {
         const r = this.p1.getChildByName('content').getChildByName(`btn${a}`);
@@ -896,10 +873,10 @@ let uiscript;
     (e.prototype.close = function() {
       const t = this;
       this.me.visible &&
-        ((this.locking = !0),
-        h.Inst.me.east_north_out.play(0, !1),
+        ((this.locking = true),
+        h.Inst.me.east_north_out.play(0, false),
         Laya.timer.once(200, this, () => {
-          (t.me.visible = !1), (t.locking = !1), Laya.timer.clearAll(t);
+          (t.me.visible = false), (t.locking = false), Laya.timer.clearAll(t);
         }));
     }),
     (e.prototype._fetchPlayerCount = function() {
@@ -912,7 +889,7 @@ let uiscript;
         this._last_fetch_time = Laya.timer.currTimer;
         for (var i = [], n = 0; n < this.list_mode.length; n++)
           this.list_mode[n].met && i.push(this.list_mode[n].id);
-        (this._last_fetch_success = !1),
+        (this._last_fetch_success = false),
           app.NetAgent.sendReq2Lobby(
             'Lobby',
             'fetchCurrentMatchInfo',
@@ -925,7 +902,7 @@ let uiscript;
                     .getChildByName('content')
                     .getChildByName(`btn${a}`)
                     .getChildByName('count').text = '--';
-                e._last_fetch_success = !1;
+                e._last_fetch_success = false;
               } else
                 try {
                   app.Log.log(JSON.stringify(n));
@@ -948,7 +925,7 @@ let uiscript;
                         .getChildByName(`btn${o}`)
                         .getChildByName('count').text = s.toString());
                   }
-                  e._last_fetch_success = !0;
+                  e._last_fetch_success = true;
                 } catch (i) {}
             }
           );
@@ -1012,7 +989,7 @@ let uiscript;
                           ));
                   },
                   null,
-                  !1
+                  false
                 );
               },
             a = this,
@@ -1055,9 +1032,9 @@ let uiscript;
         (t.chat_block = null),
         (t.character_skin = null),
         (t.nowpage = 0),
-        (t.locking = !1),
+        (t.locking = false),
         (t.sound_channel = null),
-        (t.firstIn = !0),
+        (t.firstIn = true),
         (c.Inst = t),
         t
       );
@@ -1099,7 +1076,7 @@ let uiscript;
         (this.container_chat = this.me
           .getChildByName('illust')
           .getChildByName('chat')),
-        (this.container_chat.visible = !1),
+        (this.container_chat.visible = false),
         (this.chat_block = new t.UI_Character_Chat(this.container_chat)),
         (this.me
           .getChildByName('illust')
@@ -1110,13 +1087,13 @@ let uiscript;
               (h.sound_channel ? h.stopsay() : h.say('lobby_normal'));
           },
           null,
-          !1
+          false
         ));
     }),
     (c.prototype.onEnable = function() {
       this.showEnter(),
         t.UI_TanfangRoot.Inst.beginload(),
-        (t.UI_Invite.Inst.enable = !0),
+        (t.UI_Invite.Inst.enable = true),
         0 ==
           app.PlayerBehaviorStatistic.get_val(
             app.EBehaviorType.XinShouYinDao
@@ -1154,7 +1131,7 @@ let uiscript;
           app.EBehaviorType.TW_Purchase,
           app.PlayerBehaviorStatistic.recharged_count
         ),
-        this.firstIn && ((this.firstIn = !1), t.UI_PaiPu.init());
+        this.firstIn && ((this.firstIn = false), t.UI_PaiPu.init());
       let e = 0;
       switch (GameMgr.Inst.account_data.level.id) {
         case 10101:
@@ -1241,24 +1218,24 @@ let uiscript;
     (c.prototype.showEnter = function() {
       const t = this;
       this.refreshInfo(),
-        (this.page0.me.visible = !0),
-        (this.page_rank.me.visible = !1),
-        (this.page_friend.me.visible = !1),
-        (this.page_match.me.visible = !1),
-        (this.page_title.me.visible = !1),
-        (this.page_east_north.me.visible = !1),
+        (this.page0.me.visible = true),
+        (this.page_rank.me.visible = false),
+        (this.page_friend.me.visible = false),
+        (this.page_match.me.visible = false),
+        (this.page_title.me.visible = false),
+        (this.page_east_north.me.visible = false),
         (this.nowpage = 0),
-        (this.locking = !0),
-        this.me.in.play(0, !1),
+        (this.locking = true),
+        this.me.in.play(0, false),
         this.page0.onEnable(567),
         this.btns.onEnable(),
         Laya.timer.once(700, this, () => {
-          t.locking = !1;
+          t.locking = false;
         }),
-        game.Scene_Lobby.Inst.change_bg('yard', !1),
+        game.Scene_Lobby.Inst.change_bg('yard', false),
         c.login_helloed ||
           Laya.timer.once(500, this, () => {
-            (c.login_helloed = !0), t.say('lobby_playerlogin');
+            (c.login_helloed = true), t.say('lobby_playerlogin');
           });
     }),
     (c.prototype.refreshInfo = function() {
@@ -1268,11 +1245,11 @@ let uiscript;
           GameMgr.Inst.account_data.avatar_id,
           'full'
         ),
-        (this.character_skin.me.visible = !0);
+        (this.character_skin.me.visible = true);
     }),
     (c.prototype.Hide = function(t) {
       const e = this;
-      switch (((this.locking = !0), this.nowpage)) {
+      switch (((this.locking = true), this.nowpage)) {
         case 0:
           this.page0.onDisable(0);
           break;
@@ -1287,15 +1264,15 @@ let uiscript;
       }
       this.page_east_north.close(),
         this.page_title.close(),
-        this.me.out.play(0, !1),
+        this.me.out.play(0, false),
         Laya.timer.once(250, this, () => {
-          (e.locking = !1), (e.enable = !1), t && t.run();
+          (e.locking = false), (e.enable = false), t && t.run();
         });
     }),
     (c.prototype.setPage = function(t) {
       const e = this;
       if (!this.locking && this.nowpage != t) {
-        switch (((this.locking = !0), this.nowpage)) {
+        switch (((this.locking = true), this.nowpage)) {
           case 0:
             this.page0.onDisable(0);
             break;
@@ -1326,7 +1303,7 @@ let uiscript;
           }
         }),
           Laya.timer.once(i, this, () => {
-            e.locking = !1;
+            e.locking = false;
           });
       }
     }),
@@ -1346,14 +1323,14 @@ let uiscript;
       r && (this.chat_block.show(r.words), (this.sound_channel = r.sound));
     }),
     (c.prototype.stopsay = function() {
-      this.chat_block.close(!1),
+      this.chat_block.close(false),
         this.sound_channel &&
           (this.sound_channel.stop(),
           Laya.SoundManager.removeChannel(this.sound_channel),
           (this.sound_channel = null));
     }),
     (c.Inst = null),
-    (c.login_helloed = !1),
+    (c.login_helloed = false),
     c
   ;
   })(t.UIBase);

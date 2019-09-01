@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => (function(t) {
@@ -45,7 +22,7 @@ let uiscript;
                     a.change_index(t);
                   },
                   null,
-                  !1
+                  false
                 );
                 const i = e.getChildAt(0);
                 t == o._current_index
@@ -69,8 +46,8 @@ let uiscript;
       get() {
         return this._current_index;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (e.prototype.change_index = function(t) {
       if (this._current_index != t) {
@@ -92,8 +69,8 @@ let uiscript;
       for (let e = 0; e < this._toggles.length; e++)
         e < t.length
           ? ((this._toggles[e].label.text = t[e]),
-            (this._toggles[e].btn.visible = !0))
-          : (this._toggles[e].btn.visible = !1);
+            (this._toggles[e].btn.visible = true))
+          : (this._toggles[e].btn.visible = false);
     }),
     e
   ;
@@ -129,7 +106,7 @@ let uiscript;
           );
         },
         null,
-        !1
+        false
       )),
       (r._label = s.getChildAt(1)),
       r.change_num(n),
@@ -141,8 +118,8 @@ let uiscript;
       get() {
         return this._current_num;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (i.prototype.change_num = function(t) {
       (this._current_num = t), (this._label.text = t.toString());
@@ -176,11 +153,11 @@ let uiscript;
         (t.panel = null),
         (t._scrollbar = null),
         (t._scrollpoint = null),
-        (t.locking = !1),
+        (t.locking = false),
         (t._btn_create_cd = 0),
         (t.tournament_id = 0),
         (t._blocks = []),
-        (t._drag_scroll = !1),
+        (t._drag_scroll = false),
         (r.Inst = t),
         t
       );
@@ -220,13 +197,13 @@ let uiscript;
                 e._refreshShow();
             },
             null,
-            !1
+            false
           )
         )),
         (this.__jushu = new i(
           this.panel.getChildByName('jushu'),
           2,
-          Laya.Handler.create(this, t => {}, null, !1)
+          Laya.Handler.create(this, t => {}, null, false)
         )),
         (this.__time = new i(this.panel.getChildByName('time'), 2, null)),
         (this.__test_paipu = new i(
@@ -275,13 +252,13 @@ let uiscript;
                 (e.__chibaopai.me.visible = 0 != t),
                 (e.__shiduan.me.visible = 0 != t),
                 (e.__bianjietishi.me.visible = 0 != t),
-                (e.__guanzhan.me.visible = !1),
+                (e.__guanzhan.me.visible = false),
                 (e.__ailevel.me.visible = 0 != t),
                 (e.__fanfu.me.visible = 0 != t),
                 e._refreshShow();
             },
             null,
-            !1
+            false
           )
         )),
         (this.__split_line = new n(
@@ -299,7 +276,7 @@ let uiscript;
                 e.__qishidianshu.change_num(t);
             },
             null,
-            !1
+            false
           )
         )),
         (this.__fandian = new a(
@@ -314,7 +291,7 @@ let uiscript;
                 e.__fandian.change_num(t);
             },
             null,
-            !1
+            false
           )
         )),
         (this.__zimosun = new i(
@@ -349,13 +326,13 @@ let uiscript;
                 e.__guanzhan.change_index(0);
             },
             null,
-            !1
+            false
           )
         )),
         (this.__ailevel = new i(
           this.panel.getChildByName('ailevel'),
           0,
-          Laya.Handler.create(this, t => {}, null, !1)
+          Laya.Handler.create(this, t => {}, null, false)
         )),
         (this.__shiduan.me.getChildByName(
           'what'
@@ -365,7 +342,7 @@ let uiscript;
             t.UI_InfoLite.Inst.show(game.Tools.strOfLocalization(54));
           },
           null,
-          !1
+          false
         )),
         (this.__bianjietishi.me.getChildByName(
           'what'
@@ -375,7 +352,7 @@ let uiscript;
             t.UI_InfoLite.Inst.show(game.Tools.strOfLocalization(53));
           },
           null,
-          !1
+          false
         )),
         (this.panel
           .getChildByName('moshi')
@@ -385,7 +362,7 @@ let uiscript;
             t.UI_InfoLite.Inst.show(game.Tools.strOfLocalization(57));
           },
           null,
-          !1
+          false
         )),
         (this.panel
           .getChildByName('zimosun')
@@ -395,7 +372,7 @@ let uiscript;
             t.UI_InfoLite.Inst.show(game.Tools.strOfLocalization(63));
           },
           null,
-          !1
+          false
         ));
       for (let s = 2; s < this.panel.numChildren; s++) {
         const o = this.panel.getChildAt(s), l = o.getChildByName('what');
@@ -419,19 +396,19 @@ let uiscript;
         this._blocks.push(this.__bianjietishi),
         this._blocks.push(this.__guanzhan),
         this._blocks.push(this.__ailevel),
-        (this.__test_paipu.me.visible = !1),
-        (this.__test_paicount.me.visible = !1),
-        (this.__split_line.me.visible = !1),
-        (this.__qishidianshu.me.visible = !1),
-        (this.__fandian.me.visible = !1),
-        (this.__zimosun.me.visible = !1),
-        (this.__chibaopai.me.visible = !1),
-        (this.__shiduan.me.visible = !1),
-        (this.__fanfu.me.visible = !1),
-        (this.__bianjietishi.me.visible = !1),
-        (this.__guanzhan.me.visible = !1),
-        (this.__ailevel.me.visible = !1),
-        (this.panel.vScrollBar.visible = !1),
+        (this.__test_paipu.me.visible = false),
+        (this.__test_paicount.me.visible = false),
+        (this.__split_line.me.visible = false),
+        (this.__qishidianshu.me.visible = false),
+        (this.__fandian.me.visible = false),
+        (this.__zimosun.me.visible = false),
+        (this.__chibaopai.me.visible = false),
+        (this.__shiduan.me.visible = false),
+        (this.__fanfu.me.visible = false),
+        (this.__bianjietishi.me.visible = false),
+        (this.__guanzhan.me.visible = false),
+        (this.__ailevel.me.visible = false),
+        (this.panel.vScrollBar.visible = false),
         (this.container_top.getChildByName(
           'btn_cancel'
         ).clickHandler = Laya.Handler.create(
@@ -445,7 +422,7 @@ let uiscript;
               );
           },
           null,
-          !1
+          false
         )),
         (this.container_content.getChildByName(
           'btn_create'
@@ -453,7 +430,7 @@ let uiscript;
           this,
           this._btnCreateRoom,
           null,
-          !1
+          false
         )),
         (this._scrollbar = this.container_content.getChildByName(
           'scrollbar'
@@ -461,7 +438,7 @@ let uiscript;
         (this._scrollpoint = this._scrollbar.getChildByName('scrollpoint')),
         this._scrollbar &&
           (this._scrollbar.on('mousedown', this, () => {
-            e._drag_scroll = !0;
+            e._drag_scroll = true;
             const t = e._scrollbar.mouseY / e._scrollbar.height;
             e.panel.vScrollBar.value = e.panel.vScrollBar.max * t;
           }),
@@ -472,10 +449,10 @@ let uiscript;
             }
           }),
           this._scrollbar.on('mouseup', this, () => {
-            e._drag_scroll = !1;
+            e._drag_scroll = false;
           }),
           this._scrollbar.on('mouseout', this, () => {
-            e._drag_scroll = !1;
+            e._drag_scroll = false;
           })),
         Laya.timer.frameLoop(1, this, () => {
           if (e.enable && e._scrollbar.visible) {
@@ -490,7 +467,7 @@ let uiscript;
     (r.prototype.show = function() {
       const e = this;
       (this.tournament_id = 0),
-        (this._drag_scroll = !1),
+        (this._drag_scroll = false),
         this.panel.vScrollBar.stopScroll(),
         cfg.tournament.tournaments.forEach(({game_ticket_id, id}) => {
           if (0 == e.tournament_id) {
@@ -499,22 +476,22 @@ let uiscript;
           }
         }),
         this._refreshShow(),
-        (this.enable = !0),
+        (this.enable = true),
         t.UIBase.anim_alpha_in(this.container_top, { y: -30 }, 150),
         t.UIBase.anim_alpha_in(this.container_content, { y: 30 }, 150),
-        (this.locking = !0),
+        (this.locking = true),
         Laya.timer.once(200, this, () => {
-          (e.locking = !1), (e._btn_create_cd = 0);
+          (e.locking = false), (e._btn_create_cd = 0);
         });
     }),
     (r.prototype.hide = function(e) {
       const i = this;
-      void 0 === e && (e = null),
+      undefined === e && (e = null),
         t.UIBase.anim_alpha_out(this.container_top, { y: -30 }, 150),
         t.UIBase.anim_alpha_out(this.container_content, { y: 30 }, 150),
-        (this.locking = !0),
+        (this.locking = true),
         Laya.timer.once(200, this, () => {
-          (i.locking = !1), (i.enable = !1), e && e.run();
+          (i.locking = false), (i.enable = false), e && e.run();
         });
     }),
     (r.prototype._btnCreateRoom = function() {
@@ -586,7 +563,7 @@ let uiscript;
           1 == this.__moshi.index &&
             (a.have_zimosun = 0 == this.__zimosun.index);
         GameMgr.inRelease;
-        !0;
+        true;
         app.NetAgent.sendReq2Lobby(
           'Lobby',
           'createRoom',
@@ -594,11 +571,11 @@ let uiscript;
             player_count: n,
             mode: {
               mode: i,
-              ai: !0,
+              ai: true,
               detail_rule: a,
               testing_environment: {}
             },
-            public_live: !1
+            public_live: false
           },
           (i, n) => {
             (e._btn_create_cd = Laya.timer.currTimer),
@@ -631,9 +608,9 @@ let uiscript;
       this.panel.refresh(),
         e < this.panel.height
           ? ((this.panel.vScrollBar.value = 0),
-            (this._scrollbar.visible = !1))
+            (this._scrollbar.visible = false))
           : ((this.panel.vScrollBar.value = this.panel.vScrollBar.max * t),
-            (this._scrollbar.visible = !0));
+            (this._scrollbar.visible = true));
     }),
     (r.Inst = null),
     (r.skin_unchoose = 'myres/room/btn_choosen_no.png'),

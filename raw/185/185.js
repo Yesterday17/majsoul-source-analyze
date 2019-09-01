@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -31,7 +6,7 @@ var __extends =
       return (
         (t.title = null),
         (t.txtinput = null),
-        (t.locking = !1),
+        (t.locking = false),
         (t.root = null),
         (t._when_inputed = null),
         (t._when_cancel = null),
@@ -52,7 +27,7 @@ var __extends =
               t._btn_cancel();
             },
             null,
-            !1
+            false
           )),
           (this.root.getChildByName(
             'btn_confirm'
@@ -60,7 +35,7 @@ var __extends =
             this,
             this._btn_confirm,
             null,
-            !1
+            false
           )),
           (this.txtinput = this.root
             .getChildByName('input')
@@ -72,22 +47,22 @@ var __extends =
               var a = e.getChildByName('n' + i),
                 r = a.getChildByName('s');
               r.alpha = 0;
-              var s = !1;
+              var s = false;
               a.on('mousedown', n, function() {
                 (r.alpha = 0),
-                  (s = !0),
-                  Laya.Tween.to(r, { alpha: 1 }, 50, null, null, 0, !0, !0);
+                  (s = true),
+                  Laya.Tween.to(r, { alpha: 1 }, 50, null, null, 0, true, true);
               }),
                 a.on('mouseup', n, function() {
-                  Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, !0, !0),
+                  Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, true, true),
                     s &&
                       t.txtinput.text.length < t.txtinput.maxChars &&
                       (t.txtinput.text = t.txtinput.text + i.toString()),
-                    (s = !1);
+                    (s = false);
                 }),
                 a.on('mouseout', n, function() {
-                  Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, !0, !0),
-                    (s = !1);
+                  Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, true, true),
+                    (s = false);
                 });
             },
             n = this,
@@ -98,67 +73,67 @@ var __extends =
           i(a);
         var r = (o = e.getChildByName('clear')).getChildByName('s');
         r.alpha = 0;
-        var s = !1;
+        var s = false;
         o.on('mousedown', this, function() {
           (r.alpha = 0),
-            (s = !0),
-            Laya.Tween.to(r, { alpha: 1 }, 50, null, null, 0, !0, !0);
+            (s = true),
+            Laya.Tween.to(r, { alpha: 1 }, 50, null, null, 0, true, true);
         }),
           o.on('mouseup', this, function() {
-            Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, !0, !0),
+            Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, true, true),
               s && (t.txtinput.text = ''),
-              (s = !1);
+              (s = false);
           }),
           o.on('mouseout', this, function() {
-            Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, !0, !0), (s = !1);
+            Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, true, true), (s = false);
           });
         var o = e.getChildByName('del'),
           l = o.getChildByName('s');
         l.alpha = 0;
-        var h = !1;
+        var h = false;
         o.on('mousedown', this, function() {
           (l.alpha = 0),
-            (h = !0),
-            Laya.Tween.to(l, { alpha: 1 }, 50, null, null, 0, !0, !0);
+            (h = true),
+            Laya.Tween.to(l, { alpha: 1 }, 50, null, null, 0, true, true);
         }),
           o.on('mouseup', this, function() {
             if (
-              (Laya.Tween.to(l, { alpha: 0 }, 50, null, null, 0, !0, !0), h)
+              (Laya.Tween.to(l, { alpha: 0 }, 50, null, null, 0, true, true), h)
             ) {
               var e = t.txtinput.text;
               e.length > 0 && (e = e.substr(0, e.length - 1)),
                 (t.txtinput.text = e);
             }
-            h = !1;
+            h = false;
           }),
           o.on('mouseout', this, function() {
-            Laya.Tween.to(l, { alpha: 0 }, 50, null, null, 0, !0, !0), (h = !1);
+            Laya.Tween.to(l, { alpha: 0 }, 50, null, null, 0, true, true), (h = false);
           });
       }),
       (i.prototype.show = function(e, i, n) {
         var a = this;
-        void 0 === n && (n = null),
-          (this.enable = !0),
+        undefined === n && (n = null),
+          (this.enable = true),
           (this.txtinput.text = ''),
           (this.title.text = e),
           (this._when_cancel = n),
           (this._when_inputed = i),
           this.locking ||
-            ((this.locking = !0),
+            ((this.locking = true),
             t.UIBase.anim_pop_out(
               this.root,
               Laya.Handler.create(this, function() {
-                a.locking = !1;
+                a.locking = false;
               })
             ));
       }),
       (i.prototype._hide = function(e) {
         var i = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (i.locking = !1), (i.enable = !1), e.run();
+              (i.locking = false), (i.enable = false), e.run();
             })
           );
       }),

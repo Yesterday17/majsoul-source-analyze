@@ -8,7 +8,7 @@ var game;
   })((e = t.E_LoadState || (t.E_LoadState = {})));
   var i = (function() {
     function t() {
-      (this._active = !1), (this._load_state = e.none);
+      (this._active = false), (this._load_state = e.none);
     }
     return (
       Object.defineProperty(t.prototype, 'active', {
@@ -18,15 +18,15 @@ var game;
         set: function(t) {
           (this._active = t), this._active ? this.onEnable() : this.onDisable();
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(t.prototype, 'load_state', {
         get: function() {
           return this._load_state;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       t
     );

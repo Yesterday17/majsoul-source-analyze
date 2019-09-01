@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => {
@@ -52,7 +29,7 @@ let uiscript;
               this,
               this._changeTab,
               [a - 1],
-              !1
+              false
             ));
         }
         cfg.fandesc.fandesc.forEach(t => {
@@ -75,7 +52,7 @@ let uiscript;
                 e._showItem(index, container);
               },
               null,
-              !1
+              false
             )
           );
       }
@@ -83,10 +60,10 @@ let uiscript;
         (this.tab_index = -1), this._changeTab(0);
       }),
       (t.prototype.show = function() {
-        this.me.visible = !0;
+        this.me.visible = true;
       }),
       (t.prototype.close = function() {
-        this.me.visible = !1;
+        this.me.visible = false;
       }),
       (t.prototype._changeTab = function(t) {
         if (t != this.tab_index) {
@@ -122,14 +99,14 @@ let uiscript;
           l++
         ) {
           const h = n.getChildAt(l);
-          if (r >= a.length) h.visible = !1;
+          if (r >= a.length) h.visible = false;
           else {
             let c = '';
             'b' == a[r]
               ? ((c = 'back'), r++)
               : ((c = a[r] + a[r + 1]), (r += 2)),
               (h.skin = game.Tools.localUISrc(`${o + c}.png`)),
-              (h.visible = !0),
+              (h.visible = true),
               (h.x = s),
               (h.y = 0),
               (s += h.width);
@@ -144,7 +121,7 @@ let uiscript;
   const i = (() => {
     function t(t) {
       const e = this;
-      (this.locking = !1),
+      (this.locking = false),
         (this.loadover = []),
         (this.urls = [
           game.Tools.localUISrc('course/course0.png'),
@@ -170,7 +147,7 @@ let uiscript;
             e.locking || (0 != e.pageindex && e.showPage(e.pageindex - 1));
           },
           null,
-          !1
+          false
         )),
         (this.btn_next.clickHandler = Laya.Handler.create(
           this,
@@ -180,9 +157,9 @@ let uiscript;
                 e.showPage(e.pageindex + 1));
           },
           null,
-          !1
+          false
         ));
-      for (let i = 0; i < this.urls.length; i++) this.loadover.push(!1);
+      for (let i = 0; i < this.urls.length; i++) this.loadover.push(false);
       this.label_count = this.me.getChildByName('count');
     }
     return (t.prototype.onEnter = function() {
@@ -190,20 +167,20 @@ let uiscript;
     }),
     (t.prototype.show = function() {
       const t = this;
-      this.showPage(this.pageindex), (this.me.visible = !0);
+      this.showPage(this.pageindex), (this.me.visible = true);
       for (
         let e = e => {
-                i.loadover.push(!1),
+                i.loadover.push(false),
                   Laya.loader.load(
                     i.urls[e],
                     Laya.Handler.create(i, () => {
                       Laya.timer.frameOnce(3, t, () => {
-                        (t.loadover[e] = !0),
+                        (t.loadover[e] = true),
                           t.me.visible &&
                             t.pageindex == e &&
-                            ((t.loading.visible = !1),
+                            ((t.loading.visible = false),
                             (t.page.source = Laya.loader.getRes(t.urls[e])),
-                            (t.page.visible = !0)),
+                            (t.page.visible = true)),
                           t.me.visible ||
                             Laya.loader.clearTextureRes(t.urls[e]);
                       });
@@ -218,7 +195,7 @@ let uiscript;
         e(n);
     }),
     (t.prototype.close = function() {
-      this.me.visible = !1;
+      this.me.visible = false;
       for (let t = 0; t < this.urls.length; t++)
         this.loadover[t] && Laya.loader.clearTextureRes(this.urls[t]);
     }),
@@ -227,10 +204,10 @@ let uiscript;
         (this.btn_pre.visible = 0 != t),
         (this.btn_next.visible = t != this.urls.length - 1),
         this.loadover[t]
-          ? ((this.page.visible = !0),
+          ? ((this.page.visible = true),
             (this.page.source = Laya.loader.getRes(this.urls[t])),
-            (this.loading.visible = !1))
-          : ((this.page.visible = !1), (this.loading.visible = !0)),
+            (this.loading.visible = false))
+          : ((this.page.visible = false), (this.loading.visible = true)),
         (this.label_count.text =
           `${(this.pageindex + 1).toString()}/${this.urls.length.toString()}`);
     }),
@@ -252,7 +229,7 @@ let uiscript;
         (t.blackmask = null),
         (t.page_rule = null),
         (t.page_course = null),
-        (t.locking = !1),
+        (t.locking = false),
         (t.tab_index = 0),
         (t.func_close = null),
         (t.tab_fan = null),
@@ -292,7 +269,7 @@ let uiscript;
             t.changeTab(0);
           },
           null,
-          !1
+          false
         )),
         (this.tab_course = this.root.getChildByName('tab_course')),
         (this.root.getChildByName(
@@ -303,7 +280,7 @@ let uiscript;
             t.changeTab(1);
           },
           null,
-          !1
+          false
         )),
         (this.root.getChildByName(
           'btn_close'
@@ -313,21 +290,21 @@ let uiscript;
             t.close();
           },
           null,
-          !1
+          false
         ));
     }),
     (a.prototype.show = function(e, i) {
       const n = this;
-      void 0 === e && (e = 0),
-        void 0 === i && (i = null),
-        (this.locking = !0),
-        (this.enable = !0),
+      undefined === e && (e = 0),
+        undefined === i && (i = null),
+        (this.locking = true),
+        (this.enable = true),
         this.page_course.onEnter(),
         this.page_rule.onEnter(),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            n.locking = !1;
+            n.locking = false;
           })
         ),
         (this.blackmask.alpha = 0),
@@ -354,13 +331,13 @@ let uiscript;
     }),
     (a.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         Laya.Tween.to(this.blackmask, { alpha: 0 }, 150),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1),
-              (e.enable = !1),
+            (e.locking = false),
+              (e.enable = false),
               e.func_close && e.func_close.run();
           })
         );

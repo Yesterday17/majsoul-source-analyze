@@ -10,7 +10,7 @@ let view;
         (this._starttime = 0),
         (this._lifetime = 150),
         (this._index = 0),
-        (this._isnew = !1),
+        (this._isnew = false),
         (this.model = new Laya.Sprite3D()),
         e.addChild(this.model),
         (this.model.transform.localPosition = new Laya.Vector3(
@@ -20,7 +20,7 @@ let view;
         )),
         (this.model.transform.localRotationEuler = new Laya.Vector3(0, 0, 0)),
         (this.model.transform.localScale = new Laya.Vector3(1, 1, 1)),
-        (this.model.active = !0),
+        (this.model.active = true),
         (this.contianer_pai = new Laya.Sprite3D()),
         this.model.addChild(this.contianer_pai),
         (this.contianer_pai.transform.localPosition = new Laya.Vector3(
@@ -34,13 +34,13 @@ let view;
           0
         )),
         (this.contianer_pai.transform.localScale = new Laya.Vector3(1, 1, 1)),
-        (this.contianer_pai.active = !0),
+        (this.contianer_pai.active = true),
         (this.shadow = t.DesktopMgr.Inst.effect_shadow.clone()),
         this.model.addChild(this.shadow),
         (this.shadow.transform.localPosition = new Laya.Vector3(0, 0, 0)),
         (this.shadow.transform.localScale = new Laya.Vector3(1, 1, 1)),
         (this.shadow.transform.localRotationEuler = new Laya.Vector3(0, 0, 0)),
-        (this.shadow.active = !0);
+        (this.shadow.active = true);
     }
     return (e.prototype.SetVal = function(e) {
       try {
@@ -60,7 +60,7 @@ let view;
             180,
             0
           )),
-          (this.pai3D.model.active = !0);
+          (this.pai3D.model.active = true);
       } catch (t) {
         const i = {};
         (i.error = t.message),
@@ -115,7 +115,7 @@ let view;
           0.53 * t.PAIMODEL_THICKNESS
         )),
         (this.shadow.transform.localPosition = new Laya.Vector3(0, 0, 0)),
-        (this.shadow.active = !0);
+        (this.shadow.active = true);
     }),
     (e.prototype.FullDown = function() {
       (this.contianer_pai.transform.localPosition = new Laya.Vector3(
@@ -143,7 +143,7 @@ let view;
           0,
           0.5 * (t.PAIMODEL_HEIGHT + t.PAIMODEL_THICKNESS)
         )),
-        (this.shadow.active = !0);
+        (this.shadow.active = true);
     }),
     (e.prototype.Cover = function() {
       (this.contianer_pai.transform.localPosition = new Laya.Vector3(
@@ -171,7 +171,7 @@ let view;
           0,
           0.5 * -(t.PAIMODEL_HEIGHT + t.PAIMODEL_THICKNESS)
         )),
-        (this.shadow.active = !0);
+        (this.shadow.active = true);
     }),
     (e.prototype.DoAnim_FullDown = function() {
       const t = this;
@@ -183,7 +183,7 @@ let view;
           0,
           0
         )),
-        (this.shadow.active = !1),
+        (this.shadow.active = false),
         Laya.timer.clearAll(this),
         Laya.timer.frameLoop(1, this, () => {
           const e = Laya.timer.currTimer - t._starttime;
@@ -208,7 +208,7 @@ let view;
           0,
           0
         )),
-        (this.shadow.active = !1),
+        (this.shadow.active = false),
         Laya.timer.clearAll(this),
         Laya.timer.frameLoop(1, this, () => {
           const e = Laya.timer.currTimer - t._starttime;
@@ -228,7 +228,7 @@ let view;
       this.Cover(),
         (this._lifetime = 150),
         (this._starttime = Laya.timer.currTimer),
-        (this.shadow.active = !1),
+        (this.shadow.active = false),
         Laya.timer.clearAll(this),
         Laya.timer.frameLoop(1, this, () => {
           const e = Laya.timer.currTimer - t._starttime - 300;
@@ -246,10 +246,10 @@ let view;
     (e.prototype.Destory = function() {
       null != this.contianer_pai &&
         (Laya.timer.clearAll(this),
-        this.contianer_pai.destroy(!0),
-        this.pai3D.model.destroy(!0),
-        this.shadow.destroy(!0),
-        this.model.destroy(!0),
+        this.contianer_pai.destroy(true),
+        this.pai3D.model.destroy(true),
+        this.shadow.destroy(true),
+        this.model.destroy(true),
         (this.contianer_pai = null),
         (this.pai3D = null));
     }),

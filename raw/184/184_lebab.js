@@ -1,32 +1,9 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
     function i() {
       const t = e.call(this, new ui.lobby.nicknameUI()) || this;
-      return (t.locking = !1), (t.btn_cd = 0), t;
+      return (t.locking = false), (t.btn_cd = 0), t;
     }
     return __extends(i, e),
     (i.show = function() {
@@ -48,10 +25,10 @@ let uiscript;
           this,
           this.onBtnConfrim,
           null,
-          !1
+          false
         )),
         this.input.on('focus', this, () => {
-          (e.lb.visible = !1), (e.yes.visible = !1), (e.no.visible = !1);
+          (e.lb.visible = false), (e.yes.visible = false), (e.no.visible = false);
         }),
         this.input.on('blur', this, () => {
           e.lb.visible = !e.input.text || '' == e.input.text;
@@ -68,7 +45,7 @@ let uiscript;
             e.locking || e.close_course();
           },
           null,
-          !1
+          false
         )),
         (this.root_xinshou.getChildByName(
           'btn_yes'
@@ -76,7 +53,7 @@ let uiscript;
           this,
           () => {
             e.locking ||
-              ((e.enable = !1),
+              ((e.enable = false),
               t.UI_Rules.Inst.show(
                 1,
                 Laya.Handler.create(e, () => {
@@ -85,34 +62,34 @@ let uiscript;
               ));
           },
           null,
-          !1
+          false
         )),
         (this.root.getChildByName('en_no_space').visible =
           'en' == GameMgr.client_language);
     }),
     (i.prototype.show = function() {
       const e = this;
-      (this.enable = !0),
-        (this.locking = !0),
-        (this.yes.visible = !1),
-        (this.no.visible = !1),
-        (this.root_xinshou.visible = !1),
+      (this.enable = true),
+        (this.locking = true),
+        (this.yes.visible = false),
+        (this.no.visible = false),
+        (this.root_xinshou.visible = false),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            e.locking = !1;
+            e.locking = false;
           })
         );
     }),
     (i.prototype.close_nickname = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1),
-              (e.root.visible = !1),
-              (e.enable = !1),
+            (e.locking = false),
+              (e.root.visible = false),
+              (e.enable = false),
               e.destroy(),
               t.UI_XinShouYinDao.Inst.show(
                 0,
@@ -125,25 +102,25 @@ let uiscript;
     }),
     (i.prototype.show_course = function() {
       const e = this;
-      (this.root_xinshou.visible = !0),
+      (this.root_xinshou.visible = true),
         (this.root_xinshou.getChildByName('name').text =
           `${this.input.text} ${game.Tools.strOfLocalization(2150)}`),
-        (this.locking = !0),
+        (this.locking = true),
         t.UIBase.anim_pop_out(
           this.root_xinshou,
           Laya.Handler.create(this, () => {
-            e.locking = !1;
+            e.locking = false;
           })
         );
     }),
     (i.prototype.close_course = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root_xinshou,
           Laya.Handler.create(this, () => {
-            (e.locking = !1),
-              (e.enable = !1),
+            (e.locking = false),
+              (e.enable = false),
               e.destroy(),
               game.Scene_Lobby.Inst.pending_enter_event();
           })
@@ -160,15 +137,15 @@ let uiscript;
             (i >= 11904 && i <= 40959)
           )
         ) {
-          for (var n = !1, a = 0; a < '~@!#%&()_+={}:;<>'.length; a++)
+          for (var n = false, a = 0; a < '~@!#%&()_+={}:;<>'.length; a++)
             if ('~@!#%&()_+={}:;<>'[a] == t[e]) {
-              n = !0;
+              n = true;
               break;
             }
-          if (!n) return !0;
+          if (!n) return true;
         }
       }
-      return !1;
+      return false;
     }),
     (i.prototype.onBtnConfrim = function() {
       const e = this;
@@ -190,7 +167,7 @@ let uiscript;
         if (a == i.length) {
           const s = this.input.text;
           if (this.have_invalid_char(s) || t.UI_Entrance.Accountforbidden(s))
-            this.no.visible = !0;
+            this.no.visible = true;
           else if (!(Laya.timer.currTimer < this.btn_cd)) {
             this.btn_cd = Laya.timer.currTimer + 700;
             const o = {};

@@ -17,8 +17,8 @@ var view;
         get: function() {
           return this.player.seat;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (e.prototype.Reset = function() {
         if ((Laya.timer.clearAll(this), this.pais.length > 0)) {
@@ -30,7 +30,7 @@ var view;
       }),
       (e.prototype.AddMing = function(e, i) {
         var n = this;
-        void 0 === i && (i = !0);
+        undefined === i && (i = true);
         try {
           this.mings.push(e);
           for (var a = 0, r = new Array(), s = 0; s < e.pais.length; s++) {
@@ -54,7 +54,7 @@ var view;
                 0.53 * t.PAIMODEL_HEIGHT
               )),
               (o.transform.localRotationEuler = new Laya.Vector3(90, 0, 0)),
-              (o.active = !0);
+              (o.active = true);
           }
           var l = 0;
           if (e.type == mjcore.E_Ming.shunzi) {
@@ -184,9 +184,9 @@ var view;
               this.player.hand_type
             );
             this.player.playHandAnimtion(w),
-              (m.active = !1),
+              (m.active = false),
               Laya.timer.once(w.keypoint[0], this, function() {
-                m.active = !0;
+                m.active = true;
               }),
               Laya.timer.once(w.keypoint[1], this, function() {
                 try {
@@ -227,7 +227,7 @@ var view;
                   var a = m.transform.position.clone();
                   (a.x -= 0.04),
                     (i.transform.position = a),
-                    (i.active = !0),
+                    (i.active = true),
                     Laya.timer.once(1e3, n, function() {
                       i && i.destroy();
                     });
@@ -254,7 +254,7 @@ var view;
       }),
       (e.prototype.AddGang = function(e, i) {
         var n = this;
-        void 0 === i && (i = !0);
+        undefined === i && (i = true);
         for (
           var a = function(a) {
               if (
@@ -292,7 +292,7 @@ var view;
                     0.53 * t.PAIMODEL_HEIGHT
                   )),
                   (o.transform.localRotationEuler = new Laya.Vector3(90, 0, 0)),
-                  (o.active = !0),
+                  (o.active = true),
                   i)
                 ) {
                   t.AudioMgr.PlayAudio(209);
@@ -334,9 +334,9 @@ var view;
                     r.player.hand_type
                   );
                   r.player.playHandAnimtion(u),
-                    (l.active = !1),
+                    (l.active = false),
                     Laya.timer.once(u.keypoint[0], r, function() {
-                      l.active = !0;
+                      l.active = true;
                     }),
                     Laya.timer.once(u.keypoint[1], r, function() {
                       n.origin.parent.addChild(l),
@@ -366,7 +366,7 @@ var view;
                         var i = l.transform.position.clone();
                         (i.x -= 0.04),
                           (e.transform.position = i),
-                          (e.active = !0),
+                          (e.active = true),
                           Laya.timer.once(1e3, n, function() {
                             e.destroy();
                           });

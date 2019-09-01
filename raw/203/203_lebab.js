@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (t => {
@@ -42,7 +19,7 @@ let uiscript;
               t.receiveInfo(notice);
             },
             null,
-            !1
+            false
           )
         );
     }),
@@ -80,25 +57,25 @@ let uiscript;
       (this.label.text = t),
         (this.complete = e),
         Laya.timer.clearAll(this),
-        (this.root.visible = !0),
+        (this.root.visible = true),
         (this.origin_x = this.panel.width + 500 * this.speed),
         (this.target_x = -(
           500 * this.speed +
           this.label.textField.textWidth
         )),
         (this.start_time = Laya.timer.currTimer),
-        Laya.timer.frameLoop(1, this, this.__update, null, !0),
-        (this.enable = !0);
+        Laya.timer.frameLoop(1, this, this.__update, null, true),
+        (this.enable = true);
     }),
     (e.prototype.close = function() {
       this.complete && this.complete.run(),
         Laya.timer.clearAll(this),
-        (this.enable = !1);
+        (this.enable = false);
     }),
     (e.prototype.__update = function() {
       const t = Laya.timer.currTimer - this.start_time;
       t >= (this.origin_x - this.target_x) / this.speed
-        ? ((this.root.visible = !1), this.close())
+        ? ((this.root.visible = false), this.close())
         : (this.label.x = this.origin_x - this.speed * t);
     }),
     (e.Inst = null),

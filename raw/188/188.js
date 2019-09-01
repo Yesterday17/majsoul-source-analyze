@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -45,7 +20,7 @@ var __extends =
         (t.illust = null),
         (t.label_name = null),
         (t.detail_data = null),
-        (t.locking = !1),
+        (t.locking = false),
         (t.tab_info4 = null),
         (t.tab_info3 = null),
         (t.tab_note = null),
@@ -95,7 +70,7 @@ var __extends =
           (this.btn_addfriend.clickHandler = Laya.Handler.create(
             this,
             function() {
-              (e.btn_addfriend.visible = !1),
+              (e.btn_addfriend.visible = false),
                 app.NetAgent.sendReq2Lobby(
                   'Lobby',
                   'applyFriend',
@@ -104,7 +79,7 @@ var __extends =
                 );
             },
             null,
-            !1
+            false
           )),
           (this.root.getChildByName(
             'btn_close'
@@ -114,7 +89,7 @@ var __extends =
               e.close();
             },
             null,
-            !1
+            false
           )),
           (this.note = new t.UI_PlayerNote(
             this.root.getChildByName('container_note'),
@@ -127,7 +102,7 @@ var __extends =
               e.locking || (1 != e.tab_index && e.changeMJCategory(1));
             },
             null,
-            !1
+            false
           )),
           (this.tab_info3 = this.root.getChildByName('tab_info3')),
           (this.tab_info3.clickHandler = Laya.Handler.create(
@@ -136,7 +111,7 @@ var __extends =
               e.locking || (2 != e.tab_index && e.changeMJCategory(2));
             },
             null,
-            !1
+            false
           )),
           (this.tab_note = this.root.getChildByName('tab_note')),
           (this.tab_note.clickHandler = Laya.Handler.create(
@@ -149,7 +124,7 @@ var __extends =
                 i <= 15601824e5
                   ? t.UIMgr.Inst.ShowErrorInfo('该功能正在维护')
                   : e.container_info.visible &&
-                    ((e.container_info.visible = !1),
+                    ((e.container_info.visible = false),
                     (e.tab_info4.skin = e.tab_img_dark),
                     (e.tab_info3.skin = e.tab_img_dark),
                     (e.tab_note.skin = e.tab_img_chosen),
@@ -158,23 +133,23 @@ var __extends =
               }
             },
             null,
-            !1
+            false
           )),
-          (this.locking = !1);
+          (this.locking = false);
       }),
       (i.prototype.show = function(e, i) {
         var n = this;
-        void 0 === i && (i = 1),
+        undefined === i && (i = 1),
           GameMgr.Inst.BehavioralStatistics(14),
           (this.account_id = e),
-          (this.enable = !0),
-          (this.locking = !0),
+          (this.enable = true),
+          (this.locking = true),
           (this.root.y = 560),
           (this.player_data = null),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              n.locking = !1;
+              n.locking = false;
             })
           ),
           this.detail_data.reset(),
@@ -195,7 +170,7 @@ var __extends =
           this.note.init_data(e),
           this.refreshBaseInfo(),
           (this.tab_index = i),
-          (this.container_info.visible = !0),
+          (this.container_info.visible = true),
           (this.tab_info4.skin =
             1 == this.tab_index ? this.tab_img_chosen : this.tab_img_dark),
           (this.tab_info3.skin =
@@ -215,9 +190,9 @@ var __extends =
       (i.prototype.refreshBaseInfo = function() {
         var e = this;
         (this.title.id = 0),
-          (this.illust.me.visible = !1),
+          (this.illust.me.visible = false),
           (this.label_name.text = ''),
-          (this.btn_addfriend.visible = !1),
+          (this.btn_addfriend.visible = false),
           app.NetAgent.sendReq2Lobby(
             'Lobby',
             'fetchAccountInfo',
@@ -238,7 +213,7 @@ var __extends =
                     e.player_data[1 == e.tab_index ? 'level' : 'level3'].id),
                   (e.level.exp =
                     e.player_data[1 == e.tab_index ? 'level' : 'level3'].score),
-                  (e.illust.me.visible = !0),
+                  (e.illust.me.visible = true),
                   e.illust.setSkin(a.avatar_id, 'waitingroom'),
                   game.Tools.is_same_zone(
                     GameMgr.Inst.account_id,
@@ -246,8 +221,8 @@ var __extends =
                   ) &&
                   e.account_id != GameMgr.Inst.account_id &&
                   null == game.FriendMgr.find(e.account_id)
-                    ? (e.btn_addfriend.visible = !0)
-                    : (e.btn_addfriend.visible = !1),
+                    ? (e.btn_addfriend.visible = true)
+                    : (e.btn_addfriend.visible = false),
                   e.note.sign.setSign(a.signature);
               }
             }
@@ -255,7 +230,7 @@ var __extends =
       }),
       (i.prototype.changeMJCategory = function(t) {
         (this.tab_index = t),
-          (this.container_info.visible = !0),
+          (this.container_info.visible = true),
           this.detail_data.changeMJCategory(t),
           (this.tab_info4.skin =
             1 == this.tab_index ? this.tab_img_chosen : this.tab_img_dark),
@@ -277,12 +252,12 @@ var __extends =
         var e = this;
         this.enable &&
           (this.locking ||
-            ((this.locking = !0),
+            ((this.locking = true),
             this.detail_data.close(),
             t.UIBase.anim_pop_hide(
               this.root,
               Laya.Handler.create(this, function() {
-                (e.locking = !1), (e.enable = !1);
+                (e.locking = false), (e.enable = false);
               })
             )));
       }),

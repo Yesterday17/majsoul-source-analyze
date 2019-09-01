@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  view;
+var view;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -48,7 +23,7 @@ var __extends =
         (t.container_ming = null),
         (t.container_babei = null),
         (t.score = 0),
-        (t.duringShowDetla = !1),
+        (t.duringShowDetla = false),
         (t.anim_id = 0),
         (t.trans_liqi_position = null),
         (t.trans_liqi_scale = null),
@@ -68,18 +43,18 @@ var __extends =
           (this.trans_man = s),
           (this.trans_babei = o);
         for (h = 0; h < this.trans_hand.parent.numChildren; h++)
-          this.trans_hand.parent.getChildAt(h).active = !1;
+          this.trans_hand.parent.getChildAt(h).active = false;
         for (h = 0; h < this.trans_ming.parent.numChildren; h++)
-          this.trans_ming.parent.getChildAt(h).active = !1;
+          this.trans_ming.parent.getChildAt(h).active = false;
         for (h = 0; h < this.trans_paihai.parent.numChildren; h++)
-          this.trans_paihai.parent.getChildAt(h).active = !1;
+          this.trans_paihai.parent.getChildAt(h).active = false;
         for (h = 0; h < this.trans_babei.parent.numChildren; h++)
-          this.trans_babei.parent.getChildAt(h).active = !1;
+          this.trans_babei.parent.getChildAt(h).active = false;
         (this.container_qipai = new t.Block_QiPai(r, this)),
           (this.container_ming = new t.Block_Ming(a, this)),
           (this.container_babei = new t.Block_Babei(o, this)),
           (this.trans_liqi = s.getChildByName('liqi')),
-          (this.trans_liqi.active = !1),
+          (this.trans_liqi.active = false),
           (this.trans_liqi_position = this.trans_liqi.transform.localPosition),
           (this.trans_liqi_scale = this.trans_liqi.transform.localScale),
           (this.trans_dir = s.getChildByName('dir')),
@@ -89,22 +64,22 @@ var __extends =
         for (var h = 0; h < 10; h++)
           this.trans_scores.push(l.getChildByName(h.toString()));
         (this.hand3d = s.parent.getChildByName('hand_' + (i + 1).toString())),
-          (this.hand3d.active = !1),
+          (this.hand3d.active = false),
           this.SetScore(25e3, 25e3),
           this.RefreshDir();
       }),
       (i.prototype.onInitRoom = function(e) {
         if (((this.seat = e), -1 != this.seat)) {
-          (this.trans_man.active = !0),
+          (this.trans_man.active = true),
             this.create_liqibang(
               t.DesktopMgr.Inst.player_effects[this.seat].liqibang
             );
           var i = t.DesktopMgr.Inst.player_effects[this.seat].hand;
           this.create_hand(i);
-        } else this.trans_man.active = !1;
+        } else this.trans_man.active = false;
       }),
       (i.prototype.create_liqibang = function(t) {
-        this.liqibang && (this.liqibang.destroy(!0), (this.liqibang = null)),
+        this.liqibang && (this.liqibang.destroy(true), (this.liqibang = null)),
           (this.liqibang = Laya.loader.getRes(t).clone()),
           this.trans_liqi.addChild(this.liqibang),
           (this.liqibang.transform.localPosition = new Laya.Vector3(0, 0, 0)),
@@ -114,7 +89,7 @@ var __extends =
             0,
             0
           )),
-          (this.liqibang.active = !0);
+          (this.liqibang.active = true);
         var e = function(t) {
           if ('shadow' != t.name) {
             if (t instanceof Laya.MeshSprite3D) {
@@ -148,7 +123,7 @@ var __extends =
           ((this.hand_type = t), (this._anim_hands = []), this._hand_models)
         ) {
           for (var e = 0; e < this._hand_models.length; e++)
-            this._hand_models[e].destroy(!0);
+            this._hand_models[e].destroy(true);
           this._hand_models = [];
         }
         var i = 'scene/' + t + '.lh',
@@ -161,7 +136,7 @@ var __extends =
             .getChildAt(0)
             .getChildByName('node_liqibang')
             .getChildByName('p')
-            .destroy(!0),
+            .destroy(true),
           n
             .getChildAt(0)
             .getChildByName('node_tile')
@@ -170,7 +145,7 @@ var __extends =
               .getChildAt(0)
               .getChildByName('node_tile')
               .getChildByName('p')
-              .destroy(!0);
+              .destroy(true);
         var a = n.getChildAt(0).clone();
         this.hand3d.addChild(a),
           (a.transform.localPosition = new Laya.Vector3(0, 0, 0)),
@@ -210,12 +185,12 @@ var __extends =
         'hand_cat_blue' == t &&
           ((h = new Laya.Vector3(83 / 255, 65 / 255, 63 / 255)), (c = 0.9));
         var u = a.clone();
-        u.getChildByName('node_liqibang').destroy(!0),
-          u.getChildByName('node_tile').destroy(!0),
+        u.getChildByName('node_liqibang').destroy(true),
+          u.getChildByName('node_tile').destroy(true),
           u.getChildByName('Dum_Shadow') &&
-            u.getChildByName('Dum_Shadow').destroy(!0),
+            u.getChildByName('Dum_Shadow').destroy(true),
           u.getChildByName('Bone021') &&
-            u.getChildByName('Bone021').destroy(!0),
+            u.getChildByName('Bone021').destroy(true),
           a.addChild(u),
           (u.transform.localPosition = new Laya.Vector3(0, 0, 0)),
           (u.transform.localScale = new Laya.Vector3(1, 1, 1)),
@@ -232,12 +207,12 @@ var __extends =
           (_.skinnedMeshRender.sharedMaterials = [d, f]),
           this._anim_hands.push(u.getComponentByType(Laya.Animator)),
           this._hand_models.push(u),
-          (this.hand3d.active = !0),
+          (this.hand3d.active = true),
           (this.hand3d.transform.position = new Laya.Vector3(0, 0, 0));
       }),
       (i.prototype.playHandAnimtion = function(t) {
         var e = this;
-        this.hand3d.active = !0;
+        this.hand3d.active = true;
         for (var i = 0; i < this._anim_hands.length; i++)
           this._anim_hands[i].play(t.name, t.speed);
         (this.hand3d.transform.localScale = new Laya.Vector3(1e-4, 1e-4, 1)),
@@ -247,24 +222,24 @@ var __extends =
           this.anim_id++;
         var n = this.anim_id;
         Laya.timer.once(t.lifetime, this, function() {
-          n == e.anim_id && (e.hand3d.active = !1);
+          n == e.anim_id && (e.hand3d.active = false);
         });
       }),
       (i.prototype.setSeat = function(t) {
         this.seat = t;
       }),
       (i.prototype.Reset = function() {
-        (this.duringShowDetla = !1),
+        (this.duringShowDetla = false),
           this.container_ming.Reset(),
           this.container_qipai.Reset(),
           this.container_babei.Reset(),
-          (this.trans_liqi.active = !1),
-          this.hand3d && (this.hand3d.active = !1),
+          (this.trans_liqi.active = false),
+          this.hand3d && (this.hand3d.active = false),
           Laya.timer.clearAll(this),
           (this.anim_id = 0);
       }),
       (i.prototype.AddQiPai = function(t, e, i, n) {
-        void 0 === n && (n = !0), this.container_qipai.AddQiPai(t, e, i, n);
+        undefined === n && (n = true), this.container_qipai.AddQiPai(t, e, i, n);
       }),
       (i.prototype.QiPaiPass = function() {
         this.container_qipai.QiPaiPass();
@@ -273,21 +248,21 @@ var __extends =
         this.container_qipai.QiPaiNoPass();
       }),
       (i.prototype.AddMing = function(t, e) {
-        void 0 === e && (e = !0), this.container_ming.AddMing(t, e);
+        undefined === e && (e = true), this.container_ming.AddMing(t, e);
       }),
       (i.prototype.AddGang = function(t, e) {
-        void 0 === e && (e = !0), this.container_ming.AddGang(t, e);
+        undefined === e && (e = true), this.container_ming.AddGang(t, e);
       }),
       (i.prototype.AddBabei = function(t, e, i) {
-        void 0 === i && (i = !0), this.container_babei.AddBabei(t, e, i);
+        undefined === i && (i = true), this.container_babei.AddBabei(t, e, i);
       }),
       (i.prototype.ShowLiqi = function(e) {
         var i = this;
         if (
-          (void 0 === e && (e = !0),
+          (undefined === e && (e = true),
           (this.trans_liqi.transform.localPosition = this.trans_liqi_position),
           (this.trans_liqi.transform.localScale = this.trans_liqi_scale),
-          (this.trans_liqi.active = !0),
+          (this.trans_liqi.active = true),
           e)
         ) {
           (this.hand3d.transform.position = this.trans_liqi.transform.position.clone()),
@@ -311,7 +286,7 @@ var __extends =
               -0.7,
               -0.7
             )),
-            (this.hand3d.active = !0);
+            (this.hand3d.active = true);
           var n = t.ModelAnimationController.get_anim_config(
             'LiZhi',
             this.hand_type
@@ -349,9 +324,9 @@ var __extends =
         }
       }),
       (i.prototype.RefreshScore = function(t) {
-        if (-1 == this.seat) this.container_score.active = !1;
+        if (-1 == this.seat) this.container_score.active = false;
         else {
-          this.container_score.active = !0;
+          this.container_score.active = true;
           var e = '',
             i = 0;
           if (this.duringShowDetla) {
@@ -406,10 +381,10 @@ var __extends =
               (r.x = 1 / 12),
               (r.y = 1 / 3),
               (this.trans_scores[s].meshRender.material.tilingOffset = r),
-              (this.trans_scores[s].active = !0);
+              (this.trans_scores[s].active = true);
           }
           for (var s = e.length; s < this.trans_scores.length; s++)
-            this.trans_scores[s].active = !1;
+            this.trans_scores[s].active = false;
           if (e.length <= 6) {
             ((o = this.container_score.transform.localPosition.clone()).x =
               (0.165 * (e.length - 1)) / 2 - 0.5325),

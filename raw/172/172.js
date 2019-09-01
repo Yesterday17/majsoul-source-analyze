@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -60,7 +35,7 @@ var __extends =
         (this.img_title.skin = game.Tools.localUISrc(
           'myres/mjdesktop/' + i + '.png'
         )),
-          (this.enable = !0),
+          (this.enable = true),
           Laya.Tween.from(this.root, { alpha: 0 }, 500),
           '' != n &&
             (t.type == mjcore.E_LiuJu.jiuzhongjiupai
@@ -75,7 +50,7 @@ var __extends =
           view.DesktopMgr.Inst.mode == view.EMJMode.play
             ? Laya.timer.once(4e3, this, this.onBtnConfirm)
             : Laya.timer.once(4e3, this, function() {
-                e.enable = !1;
+                e.enable = false;
               });
       }),
       (i.prototype.onDisable = function() {
@@ -83,7 +58,7 @@ var __extends =
       }),
       (i.prototype.onBtnConfirm = function() {
         null != view.DesktopMgr.Inst.gameEndResult
-          ? (t.UIMgr.Inst.ShowGameEnd(), (this.enable = !1))
+          ? (t.UIMgr.Inst.ShowGameEnd(), (this.enable = false))
           : (view.DesktopMgr.Inst.Reset(),
             Laya.timer.once(200, this, function() {
               app.NetAgent.sendReq2MJ(

@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function t(t) {
@@ -54,7 +29,7 @@ var __extends =
               this,
               this._changeTab,
               [a - 1],
-              !1
+              false
             ));
         }
         cfg.fandesc.fandesc.forEach(function(t) {
@@ -77,7 +52,7 @@ var __extends =
                 e._showItem(t.index, t.container);
               },
               null,
-              !1
+              false
             )
           );
       }
@@ -86,10 +61,10 @@ var __extends =
           (this.tab_index = -1), this._changeTab(0);
         }),
         (t.prototype.show = function() {
-          this.me.visible = !0;
+          this.me.visible = true;
         }),
         (t.prototype.close = function() {
-          this.me.visible = !1;
+          this.me.visible = false;
         }),
         (t.prototype._changeTab = function(t) {
           if (t != this.tab_index) {
@@ -127,14 +102,14 @@ var __extends =
             l++
           ) {
             var h = n.getChildAt(l);
-            if (r >= a.length) h.visible = !1;
+            if (r >= a.length) h.visible = false;
             else {
               var c = '';
               'b' == a[r]
                 ? ((c = 'back'), r++)
                 : ((c = a[r] + a[r + 1]), (r += 2)),
                 (h.skin = game.Tools.localUISrc(o + c + '.png')),
-                (h.visible = !0),
+                (h.visible = true),
                 (h.x = s),
                 (h.y = 0),
                 (s += h.width);
@@ -148,7 +123,7 @@ var __extends =
     i = (function() {
       function t(t) {
         var e = this;
-        (this.locking = !1),
+        (this.locking = false),
           (this.loadover = []),
           (this.urls = [
             game.Tools.localUISrc('course/course0.png'),
@@ -174,7 +149,7 @@ var __extends =
               e.locking || (0 != e.pageindex && e.showPage(e.pageindex - 1));
             },
             null,
-            !1
+            false
           )),
           (this.btn_next.clickHandler = Laya.Handler.create(
             this,
@@ -184,9 +159,9 @@ var __extends =
                   e.showPage(e.pageindex + 1));
             },
             null,
-            !1
+            false
           ));
-        for (var i = 0; i < this.urls.length; i++) this.loadover.push(!1);
+        for (var i = 0; i < this.urls.length; i++) this.loadover.push(false);
         this.label_count = this.me.getChildByName('count');
       }
       return (
@@ -195,20 +170,20 @@ var __extends =
         }),
         (t.prototype.show = function() {
           var t = this;
-          this.showPage(this.pageindex), (this.me.visible = !0);
+          this.showPage(this.pageindex), (this.me.visible = true);
           for (
             var e = function(e) {
-                i.loadover.push(!1),
+                i.loadover.push(false),
                   Laya.loader.load(
                     i.urls[e],
                     Laya.Handler.create(i, function() {
                       Laya.timer.frameOnce(3, t, function() {
-                        (t.loadover[e] = !0),
+                        (t.loadover[e] = true),
                           t.me.visible &&
                             t.pageindex == e &&
-                            ((t.loading.visible = !1),
+                            ((t.loading.visible = false),
                             (t.page.source = Laya.loader.getRes(t.urls[e])),
-                            (t.page.visible = !0)),
+                            (t.page.visible = true)),
                           t.me.visible ||
                             Laya.loader.clearTextureRes(t.urls[e]);
                       });
@@ -223,7 +198,7 @@ var __extends =
             e(n);
         }),
         (t.prototype.close = function() {
-          this.me.visible = !1;
+          this.me.visible = false;
           for (var t = 0; t < this.urls.length; t++)
             this.loadover[t] && Laya.loader.clearTextureRes(this.urls[t]);
         }),
@@ -232,10 +207,10 @@ var __extends =
             (this.btn_pre.visible = 0 != t),
             (this.btn_next.visible = t != this.urls.length - 1),
             this.loadover[t]
-              ? ((this.page.visible = !0),
+              ? ((this.page.visible = true),
                 (this.page.source = Laya.loader.getRes(this.urls[t])),
-                (this.loading.visible = !1))
-              : ((this.page.visible = !1), (this.loading.visible = !0)),
+                (this.loading.visible = false))
+              : ((this.page.visible = false), (this.loading.visible = true)),
             (this.label_count.text =
               (this.pageindex + 1).toString() +
               '/' +
@@ -258,7 +233,7 @@ var __extends =
           (t.blackmask = null),
           (t.page_rule = null),
           (t.page_course = null),
-          (t.locking = !1),
+          (t.locking = false),
           (t.tab_index = 0),
           (t.func_close = null),
           (t.tab_fan = null),
@@ -299,7 +274,7 @@ var __extends =
                 t.changeTab(0);
               },
               null,
-              !1
+              false
             )),
             (this.tab_course = this.root.getChildByName('tab_course')),
             (this.root.getChildByName(
@@ -310,7 +285,7 @@ var __extends =
                 t.changeTab(1);
               },
               null,
-              !1
+              false
             )),
             (this.root.getChildByName(
               'btn_close'
@@ -320,21 +295,21 @@ var __extends =
                 t.close();
               },
               null,
-              !1
+              false
             ));
         }),
         (a.prototype.show = function(e, i) {
           var n = this;
-          void 0 === e && (e = 0),
-            void 0 === i && (i = null),
-            (this.locking = !0),
-            (this.enable = !0),
+          undefined === e && (e = 0),
+            undefined === i && (i = null),
+            (this.locking = true),
+            (this.enable = true),
             this.page_course.onEnter(),
             this.page_rule.onEnter(),
             t.UIBase.anim_pop_out(
               this.root,
               Laya.Handler.create(this, function() {
-                n.locking = !1;
+                n.locking = false;
               })
             ),
             (this.blackmask.alpha = 0),
@@ -361,13 +336,13 @@ var __extends =
         }),
         (a.prototype.close = function() {
           var e = this;
-          (this.locking = !0),
+          (this.locking = true),
             Laya.Tween.to(this.blackmask, { alpha: 0 }, 150),
             t.UIBase.anim_pop_hide(
               this.root,
               Laya.Handler.create(this, function() {
-                (e.locking = !1),
-                  (e.enable = !1),
+                (e.locking = false),
+                  (e.enable = false),
                   e.func_close && e.func_close.run();
               })
             );

@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let view;
 !(t => {
   const e = (e => {
@@ -31,11 +8,11 @@ let view;
     (i.play = function(e) {
       const i = this;
       console.log(`ActionHule play data:${JSON.stringify(e)}`),
-        e.doras && t.DesktopMgr.Inst.WhenDoras(e.doras, !1),
-        (t.DesktopMgr.Inst.gameing = !1),
+        e.doras && t.DesktopMgr.Inst.WhenDoras(e.doras, false),
+        (t.DesktopMgr.Inst.gameing = false),
         uiscript.UI_OtherPlayerInfo.Inst.close(),
         t.BgmListMgr.stopBgm();
-      let n = !1;
+      let n = false;
       Laya.timer.once(100, this, () => {
         const a = e.hules;
         let r = 0;
@@ -52,7 +29,7 @@ let view;
                 uiscript.UI_HuCutIn.show(
                   t.DesktopMgr.Inst.player_datas[s].avatar_id
                 ),
-                  (n = !0);
+                  (n = true);
               }),
               (r += 2e3)),
             Laya.timer.once(r, i, () => {
@@ -69,7 +46,7 @@ let view;
             (r += 2800),
             s == t.DesktopMgr.Inst.seat &&
               (uiscript.UI_TingPai.Inst.reset(),
-              uiscript.UI_TingPai.Inst.setZhengting(!1));
+              uiscript.UI_TingPai.Inst.setZhengting(false));
         } else {
           Laya.timer.once(r, i, () => {
             for (var e = [], i = 0; i < a.length; i++)
@@ -85,7 +62,7 @@ let view;
                           uiscript.UI_HuCutIn.show(
                             t.DesktopMgr.Inst.player_datas[s].avatar_id
                           ),
-                            (n = !0);
+                            (n = true);
                         }),
                         (r += 2e3));
                     },
@@ -133,7 +110,7 @@ let view;
                 ].Hule(o, a[r].hu_tile, a[r].zimo, n),
                 a[r].seat == t.DesktopMgr.Inst.seat &&
                   (uiscript.UI_TingPai.Inst.reset(),
-                  uiscript.UI_TingPai.Inst.setZhengting(!1));
+                  uiscript.UI_TingPai.Inst.setZhengting(false));
             }
           }),
             (r += 2e3);
@@ -144,7 +121,7 @@ let view;
             : e.delta_scores[l] < 0 &&
               uiscript.UI_DesktopInfo.Inst.changeHeadEmo(l, 'emoji_8', -1);
         Laya.timer.once(r, i, () => {
-          uiscript.UIMgr.Inst.ShowWin(e, !1),
+          uiscript.UIMgr.Inst.ShowWin(e, false),
             t.DesktopMgr.Inst.ActionRunComplete();
         });
       });
@@ -152,9 +129,9 @@ let view;
     (i.fastplay = (e, i) => {
       app.Log.log(`ActionHule fastplay data:${JSON.stringify(e)}`),
         t.BgmListMgr.stopBgm(),
-        e.doras && t.DesktopMgr.Inst.WhenDoras(e.doras, !1),
-        (t.DesktopMgr.Inst.gameing = !1),
-        uiscript.UIMgr.Inst.ShowWin(e, !1);
+        e.doras && t.DesktopMgr.Inst.WhenDoras(e.doras, false),
+        (t.DesktopMgr.Inst.gameing = false),
+        uiscript.UIMgr.Inst.ShowWin(e, false);
     }),
     (i.record = function(t) {
       return this.play(t), 1e5;

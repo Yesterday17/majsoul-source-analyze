@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -44,30 +19,30 @@ var __extends =
           (this.btn_close.clickHandler = Laya.Handler.create(
             this,
             function() {
-              (e.locking = !0),
+              (e.locking = true),
                 t.UIBase.anim_pop_hide(
                   e.root,
                   Laya.Handler.create(e, function() {
-                    (e.locking = !1), (e.enable = !1);
+                    (e.locking = false), (e.enable = false);
                   })
                 );
             },
             null,
-            !1
+            false
           )),
           (this.btn_confirm.clickHandler = Laya.Handler.create(
             this,
             function() {
-              (e.locking = !0),
+              (e.locking = true),
                 t.UIBase.anim_pop_hide(
                   e.root,
                   Laya.Handler.create(e, function() {
-                    (e.locking = !1), (e.enable = !1);
+                    (e.locking = false), (e.enable = false);
                   })
                 );
             },
             null,
-            !1
+            false
           )),
           (this.btn_chongzhi.clickHandler = Laya.Handler.create(
             this,
@@ -86,33 +61,33 @@ var __extends =
                               t.UI_Recharge.Inst.show('huiyu');
                             },
                             null,
-                            !1
+                            false
                           )
                         )
-                      : ((e.locking = !0),
+                      : ((e.locking = true),
                         t.UIBase.anim_pop_hide(
                           e.root,
                           Laya.Handler.create(e, function() {
-                            (e.locking = !1), (e.enable = !1);
+                            (e.locking = false), (e.enable = false);
                           })
                         )),
-                    (e.enable = !1)));
+                    (e.enable = false)));
             },
             null,
-            !1
+            false
           ));
       }),
       (i.prototype.show = function(e, i, n) {
         var a = this;
-        (this.locking = !0),
+        (this.locking = true),
           (this.func_close = i),
           (this.func_locking = n),
-          (this.enable = !0),
-          (this.root.visible = !0),
+          (this.enable = true),
+          (this.root.visible = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              a.locking = !1;
+              a.locking = false;
             })
           );
         var r = GameMgr.Inst.account_data.diamond,
@@ -128,7 +103,7 @@ var __extends =
           (this.notice3.text = (s + r).toString());
       }),
       (i.Inst = null),
-      (i.first = !0),
+      (i.first = true),
       i
     );
   })(t.UIBase);

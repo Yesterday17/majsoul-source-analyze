@@ -1,32 +1,9 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (t => {
     function e() {
       const i = t.call(this, new ui.both_ui.light_tipsUI()) || this;
-      return (i.locking = !1), (e.Inst = i), i;
+      return (i.locking = false), (e.Inst = i), i;
     }
     return __extends(e, t),
     (e.prototype.onCreate = function() {
@@ -41,15 +18,15 @@ let uiscript;
             t.locking || t.close();
           },
           null,
-          !1
+          false
         ));
     }),
     (e.prototype.show = function(t) {
       const e = this;
       (this.info.text = t),
         (this.root.height = 120 + this.info.textField.textHeight),
-        (this.enable = !0),
-        (this.locking = !0),
+        (this.enable = true),
+        (this.locking = true),
         (this.root.scaleY = 0),
         Laya.timer.clearAll(this),
         Laya.Tween.to(
@@ -58,7 +35,7 @@ let uiscript;
           150,
           null,
           Laya.Handler.create(this, () => {
-            e.locking = !1;
+            e.locking = false;
           })
         ),
         Laya.timer.once(3e3, this, () => {
@@ -67,7 +44,7 @@ let uiscript;
     }),
     (e.prototype.close = function() {
       const t = this;
-      (this.locking = !0),
+      (this.locking = true),
         Laya.timer.clearAll(this),
         Laya.Tween.to(
           this.root,
@@ -75,7 +52,7 @@ let uiscript;
           150,
           null,
           Laya.Handler.create(this, () => {
-            (t.locking = !1), (t.enable = !1);
+            (t.locking = false), (t.enable = false);
           })
         );
     }),

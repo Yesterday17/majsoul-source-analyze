@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  view;
+var view;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -34,7 +9,7 @@ var __extends =
       (i.play = function(e) {
         var i = this;
         app.Log.log('ActionLiuJu play data:' + JSON.stringify(e)),
-          (t.DesktopMgr.Inst.gameing = !1),
+          (t.DesktopMgr.Inst.gameing = false),
           uiscript.UI_OtherPlayerInfo.Inst.close();
         var n = 0;
         if (
@@ -61,7 +36,7 @@ var __extends =
                   (r = r.sort(mjcore.MJPai.Distance)),
                     t.DesktopMgr.Inst.players[
                       t.DesktopMgr.Inst.seat2LocalPosition(i)
-                    ].Huangpai(!0, r, !1);
+                    ].Huangpai(true, r, false);
                 }
             }),
             (n += 1e3),
@@ -83,7 +58,7 @@ var __extends =
               (s = s.sort(mjcore.MJPai.Distance)),
                 t.DesktopMgr.Inst.players[
                   t.DesktopMgr.Inst.seat2LocalPosition(a)
-                ].Huangpai(!0, s, !1);
+                ].Huangpai(true, s, false);
             }
             if (
               e.type == mjcore.E_LiuJu.sijializhi &&
@@ -100,7 +75,7 @@ var __extends =
                 (s = s.sort(mjcore.MJPai.Distance)),
                   t.DesktopMgr.Inst.players[
                     t.DesktopMgr.Inst.seat2LocalPosition(l)
-                  ].Huangpai(!0, s, !1);
+                  ].Huangpai(true, s, false);
               }
               n = 1e3;
             }
@@ -113,7 +88,7 @@ var __extends =
       (i.fastplay = function(e, i) {
         app.Log.log('ActionLiuJu fastplay data:' + JSON.stringify(e)),
           t.BgmListMgr.stopBgm(),
-          (t.DesktopMgr.Inst.gameing = !1),
+          (t.DesktopMgr.Inst.gameing = false),
           uiscript.UI_OtherPlayerInfo.Inst.close();
         if (
           (e.liqi && t.ActionLiqi.fastplay(e.liqi, 0),
@@ -124,7 +99,7 @@ var __extends =
           (r = r.sort(mjcore.MJPai.Distance)),
             t.DesktopMgr.Inst.players[
               t.DesktopMgr.Inst.seat2LocalPosition(n)
-            ].Huangpai(!0, r, !0);
+            ].Huangpai(true, r, true);
         }
         if (e.type == mjcore.E_LiuJu.sanjiahule)
           for (var n = e.seat, o = 0; o < e.allplayertiles.length; o++)
@@ -138,7 +113,7 @@ var __extends =
               (r = r.sort(mjcore.MJPai.Distance)),
                 t.DesktopMgr.Inst.players[
                   t.DesktopMgr.Inst.seat2LocalPosition(o)
-                ].Huangpai(!0, r, !1);
+                ].Huangpai(true, r, false);
             }
         uiscript.UIMgr.Inst.ShowLiuJu(e);
       }),

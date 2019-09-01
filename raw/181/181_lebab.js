@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => {
@@ -31,7 +8,7 @@ let uiscript;
           (this.count = this.me.getChildByName('count'));
       }
       return (e.prototype.show = function({id, count}) {
-        (this.me.visible = !0), t.UIBase.anim_pop_out(this.me, null);
+        (this.me.visible = true), t.UIBase.anim_pop_out(this.me, null);
         const i = game.GameUtility.get_item_view(id);
         game.LoadMgr.setImgSkin(this.icon, i.icon),
           (this.name.text = i.name),
@@ -48,7 +25,7 @@ let uiscript;
       const e = t.call(this, new ui.mj.activity_taskUI()) || this;
       return (
         (e.cells = []),
-        (e.locking = !1),
+        (e.locking = false),
         (e.complete = null),
         (e.activity_reward = []),
         (e.index = 0),
@@ -68,18 +45,18 @@ let uiscript;
         }));
     }),
     (i.prototype.show = function({activity_reward}, e) {
-      (this.locking = !0), (this.complete = e);
+      (this.locking = true), (this.complete = e);
       for (let i = 0; i < this.cells.length; i++)
-        this.cells[i].me.visible = !1;
-      (this.enable = !0),
+        this.cells[i].me.visible = false;
+      (this.enable = true),
         (this.index = 0),
         (this.activity_reward = activity_reward),
         this.show_one(this.activity_reward[0]);
     }),
     (i.prototype.show_one = function({rewards}) {
       const e = this;
-      (this.locking = !0), (this.root.alpha = 1);
-      for (r = 0; r < this.cells.length; r++) this.cells[r].me.visible = !1;
+      (this.locking = true), (this.root.alpha = 1);
+      for (r = 0; r < this.cells.length; r++) this.cells[r].me.visible = false;
       for (
         var i = rewards,
           n = t => {
@@ -98,23 +75,23 @@ let uiscript;
         600 *
         ((i.length > this.cells.length ? this.cells.length : i.length) + 1);
       Laya.timer.once(s, this, () => {
-        e.locking = !1;
+        e.locking = false;
       });
     }),
     (i.prototype.close_one = function() {
       const t = this;
-      (this.locking = !0),
+      (this.locking = true),
         Laya.Tween.to(
           this.root,
           { alpha: 0 },
           150,
           null,
           Laya.Handler.create(this, () => {
-            (t.locking = !1),
+            (t.locking = false),
               t.index++,
               t.index < t.activity_reward.length
                 ? t.show_one(t.activity_reward[t.index])
-                : ((t.enable = !1), t.complete && t.complete.run());
+                : ((t.enable = false), t.complete && t.complete.run());
           })
         );
     }),

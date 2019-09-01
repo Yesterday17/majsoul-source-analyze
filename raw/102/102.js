@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -56,12 +31,12 @@ var __extends =
                   e.Inst && e.Inst.enable && e.Inst.refresh();
               },
               null,
-              !1
+              false
             )
           );
       }),
       (i.prototype.isopen = function() {
-        return !0;
+        return true;
       }),
       (i.prototype.onCreate = function() {
         var e = this;
@@ -93,21 +68,21 @@ var __extends =
                     (e.btn_cd = 0),
                       n || a.error
                         ? t.UIMgr.Inst.showNetReqError('gainReviveCoin', n, a)
-                        : ((e.task.btn_get.visible = !1),
-                          (e.task.alreadyget.visible = !0),
-                          (i.has_gained = !0));
+                        : ((e.task.btn_get.visible = false),
+                          (e.task.alreadyget.visible = true),
+                          (i.has_gained = true));
                   }
                 ));
             },
             null,
-            !1
+            false
           ));
       }),
       (i.prototype.show = function() {
-        (this.me.visible = !0), (this.btn_cd = 0), this.refresh();
+        (this.me.visible = true), (this.btn_cd = 0), this.refresh();
       }),
       (i.prototype.hide = function() {
-        this.me.visible = !1;
+        this.me.visible = false;
       }),
       (i.prototype.findData = function() {
         var t = 0;
@@ -130,34 +105,34 @@ var __extends =
             (this.task.bg.skin = game.Tools.localUISrc(
               'myres/lobby/bg_rules_no.png'
             )),
-              (this.task.container_info.visible = !1);
+              (this.task.container_info.visible = false);
           else {
             (this.task.bg.skin = game.Tools.localUISrc(
               'myres/lobby/bg_rules.png'
             )),
-              (this.task.container_info.visible = !0),
-              (this.task.getno.visible = !1),
-              (this.task.btn_get.visible = !1),
-              (this.task.alreadyget.visible = !1),
+              (this.task.container_info.visible = true),
+              (this.task.getno.visible = false),
+              (this.task.btn_get.visible = false),
+              (this.task.alreadyget.visible = false),
               (this.task.item_count.text = t.gold_num.toString()),
               i.has_gained
-                ? (this.task.alreadyget.visible = !0)
+                ? (this.task.alreadyget.visible = true)
                 : GameMgr.Inst.account_data.gold < t.gold_limit
-                ? (this.task.btn_get.visible = !0)
-                : (this.task.getno.visible = !0);
+                ? (this.task.btn_get.visible = true)
+                : (this.task.getno.visible = true);
             var e = cfg.item_definition.currency.get(100002);
             (this.task.item_icon.skin = game.LoadMgr.getResImageSkin(e.icon)),
               (this.task.item_name.text = e['name_' + GameMgr.client_language]);
           }
         else
           (this.desc.text = game.Tools.strOfLocalization(2233)),
-            (this.task.container_info.visible = !1),
+            (this.task.container_info.visible = false),
             (this.task.bg.skin = game.Tools.localUISrc(
               'myres/lobby/bg_rules_no.png'
             ));
       }),
       (i.Inst = null),
-      (i.has_gained = !1),
+      (i.has_gained = false),
       i
     );
   })(t.UI_ActivityBase);

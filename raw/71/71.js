@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  capsui;
+var capsui;
 !(function(t) {
   var e = (function(t) {
     function e() {
@@ -32,7 +7,7 @@ var __extends =
         (e._total_count = 0),
         (e._func_load = null),
         (e._loading = null),
-        (e._duringLoading = !1),
+        (e._duringLoading = false),
         (e._load_id = 0),
         e
       );
@@ -46,19 +21,19 @@ var __extends =
         set: function(t) {
           (this._total_count = t), this._pendingLoad();
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (e.prototype.reset = function() {
         (this._load_id = 0),
           (this._total_count = 0),
-          (this._duringLoading = !1),
-          (this._loading.visible = !1),
+          (this._duringLoading = false),
+          (this._loading.visible = false),
           t.prototype.reset.call(this);
       }),
       (e.prototype.onCreate = function() {
         (this._loading = this.me.getChildByName('loading')),
-          (this._loading.visible = !1),
+          (this._loading.visible = false),
           t.prototype.onCreate.call(this);
       }),
       (e.prototype.init_nolimitlist = function(t, e) {
@@ -75,18 +50,18 @@ var __extends =
           (1 - this.rate) * this.value_count <= 3 &&
           this._func_load
         ) {
-          (this._duringLoading = !0), this._load_id++;
+          (this._duringLoading = true), this._load_id++;
           var e = this._load_id;
           this._func_load.runWith(this.value_count),
             Laya.timer.once(700, this, function() {
-              t._duringLoading && e == t._load_id && (t._loading.visible = !0);
+              t._duringLoading && e == t._load_id && (t._loading.visible = true);
             });
         }
       }),
       (e.prototype.loadOver = function(t, e) {
         this._duringLoading &&
-          ((this._duringLoading = !1),
-          this._loading && (this._loading.visible = !1),
+          ((this._duringLoading = false),
+          this._loading && (this._loading.visible = false),
           t ? this.addItem(e) : (this._total_count = this.value_count));
       }),
       (e.prototype.popItem = function() {

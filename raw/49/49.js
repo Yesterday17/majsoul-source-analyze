@@ -52,8 +52,8 @@ var mjcore;
         var n = new t();
         switch (
           ('0' == i.charAt(0)
-            ? ((n.dora = !0), (n.index = 5))
-            : ((n.dora = !1), (n.index = +i.charAt(0))),
+            ? ((n.dora = true), (n.index = 5))
+            : ((n.dora = false), (n.index = +i.charAt(0))),
           i.charAt(1))
         ) {
           case 'z':
@@ -88,7 +88,7 @@ var mjcore;
         return t.numValue() - e.numValue();
       }),
       (t.DoraMet = function(t, i) {
-        if (t.type != i.type) return !1;
+        if (t.type != i.type) return false;
         var n = i.index + 1;
         return (
           view.DesktopMgr.Inst.rule_mode == view.ERuleMode.Liqi4

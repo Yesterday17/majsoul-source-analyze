@@ -7,7 +7,7 @@ var uiscript;
         (this.stardust_detail = 0),
         (this.items = []),
         (this.choose_count = {}),
-        (this.during_sell = !1),
+        (this.during_sell = false),
         (this.me = e),
         (this.scrollview = e.scriptMap['capsui.CScrollView']),
         this.scrollview.init_scrollview(
@@ -46,12 +46,12 @@ var uiscript;
     }
     return (
       (e.prototype.show = function() {
-        (this.me.visible = !0),
-          (this.during_sell = !1),
-          (this.btn_sell.visible = !0),
-          (this.label_huanqu.visible = !0),
-          (this.container_sell.visible = !1),
-          (this.label_stardust_delta.visible = !1),
+        (this.me.visible = true),
+          (this.during_sell = false),
+          (this.btn_sell.visible = true),
+          (this.label_huanqu.visible = true),
+          (this.container_sell.visible = false),
+          (this.label_stardust_delta.visible = false),
           (this.choose_count = {}),
           this.stardust_icon.setSkin(
             cfg.item_definition.item.get(302004).icon_transparent
@@ -62,10 +62,10 @@ var uiscript;
           this.scrollview.reset(),
           (this.items = t.UI_Bag.find_items_by_category(t.EItemCategory.gift)),
           this.scrollview.addItem(this.items.length),
-          0 == this.items.length && (this.btn_sell.visible = !1);
+          0 == this.items.length && (this.btn_sell.visible = false);
       }),
       (e.prototype.close = function() {
-        (this.me.visible = !1), (this.items = []), this.scrollview.reset();
+        (this.me.visible = false), (this.items = []), this.scrollview.reset();
       }),
       (e.prototype.render_item = function(e) {
         var i = this,
@@ -82,35 +82,35 @@ var uiscript;
               if (o.can_sell) {
                 var e = i.choose_count[s.item_id];
                 null == e || 0 == e
-                  ? ((a.getChildByName('count').visible = !1),
-                    (a.getChildByName('btn_del').visible = !1))
-                  : ((a.getChildByName('count').visible = !0),
+                  ? ((a.getChildByName('count').visible = false),
+                    (a.getChildByName('btn_del').visible = false))
+                  : ((a.getChildByName('count').visible = true),
                     (a
                       .getChildByName('count')
                       .getChildAt(0).text = e.toString()),
-                    (a.getChildByName('btn_del').visible = !0),
+                    (a.getChildByName('btn_del').visible = true),
                     (t -= e)),
                   (a
                     .getChildByName('btn_detail')
                     .getChildByName('content')
-                    .getChildByName('ban').visible = !1);
+                    .getChildByName('ban').visible = false);
               } else
-                (a.getChildByName('count').visible = !1),
-                  (a.getChildByName('btn_del').visible = !1),
+                (a.getChildByName('count').visible = false),
+                  (a.getChildByName('btn_del').visible = false),
                   (a
                     .getChildByName('btn_detail')
                     .getChildByName('content')
-                    .getChildByName('ban').visible = !0);
+                    .getChildByName('ban').visible = true);
             else
-              (a.getChildByName('count').visible = !1),
-                (a.getChildByName('btn_del').visible = !1),
+              (a.getChildByName('count').visible = false),
+                (a.getChildByName('btn_del').visible = false),
                 (a
                   .getChildByName('btn_detail')
                   .getChildByName('content')
-                  .getChildByName('ban').visible = !1);
+                  .getChildByName('ban').visible = false);
             t <= 1
-              ? (h.visible = !1)
-              : ((h.visible = !0), (h.text = t.toString()));
+              ? (h.visible = false)
+              : ((h.visible = true), (h.text = t.toString()));
           };
         c(),
           (l.clickHandler = Laya.Handler.create(
@@ -132,7 +132,7 @@ var uiscript;
               } else t.UI_ItemDetail.Inst.show(s.item_id);
             },
             null,
-            !1
+            false
           )),
           (a.getChildByName('btn_del').clickHandler = Laya.Handler.create(
             this,
@@ -145,7 +145,7 @@ var uiscript;
                 i.refresh_stardust());
             },
             null,
-            !1
+            false
           )),
           r.skin ||
             (r.skin = new t.UI_Item_Skin(
@@ -158,11 +158,11 @@ var uiscript;
           : (u.scaleX = u.scaleY = 1.1);
       }),
       (e.prototype.open_sell = function() {
-        (this.during_sell = !0),
-          (this.btn_sell.visible = !1),
-          (this.label_huanqu.visible = !1),
-          (this.container_sell.visible = !0),
-          (this.label_stardust_delta.visible = !0),
+        (this.during_sell = true),
+          (this.btn_sell.visible = false),
+          (this.label_huanqu.visible = false),
+          (this.container_sell.visible = true),
+          (this.label_stardust_delta.visible = true),
           (this.label_stardust_delta.text = ''),
           (this.choose_count = {}),
           (this.stardust_detail = 0),
@@ -170,11 +170,11 @@ var uiscript;
           this.scrollview.wantToRefreshAll();
       }),
       (e.prototype.close_sell = function() {
-        (this.during_sell = !1),
-          (this.btn_sell.visible = !0),
-          (this.label_huanqu.visible = !0),
-          (this.container_sell.visible = !1),
-          (this.label_stardust_delta.visible = !1),
+        (this.during_sell = false),
+          (this.btn_sell.visible = true),
+          (this.label_huanqu.visible = true),
+          (this.container_sell.visible = false),
+          (this.label_stardust_delta.visible = false),
           this.clear_choose(),
           this.scrollview.wantToRefreshAll();
       }),
@@ -218,19 +218,19 @@ var uiscript;
                 '+' + this.stardust_detail.toString()),
               (this.label_stardust_delta.x =
                 this.label_stardust_count.textField.textWidth + 55),
-              (this.label_stardust_delta.visible = !0),
-              (this.btn_sell2.visible = !0),
-              (this.btn_clear_choose.visible = !0))
-            : ((this.label_stardust_delta.visible = !1),
-              (this.btn_sell2.visible = !1),
-              (this.btn_clear_choose.visible = !1));
+              (this.label_stardust_delta.visible = true),
+              (this.btn_sell2.visible = true),
+              (this.btn_clear_choose.visible = true))
+            : ((this.label_stardust_delta.visible = false),
+              (this.btn_sell2.visible = false),
+              (this.btn_clear_choose.visible = false));
       }),
       (e.prototype.when_update_data = function() {
         this.close_sell(),
           this.scrollview.reset(),
           (this.items = t.UI_Bag.find_items_by_category(t.EItemCategory.gift)),
           this.scrollview.addItem(this.items.length),
-          0 == this.items.length && (this.btn_sell.visible = !1),
+          0 == this.items.length && (this.btn_sell.visible = false),
           (this.stardust_count = t.UI_Bag.get_item_count(game.stardust_id)),
           this.refresh_stardust();
       }),

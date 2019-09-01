@@ -29,8 +29,8 @@ var view;
             e
           );
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(i, 'bgm_mj_list', {
         get: function() {
@@ -51,8 +51,8 @@ var view;
             e
           );
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (i.init = function() {
         var t = Laya.LocalStorage.getItem(
@@ -93,7 +93,7 @@ var view;
         );
       }),
       (i.stopBgm = function(i) {
-        void 0 === i && (i = 1e3),
+        undefined === i && (i = 1e3),
           this.type == e.lizhi && (this.type = e.none),
           (this.playing_bgm = ''),
           t.AudioMgr.StopMusic(i),
@@ -109,7 +109,7 @@ var view;
         ) {
           for (var i = 0; i < t.length; i++)
             if (t[i] != this.playing_bgm)
-              return void this.PlayLobbyBgm(t[i], !0, 0);
+              return void this.PlayLobbyBgm(t[i], true, 0);
           this.stopBgm(0);
         } else this.stopBgm(0);
       }),
@@ -126,7 +126,7 @@ var view;
       (i.tryPlayBgm = function(i) {
         return (
           this.type != e.lizhi &&
-          (!t.AudioMgr.musicMuted && (t.AudioMgr.PlayMusic(i, 1e3, !0), !0))
+          (!t.AudioMgr.musicMuted && (t.AudioMgr.PlayMusic(i, 1e3, true), true))
         );
       }),
       (i._RandNextIndex = function(t, e) {
@@ -146,17 +146,17 @@ var view;
       }),
       (i.PlayLobbyBgm = function(i, n, a) {
         if (
-          (void 0 === i && (i = ''),
-          void 0 === n && (n = !1),
-          void 0 === a && (a = 1e3),
+          (undefined === i && (i = ''),
+          undefined === n && (n = false),
+          undefined === a && (a = 1e3),
           !n && '' != i && i == this.playing_bgm)
         )
-          return !1;
+          return false;
         this.type = e.lobby;
         var r = this.findIndexInLobby(i),
           s = this.bgm_lobby_list;
         if (-1 == r) {
-          if (0 == s.length) return !1;
+          if (0 == s.length) return false;
           var o = Math.random();
           r = Math.floor(o * s.length);
         }
@@ -164,14 +164,14 @@ var view;
       }),
       (i.NextLobbyBgm = function() {
         var t = this.bgm_lobby_list;
-        if (0 == t.length) return !1;
+        if (0 == t.length) return false;
         var e = this.findIndexInLobby(this.playing_bgm);
         return (
           (e =
             'list' == this.bgm_lobby_mode || e >= 0
               ? (e + 1) % t.length
               : this._RandNextIndex(e, t.length)),
-          this.PlayLobbyBgm(t[e], !0, 0)
+          this.PlayLobbyBgm(t[e], true, 0)
         );
       }),
       (i.findIndexInMJ = function(t) {
@@ -181,31 +181,31 @@ var view;
       }),
       (i.PlayMJBgm = function(i, n, a) {
         if (
-          (void 0 === i && (i = ''),
-          void 0 === n && (n = !1),
-          void 0 === a && (a = 1e3),
+          (undefined === i && (i = ''),
+          undefined === n && (n = false),
+          undefined === a && (a = 1e3),
           !n && '' != i && i == this.playing_bgm)
         )
-          return !1;
+          return false;
         this.type = e.mj;
         var r = this.findIndexInMJ(i),
           s = this.bgm_mj_list;
         if (-1 == r) {
-          if (0 == s.length) return !1;
+          if (0 == s.length) return false;
           r = Math.floor(Math.random() * s.length);
         }
         t.AudioMgr.PlayMusic(s[r], a, n);
       }),
       (i.NextMJBgm = function() {
         var t = this.bgm_mj_list;
-        if (0 == t.length) return !1;
+        if (0 == t.length) return false;
         var e = this.findIndexInMJ(this.playing_bgm);
         return (
           (e =
             'list' == this.bgm_mj_mode || e >= 0
               ? (e + 1) % t.length
               : this._RandNextIndex(e, t.length)),
-          this.PlayMJBgm(t[e], !0, 0)
+          this.PlayMJBgm(t[e], true, 0)
         );
       }),
       (i.baned_bgm_lobby_list = []),

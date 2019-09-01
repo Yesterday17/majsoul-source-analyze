@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e;
   !(function(t) {
@@ -60,7 +35,7 @@ var __extends =
             this,
             function() {
               e.locking ||
-                ((e.btn.disabled = !0),
+                ((e.btn.disabled = true),
                 app.NetAgent.sendReq2Lobby('Lobby', 'cancelMatch', {}, function(
                   i,
                   n
@@ -71,14 +46,14 @@ var __extends =
                 }));
             },
             null,
-            !1
+            false
           )),
-          (this.btn.disabled = !1);
+          (this.btn.disabled = false);
       }),
       (n.prototype.tryToClose = function(i) {
         var n = this;
         this.state == e.none
-          ? ((this.enable = !1), i.runWith(!0))
+          ? ((this.enable = false), i.runWith(true))
           : this.state == e.during
           ? app.NetAgent.sendReq2Lobby('Lobby', 'cancelMatch', {}, function(
               e,
@@ -86,21 +61,21 @@ var __extends =
             ) {
               e || a.error
                 ? (t.UIMgr.Inst.showNetReqError('cancelMatch', e, a),
-                  i.runWith(!1))
-                : ((n.enable = !1), i.runWith(!0), n.close());
+                  i.runWith(false))
+                : ((n.enable = false), i.runWith(true), n.close());
             })
-          : this.state == e.success && i.runWith(!1);
+          : this.state == e.success && i.runWith(false);
       }),
       (n.prototype.show = function(i) {
         var n = this;
-        (this.enable = !0),
-          (this.locking = !0),
-          (this.btn.disabled = !1),
+        (this.enable = true),
+          (this.locking = true),
+          (this.btn.disabled = false),
           (this.root.scaleX = this.root.scaleY = 1),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              n.locking = !1;
+              n.locking = false;
             })
           ),
           Laya.timer.clearAll(this);
@@ -131,11 +106,11 @@ var __extends =
       }),
       (n.prototype.close = function() {
         var e = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1), (e.enable = !1);
+              (e.locking = false), (e.enable = false);
             })
           );
       }),
@@ -144,13 +119,13 @@ var __extends =
       }),
       (n.prototype.onGameStart = function(i) {
         (this.state = e.success),
-          (this.enable = !1),
-          (t.UI_Lobby.Inst.enable = !1),
+          (this.enable = false),
+          (t.UI_Lobby.Inst.enable = false),
           game.MJNetMgr.Inst.OpenConnect(
             i.connect_token,
             i.game_uuid,
             i.location,
-            !1,
+            false,
             null
           );
       }),

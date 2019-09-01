@@ -1,35 +1,10 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
       var t = e.call(this, new ui.lobby.shop_pack_detailUI()) || this;
       return (
-        (t.locking = !1),
+        (t.locking = false),
         (t.goods_id = 0),
         (t.packs = []),
         (t.origin_total_price = 0),
@@ -114,7 +89,7 @@ var __extends =
                 c = h.price,
                 u = t.UI_Shop.goods_discount_value(o),
                 _ = Math.floor(c * u),
-                d = !1;
+                d = false;
               1 == h.category_goods && (d = t.UI_Sushe.skin_owned(h.item_id)),
                 this.packs.push({
                   goods_id: o,
@@ -142,12 +117,12 @@ var __extends =
               ).text = this.now_total_price.toString()),
               this.scrollview.reset(),
               this.scrollview.addItem(this.packs.length),
-              (this.enable = !0),
-              (this.locking = !0),
+              (this.enable = true),
+              (this.locking = true),
               t.UIBase.anim_pop_out(
                 this.root,
                 Laya.Handler.create(this, function() {
-                  n.locking = !1;
+                  n.locking = false;
                 })
               );
           }
@@ -155,11 +130,11 @@ var __extends =
       }),
       (i.prototype.close = function() {
         var e = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1), (e.enable = !1);
+              (e.locking = false), (e.enable = false);
             })
           );
       }),
@@ -167,10 +142,10 @@ var __extends =
       (i.prototype.refresh_price = function(t, e, i) {
         var n = t.getChildByName('container_origin_price'),
           a = t.getChildByName('container_discount');
-        if (((n.visible = !1), (a.visible = !1), i >= 1))
-          (n.visible = !0), (n.getChildByName('now_price').text = e.toString());
+        if (((n.visible = false), (a.visible = false), i >= 1))
+          (n.visible = true), (n.getChildByName('now_price').text = e.toString());
         else {
-          (a.visible = !0),
+          (a.visible = true),
             (a.getChildByName('discount').text =
               '-' + (100 - Math.ceil(100 * i)) + '%');
           var r = a.getChildByName('now_price'),
@@ -187,14 +162,14 @@ var __extends =
           n = this.packs[e],
           a = cfg.shops.goods.get(n.goods_id);
         if (1 == a.category_goods) {
-          i.getChildByName('head').getChildByName('flag_skin').visible = !0;
+          i.getChildByName('head').getChildByName('flag_skin').visible = true;
           var r = cfg.item_definition.skin.get(a.item_id);
           game.LoadMgr.setImgSkin(
             i.getChildByName('head').getChildByName('icon'),
             r.path + '/bighead.png'
           );
         } else
-          (i.getChildByName('head').getChildByName('flag_skin').visible = !1),
+          (i.getChildByName('head').getChildByName('flag_skin').visible = false),
             game.LoadMgr.setImgSkin(
               i.getChildByName('head').getChildByName('icon'),
               a.icon
@@ -203,10 +178,10 @@ var __extends =
           (i.getChildByName('desc').text =
             a['desc_' + GameMgr.client_language]),
           n.owned
-            ? ((i.getChildByName('container_buy').visible = !1),
-              (i.getChildByName('owned').visible = !0))
-            : ((i.getChildByName('container_buy').visible = !0),
-              (i.getChildByName('owned').visible = !1),
+            ? ((i.getChildByName('container_buy').visible = false),
+              (i.getChildByName('owned').visible = true))
+            : ((i.getChildByName('container_buy').visible = true),
+              (i.getChildByName('owned').visible = false),
               this.refresh_price(
                 i.getChildByName('container_buy'),
                 n.origin_price,

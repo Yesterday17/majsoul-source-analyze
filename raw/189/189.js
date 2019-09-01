@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e,
     i = (function() {
@@ -36,14 +11,14 @@ var __extends =
             .getChildByName('txtinput')),
           (this.btn_confirm = this.me.getChildByName('btn_confirm')),
           (this.btn_cancel = this.me.getChildByName('btn_cancel')),
-          (this.me.visible = !1),
+          (this.me.visible = false),
           (this.btn_cancel.clickHandler = Laya.Handler.create(
             this,
             function() {
               e.hide(null);
             },
             null,
-            !1
+            false
           ));
       }
       return (
@@ -51,7 +26,7 @@ var __extends =
           var i = this;
           (this.title.text = game.Tools.strOfLocalization(2124)),
             GameMgr.inConch
-              ? ((this.btn_confirm.visible = !0),
+              ? ((this.btn_confirm.visible = true),
                 (this.btn_confirm.clickHandler = Laya.Handler.create(
                   this,
                   function() {
@@ -62,10 +37,10 @@ var __extends =
                       t.UI_FlyTips.ShowTips(game.Tools.strOfLocalization(2125));
                   },
                   null,
-                  !1
+                  false
                 )))
               : GameMgr.iniOSWebview
-              ? ((this.btn_confirm.visible = !0),
+              ? ((this.btn_confirm.visible = true),
                 (this.btn_confirm.clickHandler = Laya.Handler.create(
                   this,
                   function() {
@@ -78,16 +53,16 @@ var __extends =
                       t.UI_FlyTips.ShowTips(game.Tools.strOfLocalization(2125));
                   },
                   null,
-                  !1
+                  false
                 )))
-              : ((this.btn_confirm.visible = !1),
+              : ((this.btn_confirm.visible = false),
                 (this.btn_confirm.clickHandler = Laya.Handler.create(
                   this,
                   function() {},
                   null,
-                  !1
+                  false
                 ))),
-            (this.input.editable = !1);
+            (this.input.editable = false);
           var n = game.Tools.encode_account_id(GameMgr.Inst.account_id);
           (this.input.text =
             game.Tools.strOfLocalization(2126) +
@@ -97,15 +72,15 @@ var __extends =
             e +
             '_a' +
             n),
-            (this.me.visible = !0),
-            (this.locking = !0),
+            (this.me.visible = true),
+            (this.locking = true),
             (this.btn_confirm.getChildAt(0).text = game.Tools.strOfLocalization(
               2127
             )),
             t.UIBase.anim_pop_out(
               this.me,
               Laya.Handler.create(this, function() {
-                i.locking = !1;
+                i.locking = false;
               })
             );
         }),
@@ -114,7 +89,7 @@ var __extends =
           t.UI_PiPeiYuYue.Inst.enable
             ? t.UI_Popout.PopOutNoTitle(game.Tools.strOfLocalization(204), null)
             : ((this.title.text = game.Tools.strOfLocalization(2128)),
-              (this.btn_confirm.visible = !0),
+              (this.btn_confirm.visible = true),
               (this.btn_confirm.getChildAt(
                 0
               ).text = game.Tools.strOfLocalization(2129)),
@@ -143,26 +118,26 @@ var __extends =
                   );
                 },
                 null,
-                !1
+                false
               )),
-              (this.input.editable = !0),
+              (this.input.editable = true),
               (this.input.text = ''),
-              (this.me.visible = !0),
-              (this.locking = !0),
+              (this.me.visible = true),
+              (this.locking = true),
               t.UIBase.anim_pop_out(
                 this.me,
                 Laya.Handler.create(this, function() {
-                  e.locking = !1;
+                  e.locking = false;
                 })
               ));
         }),
         (e.prototype.hide = function(e) {
           var i = this;
-          (this.locking = !0),
+          (this.locking = true),
             t.UIBase.anim_pop_hide(
               this.me,
               Laya.Handler.create(this, function() {
-                (i.locking = !1), (i.me.visible = !1), e && e.run();
+                (i.locking = false), (i.me.visible = false), e && e.run();
               })
             );
         }),
@@ -188,7 +163,7 @@ var __extends =
           ).clickHandler = new Laya.Handler(this, function() {
             e.locking ||
               (game.Tools.calu_word_length(e.input.text) > 30
-                ? (e.toolong.visible = !0)
+                ? (e.toolong.visible = true)
                 : (e.close(),
                   r.addCollect(
                     e.uuid,
@@ -205,27 +180,27 @@ var __extends =
           (this.uuid = e),
             (this.start_time = i),
             (this.end_time = n),
-            (this.me.visible = !0),
-            (this.locking = !0),
+            (this.me.visible = true),
+            (this.locking = true),
             (this.input.text = ''),
-            (this.toolong.visible = !1),
+            (this.toolong.visible = false),
             (this.blackbg.alpha = 0),
             Laya.Tween.to(this.blackbg, { alpha: 0.5 }, 150),
             t.UIBase.anim_pop_out(
               this.root,
               Laya.Handler.create(this, function() {
-                a.locking = !1;
+                a.locking = false;
               })
             );
         }),
         (e.prototype.close = function() {
           var e = this;
-          (this.locking = !0),
+          (this.locking = true),
             Laya.Tween.to(this.blackbg, { alpha: 0 }, 150),
             t.UIBase.anim_pop_hide(
               this.root,
               Laya.Handler.create(this, function() {
-                (e.locking = !1), (e.me.visible = !1);
+                (e.locking = false), (e.me.visible = false);
               })
             );
         }),
@@ -247,14 +222,14 @@ var __extends =
         (i.prototype.reset = function() {
           (this.count = 0),
             (this.true_count = 0),
-            (this.have_more_paipu = !0),
+            (this.have_more_paipu = true),
             (this.uuid_list = []),
-            (this.duringload = !1);
+            (this.duringload = false);
         }),
         (i.prototype.loadList = function() {
           var i = this;
           if (!this.duringload && this.have_more_paipu) {
-            if (((this.duringload = !0), this.type == e.COLLECT)) {
+            if (((this.duringload = true), this.type == e.COLLECT)) {
               for (var n = [], a = 0, s = 0; s < 10; s++) {
                 var o = this.count + s;
                 if (o >= r.collect_lsts.length) break;
@@ -269,8 +244,8 @@ var __extends =
                     { uuid_list: n },
                     function(e, s) {
                       if (
-                        ((i.duringload = !1),
-                        r.Inst.onLoadStateChange(i.type, !1),
+                        ((i.duringload = false),
+                        r.Inst.onLoadStateChange(i.type, false),
                         e || s.error)
                       )
                         t.UIMgr.Inst.showNetReqError(
@@ -289,17 +264,17 @@ var __extends =
                         }
                         (i.count += a),
                           i.count >= r.collect_lsts.length &&
-                            ((i.have_more_paipu = !1),
+                            ((i.have_more_paipu = false),
                             r.Inst.onLoadOver(i.type)),
                           r.Inst.onLoadMoreLst(i.type, a);
                       } else
-                        (i.have_more_paipu = !1), r.Inst.onLoadOver(i.type);
+                        (i.have_more_paipu = false), r.Inst.onLoadOver(i.type);
                     }
                   )
-                : ((this.duringload = !1),
+                : ((this.duringload = false),
                   (this.count += a),
                   this.count >= r.collect_lsts.length &&
-                    ((this.have_more_paipu = !1), r.Inst.onLoadOver(this.type)),
+                    ((this.have_more_paipu = false), r.Inst.onLoadOver(this.type)),
                   r.Inst.onLoadMoreLst(this.type, a));
             } else
               app.NetAgent.sendReq2Lobby(
@@ -308,8 +283,8 @@ var __extends =
                 { start: this.true_count, count: 10, type: this.type },
                 function(n, a) {
                   if (
-                    ((i.duringload = !1),
-                    r.Inst.onLoadStateChange(i.type, !1),
+                    ((i.duringload = false),
+                    r.Inst.onLoadStateChange(i.type, false),
                     n || a.error)
                   )
                     t.UIMgr.Inst.showNetReqError('fetchGameRecordList', n, a);
@@ -337,12 +312,12 @@ var __extends =
                     (i.count += o),
                       (i.true_count += s.length),
                       r.Inst.onLoadMoreLst(i.type, o),
-                      (i.have_more_paipu = !0);
-                  } else (i.have_more_paipu = !1), r.Inst.onLoadOver(i.type);
+                      (i.have_more_paipu = true);
+                  } else (i.have_more_paipu = false), r.Inst.onLoadOver(i.type);
                 }
               );
             Laya.timer.once(700, this, function() {
-              i.duringload && r.Inst.onLoadStateChange(i.type, !0);
+              i.duringload && r.Inst.onLoadStateChange(i.type, true);
             });
           }
         }),
@@ -367,7 +342,7 @@ var __extends =
           (t.pop_collectinput = null),
           (t.label_collect_count = null),
           (t.noinfo = null),
-          (t.locking = !1),
+          (t.locking = false),
           (t.current_type = e.ALL),
           (s.Inst = t),
           t
@@ -487,7 +462,7 @@ var __extends =
                   );
               },
               null,
-              !1
+              false
             )),
             (this.container_scrollview = this.me.getChildByName('scrollview')),
             (this.scrollview = this.container_scrollview.scriptMap[
@@ -500,7 +475,7 @@ var __extends =
                   e.setItemValue(t.index, t.container);
                 },
                 null,
-                !1
+                false
               )
             ),
             this.container_scrollview.on('ratechange', this, function() {
@@ -509,12 +484,12 @@ var __extends =
                 (t.duringload ||
                   (t.have_more_paipu
                     ? t.loadList()
-                    : 0 == t.count && (e.noinfo.visible = !0)));
+                    : 0 == t.count && (e.noinfo.visible = true)));
             }),
             (this.loading = this.container_scrollview.getChildByName(
               'loading'
             )),
-            (this.loading.visible = !1),
+            (this.loading.visible = false),
             (this.container_scrollview.getChildByName(
               'checkother'
             ).clickHandler = Laya.Handler.create(
@@ -523,7 +498,7 @@ var __extends =
                 e.pop_otherpaipu.me.visible || e.pop_otherpaipu.show_check();
               },
               null,
-              !1
+              false
             )),
             (this.tabs = []);
           for (var a = 0; a < 5; a++)
@@ -533,7 +508,7 @@ var __extends =
               (this.tabs[a].clickHandler = new Laya.Handler(
                 this,
                 this.changeTab,
-                [a, !1]
+                [a, false]
               ));
           (this.pop_otherpaipu = new i(
             this.me.getChildByName('pop_otherpaipu')
@@ -550,18 +525,18 @@ var __extends =
         (s.prototype.show = function() {
           var e = this;
           GameMgr.Inst.BehavioralStatistics(20),
-            game.Scene_Lobby.Inst.change_bg('indoor', !1),
-            (this.enable = !0),
-            (this.pop_otherpaipu.me.visible = !1),
-            (this.pop_collectinput.me.visible = !1),
+            game.Scene_Lobby.Inst.change_bg('indoor', false),
+            (this.enable = true),
+            (this.pop_otherpaipu.me.visible = false),
+            (this.pop_collectinput.me.visible = false),
             t.UIBase.anim_alpha_in(this.top, { y: -30 }, 200),
             t.UIBase.anim_alpha_in(this.container_scrollview, { y: 30 }, 200),
-            (this.locking = !0),
-            (this.loading.visible = !1),
+            (this.locking = true),
+            (this.loading.visible = false),
             Laya.timer.once(200, this, function() {
-              e.locking = !1;
+              e.locking = false;
             }),
-            this.changeTab(0, !0),
+            this.changeTab(0, true),
             (this.label_collect_count.text =
               s.collect_lsts.length.toString() +
               '/' +
@@ -569,19 +544,19 @@ var __extends =
         }),
         (s.prototype.close = function(e) {
           var i = this;
-          (this.locking = !0),
+          (this.locking = true),
             t.UIBase.anim_alpha_out(this.top, { y: -30 }, 150),
             t.UIBase.anim_alpha_out(this.container_scrollview, { y: 30 }, 150),
             Laya.timer.once(150, this, function() {
-              (i.locking = !1), (i.enable = !1), e && e.run();
+              (i.locking = false), (i.enable = false), e && e.run();
             });
         }),
         (s.prototype.changeTab = function(t, i) {
           var n = [e.ALL, e.RANK, e.FRIEND, e.MATCH, e.COLLECT];
           if (i || n[t] != this.current_type) {
             if (
-              ((this.loading.visible = !1),
-              (this.noinfo.visible = !1),
+              ((this.loading.visible = false),
+              (this.noinfo.visible = false),
               (this.current_type = n[t]),
               this.current_type == e.COLLECT &&
                 s.paipuLst[this.current_type].reset(),
@@ -611,7 +586,7 @@ var __extends =
               for (var r = s.record_map[a.uuid_list[e]], o = 0; o < 4; o++) {
                 var l = i.getChildByName('p' + o.toString());
                 if (o < r.result.players.length) {
-                  l.visible = !0;
+                  l.visible = true;
                   var h = l.getChildByName('chosen'),
                     c = l.getChildByName('rank'),
                     u = l.getChildByName('rank_word'),
@@ -620,7 +595,7 @@ var __extends =
                     f = r.result.players[o];
                   d.text = f.part_point_1 || '0';
                   for (
-                    var p = game.Tools.strOfLocalization(2133), m = !1, g = 0;
+                    var p = game.Tools.strOfLocalization(2133), m = false, g = 0;
                     g < r.accounts.length;
                     g++
                   )
@@ -650,7 +625,7 @@ var __extends =
                       case 3:
                         y.text = 'th';
                     }
-                } else l.visible = !1;
+                } else l.visible = false;
               }
               var v = new Date(1e3 * r.end_time),
                 b = '';
@@ -679,7 +654,7 @@ var __extends =
                           ));
                   },
                   null,
-                  !1
+                  false
                 )),
                 (i.getChildByName('share').clickHandler = Laya.Handler.create(
                   this,
@@ -690,7 +665,7 @@ var __extends =
                       GameMgr.Inst.BehavioralStatistics(21));
                   },
                   null,
-                  !1
+                  false
                 ));
               var w = i.getChildByName('room'),
                 x = game.Tools.get_room_desc(r.config);
@@ -713,28 +688,28 @@ var __extends =
                   E = i.getChildByName('input'),
                   L = E.getChildByName('txtinput'),
                   D = i.getChildByName('btn_input'),
-                  A = !1,
+                  A = false,
                   N = function() {
                     A
-                      ? ((M.visible = !1),
-                        (E.visible = !0),
+                      ? ((M.visible = false),
+                        (E.visible = true),
                         (L.text = M.text),
-                        (D.visible = !1))
+                        (D.visible = false))
                       : (T.remarks && '' != T.remarks
                           ? (M.text = game.Tools.strWithoutForbidden(T.remarks))
                           : (M.text = I),
-                        (M.visible = !0),
-                        (E.visible = !1),
-                        (D.visible = !0));
+                        (M.visible = true),
+                        (E.visible = false),
+                        (D.visible = true));
                   };
                 N(),
                   (D.clickHandler = Laya.Handler.create(
                     this,
                     function() {
-                      (A = !0), N();
+                      (A = true), N();
                     },
                     null,
-                    !1
+                    false
                   )),
                   L.on('blur', this, function() {
                     A &&
@@ -750,7 +725,7 @@ var __extends =
                             { uuid: r.uuid, remarks: L.text },
                             function(t, e) {}
                           ))),
-                      (A = !1),
+                      (A = false),
                       N();
                   });
                 ((R = i.getChildByName(
@@ -761,15 +736,15 @@ var __extends =
                     s.removeCollect(r.uuid);
                   },
                   null,
-                  !1
+                  false
                 )),
                   (R.getChildByName('img').skin = game.Tools.localUISrc(
                     'myres/lobby/collect_star.png'
                   ));
               } else {
-                (i.getChildByName('input').visible = !1),
-                  (i.getChildByName('btn_input').visible = !1),
-                  (i.getChildByName('remarks_info').visible = !0),
+                (i.getChildByName('input').visible = false),
+                  (i.getChildByName('btn_input').visible = false),
+                  (i.getChildByName('remarks_info').visible = true),
                   (i.getChildByName('remarks_info').text = I);
                 var R = i.getChildByName('collect');
                 (R.clickHandler = Laya.Handler.create(
@@ -778,7 +753,7 @@ var __extends =
                     n.pop_collectinput.show(r.uuid, r.start_time, r.end_time);
                   },
                   null,
-                  !1
+                  false
                 )),
                   (R.getChildByName('img').skin = game.Tools.localUISrc(
                     'myres/lobby/collect_star_gray.png'
@@ -796,7 +771,7 @@ var __extends =
         (s.prototype.onLoadOver = function(t) {
           if (this.current_type == t) {
             0 == s.paipuLst[this.current_type].count &&
-              (this.noinfo.visible = !0);
+              (this.noinfo.visible = true);
           }
         }),
         (s.prototype.onCollectChange = function(t, i) {

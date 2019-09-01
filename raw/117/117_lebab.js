@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -35,14 +12,14 @@ let uiscript;
         .getChildByName('Prohibition')
         .getChildByName('container')),
         (this.info = this.root.getChildByName('text')),
-        (this.me.visible = !1),
+        (this.me.visible = false),
         (this.root.getChildByName('btn').clickHandler = Laya.Handler.create(
           this,
           () => {
             t.close();
           },
           null,
-          !1
+          false
         ));
     }),
     (i.prototype.show = function({u32_params, str_params}) {
@@ -60,7 +37,7 @@ game.Tools.time2YearMounthDate(n)} ${game.Tools.time2HourMinute(n)}\n`;
         str_params.length > 0 &&
         (i += game.Tools.strOfLocalization(2067) + str_params[0]),
         (this.info.text = i),
-        (this.me.visible = !0),
+        (this.me.visible = true),
         t.UIBase.anim_pop_out(this.root, null);
     }),
     (i.prototype.close = function() {
@@ -68,7 +45,7 @@ game.Tools.time2YearMounthDate(n)} ${game.Tools.time2HourMinute(n)}\n`;
       t.UIBase.anim_pop_hide(
         this.root,
         Laya.Handler.create(this, () => {
-          e.me.visible = !1;
+          e.me.visible = false;
         })
       );
     }),

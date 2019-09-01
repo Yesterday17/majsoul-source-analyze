@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -56,7 +31,7 @@ var __extends =
         e.push('btn_cancel'),
           (this._oplist = e),
           this.showOp(e),
-          (this.enable = !0),
+          (this.enable = true),
           view.DesktopMgr.Inst.ShowChiPengEffect(),
           view.AudioMgr.PlayAudio(202);
       }),
@@ -159,7 +134,7 @@ var __extends =
           'FastTest',
           'inputChiPengGang',
           {
-            cancel_operation: !0,
+            cancel_operation: true,
             timeuse: t.UI_DesktopInfo.Inst._timecd.timeuse
           },
           function(t, e) {}

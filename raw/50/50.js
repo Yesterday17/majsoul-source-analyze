@@ -4,7 +4,7 @@ var game;
     function t() {}
     return (
       (t.prototype.recover_pre_order = function(t) {
-        return !1;
+        return false;
       }),
       (t.prototype.getGoodsInfo = function(t) {
         return null;

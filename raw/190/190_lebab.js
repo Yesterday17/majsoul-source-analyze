@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   let e;
@@ -56,7 +33,7 @@ let uiscript;
           this,
           () => {
             e.locking ||
-              ((e.btn.disabled = !0),
+              ((e.btn.disabled = true),
               app.NetAgent.sendReq2Lobby('Lobby', 'cancelMatch', {}, (i, n) => {
                 i || n.error
                   ? t.UIMgr.Inst.showNetReqError('cancelMatch', i, n)
@@ -64,33 +41,33 @@ let uiscript;
               }));
           },
           null,
-          !1
+          false
         )),
-        (this.btn.disabled = !1);
+        (this.btn.disabled = false);
     }),
     (n.prototype.tryToClose = function(i) {
       const n = this;
       this.state == e.none
-        ? ((this.enable = !1), i.runWith(!0))
+        ? ((this.enable = false), i.runWith(true))
         : this.state == e.during
         ? app.NetAgent.sendReq2Lobby('Lobby', 'cancelMatch', {}, (e, a) => {
             e || a.error
               ? (t.UIMgr.Inst.showNetReqError('cancelMatch', e, a),
-                i.runWith(!1))
-              : ((n.enable = !1), i.runWith(!0), n.close());
+                i.runWith(false))
+              : ((n.enable = false), i.runWith(true), n.close());
           })
-        : this.state == e.success && i.runWith(!1);
+        : this.state == e.success && i.runWith(false);
     }),
     (n.prototype.show = function(i) {
       const n = this;
-      (this.enable = !0),
-        (this.locking = !0),
-        (this.btn.disabled = !1),
+      (this.enable = true),
+        (this.locking = true),
+        (this.btn.disabled = false),
         (this.root.scaleX = this.root.scaleY = 1),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            n.locking = !1;
+            n.locking = false;
           })
         ),
         Laya.timer.clearAll(this);
@@ -121,11 +98,11 @@ let uiscript;
     }),
     (n.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.enable = !1);
+            (e.locking = false), (e.enable = false);
           })
         );
     }),
@@ -134,13 +111,13 @@ let uiscript;
     }),
     (n.prototype.onGameStart = function({connect_token, game_uuid, location}) {
       (this.state = e.success),
-        (this.enable = !1),
-        (t.UI_Lobby.Inst.enable = !1),
+        (this.enable = false),
+        (t.UI_Lobby.Inst.enable = false),
         game.MJNetMgr.Inst.OpenConnect(
           connect_token,
           game_uuid,
           location,
-          !1,
+          false,
           null
         );
     }),

@@ -3,12 +3,12 @@ var uiscript;
   var e = (function() {
     function e(t) {
       (this._me = null),
-        (this._enable = !1),
-        (this._valid = !1),
-        (this._enable = this._valid = !1),
+        (this._enable = false),
+        (this._valid = false),
+        (this._enable = this._valid = false),
         t
           ? ((this._me = t),
-            (this._me.visible = !1),
+            (this._me.visible = false),
             this._me.frameOnce(4, this, this._onload))
           : console.error('加载UI失败');
     }
@@ -17,8 +17,8 @@ var uiscript;
         get: function() {
           return this._me;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(e.prototype, 'enable', {
         get: function() {
@@ -31,11 +31,11 @@ var uiscript;
             (this._me.visible = t),
             t ? this._onEnable() : this._onDisable());
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (e.prototype._onload = function() {
-        (this._valid = !0),
+        (this._valid = true),
           this.onCreate(),
           this.me.frameLoop(1, this, this._update);
       }),
@@ -51,10 +51,10 @@ var uiscript;
       (e.prototype.destroy = function() {
         this._valid &&
           (Laya.timer.clearAll(this),
-          (this.enable = !1),
+          (this.enable = false),
           this.onDestroy(),
-          (this._valid = !1),
-          this._me.destroy(!0),
+          (this._valid = false),
+          this._me.destroy(true),
           t.UIMgr.Inst.onUIDestory(this));
       }),
       (e.prototype.onCreate = function() {}),
@@ -93,17 +93,17 @@ var uiscript;
         );
       }),
       (e.anim_alpha_in = function(t, e, i, n, a, r) {
-        void 0 === n && (n = 0),
-          void 0 === a && (a = null),
-          void 0 === r && (r = null);
+        undefined === n && (n = 0),
+          undefined === a && (a = null),
+          undefined === r && (r = null);
         var s = {};
         for (var o in e) (s[o] = t[o]), (t[o] += e[o]);
         (t.alpha = 0), (s.alpha = 1), Laya.Tween.to(t, s, i, r, a, n);
       }),
       (e.anim_alpha_out = function(t, e, i, n, a, r) {
-        void 0 === n && (n = 0),
-          void 0 === a && (a = null),
-          void 0 === r && (r = null);
+        undefined === n && (n = 0),
+          undefined === a && (a = null),
+          undefined === r && (r = null);
         var s = {};
         for (var o in e) (s[o] = t[o]), (e[o] += t[o]);
         (e.alpha = 0),

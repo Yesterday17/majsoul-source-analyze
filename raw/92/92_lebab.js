@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let view;
 !(t => {
   const e = (e => {
@@ -71,14 +48,14 @@ let view;
               r++;
               const a = new t.HandPai3D(n.trans_hand.parent);
               a.SetVal(mjcore.MJPai.Create('5z')),
-                a.SetIndex(r - 1, !1),
+                a.SetIndex(r - 1, false),
                 n.hand.push(a),
                 a.DoAnim_Stand();
             }
           });
         14 == e &&
           Laya.timer.once(900, this, () => {
-            n.hand[13].SetIndex(13, !0);
+            n.hand[13].SetIndex(13, true);
           });
       }
     }),
@@ -97,7 +74,7 @@ let view;
       this.debug_new_round_frame = Laya.timer.currFrame;
     }),
     (i.prototype.LiPai = function() {
-      this.hand[this.hand.length - 1].SetIndex(this.hand.length - 1, !1),
+      this.hand[this.hand.length - 1].SetIndex(this.hand.length - 1, false),
         this.hand[this.hand.length - 1].Stand();
     }),
     (i.prototype.onBabei = function(t, e) {
@@ -122,13 +99,13 @@ let view;
             Laya.timer.once(1e3, this, () => {
               (i.hand[n] = i.hand[i.hand.length - 1]),
                 i.hand.pop(),
-                i.hand[n].SetIndex(n, !1),
+                i.hand[n].SetIndex(n, false),
                 i.hand[n].Stand();
             });
         }
     }),
     (i.prototype._RemoveHandPai = function(t, e) {
-      if ((void 0 === e && (e = !0), e)) {
+      if ((undefined === e && (e = true), e)) {
         for (i = 0; i < this.hand.length; i++)
           if (mjcore.MJPai.isSame(t, this.hand[i].val)) {
             n = this.hand[i];
@@ -151,7 +128,7 @@ let view;
     }),
     (i.prototype._LiPai = function() {
       this.hand.sort(({val}, {val}) => mjcore.MJPai.Distance(val, val));
-      for (let t = 0; t < this.hand.length; t++) this.hand[t].SetIndex(t, !1);
+      for (let t = 0; t < this.hand.length; t++) this.hand[t].SetIndex(t, false);
     }),
     (i.prototype.recordBabei = function(t, e, i) {
       this.recordDiscardTile(t, e, i);
@@ -177,7 +154,7 @@ let view;
         ) {
           const i = new t.HandPai3D(this.trans_hand.parent);
           i.SetVal(mjcore.MJPai.Create('5z')),
-            i.SetIndex(this.hand.length, !1),
+            i.SetIndex(this.hand.length, false),
             i.Stand(),
             this.hand.push(i);
         }
@@ -190,7 +167,7 @@ let view;
       }
     }),
     (i.prototype.AddMing = function(i, n) {
-      if ((void 0 === n && (n = !0), !(this.seat < 0))) {
+      if ((undefined === n && (n = true), !(this.seat < 0))) {
         app.Log.log(
           `ViewPlayer_Other AddMing  ming:${i.toString()} doanim:${n}`
         );
@@ -216,7 +193,7 @@ let view;
       }
     }),
     (i.prototype.AddGang = function(i, n) {
-      if ((void 0 === n && (n = !0), !(this.seat < 0))) {
+      if ((undefined === n && (n = true), !(this.seat < 0))) {
         app.Log.log(
           `ViewPlayer_Other AddGang ${i.toString()} doanim:${n}`
         );
@@ -250,7 +227,7 @@ let view;
         try {
           const i = new t.HandPai3D(this.trans_hand.parent);
           i.SetVal(e),
-            i.SetIndex(this.hand.length, !0),
+            i.SetIndex(this.hand.length, true),
             i.Stand(),
             this.hand.push(i);
         } catch (t) {
@@ -270,7 +247,7 @@ let view;
       if (!(this.seat < 0)) {
         const i = new t.HandPai3D(this.trans_hand.parent);
         i.SetVal(e),
-          i.SetIndex(this.hand.length, !0),
+          i.SetIndex(this.hand.length, true),
           t.DesktopMgr.Inst.record_show_hand
             ? (i.FullDown(),
               (i.pai3D.ispaopai = t.DesktopMgr.Inst.isPaoPai(i.pai3D.val)))
@@ -291,10 +268,10 @@ let view;
           if ((this.SetNum(e.length + (n ? 1 : 0)), n)) {
             const s = this.hand[this.hand.length - 1];
             s.SetVal(i),
-              s.SetIndex(this.hand.length - 1, !0),
+              s.SetIndex(this.hand.length - 1, true),
               s.FullDown(),
               (s.model.transform.localPosition.z += 0.2 * t.PAIMODEL_HEIGHT),
-              (s.shadow.active = !1);
+              (s.shadow.active = false);
             u = s.pai3D.model.transform.position.clone();
             (this.hand3d.transform.position = u.clone()),
               this.hand3d
@@ -354,10 +331,10 @@ let view;
           if (n) {
             const c = this.hand[this.hand.length - 1];
             c.SetVal(i),
-              c.SetIndex(this.hand.length - 1, !0),
+              c.SetIndex(this.hand.length - 1, true),
               c.FullDown(),
               (c.model.transform.localPosition.z += 0.2 * t.PAIMODEL_HEIGHT),
-              (c.shadow.active = !1);
+              (c.shadow.active = false);
             var u = c.pai3D.model.transform.position.clone();
             (this.hand3d.transform.position = u.clone()),
               this.hand3d
@@ -459,7 +436,7 @@ let view;
               (this.hand[i].pai3D.ispaopai = t.DesktopMgr.Inst.isPaoPai(
                 this.hand[i].pai3D.val
               )))
-            : (this.hand[i].Stand(), (this.hand[i].pai3D.ispaopai = !1)),
+            : (this.hand[i].Stand(), (this.hand[i].pai3D.ispaopai = false)),
             this.hand[i].pai3D.OnChoosedPai();
     }),
     (i.prototype.onShowPaopaiChange = function() {

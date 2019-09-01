@@ -1,34 +1,9 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(t) {
     function e() {
       var i = t.call(this, new ui.both_ui.light_tipsUI()) || this;
-      return (i.locking = !1), (e.Inst = i), i;
+      return (i.locking = false), (e.Inst = i), i;
     }
     return (
       __extends(e, t),
@@ -44,15 +19,15 @@ var __extends =
               t.locking || t.close();
             },
             null,
-            !1
+            false
           ));
       }),
       (e.prototype.show = function(t) {
         var e = this;
         (this.info.text = t),
           (this.root.height = 120 + this.info.textField.textHeight),
-          (this.enable = !0),
-          (this.locking = !0),
+          (this.enable = true),
+          (this.locking = true),
           (this.root.scaleY = 0),
           Laya.timer.clearAll(this),
           Laya.Tween.to(
@@ -61,7 +36,7 @@ var __extends =
             150,
             null,
             Laya.Handler.create(this, function() {
-              e.locking = !1;
+              e.locking = false;
             })
           ),
           Laya.timer.once(3e3, this, function() {
@@ -70,7 +45,7 @@ var __extends =
       }),
       (e.prototype.close = function() {
         var t = this;
-        (this.locking = !0),
+        (this.locking = true),
           Laya.timer.clearAll(this),
           Laya.Tween.to(
             this.root,
@@ -78,7 +53,7 @@ var __extends =
             150,
             null,
             Laya.Handler.create(this, function() {
-              (t.locking = !1), (t.enable = !1);
+              (t.locking = false), (t.enable = false);
             })
           );
       }),

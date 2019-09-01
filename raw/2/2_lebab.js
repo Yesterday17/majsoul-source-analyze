@@ -2,7 +2,7 @@ let uiscript;
 !(t => {
   const e = (() => {
       function e(t, e) {
-        (this._cell = null), (this.id = e), (this.loaded = !1), (this.note = t);
+        (this._cell = null), (this.id = e), (this.loaded = false), (this.note = t);
       }
       return (e.prototype.bind = function(e, i) {
         const n = this;
@@ -26,25 +26,25 @@ let uiscript;
                 t.UI_OtherPlayerInfo.Inst.show(n.commenter.account_id);
               },
               null,
-              !1
+              false
             )),
           i.cell.btn_del &&
             (i.cell.btn_del.clickHandler = Laya.Handler.create(
               this,
               () => {
-                game.Tools.setGrayDisable(i.cell.btn_del, !0),
+                game.Tools.setGrayDisable(i.cell.btn_del, true),
                   t.UI_SecondConfirm.Inst.show(
                     game.Tools.strOfLocalization(19),
                     Laya.Handler.create(n, () => {
                       n.note.delItem(i.cell.noteitem.id);
                     }),
                     Laya.Handler.create(n, () => {
-                      game.Tools.setGrayDisable(i.cell.btn_del, !1);
+                      game.Tools.setGrayDisable(i.cell.btn_del, false);
                     })
                   );
               },
               null,
-              !1
+              false
             )),
           this._cell !== i.cell &&
             (i.cell.noteitem && i.cell.noteitem.disbind(),
@@ -60,7 +60,7 @@ let uiscript;
         (this.timestamp = timestamp),
           (this.commenter = commenter),
           (this.content = content),
-          (this.loaded = !0),
+          (this.loaded = true),
           this.render();
       }),
       (e.prototype.render = function() {
@@ -74,12 +74,12 @@ let uiscript;
                 this.timestamp
               ));
             const t = JSON.parse(this.content);
-            (this._cell.emo.me.visible = !1),
-              (this._cell.words.visible = !1),
+            (this._cell.emo.me.visible = false),
+              (this._cell.words.visible = false),
               'emo' == t.type
-                ? ((this._cell.emo.me.visible = !0),
+                ? ((this._cell.emo.me.visible = true),
                   this._cell.emo.setSkin(t.chara, t.index))
-                : ((this._cell.words.visible = !0),
+                : ((this._cell.words.visible = true),
                   (this._cell.words.text = game.Tools.strWithoutForbidden(
                     t.text
                   ))),
@@ -93,19 +93,19 @@ let uiscript;
                 e[`full_name_${GameMgr.client_language}`]),
               this.note.target_id == GameMgr.Inst.account_id ||
               this.commenter.account_id == GameMgr.Inst.account_id
-                ? (this._cell.btn_del.visible = !0)
-                : (this._cell.btn_del.visible = !1);
+                ? (this._cell.btn_del.visible = true)
+                : (this._cell.btn_del.visible = false);
           } else
             (this._cell.head.id = 400101),
               (this._cell.date.text = ''),
               (this._cell.time.text = ''),
-              (this._cell.emo.me.visible = !1),
-              (this._cell.words.visible = !1),
-              (this._cell.btn_del.visible = !1),
+              (this._cell.emo.me.visible = false),
+              (this._cell.words.visible = false),
+              (this._cell.btn_del.visible = false),
               (this._cell.name.text = ''),
               (this._cell.level.text = '');
           this._cell.btn_del &&
-            game.Tools.setGrayDisable(this._cell.btn_del, !1);
+            game.Tools.setGrayDisable(this._cell.btn_del, false);
         }
       }),
       e
@@ -148,7 +148,7 @@ let uiscript;
               );
             },
             null,
-            !1
+            false
           )
         )),
         (this.img_input = this.container_input.getChildByName('input')),
@@ -161,7 +161,7 @@ let uiscript;
             s.blockemj.show();
           },
           null,
-          !1
+          false
         ));
       let o = 0;
       (this.btn_send = this.container_input.getChildByName('btn_send')),
@@ -173,7 +173,7 @@ let uiscript;
               '' != i &&
               (o > Laya.timer.currTimer ||
                 ((o = Laya.timer.currTimer + 3e3),
-                game.Tools.setGrayDisable(s.btn_send, !0),
+                game.Tools.setGrayDisable(s.btn_send, true),
                 (i = game.Tools.strWithoutForbidden(i)),
                 app.NetAgent.sendReq2Lobby(
                   'Lobby',
@@ -184,7 +184,7 @@ let uiscript;
                   },
                   (i, n) => {
                     (o = 0),
-                      game.Tools.setGrayDisable(s.btn_send, !1),
+                      game.Tools.setGrayDisable(s.btn_send, false),
                       i || n.error
                         ? (t.UIMgr.Inst.showNetReqError('leaveComment', i, n),
                           n &&
@@ -198,41 +198,41 @@ let uiscript;
                 )));
           },
           null,
-          !1
+          false
         ));
     }
     return (e.prototype.show = function(t, e) {
       if (this.target_id != t || e != this.comment_allow) {
         (this.target_id = t),
           (this.comment_allow = e),
-          (this.blockemj.me.visible = !1),
-          (this.noinfo.visible = !1),
-          (this.container_input.visible = !1);
+          (this.blockemj.me.visible = false),
+          (this.noinfo.visible = false),
+          (this.container_input.visible = false);
         if (
-          (game.Tools.setGrayDisable(this.btn_send, !1),
+          (game.Tools.setGrayDisable(this.btn_send, false),
           t == GameMgr.Inst.account_id)
         )
-          (this.noinfo.visible = !0),
+          (this.noinfo.visible = true),
             (this.noinfo.text = game.Tools.strOfLocalization(2155));
         else {
-          let i = !1, n = !1;
+          let i = false, n = false;
           game.Scene_MJ.Inst.active &&
             view.DesktopMgr.Inst.mode == view.EMJMode.play &&
-            (n = !0),
+            (n = true),
             n
-              ? ((this.noinfo.visible = !0),
+              ? ((this.noinfo.visible = true),
                 (this.noinfo.text = game.Tools.strOfLocalization(20)))
               : 2 == e
-              ? ((this.noinfo.visible = !0),
+              ? ((this.noinfo.visible = true),
                 (this.noinfo.text = game.Tools.strOfLocalization(17)))
               : 1 == e
               ? game.FriendMgr.find(t)
-                ? (i = !0)
-                : ((this.noinfo.visible = !0),
+                ? (i = true)
+                : ((this.noinfo.visible = true),
                   (this.noinfo.text = game.Tools.strOfLocalization(18)))
-              : (i = !0),
+              : (i = true),
             i &&
-              ((this.container_input.visible = !0),
+              ((this.container_input.visible = true),
               (this.img_input.height = 74),
               (this.txt_input.height = 95),
               (this.txt_input.text = ''));
@@ -240,9 +240,9 @@ let uiscript;
       }
     }),
     (e.prototype.reset = function() {
-      (this.noinfo.visible = !1),
-        (this.container_input.visible = !1),
-        (this.blockemj.me.visible = !1),
+      (this.noinfo.visible = false),
+        (this.container_input.visible = false),
+        (this.blockemj.me.visible = false),
         (this.target_id = -1),
         (this.comment_allow = -1);
     }),
@@ -263,19 +263,19 @@ let uiscript;
             t.Sign_Input.Inst.show();
           },
           null,
-          !1
+          false
         ));
     }
     return (
       (e.prototype.reset = function() {
-        (this.label_noinfo.visible = !1), (this.label_content.visible = !1);
+        (this.label_noinfo.visible = false), (this.label_content.visible = false);
       }),
       (e.prototype.setSign = function(t) {
         this.reset(),
           t && '' != t
-            ? ((this.label_content.visible = !0),
+            ? ((this.label_content.visible = true),
               (this.label_content.text = game.Tools.strWithoutForbidden(t)))
-            : (this.label_noinfo.visible = !0);
+            : (this.label_noinfo.visible = true);
       }),
       e
     );
@@ -290,7 +290,7 @@ let uiscript;
         (this.root = this.me.getChildByName('root')),
         (this.scroll_view = this.root.scriptMap['capsui.CScrollView']),
         this.scroll_view.init_scrollview(
-          Laya.Handler.create(this, this.render_item, null, !1)
+          Laya.Handler.create(this, this.render_item, null, false)
         ),
         (this.me.getChildByName('close').clickHandler = Laya.Handler.create(
           this,
@@ -298,7 +298,7 @@ let uiscript;
             i._locking || i.close();
           },
           null,
-          !1
+          false
         ));
     }
     return (e.prototype.show = function() {
@@ -324,22 +324,22 @@ let uiscript;
       }
       this.scroll_view.reset(),
         this.scroll_view.addItem(Math.ceil(this._emjs.length / 3)),
-        (this._locking = !0),
-        (this.me.visible = !0),
+        (this._locking = true),
+        (this.me.visible = true),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            e._locking = !1;
+            e._locking = false;
           })
         );
     }),
     (e.prototype.close = function() {
       const e = this;
-      (this._locking = !0),
+      (this._locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e._locking = !1), (e.me.visible = !1);
+            (e._locking = false), (e.me.visible = false);
           })
         );
     }),
@@ -352,8 +352,8 @@ let uiscript;
             s = e => {
               const s = a.getChildAt(e), l = 3 * n + e;
               l >= o._emjs.length
-                ? (s.visible = !1)
-                : ((s.visible = !0),
+                ? (s.visible = false)
+                : ((s.visible = true),
                   r[`skin_${e}`] ||
                     (r[`skin_${e}`] = new t.UI_Character_Emo(s)),
                   r[`skin_${e}`].setSkin(o._emjs[l].chara, o._emjs[l].index),
@@ -364,7 +364,7 @@ let uiscript;
                         (i._on_btn_emj.runWith(i._emjs[l]), i.close());
                     },
                     null,
-                    !1
+                    false
                   )));
             },
             o = this,
@@ -386,17 +386,17 @@ let uiscript;
         (this.input = null),
         (this.nonote = null),
         (this.red_point = null),
-        (this.readed = !0),
+        (this.readed = true),
         (this.last_read_id = -1),
         (this.red_point = e),
         (this.me = t),
         (this.content = this.me.scriptMap['capsui.CScrollView']),
         this.content.init_scrollview(
-          Laya.Handler.create(this, this._render_item, null, !1)
+          Laya.Handler.create(this, this._render_item, null, false)
         ),
         (this.page_controller = new capsui.PageController(
           this.me.getChildByName('page_controller'),
-          Laya.Handler.create(this, this._render_page, null, !1)
+          Laya.Handler.create(this, this._render_page, null, false)
         )),
         this.me.getChildByName('input') &&
           (this.input = new i(
@@ -421,11 +421,11 @@ let uiscript;
         });
     }
     return (a.prototype.init_data = function(t) {
-      (this.readed = !0),
+      (this.readed = true),
         (this.target_id = t),
         (this.comment_list = []),
-        (this.nonote.visible = !1),
-        this.red_point && (this.red_point.visible = !1),
+        (this.nonote.visible = false),
+        this.red_point && (this.red_point.visible = false),
         this.page_controller.reset(),
         this.content.reset(),
         this.input && this.input.reset(),
@@ -433,12 +433,12 @@ let uiscript;
         this.sign.reset();
     }),
     (a.prototype.show = function() {
-      (this.me.visible = !0),
+      (this.me.visible = true),
         this.target_id == GameMgr.Inst.account_id &&
-          (this.read(), this.red_point && (this.red_point.visible = !1));
+          (this.read(), this.red_point && (this.red_point.visible = false));
     }),
     (a.prototype.close = function() {
-      this.me.visible = !1;
+      this.me.visible = false;
     }),
     (a.prototype.refresh = function() {
       const i = this;

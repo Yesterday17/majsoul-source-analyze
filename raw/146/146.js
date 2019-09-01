@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function t(e) {
@@ -39,12 +14,12 @@ var __extends =
         (t.prototype.show = function() {
           (this.scene = Laya.loader.getRes(t.scene_entrance)),
             this.me.addChild(this.scene),
-            (this.scene.visible = !0);
+            (this.scene.visible = true);
         }),
         (t.prototype.close = function() {
           Laya.timer.clearAll(this),
-            (this.scene.visible = !1),
-            this.scene.destroy(!0);
+            (this.scene.visible = false),
+            this.scene.destroy(true);
         }),
         (t.scene_entrance = ''),
         t
@@ -56,13 +31,13 @@ var __extends =
           (this.round = this.me.getChildByName('round')),
           (this.word = this.me.getChildByName('word')),
           (this.icon = this.me.getChildByName('icon')),
-          (this.me.visible = !1);
+          (this.me.visible = false);
       }
       return (
         (t.prototype.show = function(t) {
           var e = this;
           if (!this.me.visible) {
-            this.me.visible = !0;
+            this.me.visible = true;
             var i = Laya.timer.currTimer;
             if (
               (Laya.timer.frameLoop(1, this, function() {
@@ -71,9 +46,9 @@ var __extends =
               (this.word.text = game.Tools.strOfLocalization(2053)),
               0 == t)
             )
-              (this.icon.visible = !1), (this.word.y = 150);
+              (this.icon.visible = false), (this.word.y = 150);
             else
-              switch (((this.icon.visible = !0), (this.word.y = 195), t)) {
+              switch (((this.icon.visible = true), (this.word.y = 195), t)) {
                 case 1:
                 case 4:
                   this.icon.skin = game.Tools.localUISrc(
@@ -113,12 +88,12 @@ var __extends =
                   );
                   break;
                 default:
-                  this.icon.visible = !1;
+                  this.icon.visible = false;
               }
           }
         }),
         (t.prototype.close = function() {
-          Laya.timer.clearAll(this), (this.me.visible = !1);
+          Laya.timer.clearAll(this), (this.me.visible = false);
         }),
         t
       );
@@ -126,11 +101,11 @@ var __extends =
     n = (function() {
       function e(e) {
         var i = this;
-        (this.saveflag = !0),
-          (this.locking = !1),
+        (this.saveflag = true),
+          (this.locking = false),
           (this.last_mail_time = -1),
           (this.me = e),
-          (this.me.visible = !1),
+          (this.me.visible = false),
           (this.root = this.me.getChildByName('jpenroot')),
           (this.root.getChildByName(
             'btn_close'
@@ -140,7 +115,7 @@ var __extends =
               i.locking || i.close();
             },
             null,
-            !1
+            false
           )),
           (this.input_account = this.root
             .getChildByName('container_mail')
@@ -149,10 +124,10 @@ var __extends =
             .getChildByName('container_mail')
             .getChildByName('no')),
           this.input_account.on('input', this, function() {
-            i.label_account_no.visible && (i.label_account_no.visible = !1),
+            i.label_account_no.visible && (i.label_account_no.visible = false),
               '' != i.input_code.text &&
                 '' != i.input_account.text &&
-                game.Tools.setGrayDisable(i.btn_regist, !1);
+                game.Tools.setGrayDisable(i.btn_regist, false);
           }),
           (this.input_code = this.root
             .getChildByName('container_yanzhengma')
@@ -160,7 +135,7 @@ var __extends =
           this.input_code.on('input', this, function() {
             '' != i.input_code.text &&
               '' != i.input_account.text &&
-              game.Tools.setGrayDisable(i.btn_regist, !1);
+              game.Tools.setGrayDisable(i.btn_regist, false);
           }),
           (this.btn_getcode = this.root
             .getChildByName('sendbutton')
@@ -186,7 +161,7 @@ var __extends =
                 }),
                 (i.last_mail_time = Laya.timer.currTimer),
                 i.refresh_code_state())
-              : (i.label_account_no.visible = !0);
+              : (i.label_account_no.visible = true);
           })),
           (this.btn_regist = this.root.getChildByName('btn_enter')),
           (this.btn_regist.clickHandler = new Laya.Handler(this, function() {
@@ -240,9 +215,9 @@ var __extends =
           ));
         var r;
         'jp' == GameMgr.client_language
-          ? ((n.getChildByName('en').visible = !1),
+          ? ((n.getChildByName('en').visible = false),
             (r = n.getChildByName('jp')))
-          : ((n.getChildByName('jp').visible = !1),
+          : ((n.getChildByName('jp').visible = false),
             (r = n.getChildByName('en'))),
           (n.getChildByName('btn_check').clickHandler = new Laya.Handler(
             this,
@@ -260,7 +235,7 @@ var __extends =
                   t.UI_User_Xieyi_enjp.Inst.show('docs/term_of_service.txt');
             },
             null,
-            !1
+            false
           )),
           (r.getChildByName('yinsi').clickHandler = Laya.Handler.create(
             this,
@@ -271,7 +246,7 @@ var __extends =
                   t.UI_User_Xieyi_enjp.Inst.show('docs/privacy_policy.txt');
             },
             null,
-            !1
+            false
           ));
       }
       return (
@@ -282,23 +257,23 @@ var __extends =
         }),
         (e.prototype.show = function() {
           var e = this;
-          (this.locking = !0),
-            (this.me.visible = !0),
+          (this.locking = true),
+            (this.me.visible = true),
             t.UIBase.anim_pop_out(
               this.root,
               Laya.Handler.create(this, function() {
-                e.locking = !1;
+                e.locking = false;
               })
             ),
             (this.input_account.text = ''),
-            (this.label_account_no.visible = !1),
+            (this.label_account_no.visible = false),
             (this.input_code.text = ''),
-            (this.checkbox.visible = !0),
-            (this.btn_regist.visible = !0);
+            (this.checkbox.visible = true),
+            (this.btn_regist.visible = true);
           var i = game.LocalStorage.getItem('saveflag'),
             n = game.LocalStorage.getItem('useremail');
           'true' == i && ((this.input_account.text = n), app.Log.log(n)),
-            game.Tools.setGrayDisable(this.btn_regist, !0),
+            game.Tools.setGrayDisable(this.btn_regist, true),
             Laya.timer.clearAll(this),
             this.refresh_code_state(),
             Laya.timer.loop(100, this, function() {
@@ -307,28 +282,28 @@ var __extends =
         }),
         (e.prototype.refresh_code_state = function() {
           var t = 1e8;
-          game.Tools.setGrayDisable(this.btn_getcode, !0),
+          game.Tools.setGrayDisable(this.btn_getcode, true),
             this.last_mail_time > 0 &&
               (t = Laya.timer.currTimer - this.last_mail_time),
             t < 6e4
-              ? ((this.label_info.underline = !1),
+              ? ((this.label_info.underline = false),
                 (t = Math.ceil((6e4 - t) / 1e3)),
                 (this.label_info.text = game.Tools.strOfLocalization(2682, [
                   t.toString()
                 ])),
-                (this.label_info.underline = !1),
-                game.Tools.setGrayDisable(this.btn_getcode, !0))
+                (this.label_info.underline = false),
+                game.Tools.setGrayDisable(this.btn_getcode, true))
               : ((this.label_info.text = game.Tools.strOfLocalization(2720)),
-                (this.label_info.underline = !0),
-                game.Tools.setGrayDisable(this.btn_getcode, !1));
+                (this.label_info.underline = true),
+                game.Tools.setGrayDisable(this.btn_getcode, false));
         }),
         (e.prototype.close = function() {
           var e = this;
-          (this.locking = !0),
+          (this.locking = true),
             t.UIBase.anim_pop_hide(
               this.root,
               Laya.Handler.create(this, function() {
-                (e.locking = !1), (e.me.visible = !1), Laya.timer.clearAll(e);
+                (e.locking = false), (e.me.visible = false), Laya.timer.clearAll(e);
               })
             );
         }),
@@ -359,18 +334,18 @@ var __extends =
           var e = Laya.LocalStorage.getItem('_pre_sociotype'),
             i = -1;
           e && '' != e && (i = parseInt(e));
-          var n = !0;
+          var n = true;
           if (i === t)
             if (t >= 1 && t <= 6) {
               var a = Laya.LocalStorage.getItem('_pre_code');
-              a && '' != a && ((n = !1), this.onSocioBack(t, a, null));
+              a && '' != a && ((n = false), this.onSocioBack(t, a, null));
             } else if (7 == t);
             else if (t >= 8 && t <= 10) {
               var r = game.LocalStorage.getItem('yostar_token');
               r || (r = '');
               var s = game.LocalStorage.getItem('yostar_uid');
               s || (s = ''),
-                '' != r && '' != s && ((n = !1), this.onSocioBack(t, r, s));
+                '' != r && '' != s && ((n = false), this.onSocioBack(t, r, s));
             }
           if (n)
             if (GameMgr.inConch) {
@@ -432,15 +407,15 @@ var __extends =
                   : (_ += 'tt'),
                   (_ += '/yo_google.html'),
                   'jp' == GameMgr.client_language
-                    ? Yo.googleJaAuth({ redirect_uri: _, openNewWindow: !1 })
-                    : Yo.googleAuth({ redirect_uri: _, openNewWindow: !1 });
+                    ? Yo.googleJaAuth({ redirect_uri: _, openNewWindow: false })
+                    : Yo.googleAuth({ redirect_uri: _, openNewWindow: false });
               } else if (9 == t) {
                 _ = GameMgr.Inst.link_url + 'redirect/';
                 GameMgr.inRelease
                   ? (_ += GameMgr.client_language)
                   : (_ += 'tt'),
                   (_ += '/yo_facebook.html'),
-                  Yo.facebookAuth({ redirect_uri: _, openNewWindow: !1 });
+                  Yo.facebookAuth({ redirect_uri: _, openNewWindow: false });
               } else if (10 == t) {
                 var _ = GameMgr.Inst.link_url + 'redirect/';
                 GameMgr.inRelease
@@ -448,8 +423,8 @@ var __extends =
                   : (_ += 'tt'),
                   (_ += '/yo_tiwtter.html'),
                   'jp' == GameMgr.client_language
-                    ? Yo.twitterJaAuth({ redirect_uri: _, openNewWindow: !1 })
-                    : Yo.twitterAuth({ redirect_uri: _, openNewWindow: !1 });
+                    ? Yo.twitterJaAuth({ redirect_uri: _, openNewWindow: false })
+                    : Yo.twitterAuth({ redirect_uri: _, openNewWindow: false });
               }
             }
         }),
@@ -468,8 +443,8 @@ var __extends =
                 return '';
             }
           },
-          enumerable: !0,
-          configurable: !0
+          enumerable: true,
+          configurable: true
         }),
         (r.prototype.onCreate = function() {
           var a = this,
@@ -485,9 +460,9 @@ var __extends =
             };
             return (
               (e.input.text = ''),
-              (e.lb.visible = !0),
+              (e.lb.visible = true),
               e.input.on('focus', a, function() {
-                e.lb.visible = !1;
+                e.lb.visible = false;
               }),
               e.input.on('blur', a, function() {
                 e.lb.visible = !e.input.text || '' == e.input.text;
@@ -512,10 +487,10 @@ var __extends =
             'chs' != GameMgr.client_language &&
               ((this.container_login
                 .getChildByName('chs')
-                .getChildByName('lb').visible = !1),
+                .getChildByName('lb').visible = false),
               (this.container_login
                 .getChildByName('chs')
-                .getChildByName('img_lb').visible = !1)),
+                .getChildByName('img_lb').visible = false)),
             (this.txt_account = o(
               this.container_login
                 .getChildByName('chs')
@@ -541,7 +516,7 @@ var __extends =
               }
             ),
             (this.container_extendInfo = s.getChildByName('extendinfo')),
-            (this.container_extendInfo.visible = !1),
+            (this.container_extendInfo.visible = false),
             (this.container_login
               .getChildByName('chs')
               .getChildByName('btn_regist').clickHandler = Laya.Handler.create(
@@ -550,7 +525,7 @@ var __extends =
                 t.UI_Entrance_Mail_Regist.Inst.show();
               },
               null,
-              !1
+              false
             )),
             (this.container_login
               .getChildByName('chs')
@@ -562,7 +537,7 @@ var __extends =
                 t.UI_Entrance_Reset_Password.Inst.show();
               },
               null,
-              !1
+              false
             )),
             (this.btn_add2desktop = this.me
               .getChildByName('root')
@@ -585,7 +560,7 @@ var __extends =
               this,
               this._btn_login,
               null,
-              !1
+              false
             )),
             (this.login_loading = new i(s.getChildByName('loading_login'))),
             (this.page_maillogin = new n(this.me.getChildByName('mail_login'))),
@@ -598,7 +573,7 @@ var __extends =
             this.social_btns.push(
               this.container_social.getChildByName('btn' + u)
             ),
-              (this.social_btns[u].visible = !1);
+              (this.social_btns[u].visible = false);
           var l = [];
           'chs' == GameMgr.client_language &&
             (l = [
@@ -621,13 +596,13 @@ var __extends =
             var h = function(t) {
                 var e = c.social_btns[t];
                 t < l.length
-                  ? ((e.visible = !0),
+                  ? ((e.visible = true),
                     (e.getChildAt(0).skin = game.Tools.localUISrc(l[t].img)),
                     (e.clickHandler = new Laya.Handler(c, function() {
                       r.trySocio(l[t].type);
                     })),
                     (e.x = (340 * t) / (l.length - 1) + 55))
-                  : (e.visible = !1);
+                  : (e.visible = false);
               },
               c = this,
               u = 0;
@@ -649,9 +624,9 @@ var __extends =
                   );
               },
               null,
-              !1
+              false
             )),
-            (this.me.getChildByName('infos').visible = !1),
+            (this.me.getChildByName('infos').visible = false),
             (this.me.getChildByName('copyright').visible =
               'chs' == GameMgr.client_language && GameMgr.inConch);
         }),
@@ -663,10 +638,10 @@ var __extends =
             function() {
               !(function(t) {
                 1 == t && r.trySocio(7);
-              })(!0);
+              })(true);
             },
             null,
-            !1
+            false
           );
           var i = t.getChildByName('checksave'),
             n = i.getChildByName('checkbox');
@@ -680,22 +655,22 @@ var __extends =
         (r.prototype.show = function() {
           var t = this;
           'chs' != GameMgr.client_language && GameMgr.inRelease
-            ? ((this.container_login.getChildByName('chs').visible = !1),
-              (this.container_login.getChildByName('jpen').visible = !0),
+            ? ((this.container_login.getChildByName('chs').visible = false),
+              (this.container_login.getChildByName('jpen').visible = true),
               this.ModelJpEn())
             : ((this.container_social.x = 40), (this.container_social.y = 475)),
             -1 != GameMgr.Inst.beinvited_roomid
-              ? ((this.container_extendInfo.visible = !0),
+              ? ((this.container_extendInfo.visible = true),
                 (this.container_extendInfo.getChildAt(0).text =
                   game.Tools.strOfLocalization(2054) +
                   ':' +
                   GameMgr.Inst.beinvited_roomid))
               : '' != GameMgr.Inst.outsee_paipuid
-              ? ((this.container_extendInfo.visible = !0),
+              ? ((this.container_extendInfo.visible = true),
                 (this.container_extendInfo.getChildAt(
                   0
                 ).text = game.Tools.strOfLocalization(2055)))
-              : (this.container_extendInfo.visible = !1),
+              : (this.container_extendInfo.visible = false),
             (this.me.getChildByName('root').getChildByName('version').text =
               game.ResourceVersion.version);
           var e = Laya.LocalStorage.getItem('_pre_sociotype'),
@@ -744,7 +719,7 @@ var __extends =
                 : this.showContainerLogin();
           } else this.showContainerLogin();
           this.scene.show(),
-            (this.enable = !0),
+            (this.enable = true),
             'hk' == game.LobbyNetMgr.gateway_region_name
               ? this.showServer(1)
               : this.showServer(0);
@@ -767,21 +742,21 @@ var __extends =
             var t = game.LocalStorage.getItem('account');
             t && '' != t
               ? ((this.txt_account.input.text = t),
-                (this.txt_account.lb.visible = !1))
+                (this.txt_account.lb.visible = false))
               : ((this.txt_account.input.text = ''),
-                (this.txt_account.lb.visible = !0));
+                (this.txt_account.lb.visible = true));
           }
           var e = game.LocalStorage.getItem('password');
           e && '' != e
             ? ((this.txt_password.input.text = e),
-              (this.txt_password.lb.visible = !1))
+              (this.txt_password.lb.visible = false))
             : ((this.txt_password.input.text = ''),
-              (this.txt_password.lb.visible = !0)),
-            (this.container_login.visible = !0),
+              (this.txt_password.lb.visible = true)),
+            (this.container_login.visible = true),
             this.login_loading.close();
         }),
         (r.prototype.showLoginLoading = function(t) {
-          (this.container_login.visible = !1), this.login_loading.show(t);
+          (this.container_login.visible = false), this.login_loading.show(t);
         }),
         (r.prototype._btn_login = function() {
           var e = this,
@@ -874,11 +849,11 @@ var __extends =
               {
                 account: e,
                 password: GameMgr.encodeP(i),
-                reconnect: !1,
+                reconnect: false,
                 device: a,
                 random_key: GameMgr.device_id,
                 client_version: game.ResourceVersion.version,
-                gen_access_token: !0,
+                gen_access_token: true,
                 currency_platforms: r
               },
               function(a, r) {
@@ -942,7 +917,7 @@ var __extends =
         (r.prototype._loginby_sociocode = function(e, i, n) {
           var a = this;
           if (
-            (void 0 === n && (n = ''),
+            (undefined === n && (n = ''),
             app.Log.log(
               '_loginby_sociocode0 sociotype:' +
                 e +
@@ -1112,7 +1087,7 @@ var __extends =
               {
                 type: e,
                 access_token: i,
-                reconnect: !1,
+                reconnect: false,
                 device: a,
                 random_key: GameMgr.device_id,
                 client_version: game.ResourceVersion.version,
@@ -1154,7 +1129,7 @@ var __extends =
               GameMgr.Inst.account_numerical_resource[a[r].id] = a[r].count;
           (GameMgr.Inst.account_refresh_time = Laya.timer.currTimer),
             i.game_info &&
-              ((GameMgr.Inst.ingame = !0),
+              ((GameMgr.Inst.ingame = true),
               (GameMgr.Inst.mj_server_location = i.game_info.location),
               (GameMgr.Inst.mj_game_token = i.game_info.connect_token),
               (GameMgr.Inst.mj_game_uuid = i.game_info.game_uuid)),
@@ -1165,7 +1140,7 @@ var __extends =
               (GameMgr.Inst.access_token = i.access_token)),
             Laya.LocalStorage.removeItem('__ad_s'),
             t.UI_Loading.Inst.show('load_lobby'),
-            (this.enable = !1),
+            (this.enable = false),
             this.scene.close(),
             t.UI_Entrance_Mail_Regist.Inst.close(),
             this.login_loading.close(),
@@ -1186,7 +1161,7 @@ var __extends =
                   return t.UI_Loading.Inst.setProgressVal(0.2 * e);
                 },
                 null,
-                !1
+                false
               )
             );
         }),
@@ -1195,10 +1170,10 @@ var __extends =
         }),
         (r.prototype.showInfo = function(e) {
           var i = '';
-          e && (i += e), t.UI_Entrance_Error.Inst.show(i, !1);
+          e && (i += e), t.UI_Entrance_Error.Inst.show(i, false);
         }),
         (r.prototype.showError = function(e, i, n) {
-          void 0 === i && (i = -1), void 0 === n && (n = '');
+          undefined === i && (i = -1), undefined === n && (n = '');
           var a = '';
           e && (a += e),
             -1 != i &&
@@ -1207,7 +1182,7 @@ var __extends =
                 ? (a += cfg.info.error.get(i)[GameMgr.client_language])
                 : (a += game.Tools.strOfLocalization(2063) + '(' + i + ')')),
             n && (a += ', info:' + n),
-            t.UI_Entrance_Error.Inst.show(a, !1);
+            t.UI_Entrance_Error.Inst.show(a, false);
         }),
         (r.prototype.showServer = function(t) {
           0 == t
@@ -1220,10 +1195,10 @@ var __extends =
               (this.label_server.text = game.Tools.strOfLocalization(2216)));
         }),
         (r.Accountforbidden = function(t) {
-          var e = !1;
+          var e = false;
           return (
             cfg.info.forbidden.forEach(function(i, n) {
-              '' != i.word && t.indexOf(i.word) >= 0 && (e = !0);
+              '' != i.word && t.indexOf(i.word) >= 0 && (e = true);
             }),
             e
           );
@@ -1243,7 +1218,7 @@ var __extends =
               : 'jp' == GameMgr.client_language
               ? 'scene/Assets/Resource/entrance/icon_color_jp.png'
               : 'scene/Assets/Resource/entrance/icon_color.png'),
-            Laya.loader.getRes(t).dispose(!0);
+            Laya.loader.getRes(t).dispose(true);
         }),
         (r.Inst = null),
         r

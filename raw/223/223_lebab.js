@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -41,12 +18,12 @@ let uiscript;
             t.locking ||
               t.close(
                 Laya.Handler.create(t, () => {
-                  t._func && t._func.runWith({ success: !1 });
+                  t._func && t._func.runWith({ success: false });
                 })
               );
           },
           null,
-          !1
+          false
         ));
     }),
     (i.prototype.show = function(e, i, n) {
@@ -54,12 +31,12 @@ let uiscript;
       (this._func = n),
         (this.label_sec.text = i.toString()),
         (this._sec = i),
-        (this.locking = !0),
-        (this.enable = !0),
+        (this.locking = true),
+        (this.enable = true),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            (a.locking = !1),
+            (a.locking = false),
               (a._start_time = Laya.timer.currTimer),
               Laya.timer.loop(100, a, () => {
                 let i = Math.ceil(
@@ -81,11 +58,11 @@ let uiscript;
     (i.prototype.close = function(e) {
       const i = this;
       Laya.timer.clearAll(this),
-        (this.locking = !0),
+        (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (i.locking = !1), (i.enable = !1), e && e.run();
+            (i.locking = false), (i.enable = false), e && e.run();
           })
         );
     }),

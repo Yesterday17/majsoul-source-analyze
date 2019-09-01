@@ -1,32 +1,9 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
     function i() {
       const t = e.call(this, new ui.common.errorinfoUI()) || this;
-      return (t.locking = !1), t;
+      return (t.locking = false), t;
     }
     return __extends(i, e),
     (i.prototype.onCreate = function() {
@@ -39,7 +16,7 @@ let uiscript;
           this,
           this.close,
           null,
-          !1
+          false
         )),
         (this.btn_restart.clickHandler = Laya.Handler.create(
           this,
@@ -51,20 +28,20 @@ let uiscript;
               : (Laya.Browser.window.location.href = GameMgr.Inst.link_url);
           },
           null,
-          !1
+          false
         )),
-        (this.btn_restart.visible = !1),
-        (this.btn_cancel.visible = !1),
-        (this.blackbg.visible = !1);
+        (this.btn_restart.visible = false),
+        (this.btn_cancel.visible = false),
+        (this.blackbg.visible = false);
     }),
     (i.prototype.showStr = function(t) {
-      (this.btn_cancel.visible = !0), (this.info.text = t), this._show();
+      (this.btn_cancel.visible = true), (this.info.text = t), this._show();
     }),
     (i.prototype.showNetReqError = function(t, e, i) {
-      this.btn_cancel.visible = !0;
+      this.btn_cancel.visible = true;
       let n = '';
       let a = '';
-      let r = !0;
+      let r = true;
       if (e && '' != e) {
         let s = '';
         if (
@@ -91,7 +68,7 @@ let uiscript;
               n += '服务器断开连接';
           }
       } else if (i && i.error && i.error.code) {
-        r = !1;
+        r = false;
         const o = i.error.code;
         const l = cfg.info.error.get(o);
         l
@@ -102,7 +79,7 @@ let uiscript;
       (this.info.text = n), this._show();
       const h = {};
       (h.timestamp = Math.floor(Date.now() / 1e3)),
-        (h.fatal = !1),
+        (h.fatal = false),
         (h.lobby_ip = app.NetAgent.lobby_ip),
         (h.mj_ip = app.NetAgent.mj_ip),
         GameMgr.Inst &&
@@ -130,30 +107,30 @@ let uiscript;
       } else app.Log.log(JSON.stringify(c));
     }),
     (i.prototype.showFE = function() {
-      (this.enable = !0),
+      (this.enable = true),
         (this.info.text = game.Tools.strOfLocalization(14)),
-        (this.blackbg.visible = !0),
-        (this.btn_restart.visible = !0);
+        (this.blackbg.visible = true),
+        (this.btn_restart.visible = true);
     }),
     (i.prototype._show = function() {
       const e = this;
-      (this.me.visible = !0),
-        (this.locking = !0),
+      (this.me.visible = true),
+        (this.locking = true),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            e.locking = !1;
+            e.locking = false;
           })
         );
     }),
     (i.prototype.close = function() {
       const e = this;
       this.locking ||
-        ((this.locking = !0),
+        ((this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.me.visible = !1), e.me.destroy(!0);
+            (e.locking = false), (e.me.visible = false), e.me.destroy(true);
           })
         ));
     }),

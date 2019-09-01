@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (t => {
@@ -40,30 +17,30 @@ let uiscript;
             t.locking || t.close();
           },
           null,
-          !1
+          false
         ));
     }),
     (e.prototype.show = function(t, e) {
       const i = this;
-      (this.enable = !0),
+      (this.enable = true),
         (this.complete = e),
         (this.icon.skin = game.LoadMgr.getResImageSkin(
           cfg.item_definition.title.get(t).icon
         )),
-        (this.btn_close.visible = !1),
+        (this.btn_close.visible = false),
         (this.root.alpha = 1),
-        (this.locking = !0),
-        this.me.in.play(0, !1),
+        (this.locking = true),
+        this.me.in.play(0, false),
         Laya.timer.once(1e3, this, () => {
-          (i.locking = !1), (i.btn_close.visible = !0);
+          (i.locking = false), (i.btn_close.visible = true);
         });
     }),
     (e.prototype.close = function() {
       const t = this;
-      (this.locking = !0),
-        this.me.out.play(0, !1),
+      (this.locking = true),
+        this.me.out.play(0, false),
         Laya.timer.once(200, this, () => {
-          (t.locking = !1), (t.enable = !1), t.complete && t.complete.run();
+          (t.locking = false), (t.enable = false), t.complete && t.complete.run();
         });
     }),
     (e.Inst = null),

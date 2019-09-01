@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function t(t, e) {
@@ -34,15 +9,15 @@ var __extends =
           (this.wrong = t.getChildByName('wrong')),
           (this.accept = t.getChildByName('accept')),
           this.txtinput.on('focus', this, function() {
-            (i.wrong.visible = !1), (i.accept.visible = !1);
+            (i.wrong.visible = false), (i.accept.visible = false);
           }),
           this.txtinput.on('blur', this, function() {
-            (i.wrong.visible = !1),
-              (i.accept.visible = !1),
+            (i.wrong.visible = false),
+              (i.accept.visible = false),
               '' != i.txtinput.text &&
                 (!i.func_pending || i.func_pending.run()
-                  ? (i.accept.visible = !0)
-                  : (i.wrong.visible = !0));
+                  ? (i.accept.visible = true)
+                  : (i.wrong.visible = true));
           }),
           this.reset();
       }
@@ -51,20 +26,20 @@ var __extends =
           get: function() {
             return this.txtinput.text;
           },
-          enumerable: !0,
-          configurable: !0
+          enumerable: true,
+          configurable: true
         }),
         Object.defineProperty(t.prototype, 'isOK', {
           get: function() {
             return !this.func_pending || this.func_pending.run();
           },
-          enumerable: !0,
-          configurable: !0
+          enumerable: true,
+          configurable: true
         }),
         (t.prototype.reset = function() {
           (this.txtinput.text = ''),
-            (this.wrong.visible = !1),
-            (this.accept.visible = !1);
+            (this.wrong.visible = false),
+            (this.accept.visible = false);
         }),
         t
       );
@@ -135,7 +110,7 @@ var __extends =
                     password: GameMgr.encodeP(i.input_password0.text)
                   },
                   function(n, a) {
-                    (i.btn_confirm.mouseEnabled = !0),
+                    (i.btn_confirm.mouseEnabled = true),
                       n || a.error
                         ? (t.UIMgr.Inst.showNetReqError('bindEmail', n, a),
                           (i.last_send_time = 0))
@@ -163,8 +138,8 @@ var __extends =
                       );
                     e = i.input_mail.text;
                   }
-                  (i.btn_send_code.mouseEnabled = !1),
-                    (i.during_send_cd = !0),
+                  (i.btn_send_code.mouseEnabled = false),
+                    (i.during_send_cd = true),
                     (i.last_send_time = Laya.timer.currTimer),
                     i.refresh_send(),
                     app.NetAgent.sendReq2Lobby(
@@ -192,49 +167,49 @@ var __extends =
             ).clickHandler = new Laya.Handler(this, function() {
               i.locking || i.close();
             })),
-            (this.during_send_cd = !1),
+            (this.during_send_cd = false),
             (this.last_send_time = 0);
         }),
         (n.prototype.show = function() {
           var e = this;
-          (this.enable = !0),
-            (this.locking = !0),
+          (this.enable = true),
+            (this.locking = true),
             (this.input_code.text = ''),
             this.input_password0.reset(),
             this.input_password1.reset(),
             GameMgr.Inst.account_data.email
-              ? ((this.input_mail.me.visible = !1),
+              ? ((this.input_mail.me.visible = false),
                 (this.label_mail.text = GameMgr.Inst.account_data.email),
-                (this.label_mail.parent.visible = !0))
-              : ((this.input_mail.me.visible = !0),
+                (this.label_mail.parent.visible = true))
+              : ((this.input_mail.me.visible = true),
                 this.input_mail.reset(),
-                (this.label_mail.parent.visible = !1)),
+                (this.label_mail.parent.visible = false)),
             Laya.timer.clearAll(this),
             t.UIBase.anim_pop_out(
               this.root,
               Laya.Handler.create(this, function() {
-                e.locking = !1;
+                e.locking = false;
               })
             ),
             this.during_send_cd
               ? this.refresh_send()
-              : ((this.during_send_cd = !1),
-                (this.btn_send_code.mouseEnabled = !0),
+              : ((this.during_send_cd = false),
+                (this.btn_send_code.mouseEnabled = true),
                 (this.label_send_code.text = game.Tools.strOfLocalization(
                   2787
                 ))),
-            (this.btn_confirm.mouseEnabled = !0),
+            (this.btn_confirm.mouseEnabled = true),
             Laya.timer.frameLoop(1, this, function() {
               e.refresh_send();
             });
         }),
         (n.prototype.close = function() {
           var e = this;
-          (this.locking = !0),
+          (this.locking = true),
             t.UIBase.anim_pop_hide(
               this.root,
               Laya.Handler.create(this, function() {
-                (e.locking = !1), (e.enable = !1), Laya.timer.clearAll(e);
+                (e.locking = false), (e.enable = false), Laya.timer.clearAll(e);
               })
             );
         }),
@@ -242,8 +217,8 @@ var __extends =
           if (this.during_send_cd) {
             var t = Laya.timer.currTimer - this.last_send_time;
             t >= 6e4
-              ? ((this.during_send_cd = !1),
-                (this.btn_send_code.mouseEnabled = !0),
+              ? ((this.during_send_cd = false),
+                (this.btn_send_code.mouseEnabled = true),
                 (this.label_send_code.text = game.Tools.strOfLocalization(
                   2787
                 )))

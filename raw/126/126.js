@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -40,10 +15,10 @@ var __extends =
       }),
       (i.prototype.show = function() {
         var t = this;
-        (this.me.visible = !0),
-          this.me.start.play(0, !1),
+        (this.me.visible = true),
+          this.me.start.play(0, false),
           Laya.timer.once(1300, this, function() {
-            (t.me.visible = !1), t.me.destroy(!0);
+            (t.me.visible = false), t.me.destroy(true);
           });
       }),
       i

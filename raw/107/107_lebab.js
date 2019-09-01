@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -47,12 +24,12 @@ let uiscript;
           Laya.Handler.create(
             this,
             ({progresses}) => {
-              (e.has_refresh_count = !0),
+              (e.has_refresh_count = true),
                 (e.datas = progresses),
                 e.Inst && e.Inst.enable && e.Inst.refresh();
             },
             null,
-            !1
+            false
           )
         );
     }),
@@ -61,15 +38,15 @@ let uiscript;
         for (let i = progresses[e], n = 0; n < this.datas.length; n++)
           if (!this.datas[n].achieved && this.datas[n].id == i.id) {
             null != i.achieved &&
-              void 0 != i.achieved &&
+              undefined != i.achieved &&
               (this.datas[n].achieved = i.achieved),
               null != i.counter &&
-                void 0 != i.counter &&
+                undefined != i.counter &&
                 (this.datas[n].counter = i.counter);
             break;
           }
     }),
-    (i.prototype.isopen = () => !0),
+    (i.prototype.isopen = () => true),
     (i.prototype.onCreate = function() {
       this.root = this.me.getChildByName('root');
       for (let t = 0; t < 3; t++) {
@@ -95,7 +72,7 @@ let uiscript;
       }
     }),
     (i.prototype.show = function() {
-      (this.enable = !0), (this.btn_cd = 0), this.refresh();
+      (this.enable = true), (this.btn_cd = 0), this.refresh();
     }),
     (i.prototype.getLocalTime = () => {
       let t = new Date().getTime();
@@ -113,7 +90,7 @@ let uiscript;
       );
     }),
     (i.prototype.hide = function() {
-      this.enable = !1;
+      this.enable = false;
     }),
     (i.prototype.refresh = function() {
       const e = this;
@@ -124,19 +101,19 @@ let uiscript;
                 if (n < i.datas.length) {
                   const s = i.datas[n], o = cfg.events.dailyevent.get(s.id);
                   if (s.achieved || !o)
-                    (r.container_info.visible = !1),
+                    (r.container_info.visible = false),
                       (r.bg.skin = game.Tools.localUISrc(
                         'myres/lobby/bg_rules_no.png'
                       ));
                   else {
-                    (r.container_info.visible = !0),
+                    (r.container_info.visible = true),
                       (r.bg.skin = game.Tools.localUISrc(
                         'myres/lobby/bg_rules.png'
                       )),
                       (r.btn_change.visible = i.has_refresh_count),
                       (r.desc.text = o[`desc_${GameMgr.client_language}`]),
                       (r.item_count.text = `×${o.reward_num.toString()}`),
-                      (r.item_count.parent.getChildAt(6).visible = !1);
+                      (r.item_count.parent.getChildAt(6).visible = false);
                     const l = cfg.item_definition.currency.get(o.reward_type);
                     l &&
                       ((r.item_icon.skin = game.LoadMgr.getResImageSkin(l.icon)),
@@ -154,7 +131,7 @@ let uiscript;
                           if (!(e.btn_cd > Laya.timer.currTimer)) {
                             e.btn_cd = 1e3 + Laya.timer.currTimer;
                             for (let a = 0; a < e.tasks.length; a++)
-                              e.tasks[a].btn_change.visible = !1;
+                              e.tasks[a].btn_change.visible = false;
                             app.NetAgent.sendReq2Lobby(
                               'Lobby',
                               'refreshDailyTask',
@@ -167,7 +144,7 @@ let uiscript;
                                     r
                                   );
                                 else {
-                                  (i.has_refresh_count = !1),
+                                  (i.has_refresh_count = false),
                                     (i.datas[n] = r.progress);
                                   for (var s = [], o = 0; o < i.datas.length; o++)
                                     i.datas[o].achieved || s.push(i.datas[o]);
@@ -178,11 +155,11 @@ let uiscript;
                           }
                         },
                         null,
-                        !1
+                        false
                       ));
                   }
                 } else
-                  (r.container_info.visible = !1),
+                  (r.container_info.visible = false),
                     (r.bg.skin = game.Tools.localUISrc(
                       'myres/lobby/bg_rules_no.png'
                     ));
@@ -194,7 +171,7 @@ let uiscript;
       )
         n(r);
     }),
-    (i.has_refresh_count = !1),
+    (i.has_refresh_count = false),
     (i.datas = []),
     i
   ;

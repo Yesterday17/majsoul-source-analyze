@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -43,7 +20,7 @@ let uiscript;
         (t.illust = null),
         (t.label_name = null),
         (t.detail_data = null),
-        (t.locking = !1),
+        (t.locking = false),
         (t.tab_info4 = null),
         (t.tab_info3 = null),
         (t.tab_note = null),
@@ -92,7 +69,7 @@ let uiscript;
         (this.btn_addfriend.clickHandler = Laya.Handler.create(
           this,
           () => {
-            (e.btn_addfriend.visible = !1),
+            (e.btn_addfriend.visible = false),
               app.NetAgent.sendReq2Lobby(
                 'Lobby',
                 'applyFriend',
@@ -101,7 +78,7 @@ let uiscript;
               );
           },
           null,
-          !1
+          false
         )),
         (this.root.getChildByName(
           'btn_close'
@@ -111,7 +88,7 @@ let uiscript;
             e.close();
           },
           null,
-          !1
+          false
         )),
         (this.note = new t.UI_PlayerNote(
           this.root.getChildByName('container_note'),
@@ -124,7 +101,7 @@ let uiscript;
             e.locking || (1 != e.tab_index && e.changeMJCategory(1));
           },
           null,
-          !1
+          false
         )),
         (this.tab_info3 = this.root.getChildByName('tab_info3')),
         (this.tab_info3.clickHandler = Laya.Handler.create(
@@ -133,7 +110,7 @@ let uiscript;
             e.locking || (2 != e.tab_index && e.changeMJCategory(2));
           },
           null,
-          !1
+          false
         )),
         (this.tab_note = this.root.getChildByName('tab_note')),
         (this.tab_note.clickHandler = Laya.Handler.create(
@@ -146,7 +123,7 @@ let uiscript;
               i <= 15601824e5
                 ? t.UIMgr.Inst.ShowErrorInfo('该功能正在维护')
                 : e.container_info.visible &&
-                  ((e.container_info.visible = !1),
+                  ((e.container_info.visible = false),
                   (e.tab_info4.skin = e.tab_img_dark),
                   (e.tab_info3.skin = e.tab_img_dark),
                   (e.tab_note.skin = e.tab_img_chosen),
@@ -155,23 +132,23 @@ let uiscript;
             }
           },
           null,
-          !1
+          false
         )),
-        (this.locking = !1);
+        (this.locking = false);
     }),
     (i.prototype.show = function(e, i) {
       const n = this;
-      void 0 === i && (i = 1),
+      undefined === i && (i = 1),
         GameMgr.Inst.BehavioralStatistics(14),
         (this.account_id = e),
-        (this.enable = !0),
-        (this.locking = !0),
+        (this.enable = true),
+        (this.locking = true),
         (this.root.y = 560),
         (this.player_data = null),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            n.locking = !1;
+            n.locking = false;
           })
         ),
         this.detail_data.reset(),
@@ -192,7 +169,7 @@ let uiscript;
         this.note.init_data(e),
         this.refreshBaseInfo(),
         (this.tab_index = i),
-        (this.container_info.visible = !0),
+        (this.container_info.visible = true),
         (this.tab_info4.skin =
           1 == this.tab_index ? this.tab_img_chosen : this.tab_img_dark),
         (this.tab_info3.skin =
@@ -212,9 +189,9 @@ let uiscript;
     (i.prototype.refreshBaseInfo = function() {
       const e = this;
       (this.title.id = 0),
-        (this.illust.me.visible = !1),
+        (this.illust.me.visible = false),
         (this.label_name.text = ''),
-        (this.btn_addfriend.visible = !1),
+        (this.btn_addfriend.visible = false),
         app.NetAgent.sendReq2Lobby(
           'Lobby',
           'fetchAccountInfo',
@@ -235,7 +212,7 @@ let uiscript;
                   e.player_data[1 == e.tab_index ? 'level' : 'level3'].id),
                 (e.level.exp =
                   e.player_data[1 == e.tab_index ? 'level' : 'level3'].score),
-                (e.illust.me.visible = !0),
+                (e.illust.me.visible = true),
                 e.illust.setSkin(a.avatar_id, 'waitingroom'),
                 game.Tools.is_same_zone(
                   GameMgr.Inst.account_id,
@@ -243,8 +220,8 @@ let uiscript;
                 ) &&
                 e.account_id != GameMgr.Inst.account_id &&
                 null == game.FriendMgr.find(e.account_id)
-                  ? (e.btn_addfriend.visible = !0)
-                  : (e.btn_addfriend.visible = !1),
+                  ? (e.btn_addfriend.visible = true)
+                  : (e.btn_addfriend.visible = false),
                 e.note.sign.setSign(a.signature);
             }
           }
@@ -252,7 +229,7 @@ let uiscript;
     }),
     (i.prototype.changeMJCategory = function(t) {
       (this.tab_index = t),
-        (this.container_info.visible = !0),
+        (this.container_info.visible = true),
         this.detail_data.changeMJCategory(t),
         (this.tab_info4.skin =
           1 == this.tab_index ? this.tab_img_chosen : this.tab_img_dark),
@@ -274,12 +251,12 @@ let uiscript;
       const e = this;
       this.enable &&
         (this.locking ||
-          ((this.locking = !0),
+          ((this.locking = true),
           this.detail_data.close(),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, () => {
-              (e.locking = !1), (e.enable = !1);
+              (e.locking = false), (e.enable = false);
             })
           )));
     }),

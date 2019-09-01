@@ -34,13 +34,13 @@ let uiscript;
       }),
       (e.prototype.show = function() {
         if (
-          ((this.me.visible = !0),
+          ((this.me.visible = true),
           this.icon.setSkin(this.skin_id, 'bighead'),
           t.UI_Sushe.skin_owned(this.skin_id))
         )
-          this.container_lock.visible = !1;
+          this.container_lock.visible = false;
         else {
-          this.container_lock.visible = !0;
+          this.container_lock.visible = true;
           const e = cfg.item_definition.skin.get(this.skin_id);
           this.label_lock_info.text =
             e[`lock_tips_${GameMgr.client_language}`];
@@ -59,18 +59,18 @@ let uiscript;
       (this.cells = []),
         (this.container_charas = []),
         (this.skin_data = {}),
-        (this.inited = !1),
+        (this.inited = false),
         (this.total_h = 0),
         (this.me = t),
         (this.content = this.me.getChildByName('content'));
       const n = this.content.getChildByName('templete_cell');
-      (n.visible = !1),
+      (n.visible = false),
         (this.cells = []),
         cfg.item_definition.skin.forEach(({character_id, type, id}) => {
           const a = cfg.item_definition.character.get(character_id);
           if (a && a.open) {
-            let r = !0;
-            0 == type ? (r = !1) : 1 == type && (a.can_marry || (r = !1)),
+            let r = true;
+            0 == type ? (r = false) : 1 == type && (a.can_marry || (r = false)),
               r &&
                 (0 == i.cells.length
                   ? i.cells.push(new e(n))
@@ -83,7 +83,7 @@ let uiscript;
           }
         });
       const a = this.content.getChildByName('templete_chara');
-      (a.visible = !1), (this.container_charas = []);
+      (a.visible = false), (this.container_charas = []);
       for (const r in this.skin_data)
         0 == this.container_charas.length
           ? this.container_charas.push(a)
@@ -105,7 +105,7 @@ let uiscript;
               i.onPanelScroll();
           })
         ),
-        (this.scrollbar.islong = !1),
+        (this.scrollbar.islong = false),
         (this.content.vScrollBarSkin = ''),
         this.content.vScrollBar.on('change', this, () => {
           i.onPanelScroll();
@@ -119,11 +119,11 @@ let uiscript;
       for (var e = this, i = 0; i < this.cells.length; i++)
         (this.cells[i].skin_id = 0),
           this.cells[i].reset(),
-          (this.cells[i].me.visible = !1),
+          (this.cells[i].me.visible = false),
           this.content.addChild(this.cells[i].me),
           (this.cells[i].me.y = 0);
       for (i = 0; i < this.container_charas.length; i++)
-        (this.container_charas[i].visible = !1),
+        (this.container_charas[i].visible = false),
           (this.container_charas[i].y = 0),
           (this.container_charas[i].height = 0);
       this.checkbox_showAll.visible;
@@ -142,7 +142,7 @@ let uiscript;
           }
           if (0 != l.length) {
             const u = e.container_charas[a++];
-            (u.visible = !0), (u.y = r);
+            (u.visible = true), (u.y = r);
             const _ = u.getChildByName('name');
             _.text = i[`name_${GameMgr.client_language}`];
             const d = u.getChildByName('count');
@@ -155,7 +155,7 @@ let uiscript;
             ) {
               var p = l[c];
               const m = e.cells[n++];
-              (m.me.visible = !0),
+              (m.me.visible = true),
                 f.addChild(m.me),
                 (m.me.x = (c % 6) * m.me.width),
                 (m.me.y = Math.floor(c / 6) * m.me.height),
@@ -193,19 +193,19 @@ let uiscript;
       (this.no_info.visible = this.total_h <= 0), this.onPanelScroll();
     }),
     (i.prototype.show = function() {
-      (this.me.visible = !0),
+      (this.me.visible = true),
         this.inited
           ? this.refresh_lite()
-          : ((this.inited = !0),
-            (this.checkbox_showAll.visible = !0),
+          : ((this.inited = true),
+            (this.checkbox_showAll.visible = true),
             this.refresh_force());
     }),
     (i.prototype.close = function() {
-      this.me.visible = !1;
+      this.me.visible = false;
       for (let t = 0; t < this.cells.length; t++) this.cells[t].reset();
     }),
     (i.prototype.when_update_data = function() {
-      this.inited = !1;
+      this.inited = false;
     }),
     i
   ;

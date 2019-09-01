@@ -1,34 +1,9 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
       var t = e.call(this, new ui.entrance.add2desktopUI()) || this;
-      return (t.skin = ''), (t.loaded = !1), (i.Inst = t), t;
+      return (t.skin = ''), (t.loaded = false), (i.Inst = t), t;
     }
     return (
       __extends(i, e),
@@ -52,37 +27,37 @@ var __extends =
       }),
       (i.prototype.show = function() {
         var e = this;
-        (this.enable = !0),
-          (this.locking = !0),
+        (this.enable = true),
+          (this.locking = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              e.locking = !1;
+              e.locking = false;
             })
           ),
-          (this.loaded = !1),
+          (this.loaded = false),
           (this.img.skin = ''),
           '' != this.skin &&
             Laya.loader.load(
               this.skin,
               Laya.Handler.create(this, function() {
-                (e.loaded = !0),
+                (e.loaded = true),
                   e.enable
                     ? (e.img.skin = e.skin)
-                    : ((e.loaded = !1), Laya.loader.clearTextureRes(e.skin));
+                    : ((e.loaded = false), Laya.loader.clearTextureRes(e.skin));
               })
             );
       }),
       (i.prototype.close = function() {
         var e = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1),
-                (e.enable = !1),
+              (e.locking = false),
+                (e.enable = false),
                 e.loaded &&
-                  ((e.loaded = !1), Laya.loader.clearTextureRes(e.skin));
+                  ((e.loaded = false), Laya.loader.clearTextureRes(e.skin));
             })
           );
       }),

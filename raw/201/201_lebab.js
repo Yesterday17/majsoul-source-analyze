@@ -1,39 +1,16 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => {
       function e(t) {
         const e = this;
         (this.rounds = []),
-          (this.locking = !1),
-          (this.enable = !1),
+          (this.locking = false),
+          (this.enable = false),
           (this.me = t),
-          (this.me.visible = !1),
+          (this.me.visible = false),
           (this.scrollview = this.me.scriptMap['capsui.CScrollView']),
           this.scrollview.init_scrollview(
-            Laya.Handler.create(this, this.renderInfo, null, !1)
+            Laya.Handler.create(this, this.renderInfo, null, false)
           ),
           (this.btn_up = this.me.getChildByName('up')),
           (this.btn_down = this.me.getChildByName('down')),
@@ -43,7 +20,7 @@ let uiscript;
               e.locking || e.scrollview.scrollDelta(-100);
             },
             null,
-            !1
+            false
           )),
           (this.btn_down.clickHandler = Laya.Handler.create(
             this,
@@ -51,20 +28,20 @@ let uiscript;
               e.locking || e.scrollview.scrollDelta(100);
             },
             null,
-            !1
+            false
           )),
           this.scrollview.me.on('ratechange', this, () => {
             (e.btn_up.visible = e.scrollview.rate > 0),
               (e.btn_down.visible =
                 e.scrollview.need_scroll && e.scrollview.rate < 1);
           }),
-          (this.enable = !1);
+          (this.enable = false);
       }
       return (e.prototype.show = function(e) {
         const i = this;
-        (this.enable = !0),
-          (this.locking = !0),
-          (this.me.visible = !0),
+        (this.enable = true),
+          (this.locking = true),
+          (this.me.visible = true),
           this.scrollview.reset(),
           (this.rounds = e);
         for (let n = 0; n < e.length; n++) {
@@ -77,23 +54,23 @@ let uiscript;
           120,
           0,
           Laya.Handler.create(this, () => {
-            i.locking = !1;
+            i.locking = false;
           })
         ),
-          (this.btn_up.visible = !1),
+          (this.btn_up.visible = false),
           (this.btn_down.visible = this.scrollview.need_scroll);
       }),
       (e.prototype.close = function() {
         const e = this;
-        (this.enable = !1),
-          (this.locking = !0),
+        (this.enable = false),
+          (this.locking = true),
           t.UIBase.anim_alpha_out(
             this.me,
             { y: 30 },
             120,
             0,
             Laya.Handler.create(this, () => {
-              (e.locking = !1), (e.me.visible = !1);
+              (e.locking = false), (e.me.visible = false);
             })
           );
       }),
@@ -130,7 +107,7 @@ let uiscript;
           s++
         )
           if ('RecordNewRound' == a.actions[s].name) {
-            let o = void 0;
+            let o = undefined;
             (o =
               'chs' == GameMgr.client_language
                 ? ['东', '南', '西', '北']
@@ -172,10 +149,10 @@ let uiscript;
           }
         const p = a.actions[a.actions.length - 1], m = p.data, g = n, y = n.getChildByName('line'), v = n.getChildByName('liuju'), b = n.getChildByName('win'), w = n.getChildByName('lose');
         if (
-          ((y.visible = !1),
-          (v.visible = !1),
-          (b.visible = !1),
-          (w.visible = !1),
+          ((y.visible = false),
+          (v.visible = false),
+          (b.visible = false),
+          (w.visible = false),
           'RecordNoTile' == p.name)
         ) {
           for (var x = [], s = 0; s < view.DesktopMgr.Inst.player_count; s++)
@@ -189,7 +166,7 @@ let uiscript;
             ((g.height = 120 + (0 == I.length ? 0 : 40 * (I.length - 1))),
             m.liujumanguan)
           ) {
-            b.visible = !0;
+            b.visible = true;
             ((T = b.getChildByName(
               'info'
             )).text = game.Tools.strOfLocalization(2170)),
@@ -201,18 +178,18 @@ let uiscript;
             ) {
               M = C.getChildAt(s);
               s < I.length
-                ? ((M.visible = !0),
+                ? ((M.visible = true),
                   (M.getChildByName(
                     'name'
                   ).text = view.DesktopMgr.Inst.getPlayerName(I[s])),
                   (M.getChildByName('point').text =
                     `+${x[I[s]].delta.toString()}`))
-                : (M.visible = !1);
+                : (M.visible = false);
             }
           } else if (
-            ((b.visible = !0),
+            ((b.visible = true),
             (b.getChildByName('info').text = ''),
-            (v.visible = !0),
+            (v.visible = true),
             (v.text = game.Tools.strOfLocalization(2171)),
             m.scores)
           )
@@ -223,13 +200,13 @@ let uiscript;
             ) {
               M = C.getChildAt(s);
               s < I.length
-                ? ((M.visible = !0),
+                ? ((M.visible = true),
                   (M.getChildByName(
                     'name'
                   ).text = view.DesktopMgr.Inst.getPlayerName(I[s])),
                   (M.getChildByName('point').text =
                     `+${x[I[s]].delta.toString()}`))
-                : (M.visible = !1);
+                : (M.visible = false);
             }
         } else if ('RecordLiuJu' == p.name) {
           const S = [
@@ -240,9 +217,9 @@ let uiscript;
             game.Tools.strOfLocalization(2175),
             game.Tools.strOfLocalization(2176)
           ];
-          (v.visible = !0), (v.text = S[m.type]), (g.height = 120);
+          (v.visible = true), (v.text = S[m.type]), (g.height = 120);
         } else if (p.data.hules[0].zimo) {
-          b.visible = !0;
+          b.visible = true;
           ((T = b.getChildByName('info')).text = game.Tools.strOfLocalization(
             2177
           )),
@@ -254,18 +231,18 @@ let uiscript;
           ) {
             M = C.getChildAt(s);
             if (0 == s) {
-              M.visible = !0;
+              M.visible = true;
               E = m.hules[0].seat;
               M.getChildByName(
                 'name'
               ).text = view.DesktopMgr.Inst.getPlayerName(E);
               D = m.delta_scores[E];
               M.getChildByName('point').text = `+${D.toString()}`;
-            } else M.visible = !1;
+            } else M.visible = false;
           }
           g.height = 120;
         } else {
-          b.visible = !0;
+          b.visible = true;
           ((T = b.getChildByName('info')).text = game.Tools.strOfLocalization(
             2178
           )),
@@ -277,18 +254,18 @@ let uiscript;
           ) {
             M = C.getChildAt(s);
             if (s < m.hules.length) {
-              M.visible = !0;
+              M.visible = true;
               E = m.hules[s].seat;
               M.getChildByName(
                 'name'
               ).text = view.DesktopMgr.Inst.getPlayerName(E);
               D = m.delta_scores[E];
               M.getChildByName('point').text = `+${D.toString()}`;
-            } else M.visible = !1;
+            } else M.visible = false;
           }
-          (y.visible = !0),
+          (y.visible = true),
             (y.y = 80 + 40 * m.hules.length),
-            (w.visible = !0),
+            (w.visible = true),
             (w.y = 83 + 40 * m.hules.length);
           for (
             var T = w.getChildByName('info'),
@@ -299,7 +276,7 @@ let uiscript;
           ) {
             var M = C.getChildAt(s);
             if (0 == s) {
-              M.visible = !0;
+              M.visible = true;
               for (var E = 0, L = 0; L < m.delta_scores.length; L++)
                 m.delta_scores[L] < m.delta_scores[E] && (E = L);
               M.getChildByName(
@@ -307,7 +284,7 @@ let uiscript;
               ).text = view.DesktopMgr.Inst.getPlayerName(E);
               var D = m.delta_scores[E];
               M.getChildByName('point').text = D.toString();
-            } else M.visible = !1;
+            } else M.visible = false;
           }
           g.height = 180 + 40 * (p.data.hules.length - 1);
         }
@@ -317,7 +294,7 @@ let uiscript;
             e.locking || (r.Inst.jumpRound(i), e.close());
           },
           null,
-          !1
+          false
         )),
           (n.getChildByName('bg').height = n.height - 4);
       }),
@@ -328,14 +305,14 @@ let uiscript;
   const i = (() => {
     function e(t) {
       const e = this;
-      (this.locking = !1),
-        (this.enable = !1),
-        (this.have0 = !1),
+      (this.locking = false),
+        (this.enable = false),
+        (this.have0 = false),
         (this.me = t),
-        (this.me.visible = !1),
+        (this.me.visible = false),
         (this.scrollview = this.me.scriptMap['capsui.CScrollView']),
         this.scrollview.init_scrollview(
-          Laya.Handler.create(this, this.renderInfo, null, !1)
+          Laya.Handler.create(this, this.renderInfo, null, false)
         ),
         (this.btn_up = this.me.getChildByName('up')),
         (this.btn_down = this.me.getChildByName('down')),
@@ -345,7 +322,7 @@ let uiscript;
             e.locking || e.scrollview.scrollDelta(-100);
           },
           null,
-          !1
+          false
         )),
         (this.btn_down.clickHandler = Laya.Handler.create(
           this,
@@ -353,21 +330,21 @@ let uiscript;
             e.locking || e.scrollview.scrollDelta(100);
           },
           null,
-          !1
+          false
         )),
         this.scrollview.me.on('ratechange', this, () => {
           (e.btn_up.visible = e.scrollview.rate > 0),
             (e.btn_down.visible =
               e.scrollview.need_scroll && e.scrollview.rate < 1);
         }),
-        (this.enable = !1);
+        (this.enable = false);
     }
     return (e.prototype.show = function(e, i) {
       const n = this;
-      (this.enable = !0),
-        (this.locking = !0),
+      (this.enable = true),
+        (this.locking = true),
         (this.have0 = i),
-        (this.me.visible = !0),
+        (this.me.visible = true),
         this.scrollview.reset(),
         this.scrollview.addItem(e + (i ? 1 : 0)),
         t.UIBase.anim_alpha_in(
@@ -376,23 +353,23 @@ let uiscript;
           100,
           0,
           Laya.Handler.create(this, () => {
-            n.locking = !1;
+            n.locking = false;
           })
         ),
-        (this.btn_up.visible = !1),
+        (this.btn_up.visible = false),
         (this.btn_down.visible = this.scrollview.need_scroll);
     }),
     (e.prototype.close = function() {
       const e = this;
-      (this.enable = !1),
-        (this.locking = !0),
+      (this.enable = false),
+        (this.locking = true),
         t.UIBase.anim_alpha_out(
           this.me,
           { y: 30 },
           100,
           0,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.me.visible = !1);
+            (e.locking = false), (e.me.visible = false);
           })
         );
     }),
@@ -407,7 +384,7 @@ let uiscript;
             e.locking || (r.Inst.jumpXun(i + (e.have0 ? 0 : 1)), e.close());
           },
           null,
-          !1
+          false
         ));
       const a = n, s = [];
       'en' == GameMgr.client_language
@@ -427,8 +404,8 @@ let uiscript;
   const n = (() => {
     function t(t) {
       const e = this;
-      (this._show_hand = !1),
-        (this._show_paopai = !1),
+      (this._show_hand = false),
+        (this._show_paopai = false),
         (this.me = t),
         (this._btn_out = this.me.getChildByName('btn_out')),
         (this._btn_out.clickHandler = Laya.Handler.create(
@@ -437,7 +414,7 @@ let uiscript;
             e.switch();
           },
           null,
-          !1
+          false
         )),
         (this.me.getChildByName(
           'btn_shoupai'
@@ -449,7 +426,7 @@ let uiscript;
               view.DesktopMgr.Inst.onShowHandChange(e._show_hand);
           },
           null,
-          !1
+          false
         )),
         (this._choosed_show_paopai = this.me
           .getChildByName('btn_paopai')
@@ -464,7 +441,7 @@ let uiscript;
               view.DesktopMgr.Inst.onShowPaopaiChange(e._show_paopai);
           },
           null,
-          !1
+          false
         )),
         (this._choosed_show_hand = this.me
           .getChildByName('btn_shoupai')
@@ -479,29 +456,29 @@ let uiscript;
     }
     return (t.prototype.reset = function() {
       Laya.Tween.clearAll(this),
-        (this._show_hand = !0),
+        (this._show_hand = true),
         (this.me.x = -258),
-        (this._btn_out.disabled = !1),
+        (this._btn_out.disabled = false),
         (this._choosed_show_hand.visible = this._show_hand),
-        (this._show_paopai = !0),
+        (this._show_paopai = true),
         (this._choosed_show_paopai.visible = this._show_paopai);
     }),
     (t.prototype.switch = function() {
       const t = this;
       let e = -258;
       this.me.x < -100 && (e = -5),
-        (this._btn_out.disabled = !0),
+        (this._btn_out.disabled = true),
         Laya.Tween.to(
           this.me,
           { x: e },
           200,
           Laya.Ease.strongOut,
           Laya.Handler.create(this, () => {
-            t._btn_out.disabled = !1;
+            t._btn_out.disabled = false;
           }),
           0,
-          !0,
-          !0
+          true,
+          true
         );
     }),
     t
@@ -517,18 +494,18 @@ let uiscript;
         (this.gray_filter = null),
         (this.dora_filter = null),
         (this.lidora_filter = null),
-        (this.noinfo = !0),
-        (this.locking = !1),
-        (this.enable = !1),
+        (this.noinfo = true),
+        (this.locking = false),
+        (this.enable = false),
         (this.me = e),
         (this.root = e.getChildByName('root')),
         (this.content = this.root.getChildByName('content')),
         (this.content.vScrollBarSkin = '');
       const n = this.content.getChildByName('tile_templete');
-      n.visible = !1;
+      n.visible = false;
       for (let a = 0; a < 100; a++) {
         const r = n.scriptMap['capsui.UICopy'].getNodeClone();
-        (r.visible = !1), this.tiles.push(r);
+        (r.visible = false), this.tiles.push(r);
       }
       (this.container_input = this.content.getChildByName('input')),
         (this.gray_filter = new Laya.ColorFilter([
@@ -605,7 +582,7 @@ let uiscript;
             i.locking || t.UI_Info_MD5.Inst.show();
           },
           null,
-          !1
+          false
         ));
     }
     return (e.prototype.setTiles = function(t) {
@@ -618,10 +595,10 @@ let uiscript;
         (this.tiles[i].skin = game.Tools.localUISrc(
           `${e + t.charAt(2 * i) + t.charAt(2 * i + 1)}.png`
         )),
-          (this.tiles[i].visible = !0);
+          (this.tiles[i].visible = true);
       for (i = this.tile_count; i < this.tiles.length; i++)
-        this.tiles[i].visible = !1;
-      (this.noinfo = !1),
+        this.tiles[i].visible = false;
+      (this.noinfo = false),
         (this.container_input.getChildByName('txtinput').text = t);
     }),
     (e.prototype.refresh = function() {
@@ -685,15 +662,15 @@ let uiscript;
       }
     }),
     (e.prototype.setNoInfo = function() {
-      this.noinfo = !0;
+      this.noinfo = true;
     }),
     (e.prototype.show = function() {
       const e = this;
       this.locking ||
         (this.noinfo
           ? t.UIMgr.Inst.ShowErrorInfo(game.Tools.strOfLocalization(2179))
-          : ((this.locking = !0),
-            (this.me.visible = !0),
+          : ((this.locking = true),
+            (this.me.visible = true),
             this.refresh(),
             t.UIBase.anim_alpha_in(
               this.me,
@@ -701,21 +678,21 @@ let uiscript;
               120,
               0,
               Laya.Handler.create(this, () => {
-                e.locking = !1;
+                e.locking = false;
               })
             )));
     }),
     (e.prototype.close = function() {
       const e = this;
       this.locking ||
-        ((this.locking = !0),
+        ((this.locking = true),
         t.UIBase.anim_alpha_out(
           this.me,
           { y: 30 },
           120,
           0,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.me.visible = !1);
+            (e.locking = false), (e.me.visible = false);
           })
         ));
     }),
@@ -745,7 +722,7 @@ let uiscript;
         (t.round_index = 0),
         (t.action_index = 0),
         (t.locking_time = 0),
-        (t._auto_play = !1),
+        (t._auto_play = false),
         (s.Inst = t),
         t
       );
@@ -760,8 +737,8 @@ let uiscript;
           (this.img_play.visible = !t),
           (this.img_stop.visible = t);
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (s.prototype.onCreate = function() {
       const r = this, s = this.me.getChildByName('root').getChildByName('round');
@@ -769,7 +746,7 @@ let uiscript;
         this,
         () => {
           r.page_chang.locking ||
-            (r.auto_play && (r.auto_play = !1),
+            (r.auto_play && (r.auto_play = false),
             r.page_xun.enable && r.page_xun.close(),
             r.page_paishan.me.visible && r.page_paishan.close(),
             r.page_chang.enable
@@ -777,7 +754,7 @@ let uiscript;
               : r.page_chang.show(r.rounds));
         },
         null,
-        !1
+        false
       )),
         (this.label_chang = s.getChildByName('chang')),
         (this.label_ju = s.getChildByName('ju'));
@@ -787,7 +764,7 @@ let uiscript;
           this,
           () => {
             r.page_xun.locking ||
-              (r.auto_play && (r.auto_play = !1),
+              (r.auto_play && (r.auto_play = false),
               r.page_chang.enable && r.page_chang.close(),
               r.page_paishan.me.visible && r.page_paishan.close(),
               r.page_xun.enable
@@ -798,7 +775,7 @@ let uiscript;
                   ));
           },
           null,
-          !1
+          false
         )),
         (this.me
           .getChildByName('root')
@@ -806,7 +783,7 @@ let uiscript;
           this,
           () => {
             r.page_paishan.locking ||
-              (r.auto_play && (r.auto_play = !1),
+              (r.auto_play && (r.auto_play = false),
               r.page_chang.enable && r.page_chang.close(),
               r.page_xun.enable && r.page_xun.close(),
               r.page_paishan.me.visible
@@ -814,7 +791,7 @@ let uiscript;
                 : r.page_paishan.show());
           },
           null,
-          !1
+          false
         )),
         (this.page_chang = new e(this.me.getChildByName('info_chang'))),
         (this.page_xun = new i(this.me.getChildByName('info_xun'))),
@@ -827,7 +804,7 @@ let uiscript;
             r.auto_play = !r.auto_play;
           },
           null,
-          !1
+          false
         )),
         (this.me
           .getChildByName('root')
@@ -835,11 +812,11 @@ let uiscript;
           this,
           () => {
             r.locking_time > Laya.timer.currTimer
-              ? r.auto_play && (r.auto_play = !1)
+              ? r.auto_play && (r.auto_play = false)
               : r.nextStep();
           },
           null,
-          !1
+          false
         )),
         (this.me
           .getChildByName('root')
@@ -849,7 +826,7 @@ let uiscript;
             r.preStep();
           },
           null,
-          !1
+          false
         )),
         (this.me
           .getChildByName('root')
@@ -859,7 +836,7 @@ let uiscript;
             r.nextXun();
           },
           null,
-          !1
+          false
         )),
         (this.me
           .getChildByName('root')
@@ -869,7 +846,7 @@ let uiscript;
             r.preXun();
           },
           null,
-          !1
+          false
         )),
         (this.btn_preround = this.me
           .getChildByName('root')
@@ -880,7 +857,7 @@ let uiscript;
             r.preRound();
           },
           null,
-          !1
+          false
         )),
         (this.btn_nextround = this.me
           .getChildByName('root')
@@ -891,7 +868,7 @@ let uiscript;
             r.nextRound();
           },
           null,
-          !1
+          false
         )),
         (this.img_play = this.me
           .getChildByName('root')
@@ -910,15 +887,15 @@ let uiscript;
             t.UI_DesktopInfo.Inst.onBtnShowScoreDelta();
           },
           null,
-          !1
+          false
         )),
         (this.paipuconfig = new n(this.me.getChildByName('config')));
     }),
     (s.prototype.onEnable = function() {
-      this.paipuconfig.reset(), (t.UI_ReplayWheel.Inst.enable = !0);
+      this.paipuconfig.reset(), (t.UI_ReplayWheel.Inst.enable = true);
     }),
     (s.prototype.onDisable = () => {
-      t.UI_ReplayWheel.Inst.enable = !1;
+      t.UI_ReplayWheel.Inst.enable = false;
     }),
     (s.prototype._isRoundEnd = t => 'RecordNoTile' == t || 'RecordLiuJu' == t || 'RecordHule' == t),
     (s.prototype.initData = function(t) {
@@ -943,7 +920,7 @@ let uiscript;
         (this.label_chang.text = '东'),
         (this.label_ju.text = '1'),
         (this.label_xun.text = '0'),
-        (this.auto_play = !1);
+        (this.auto_play = false);
       const h = [];
       'en' != GameMgr.client_language
         ? (h.push(this.label_xun.parent.getChildByName('xun')),
@@ -954,27 +931,27 @@ let uiscript;
         app.Log.log(`牌谱大小：${a}B`);
     }),
     (s.prototype.reset = function() {
-      (this.auto_play = !1),
+      (this.auto_play = false),
         this.page_chang.enable && this.page_chang.close(),
         this.page_xun.enable && this.page_xun.close(),
-        this.page_paishan.me.visible && (this.page_paishan.me.visible = !1);
+        this.page_paishan.me.visible && (this.page_paishan.me.visible = false);
     }),
     (s.prototype.pengding_xun = t => {
       t.xun = [];
       for (
-        let e = view.DesktopMgr.Inst.seat, i = !1, n = 0;
+        let e = view.DesktopMgr.Inst.seat, i = false, n = 0;
         n < t.actions.length;
         n++
       ) {
         const a = t.actions[n];
         'RecordNewRound' == a.name
-          ? a.data.ju == e && ((i = !0), t.xun.push(n))
+          ? a.data.ju == e && ((i = true), t.xun.push(n))
           : 'RecordDealTile' == a.name || 'RecordChiPengGang' == a.name
-          ? a.data.seat == e && (i || ((i = !0), t.xun.push(n)))
+          ? a.data.seat == e && (i || ((i = true), t.xun.push(n)))
           : ('RecordDiscardTile' != a.name &&
               'RecordAnGangAddGang' != a.name &&
               'RecordBaBei' != a.name) ||
-            (i = !1);
+            (i = false);
       }
     }),
     (s.prototype.get_currentxun = function() {
@@ -989,7 +966,7 @@ let uiscript;
     }),
     (s.prototype.nextStep = function(e) {
       if (
-        (void 0 === e && (e = !1),
+        (undefined === e && (e = false),
         (e || !(this.locking_time > Laya.timer.currTimer)) &&
           !(this.round_index >= this.rounds.length))
       ) {
@@ -1005,7 +982,7 @@ let uiscript;
           )
             return (
               (view.DesktopMgr.Inst.gameEndResult = this.gameResult.result),
-              (this.enable = !1),
+              (this.enable = false),
               void t.UIMgr.Inst.ShowGameEnd()
             );
         } else this.action_index++;
@@ -1197,7 +1174,7 @@ let uiscript;
     }),
     (s.prototype.jumpToLastRoundXun = function() {
       if (this.locking_time > Laya.timer.currTimer)
-        this.auto_play && (this.auto_play = !1);
+        this.auto_play && (this.auto_play = false);
       else {
         this.round_index =
           (this.round_index - 1 + this.rounds.length) % this.rounds.length;
@@ -1210,7 +1187,7 @@ let uiscript;
     }),
     (s.prototype.nextXun = function() {
       if (this.locking_time > Laya.timer.currTimer)
-        this.auto_play && (this.auto_play = !1);
+        this.auto_play && (this.auto_play = false);
       else if (
         !(this.round_index >= this.rounds.length || this.round_index < 0)
       ) {
@@ -1231,7 +1208,7 @@ let uiscript;
     }),
     (s.prototype.preXun = function() {
       if (this.locking_time > Laya.timer.currTimer)
-        this.auto_play && (this.auto_play = !1);
+        this.auto_play && (this.auto_play = false);
       else if (
         !(this.round_index >= this.rounds.length || this.round_index < 0)
       ) {
@@ -1251,7 +1228,7 @@ let uiscript;
     }),
     (s.prototype.preStep = function() {
       if (this.locking_time > Laya.timer.currTimer)
-        this.auto_play && (this.auto_play = !1);
+        this.auto_play && (this.auto_play = false);
       else if (
         !(this.round_index >= this.rounds.length || this.round_index < 0)
       ) {
@@ -1266,7 +1243,7 @@ let uiscript;
     (s.prototype.nextRound = function() {
       this.page_xun.enable && this.page_xun.close(),
         this.locking_time > Laya.timer.currTimer
-          ? this.auto_play && (this.auto_play = !1)
+          ? this.auto_play && (this.auto_play = false)
           : ((this.round_index =
               (this.round_index + 1) % this.rounds.length),
             (this.action_index = -1),
@@ -1275,7 +1252,7 @@ let uiscript;
     (s.prototype.preRound = function() {
       this.page_xun.enable && this.page_xun.close(),
         this.locking_time > Laya.timer.currTimer
-          ? this.auto_play && (this.auto_play = !1)
+          ? this.auto_play && (this.auto_play = false)
           : ((this.round_index =
               (this.round_index - 1 + this.rounds.length) %
               this.rounds.length),
@@ -1285,7 +1262,7 @@ let uiscript;
     (s.prototype.jumpRound = function(t) {
       this.page_xun.enable && this.page_xun.close(),
         this.locking_time > Laya.timer.currTimer
-          ? this.auto_play && (this.auto_play = !1)
+          ? this.auto_play && (this.auto_play = false)
           : t < 0 ||
             t >= this.rounds.length ||
             ((this.round_index = t),
@@ -1294,7 +1271,7 @@ let uiscript;
     }),
     (s.prototype.jumpXun = function(t) {
       if (this.locking_time > Laya.timer.currTimer)
-        this.auto_play && (this.auto_play = !1);
+        this.auto_play && (this.auto_play = false);
       else if (
         !(this.round_index >= this.rounds.length || this.round_index < 0)
       ) {

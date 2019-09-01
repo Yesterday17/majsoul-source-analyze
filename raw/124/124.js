@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -45,7 +20,7 @@ var __extends =
               t.locking || t.close();
             },
             null,
-            !1
+            false
           )),
           (this.btn_close.clickHandler = Laya.Handler.create(
             this,
@@ -53,27 +28,27 @@ var __extends =
               t.locking || t.close();
             },
             null,
-            !1
+            false
           ));
       }),
       (i.prototype.show = function() {
         var e = this;
-        (this.enable = !0),
-          (this.locking = !0),
+        (this.enable = true),
+          (this.locking = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              e.locking = !1;
+              e.locking = false;
             })
           );
       }),
       (i.prototype.close = function() {
         var e = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1), (e.enable = !1);
+              (e.locking = false), (e.enable = false);
             })
           );
       }),

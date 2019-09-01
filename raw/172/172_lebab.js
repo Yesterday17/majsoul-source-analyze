@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -57,7 +34,7 @@ let uiscript;
       (this.img_title.skin = game.Tools.localUISrc(
         `myres/mjdesktop/${i}.png`
       )),
-        (this.enable = !0),
+        (this.enable = true),
         Laya.Tween.from(this.root, { alpha: 0 }, 500),
         '' != n &&
           (t.type == mjcore.E_LiuJu.jiuzhongjiupai
@@ -72,7 +49,7 @@ let uiscript;
         view.DesktopMgr.Inst.mode == view.EMJMode.play
           ? Laya.timer.once(4e3, this, this.onBtnConfirm)
           : Laya.timer.once(4e3, this, () => {
-              e.enable = !1;
+              e.enable = false;
             });
     }),
     (i.prototype.onDisable = function() {
@@ -80,7 +57,7 @@ let uiscript;
     }),
     (i.prototype.onBtnConfirm = function() {
       null != view.DesktopMgr.Inst.gameEndResult
-        ? (t.UIMgr.Inst.ShowGameEnd(), (this.enable = !1))
+        ? (t.UIMgr.Inst.ShowGameEnd(), (this.enable = false))
         : (view.DesktopMgr.Inst.Reset(),
           Laya.timer.once(200, this, () => {
             app.NetAgent.sendReq2MJ(

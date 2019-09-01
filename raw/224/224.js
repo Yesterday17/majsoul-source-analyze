@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       return function() {};
@@ -31,7 +6,7 @@ var __extends =
     i = (function() {
       function e(t) {
         (this.me = t),
-          (this.me.visible = !1),
+          (this.me.visible = false),
           (this.label0 = this.me.getChildByName('label0')),
           (this.num0_init = this.me.getChildByName('num0_init')),
           (this.num0_add = this.me.getChildByName('num0_add')),
@@ -44,7 +19,7 @@ var __extends =
         (e.prototype.show = function(e, i, n) {
           var a = this;
           if (
-            ((this.me.visible = !1),
+            ((this.me.visible = false),
             view.DesktopMgr.Inst.mode != view.EMJMode.play)
           )
             return 0;
@@ -55,17 +30,17 @@ var __extends =
           )
             return 0;
           var r = view.DesktopMgr.Inst.game_config;
-          (this.label0.visible = !1),
-            (this.num0_init.visible = !1),
-            (this.num0_add.visible = !1),
-            (this.label1.visible = !1),
-            (this.num1_init.visible = !1),
-            (this.num1_add.visible = !1);
+          (this.label0.visible = false),
+            (this.num0_init.visible = false),
+            (this.num0_add.visible = false),
+            (this.label1.visible = false),
+            (this.num1_init.visible = false),
+            (this.num1_add.visible = false);
           var s = 0;
           return (
             (s += 0),
             Laya.timer.once(e + s, this, function() {
-              (a.me.visible = !0),
+              (a.me.visible = true),
                 (a.me.alpha = 0),
                 (a.me.x = a.me_x_start - 200),
                 Laya.Tween.to(a.me, { alpha: 1, x: a.me_x_start }, 200);
@@ -83,7 +58,7 @@ var __extends =
                 t.UI_Activity_DuanWu_Point.max_point(),
                 e
               );
-              var s = !1;
+              var s = false;
               if (
                 t.UI_Activity.activity_is_running(
                   t.UI_Activity_DuanWu_Rank.activity_id
@@ -92,7 +67,7 @@ var __extends =
                 var o = r.meta;
                 if (o) {
                   var l = cfg.desktop.matchmode.get(o.mode_id);
-                  l && l.can_sumup && l.gcarry > 0 && (s = !0);
+                  l && l.can_sumup && l.gcarry > 0 && (s = true);
                 }
               }
               s &&
@@ -120,9 +95,9 @@ var __extends =
             (n = n + a - r),
             s >= 0 && n > s && (n = s),
             (r = l - n) < 0 && (r = 0),
-            (t.visible = !0),
-            (i.visible = !0),
-            (e.visible = !0),
+            (t.visible = true),
+            (i.visible = true),
+            (e.visible = true),
             (e.text = l.toString()),
             (i.text = r > 0 ? '+' + r.toString() : ''),
             (t.x = o),
@@ -195,7 +170,7 @@ var __extends =
           (t.count_down = null),
           (t.illust = null),
           (t.illust_rect = null),
-          (t.liujumanguan = !1),
+          (t.liujumanguan = false),
           (t.data = null),
           (t.current_index = 0),
           (t.effect_yiman = null),
@@ -216,7 +191,7 @@ var __extends =
             (this.illust_rect = t.UIRect.CreateFromSprite(this.illust)),
             (this.img_hands = []);
           for (n = 0; n < this.container_hand.numChildren; n++) {
-            ((e = this.container_hand.getChildAt(n)).visible = !1),
+            ((e = this.container_hand.getChildAt(n)).visible = false),
               this.img_hands.push(e);
           }
           (this.container_dora = this.root.getChildByName('container_dora')),
@@ -292,12 +267,12 @@ var __extends =
             this.liujumanguan
               ? this._showLiuJuManGuan(t[0])
               : this._showHule(t.hules[0]),
-            (this.enable = !0);
+            (this.enable = true);
         }),
         (a.prototype.onConfirm = function() {
           if (
             (Laya.timer.clearAll(this),
-            (this.btn_confirm.disabled = !0),
+            (this.btn_confirm.disabled = true),
             Laya.loader.clearTextureRes(this.illust.skin),
             this.effect_yiman &&
               (this.effect_yiman.destory(), (this.effect_yiman = null)),
@@ -307,7 +282,7 @@ var __extends =
               this.current_index++,
                 this._showLiuJuManGuan(this.data[this.current_index]);
             else {
-              this.enable = !1;
+              this.enable = false;
               for (
                 var e = [], i = 0;
                 i < view.DesktopMgr.Inst.player_count;
@@ -323,7 +298,7 @@ var __extends =
             this.current_index++,
               this._showHule(this.data.hules[this.current_index]);
           else {
-            (this.enable = !1), t.UI_DesktopInfo.Inst.setLiqibang(0);
+            (this.enable = false), t.UI_DesktopInfo.Inst.setLiqibang(0);
             for (var e = [], i = 0; i < view.DesktopMgr.Inst.player_count; i++)
               e.push({
                 old_score: this.data.old_scores[i],
@@ -334,7 +309,7 @@ var __extends =
         }),
         (a.prototype.setTitle = function(t) {
           for (n = 0; n < this.container_title.numChildren; n++)
-            this.container_title.getChildAt(n).visible = !1;
+            this.container_title.getChildAt(n).visible = false;
           if ('chs' == GameMgr.client_language) {
             e = [];
             switch (t) {
@@ -371,15 +346,15 @@ var __extends =
               case mjcore.E_Dadian_Title.E_Dadian_Title_yiman6:
                 e = ['liu', 'bei', 'yi', 'man'];
             }
-            (i = this.container_title.getChildByName('chs')).visible = !0;
-            for (n = 0; n < i.numChildren; n++) i.getChildAt(n).visible = !1;
+            (i = this.container_title.getChildByName('chs')).visible = true;
+            for (n = 0; n < i.numChildren; n++) i.getChildAt(n).visible = false;
             for (n = 0; n < e.length; n++)
               if ('' != e[n]) {
-                ((a = i.getChildAt(n)).visible = !0),
+                ((a = i.getChildAt(n)).visible = true),
                   (a.skin = 'myres/word_' + e[n] + '.png');
               }
           } else if ('en' == GameMgr.client_language) {
-            (i = this.container_title.getChildByName('en')).visible = !0;
+            (i = this.container_title.getChildByName('en')).visible = true;
             a = i.getChildAt(0);
             switch (t) {
               case mjcore.E_Dadian_Title.E_Dadian_Title_manguan:
@@ -450,35 +425,35 @@ var __extends =
                 e = ['liu', 'bei', 'yi', 'man'];
             }
             var i = this.container_title.getChildByName('chs');
-            i.visible = !0;
-            for (n = 0; n < i.numChildren; n++) i.getChildAt(n).visible = !1;
+            i.visible = true;
+            for (n = 0; n < i.numChildren; n++) i.getChildAt(n).visible = false;
             for (var n = 0; n < e.length; n++)
               if ('' != e[n]) {
                 var a;
-                ((a = i.getChildAt(n)).visible = !0),
+                ((a = i.getChildAt(n)).visible = true),
                   (a.skin = 'jp/myres/word_' + e[n] + '.png');
               }
           }
         }),
         (a.prototype.setFanFu = function(t, e) {
-          (this.container_fan.visible = this.container_fu.visible = !0),
+          (this.container_fan.visible = this.container_fu.visible = true),
             (this.container_fan.alpha = this.container_fu.alpha = 0);
           for (i = 0; i < 2; i++)
-            if (0 == t) this.fan_imgs[i].visible = !1;
+            if (0 == t) this.fan_imgs[i].visible = false;
             else {
               n = t % 10;
               (t = Math.floor(t / 10)),
-                (this.fan_imgs[i].visible = !0),
+                (this.fan_imgs[i].visible = true),
                 (this.fan_imgs[i].skin = game.Tools.localUISrc(
                   'myres/mjdesktop/h_' + n.toString() + '.png'
                 ));
             }
           for (var i = 0; i < 3; i++)
-            if (0 == e) this.fu_imgs[i].visible = !1;
+            if (0 == e) this.fu_imgs[i].visible = false;
             else {
               var n = e % 10;
               (e = Math.floor(e / 10)),
-                (this.fu_imgs[i].visible = !0),
+                (this.fu_imgs[i].visible = true),
                 (this.fu_imgs[i].skin = game.Tools.localUISrc(
                   'myres/mjdesktop/ww_' + n.toString() + '.png'
                 ));
@@ -488,7 +463,7 @@ var __extends =
         }),
         (a.prototype._showInfo_mj = function(e) {
           var i = this;
-          (this.container_Activity_Point.me.visible = !1),
+          (this.container_Activity_Point.me.visible = false),
             (this.root.alpha = 0),
             Laya.Tween.to(this.root, { alpha: 1 }, 500);
           this.label_winner_name.text =
@@ -501,8 +476,8 @@ var __extends =
             this.illust_rect
           ),
             2 == e.mode
-              ? (this.img_mode.visible = !1)
-              : ((this.img_mode.visible = !0),
+              ? (this.img_mode.visible = false)
+              : ((this.img_mode.visible = true),
                 0 == e.mode
                   ? (this.img_mode.skin = game.Tools.localUISrc(
                       'myres/mjdesktop/pg_zimo.png'
@@ -518,7 +493,7 @@ var __extends =
             o < this.img_hands.length;
             o++
           )
-            this.img_hands[o].visible = !1;
+            this.img_hands[o].visible = false;
           for (var l = 0, h = 0, c = [], o = 0; o < e.hand.length; o++)
             c.push(mjcore.MJPai.Create(e.hand[o]));
           c = c.sort(mjcore.MJPai.Distance);
@@ -529,7 +504,7 @@ var __extends =
               (this.img_hands[l].x = h),
               (this.img_hands[l].y = 0),
               (h += r),
-              (this.img_hands[l].visible = !0),
+              (this.img_hands[l].visible = true),
               l++;
           if (e.ming && e.ming.length > 0) {
             h += s;
@@ -553,7 +528,7 @@ var __extends =
                       (this.img_hands[l].x = h),
                       (this.img_hands[l].y = 0),
                       (h += r),
-                      (this.img_hands[l].visible = !0),
+                      (this.img_hands[l].visible = true),
                       l++;
                   }
                 } else
@@ -565,7 +540,7 @@ var __extends =
                       (this.img_hands[l].x = h),
                       (this.img_hands[l].y = 0),
                       (h += r),
-                      (this.img_hands[l].visible = !0),
+                      (this.img_hands[l].visible = true),
                       l++;
                   }
               } else {
@@ -592,7 +567,7 @@ var __extends =
                       (this.img_hands[l].x = h),
                       (this.img_hands[l].y = 0),
                       (h += r),
-                      (this.img_hands[l].visible = !0),
+                      (this.img_hands[l].visible = true),
                       l++;
                   }
                 } else
@@ -604,7 +579,7 @@ var __extends =
                       (this.img_hands[l].x = h),
                       (this.img_hands[l].y = 0),
                       (h += r),
-                      (this.img_hands[l].visible = !0),
+                      (this.img_hands[l].visible = true),
                       l++;
                   }
               }
@@ -618,7 +593,7 @@ var __extends =
               (this.img_hands[l].x = h),
               (this.img_hands[l].y = 0),
               (h += r),
-              (this.img_hands[l].visible = !0),
+              (this.img_hands[l].visible = true),
               l++);
           var w = ((0.72 - 0.92) * (l - 14)) / 4 + 0.92;
           this.container_hand.scaleX = this.container_hand.scaleY = w;
@@ -630,7 +605,7 @@ var __extends =
               (this.img_doras[o].y = 0);
           }
           if (e.lidoras && 2 != e.mode) {
-            this.container_lidora.visible = !0;
+            this.container_lidora.visible = true;
             for (o = 0; o < 5; o++) {
               x = 'back';
               o < e.lidoras.length && (x = e.lidoras[o]),
@@ -641,7 +616,7 @@ var __extends =
                 (this.img_lidoras[o].y = 0);
             }
           } else {
-            this.container_lidora.visible = !0;
+            this.container_lidora.visible = true;
             for (o = 0; o < 5; o++) {
               var x = 'back';
               (this.img_lidoras[o].skin = game.Tools.localUISrc(
@@ -653,16 +628,16 @@ var __extends =
           }
           var I = e.fan_names.length,
             C = 100;
-          (this.container_fan_yiman.visible = !1),
-            (this.container_fan_8.visible = !1),
-            (this.container_fan_15.visible = !1),
-            (this.container_fan_12.visible = !1),
-            (this.container_fan_liuju.visible = !1),
-            (this.container_fan_yiman.visible = !1),
-            (this.container_fan_8.visible = !1),
-            (this.container_fan_15.visible = !1),
-            (this.container_fan_12.visible = !1),
-            (this.container_fan_liuju.visible = !1);
+          (this.container_fan_yiman.visible = false),
+            (this.container_fan_8.visible = false),
+            (this.container_fan_15.visible = false),
+            (this.container_fan_12.visible = false),
+            (this.container_fan_liuju.visible = false),
+            (this.container_fan_yiman.visible = false),
+            (this.container_fan_8.visible = false),
+            (this.container_fan_15.visible = false),
+            (this.container_fan_12.visible = false),
+            (this.container_fan_liuju.visible = false);
           var S = null;
           (S =
             2 == e.mode
@@ -673,8 +648,8 @@ var __extends =
               ? this.container_fan_8
               : I <= 12
               ? this.container_fan_12
-              : this.container_fan_15).visible = !0;
-          for (o = 0; o < S.numChildren; o++) S.getChildAt(o).visible = !1;
+              : this.container_fan_15).visible = true;
+          for (o = 0; o < S.numChildren; o++) S.getChildAt(o).visible = false;
           for (var T = [], o = 0; o < e.fan_names.length; o++) {
             var M = e.fan_names[o],
               E = 0,
@@ -763,26 +738,26 @@ var __extends =
                     ((n.text = T[t].name),
                     (n.width = 242),
                     game.Tools.labelLocalizationSize(n, 242, 0.8),
-                    void 0 !== T[t].value && null !== T[t].value)
+                    undefined !== T[t].value && null !== T[t].value)
                   ) {
-                    i.getChildAt(2).visible = !0;
+                    i.getChildAt(2).visible = true;
                     var a = T[t].value.toString();
                     2 == a.length
                       ? ((i.getChildAt(3).skin = game.Tools.localUISrc(
                           'myres/mjdesktop/h_' + a[1] + '.png'
                         )),
-                        (i.getChildAt(3).visible = !0),
+                        (i.getChildAt(3).visible = true),
                         (i.getChildAt(4).skin = game.Tools.localUISrc(
                           'myres/mjdesktop/h_' + a[0] + '.png'
                         )),
-                        (i.getChildAt(4).visible = !0))
+                        (i.getChildAt(4).visible = true))
                       : ((i.getChildAt(3).skin = game.Tools.localUISrc(
                           'myres/mjdesktop/h_' + a[0] + '.png'
                         )),
-                        (i.getChildAt(3).visible = !0),
-                        (i.getChildAt(4).visible = !1));
+                        (i.getChildAt(3).visible = true),
+                        (i.getChildAt(4).visible = false));
                   }
-                  (i.visible = !0),
+                  (i.visible = true),
                     Laya.Tween.from(
                       i,
                       { x: 169, y: 184, alpha: 0 },
@@ -802,9 +777,9 @@ var __extends =
             o++
           )
             N(o);
-          (this.container_fan.visible = !1),
-            (this.container_fu.visible = !1),
-            (this.img_yiman.visible = !1),
+          (this.container_fan.visible = false),
+            (this.container_fu.visible = false),
+            (this.img_yiman.visible = false),
             e.fan && e.fu
               ? ((C += 300),
                 Laya.timer.once(C, this, function() {
@@ -815,12 +790,12 @@ var __extends =
                 Laya.timer.once(C, this, function() {
                   view.AudioMgr.PlayAudio(208),
                     (i.img_yiman.alpha = 0),
-                    (i.img_yiman.visible = !0),
+                    (i.img_yiman.visible = true),
                     Laya.Tween.to(i.img_yiman, { alpha: 1 }, 200);
                 })),
             (this.container_score.alpha = 0);
           for (o = 0; o < this.score_imgs.length; o++)
-            this.score_imgs[o].visible = !1;
+            this.score_imgs[o].visible = false;
           if (
             ((C += 700),
             (this.container_score.scaleX = this.container_score.scaleY = 2),
@@ -832,7 +807,7 @@ var __extends =
                   (i.score_imgs[t].skin = game.Tools.localUISrc(
                     'myres/mjdesktop/ww_' + a.toString() + '.png'
                   )),
-                  (i.score_imgs[t].visible = !0),
+                  (i.score_imgs[t].visible = true),
                   ++t >= i.score_imgs.length)
                 )
                   break;
@@ -845,7 +820,7 @@ var __extends =
               ),
                 view.AudioMgr.PlayAudio(221);
             }),
-            (this.container_title.visible = !1),
+            (this.container_title.visible = false),
             e.title_id)
           ) {
             C += 700;
@@ -889,7 +864,7 @@ var __extends =
             var O = game.Tools.get_chara_audio(n, P);
             Laya.timer.once(C, this, function() {
               i.setTitle(e.title_id),
-                (i.container_title.visible = !0),
+                (i.container_title.visible = true),
                 (i.container_title.alpha = 0),
                 (i.container_title.scaleX = i.container_title.scaleY = 3),
                 Laya.Tween.to(
@@ -935,32 +910,32 @@ var __extends =
             )
           ) {
             for (
-              var U = !1, o = 0;
+              var U = false, o = 0;
               o < view.DesktopMgr.Inst.player_datas.length;
               o++
             ) {
               var V = view.DesktopMgr.Inst.player_datas[o];
               if (!V || !V.account_id) {
-                U = !0;
+                U = true;
                 break;
               }
             }
             U
-              ? (this.container_Activity_Point.me.visible = !1)
+              ? (this.container_Activity_Point.me.visible = false)
               : (C += this.container_Activity_Point.show(
                   C,
                   e.point_sum,
                   e.score
                 ));
-          } else this.container_Activity_Point.me.visible = !1;
-          (this.btn_confirm.visible = !1),
+          } else this.container_Activity_Point.me.visible = false;
+          (this.btn_confirm.visible = false),
             (C += 300),
-            (this.btn_confirm.disabled = !0),
+            (this.btn_confirm.disabled = true),
             Laya.timer.once(C, this, function() {
-              (i.btn_confirm.visible = !0),
+              (i.btn_confirm.visible = true),
                 (i.btn_confirm.alpha = 1),
                 Laya.Tween.from(i.btn_confirm, { alpha: 0 }, 200),
-                (i.btn_confirm.disabled = !1);
+                (i.btn_confirm.disabled = false);
               for (
                 var t = function(t) {
                     Laya.timer.once(1e3 * t, i, function() {
@@ -979,7 +954,7 @@ var __extends =
             });
         }),
         (a.prototype._showInfo_record = function(t) {
-          (this.container_Activity_Point.me.visible = !1),
+          (this.container_Activity_Point.me.visible = false),
             (this.root.alpha = 0),
             Laya.Tween.to(this.root, { alpha: 1 }, 300);
           (this.label_winner_name.text =
@@ -991,8 +966,8 @@ var __extends =
               this.illust_rect
             ),
             2 == t.mode
-              ? (this.img_mode.visible = !1)
-              : ((this.img_mode.visible = !0),
+              ? (this.img_mode.visible = false)
+              : ((this.img_mode.visible = true),
                 0 == t.mode
                   ? (this.img_mode.skin = game.Tools.localUISrc(
                       'myres/mjdesktop/pg_zimo.png'
@@ -1008,7 +983,7 @@ var __extends =
             a < this.img_hands.length;
             a++
           )
-            this.img_hands[a].visible = !1;
+            this.img_hands[a].visible = false;
           for (var r = 0, s = 0, o = [], a = 0; a < t.hand.length; a++)
             o.push(mjcore.MJPai.Create(t.hand[a]));
           o = o.sort(mjcore.MJPai.Distance);
@@ -1019,7 +994,7 @@ var __extends =
               (this.img_hands[r].x = s),
               (this.img_hands[r].y = 0),
               (s += i),
-              (this.img_hands[r].visible = !0),
+              (this.img_hands[r].visible = true),
               r++;
           if (t.ming && t.ming.length > 0) {
             s += n;
@@ -1043,7 +1018,7 @@ var __extends =
                       (this.img_hands[r].x = s),
                       (this.img_hands[r].y = 0),
                       (s += i),
-                      (this.img_hands[r].visible = !0),
+                      (this.img_hands[r].visible = true),
                       r++;
                   }
                 } else
@@ -1055,7 +1030,7 @@ var __extends =
                       (this.img_hands[r].x = s),
                       (this.img_hands[r].y = 0),
                       (s += i),
-                      (this.img_hands[r].visible = !0),
+                      (this.img_hands[r].visible = true),
                       r++;
                   }
               } else {
@@ -1082,7 +1057,7 @@ var __extends =
                       (this.img_hands[r].x = s),
                       (this.img_hands[r].y = 0),
                       (s += i),
-                      (this.img_hands[r].visible = !0),
+                      (this.img_hands[r].visible = true),
                       r++;
                   }
                 } else
@@ -1094,7 +1069,7 @@ var __extends =
                       (this.img_hands[r].x = s),
                       (this.img_hands[r].y = 0),
                       (s += i),
-                      (this.img_hands[r].visible = !0),
+                      (this.img_hands[r].visible = true),
                       r++;
                   }
               }
@@ -1108,7 +1083,7 @@ var __extends =
               (this.img_hands[r].x = s),
               (this.img_hands[r].y = 0),
               (s += i),
-              (this.img_hands[r].visible = !0),
+              (this.img_hands[r].visible = true),
               r++);
           var y = ((0.72 - 0.92) * (r - 14)) / 4 + 0.92;
           this.container_hand.scaleX = this.container_hand.scaleY = y;
@@ -1120,7 +1095,7 @@ var __extends =
               (this.img_doras[a].y = 0);
           }
           if (t.lidoras && 2 != t.mode) {
-            this.container_lidora.visible = !0;
+            this.container_lidora.visible = true;
             for (a = 0; a < 5; a++) {
               v = 'back';
               a < t.lidoras.length && (v = t.lidoras[a]),
@@ -1131,7 +1106,7 @@ var __extends =
                 (this.img_lidoras[a].y = 0);
             }
           } else {
-            this.container_lidora.visible = !0;
+            this.container_lidora.visible = true;
             for (a = 0; a < 5; a++) {
               var v = 'back';
               (this.img_lidoras[a].skin = game.Tools.localUISrc(
@@ -1142,16 +1117,16 @@ var __extends =
             }
           }
           var b = t.fan_names.length;
-          (this.container_fan_yiman.visible = !1),
-            (this.container_fan_8.visible = !1),
-            (this.container_fan_15.visible = !1),
-            (this.container_fan_12.visible = !1),
-            (this.container_fan_liuju.visible = !1),
-            (this.container_fan_yiman.visible = !1),
-            (this.container_fan_8.visible = !1),
-            (this.container_fan_15.visible = !1),
-            (this.container_fan_12.visible = !1),
-            (this.container_fan_liuju.visible = !1);
+          (this.container_fan_yiman.visible = false),
+            (this.container_fan_8.visible = false),
+            (this.container_fan_15.visible = false),
+            (this.container_fan_12.visible = false),
+            (this.container_fan_liuju.visible = false),
+            (this.container_fan_yiman.visible = false),
+            (this.container_fan_8.visible = false),
+            (this.container_fan_15.visible = false),
+            (this.container_fan_12.visible = false),
+            (this.container_fan_liuju.visible = false);
           var w = null;
           (w =
             2 == t.mode
@@ -1162,8 +1137,8 @@ var __extends =
               ? this.container_fan_8
               : b <= 12
               ? this.container_fan_12
-              : this.container_fan_15).visible = !0;
-          for (a = 0; a < w.numChildren; a++) w.getChildAt(a).visible = !1;
+              : this.container_fan_15).visible = true;
+          for (a = 0; a < w.numChildren; a++) w.getChildAt(a).visible = false;
           for (var x = [], a = 0; a < t.fan_names.length; a++) {
             var I = t.fan_names[a],
               C = t.fan_ids[a],
@@ -1183,38 +1158,38 @@ var __extends =
               ((E.text = x[a].name),
               (E.width = 242),
               game.Tools.labelLocalizationSize(E, 242, 0.8),
-              void 0 !== x[a].value && null !== x[a].value)
+              undefined !== x[a].value && null !== x[a].value)
             ) {
-              M.getChildAt(2).visible = !0;
+              M.getChildAt(2).visible = true;
               var L = x[a].value.toString();
               2 == L.length
                 ? ((M.getChildAt(3).skin = game.Tools.localUISrc(
                     'myres/mjdesktop/h_' + L[1] + '.png'
                   )),
-                  (M.getChildAt(3).visible = !0),
+                  (M.getChildAt(3).visible = true),
                   (M.getChildAt(4).skin = game.Tools.localUISrc(
                     'myres/mjdesktop/h_' + L[0] + '.png'
                   )),
-                  (M.getChildAt(4).visible = !0))
+                  (M.getChildAt(4).visible = true))
                 : ((M.getChildAt(3).skin = game.Tools.localUISrc(
                     'myres/mjdesktop/h_' + L[0] + '.png'
                   )),
-                  (M.getChildAt(3).visible = !0),
-                  (M.getChildAt(4).visible = !1));
+                  (M.getChildAt(3).visible = true),
+                  (M.getChildAt(4).visible = false));
             }
-            M.visible = !0;
+            M.visible = true;
           }
-          (this.container_fan.visible = !1),
-            (this.container_fu.visible = !1),
-            (this.img_yiman.visible = !1),
+          (this.container_fan.visible = false),
+            (this.container_fu.visible = false),
+            (this.img_yiman.visible = false),
             t.fan && t.fu
               ? this.setFanFu(t.fan, t.fu)
               : t.yiman &&
                 ((this.img_yiman.alpha = 0),
-                (this.img_yiman.visible = !0),
+                (this.img_yiman.visible = true),
                 Laya.Tween.to(this.img_yiman, { alpha: 1 }, 200));
           for (a = 0; a < this.score_imgs.length; a++)
-            this.score_imgs[a].visible = !1;
+            this.score_imgs[a].visible = false;
           for (
             var D = t.score.toString(), a = 0;
             a < D.length && !(a >= this.score_imgs.length);
@@ -1223,18 +1198,18 @@ var __extends =
             (this.score_imgs[a].skin = game.Tools.localUISrc(
               'myres/mjdesktop/ww_' + D.charAt(D.length - 1 - a) + '.png'
             )),
-              (this.score_imgs[a].visible = !0);
+              (this.score_imgs[a].visible = true);
           (this.container_score.alpha = 1),
             (this.container_score.scaleX = this.container_score.scaleY = 1.2),
-            (this.container_title.visible = !1),
+            (this.container_title.visible = false),
             t.title_id &&
               (this.setTitle(t.title_id),
-              (this.container_title.visible = !0),
+              (this.container_title.visible = true),
               (this.container_title.alpha = 1),
               (this.container_title.scaleX = this.container_title.scaleY = 1.2)),
             (this.count_down.text = ''),
-            (this.btn_confirm.visible = !0),
-            (this.btn_confirm.disabled = !1),
+            (this.btn_confirm.visible = true),
+            (this.btn_confirm.disabled = false),
             (this.btn_confirm.alpha = 1);
         }),
         (a.prototype._showHule = function(t) {
@@ -1273,7 +1248,7 @@ var __extends =
               r++
             )
               a(r);
-            (i.fan = 0), (i.fu = 0), (i.yiman = !0);
+            (i.fan = 0), (i.fu = 0), (i.yiman = true);
           } else {
             i.fan_value = [];
             for (
@@ -1301,7 +1276,7 @@ var __extends =
               r++
             )
               s(r);
-            (i.fan = t.count), (i.fu = t.fu), (i.yiman = !1);
+            (i.fan = t.count), (i.fu = t.fu), (i.yiman = false);
           }
           if (t.title && '' != t.title)
             switch (((i.title = t.title), i.title)) {
@@ -1374,7 +1349,7 @@ var __extends =
             (i.score = t.score),
             (i.title_id = mjcore.E_Dadian_Title.E_Dadian_Title_manguan),
             (i.doras = t.doras),
-            (i.yiman = !1),
+            (i.yiman = false),
             (i.point_sum = 0),
             view.DesktopMgr.Inst.mode == view.EMJMode.play
               ? this._showInfo_mj(i)

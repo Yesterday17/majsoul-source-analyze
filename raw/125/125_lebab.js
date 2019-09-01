@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -44,7 +21,7 @@ let uiscript;
             t.locking || t.close();
           },
           null,
-          !1
+          false
         )),
         (this.btn_close.clickHandler = Laya.Handler.create(
           this,
@@ -52,13 +29,13 @@ let uiscript;
             t.locking || t.close();
           },
           null,
-          !1
+          false
         ));
     }),
     (i.prototype.show = function(e, i) {
       const n = this;
-      (this.enable = !0),
-        (this.locking = !0),
+      (this.enable = true),
+        (this.locking = true),
         (this.xiaofei.text = (e / 1e3).toString());
       let a = 0;
       (a = i < 16 ? 5e3 : 2e4),
@@ -66,17 +43,17 @@ let uiscript;
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            n.locking = !1;
+            n.locking = false;
           })
         );
     }),
     (i.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.enable = !1);
+            (e.locking = false), (e.enable = false);
           })
         );
     }),

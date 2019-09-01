@@ -20,13 +20,13 @@ var uiscript;
               (n._func_hide && n._func_hide.run(), n.hide()));
         },
         null,
-        !1
+        false
       );
     }
     return (
       (t.prototype.show = function() {
         Laya.timer.clearAll(this),
-          (this.me.visible = !0),
+          (this.me.visible = true),
           (this.me.alpha = 0),
           Laya.Tween.to(this.me, { alpha: 0.3 }, 150);
       }),

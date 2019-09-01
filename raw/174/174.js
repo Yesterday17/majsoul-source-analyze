@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -74,7 +49,7 @@ var __extends =
           )),
           !this.enable)
         ) {
-          t.UIMgr.Inst.closeUIWithTag_Both(), (this.enable = !0);
+          t.UIMgr.Inst.closeUIWithTag_Both(), (this.enable = true);
           for (var i = 1; i < this.tips.length; i++) {
             var n = Math.floor(Math.random() * (i + 1)),
               a = this.tips[n];
@@ -83,10 +58,10 @@ var __extends =
           (this.tips_showindex = 0),
             (this.tips_changeCD = Laya.timer.currTimer + 5e3),
             (this.label_tips.text = this.tips[0]),
-            (this.img_loading.visible = !0),
-            (this.container_waitother.visible = !1),
+            (this.img_loading.visible = true),
+            (this.container_waitother.visible = false),
             (this.starttime = Laya.timer.currTimer),
-            (this.me.getChildByName('black').visible = !0);
+            (this.me.getChildByName('black').visible = true);
           var r =
             ((Math.floor((game.Tools.currentTime - 1549296e3) / 3600 / 24) %
               8) +
@@ -99,7 +74,7 @@ var __extends =
         }
       }),
       (i.prototype.close = function(t) {
-        void 0 === t && (t = null), (this.enable = !1), t && t.run();
+        undefined === t && (t = null), (this.enable = false), t && t.run();
       }),
       (i.prototype.update = function() {
         var t = Laya.timer.currTimer - this.pre_t;
@@ -108,8 +83,8 @@ var __extends =
           this.refresh_progress(t);
       }),
       (i.prototype.showLoadCount = function(t, e) {
-        (this.img_loading.visible = !1),
-          (this.container_waitother.visible = !0),
+        (this.img_loading.visible = false),
+          (this.container_waitother.visible = true),
           (this.waitother_label0.text = t.toString()),
           (this.waitother_label1.text = e.toString());
         for (

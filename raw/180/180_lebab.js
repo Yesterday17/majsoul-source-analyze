@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => {
@@ -37,7 +14,7 @@ let uiscript;
           (this.label_add.text = ''),
           (this.title.text = e[`name_${GameMgr.client_language}`]),
           game.LoadMgr.setImgSkin(this.icon, e.icon),
-          (this.me.visible = !0);
+          (this.me.visible = true);
       }),
       (t.prototype.doanim = function(t) {
         const e = this, i = view.DesktopMgr.Inst.rewardinfo.match_chest, n = cfg.desktop.chest.get(i.chest_id), a = i.final - i.origin + (i.is_graded ? n.exp_step : 0);
@@ -71,7 +48,7 @@ let uiscript;
         });
       }),
       (t.prototype.close = function() {
-        (this.me.visible = !1), game.LoadMgr.clearImgSkin(this.icon);
+        (this.me.visible = false), game.LoadMgr.clearImgSkin(this.icon);
       }),
       t
     ;
@@ -85,7 +62,7 @@ let uiscript;
         (this.label_add = e.getChildByName('bar').getChildByName('num')),
         (this.icon = e.getChildByName('icon')),
         (this.container_gift = e.getChildByName('gift')),
-        (this.container_gift.visible = !1),
+        (this.container_gift.visible = false),
         (this.container_item = this.container_gift.getChildByName('item')),
         (this.icon_gift = this.container_item.getChildByName('icon')),
         (this.gift_num = this.container_gift.getChildByName('num')),
@@ -108,8 +85,8 @@ let uiscript;
             i = cfg.item_definition.item.find(e);
       game.LoadMgr.setImgSkin(this.icon, i.icon_transparent),
         game.LoadMgr.setImgSkin(this.icon_gift, i.icon),
-        (this.container_gift.visible = !1),
-        (this.me.visible = !0);
+        (this.container_gift.visible = false),
+        (this.me.visible = true);
     }),
     (e.prototype.doanim = function(e) {
       const i = this, n = view.DesktopMgr.Inst.rewardinfo.character_gift;
@@ -130,7 +107,7 @@ let uiscript;
               ? ((i.container_gift.x = i.icon.x),
                 (i.container_gift.y = i.icon.y),
                 (i.container_gift.alpha = 1),
-                (i.container_gift.visible = !0),
+                (i.container_gift.visible = true),
                 (i.container_item.scaleX = 1),
                 (i.container_item.scaleY = 1),
                 (i.container_item.alpha = 0),
@@ -180,7 +157,7 @@ let uiscript;
       });
     }),
     (e.prototype.close = function() {
-      (this.me.visible = !1), game.LoadMgr.clearImgSkin(this.icon);
+      (this.me.visible = false), game.LoadMgr.clearImgSkin(this.icon);
     }),
     e
   ;
@@ -198,7 +175,7 @@ let uiscript;
       this.label_num = t.getChildByName('num');
     }
     return (e.prototype.show = function() {
-      this.me.visible = !0;
+      this.me.visible = true;
       const e = view.DesktopMgr.Inst.rewardinfo;
       (this.target_level = e.main_character.level),
         (this.target_exp = e.main_character.exp);
@@ -308,7 +285,7 @@ let uiscript;
       );
     }),
     (e.prototype.close = function() {
-      this.me.visible = !1;
+      this.me.visible = false;
     }),
     e
   ;
@@ -331,8 +308,8 @@ let uiscript;
     }),
     (r.prototype.show = function(e) {
       const i = this, n = view.DesktopMgr.Inst.rewardinfo;
-      (this.page_jiban.me.visible = !1),
-        (this.page_jiban_gift.me.visible = !1),
+      (this.page_jiban.me.visible = false),
+        (this.page_jiban_gift.me.visible = false),
         (this.complete = e),
         this.page_box.show(),
         t.UIBase.anim_alpha_in(this.page_box.me, { x: -50 }, 150),
@@ -368,13 +345,13 @@ let uiscript;
             })
           );
         }),
-        (this.enable = !0);
+        (this.enable = true);
     }),
     (r.prototype.close = function() {
       this.page_box.close(),
         this.page_jiban_gift.close(),
         this.page_jiban.close(),
-        (this.enable = !1);
+        (this.enable = false);
     }),
     r
   ;

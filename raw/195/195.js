@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(t) {
     function e() {
@@ -59,7 +34,7 @@ var __extends =
         );
         this.refreshTime(t),
           this.caluNextTipsTime(t),
-          (this.container_tips.visible = !1);
+          (this.container_tips.visible = false);
       }),
       (e.prototype.timePass = function() {
         var t = Math.ceil(
@@ -76,7 +51,7 @@ var __extends =
               (this.tips0.text = game.Tools.strOfLocalization(2157, [
                 Math.floor(t / 60).toString()
               ])),
-            (this.container_tips.visible = !0),
+            (this.container_tips.visible = true),
             this.caluNextTipsTime(t));
       }),
       (e.prototype.caluNextTipsTime = function(t) {

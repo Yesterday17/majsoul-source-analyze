@@ -1,32 +1,9 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
     function i() {
       const t = e.call(this, new ui.mj.task_progressUI()) || this;
-      return (t.tasks = []), (t.locking = !1), (i.Inst = t), t;
+      return (t.tasks = []), (t.locking = false), (i.Inst = t), t;
     }
     return __extends(i, e),
     (i.record = function() {
@@ -87,37 +64,37 @@ let uiscript;
             t.locking || t.hide();
           },
           null,
-          !1
+          false
         ));
     }),
     (i.prototype.show = function(e, i) {
       const n = this;
-      (this.enable = !0),
-        (this.locking = !0),
+      (this.enable = true),
+        (this.locking = true),
         (this.compelte = i),
         Laya.timer.clearAll(this),
-        (this.btn_close.visible = !1),
+        (this.btn_close.visible = false),
         t.UIBase.anim_alpha_in(
           this.root,
           { x: 0 },
           200,
           0,
-          Laya.Handler.create(this, () => {}, null, !1)
+          Laya.Handler.create(this, () => {}, null, false)
         );
       for (
         let a = 0,
             r = () => {
               ++a == e.length &&
-                ((n.locking = !1),
-                (n.btn_close.visible = !0),
+                ((n.locking = false),
+                (n.btn_close.visible = true),
                 Laya.timer.once(2e3, n, () => {
-                  n.locking || ((n.btn_close.visible = !1), n.hide());
+                  n.locking || ((n.btn_close.visible = false), n.hide());
                 }));
             },
             s = t => {
               const i = o.tasks[t];
               if (t < e.length) {
-                i.container.visible = !0;
+                i.container.visible = true;
                 const a = cfg.events.dailyevent.get(e[t].id), s = cfg.item_definition.currency.get(a.reward_type);
                 s &&
                   ((i.item_icon.skin = game.LoadMgr.getResImageSkin(s.icon)),
@@ -128,7 +105,7 @@ let uiscript;
                   (i.item_name.text = l[`name_${GameMgr.client_language}`])),
                   (i.desc.text = a[`desc_${GameMgr.client_language}`]),
                   (i.item_count.text = a.reward_num.toString()),
-                  (i.img_finish.visible = !1),
+                  (i.img_finish.visible = false),
                   (i.progress_bar.scaleX = e[t].oc / a.target),
                   (i.progress_label.text =
                     `${e[t].oc.toString()}/${a.target.toString()}`);
@@ -150,7 +127,7 @@ let uiscript;
                       (i.progress_label.text =
                         `${e[t].nc.toString()}/${a.target.toString()}`),
                         e[t].achieved
-                          ? ((i.img_finish.visible = !0),
+                          ? ((i.img_finish.visible = true),
                             (i.img_finish.alpha = 0),
                             (i.img_finish.scaleX = i.img_finish.scaleY = 2),
                             Laya.timer.once(200, n, () => {
@@ -168,7 +145,7 @@ let uiscript;
                     })
                   );
                 });
-              } else i.container.visible = !1;
+              } else i.container.visible = false;
             },
             o = this,
             l = 0;
@@ -179,14 +156,14 @@ let uiscript;
     }),
     (i.prototype.hide = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_alpha_out(
           this.root,
           { x: 0 },
           200,
           0,
           Laya.Handler.create(this, () => {
-            (e.enable = !1), Laya.timer.clearAll(e), e.compelte.run();
+            (e.enable = false), Laya.timer.clearAll(e), e.compelte.run();
           })
         );
     }),

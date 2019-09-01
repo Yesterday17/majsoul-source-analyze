@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let view;
 !(t => {
   const e = (e => {
@@ -32,21 +9,21 @@ let view;
         (t._mouse_in_start_time = -1),
         (t.handpool = []),
         (t.hand = []),
-        (t.during_liqi = !1),
+        (t.during_liqi = false),
         (t.effect_click = null),
         (t.trans_hand3D = null),
         (t.trans_hand3DCover = null),
         (t._hand3d = []),
-        (t.can_discard = !1),
+        (t.can_discard = false),
         (t.last_tile = null),
         (t._prediscard_index = -1),
         (t.mouse_downx = 0),
         (t.mouse_downy = 0),
-        (t.mouse_downed = !1),
-        (t.during_drag = !1),
-        (t.click_on_choosed = !1),
+        (t.mouse_downed = false),
+        (t.during_drag = false),
+        (t.click_on_choosed = false),
         (t.zd = 0),
-        (t.xianggonged = !1),
+        (t.xianggonged = false),
         (t.screen_left = -7.2),
         (t.screen_right = 44.4),
         (t.screen_top = 16.6),
@@ -63,15 +40,15 @@ let view;
       e.prototype.Init.call(this, i, n, a, r, s, o, l);
       const h = a.getChildByName('pai');
       (this.effect_click = a.getChildByName('effect_dianji')),
-        (a.active = !0),
-        (h.active = !1);
+        (a.active = true),
+        (h.active = false);
       for (let c = 0; c < 16; c++) {
         const u = h.clone();
         this.trans_hand.addChild(u),
           (u.transform.localPosition = new Laya.Vector3(0, 0, 0)),
           (u.transform.localRotation = new Laya.Quaternion(0, 0, 0, 1)),
           (u.transform.localScale = new Laya.Vector3(1, 1, 1)),
-          (u.active = !1);
+          (u.active = false);
         const _ = u.addComponent(t.HandPaiPlane);
         this.handpool.push(_);
       }
@@ -87,7 +64,7 @@ let view;
       const i = this.handpool.pop();
       return (
         i.Reset(),
-        i.SetVal(e, !0),
+        i.SetVal(e, true),
         (i.z = this.zd),
         (this.zd -= 0.02),
         t.DesktopMgr.Inst.mode != t.EMJMode.play &&
@@ -106,7 +83,7 @@ let view;
         if (this.hand[e] === t) {
           for (var i = this.hand[e], n = e; n < this.hand.length - 1; n++)
             (this.hand[n] = this.hand[n + 1]),
-              this.hand[n].SetIndex(n, !1, !0);
+              this.hand[n].SetIndex(n, false, true);
           this.hand.pop(),
             this._OnRemovePai(i),
             i.Reset(),
@@ -119,7 +96,7 @@ let view;
         if (mjcore.MJPai.isSame(t, this.hand[e].val)) {
           for (var i = this.hand[e], n = e; n < this.hand.length - 1; n++)
             (this.hand[n] = this.hand[n + 1]),
-              this.hand[n].SetIndex(n, !1, !0);
+              this.hand[n].SetIndex(n, false, true);
           this.hand.pop(),
             this._OnRemovePai(i),
             i.Reset(),
@@ -135,14 +112,14 @@ let view;
       for (var t = 0; t < this._hand3d.length; t++) this._hand3d[t].Destory();
       (this._hand3d = []),
         (this.zd = 0),
-        (this.during_liqi = !1),
-        (this.trans_hand3D.active = !1),
-        (this.trans_hand3DCover.active = !1),
+        (this.during_liqi = false),
+        (this.trans_hand3D.active = false),
+        (this.trans_hand3DCover.active = false),
         (this.last_tile = null),
-        (this.can_discard = !1),
+        (this.can_discard = false),
         (this._choose_pai = null),
         (this._mouse_in_pai = null),
-        (this.xianggonged = !1),
+        (this.xianggonged = false),
         this.resetMouseState(),
         Laya.timer.clearAll(this);
     }),
@@ -150,7 +127,7 @@ let view;
       const n = this;
       if ((this.Reset(), this.RefreshDir(), i)) {
         for (r = 0; r < e.length; r++) {
-          this._AddHandPai(e[r]).SetIndex(r, 14 == r, !1);
+          this._AddHandPai(e[r]).SetIndex(r, 14 == r, false);
         }
         this.pendingXiangGong(14 == this.hand.length, 'NewGame fast');
       } else {
@@ -163,7 +140,7 @@ let view;
             for (let e = 0; e < 4 && o != a.length; e++) {
               o++;
               const i = n._AddHandPai(a[o - 1]);
-              i.SetIndex(o - 1, !1, !1), i.AnimNewTile();
+              i.SetIndex(o - 1, false, false), i.AnimNewTile();
             }
             t.AudioMgr.PlayAudio(216);
           });
@@ -171,7 +148,7 @@ let view;
           n.LiPai(),
             (n.last_tile = n.hand[n.hand.length - 1]),
             14 == n.hand.length &&
-              n.hand[n.hand.length - 1].SetIndex(n.hand.length - 1, !0, !1),
+              n.hand[n.hand.length - 1].SetIndex(n.hand.length - 1, true, false),
             n.pendingXiangGong(14 == n.hand.length, 'NewGame No fast');
         });
       }
@@ -180,20 +157,20 @@ let view;
     (i.prototype.RecordNewGame = function(t) {
       this.Reset(), this.RefreshDir();
       for (let e = 0; e < t.length; e++) {
-        this._AddHandPai(t[e]).SetIndex(e, 14 == e, !1);
+        this._AddHandPai(t[e]).SetIndex(e, 14 == e, false);
       }
       this.pendingXiangGong(14 == this.hand.length, 'RecordNewGame'),
         Laya.timer.frameLoop(1, this, this.update);
     }),
     (i.prototype.TakePai = function(t, e) {
-      void 0 === e && (e = !0),
+      undefined === e && (e = true),
         app.Log.log(`ViewPlayer_Me TakePai ${t.toString()} doanim:${e}`);
       try {
         const i = this._AddHandPai(t);
-        i.SetIndex(this.hand.length - 1, !0, !1),
+        i.SetIndex(this.hand.length - 1, true, false),
           e && i.AnimNewTile(),
           (this.last_tile = i),
-          this.pendingXiangGong(!0, 'TakePai');
+          this.pendingXiangGong(true, 'TakePai');
       } catch (t) {
         const n = {};
         (n.error = t.message),
@@ -219,13 +196,13 @@ let view;
           this.hand[this._prediscard_index].val;
           mjcore.MJPai.isSame(this.hand[this._prediscard_index].val, t)
             ? this._RemovePai(this.hand[this._prediscard_index])
-            : ((this.hand[this._prediscard_index].mySelf.active = !0),
+            : ((this.hand[this._prediscard_index].mySelf.active = true),
               this._RemoveHandPai(t));
         } else this._RemoveHandPai(t);
         this.LiPai(e),
           (this.last_tile = null),
           (this._prediscard_index = -1),
-          this.pendingXiangGong(!1, 'OnDiscardTile');
+          this.pendingXiangGong(false, 'OnDiscardTile');
       } catch (t) {
         const i = {};
         (i.error = t.message),
@@ -236,14 +213,14 @@ let view;
       }
     }),
     (i.prototype.AddGang = function(t, i) {
-      void 0 === i && (i = !0),
+      undefined === i && (i = true),
         app.Log.log(`ViewPlayer_Me AddGang ${t.toString()} doanim:${i}`);
       try {
         e.prototype.AddGang.call(this, t, i),
           this._RemoveHandPai(t),
           this.LiPai(),
           (this.last_tile = null),
-          this.pendingXiangGong(!1, 'AddGang');
+          this.pendingXiangGong(false, 'AddGang');
       } catch (t) {
         const n = {};
         (n.error = t.message),
@@ -254,7 +231,7 @@ let view;
       }
     }),
     (i.prototype.LiPai = function(e) {
-      void 0 === e && (e = !1);
+      undefined === e && (e = false);
       for (i = 0; i < this.hand.length; i++) this.hand[i].SelectEnd();
       if (
         t.DesktopMgr.Inst.auto_liqi ||
@@ -262,13 +239,13 @@ let view;
       ) {
         this.hand.sort(t.HandPaiPlane.Cmp);
         for (var i = 0; i < this.hand.length; i++)
-          this.hand[i].SetIndex(i, !1, !e),
+          this.hand[i].SetIndex(i, false, !e),
             t.DesktopMgr.Inst.mode != t.EMJMode.play &&
               this.hand[i].RefreshPaoPai();
       }
     }),
     (i.prototype.AddMing = function(t, e) {
-      void 0 === e && (e = !0),
+      undefined === e && (e = true),
         app.Log.log(`ViewPlayer_Me AddMing ${t.toString()} doanim:${e}`);
       try {
         for (let i = 0; i < t.pais.length; i++)
@@ -300,13 +277,13 @@ let view;
     (i.prototype.HulePrepare = function(e, i, n) {
       app.Log.log(`ViewPlayer_Me HulePrepare ${i.toString()} zimo:${n}`);
       try {
-        uiscript.UI_DesktopInfo.Inst.setZhenting(!1);
+        uiscript.UI_DesktopInfo.Inst.setZhenting(false);
         for (r = 0; r < this.hand.length; r++) this.hand[r].Hule();
         for (var a = [], r = 0; r < e.length; r++) {
           const s = new t.HandPai3D(this.trans_hand3D);
-          s.SetVal(e[r]), s.SetIndex(r, !1), s.Stand(), a.push(s);
+          s.SetVal(e[r]), s.SetIndex(r, false), s.Stand(), a.push(s);
         }
-        (this._hand3d = a), (this.trans_hand3D.active = !0);
+        (this._hand3d = a), (this.trans_hand3D.active = true);
       } catch (t) {
         const o = {};
         (o.error = t.message),
@@ -323,10 +300,10 @@ let view;
       ) {
         const s = new t.HandPai3D(this.trans_hand3D);
         s.SetVal(i),
-          s.SetIndex(this._hand3d.length, !0),
+          s.SetIndex(this._hand3d.length, true),
           this._hand3d.push(s),
           s.FullDown(),
-          (s.shadow.active = !1),
+          (s.shadow.active = false),
           (s.model.transform.localPosition.z += 0.15 * t.PAIMODEL_HEIGHT);
         const o = s.pai3D.model.transform.position.clone();
         (this.hand3d.transform.position = o.clone()),
@@ -380,12 +357,12 @@ let view;
           for (let e = 0; e < h; e++) r._hand3d[e].DoAnim_FullDown();
         }
       }),
-        (this.trans_hand3D.active = !0);
+        (this.trans_hand3D.active = true);
     }),
     (i.prototype.Huangpai = function(e, i, n) {
       const a = this;
       app.Log.log(`ViewPlayer_Me Huangpai  tingpai:${e} fast:${n}`),
-        uiscript.UI_DesktopInfo.Inst.setZhenting(!1);
+        uiscript.UI_DesktopInfo.Inst.setZhenting(false);
       for (o = 0; o < this.hand.length; o++) this.hand[o].Hule();
       for (
         var r = [], s = e ? this.trans_hand3D : this.trans_hand3DCover, o = 0;
@@ -393,7 +370,7 @@ let view;
         o++
       ) {
         const l = new t.HandPai3D(s);
-        l.SetVal(this.hand[o].val), l.SetIndex(o, !1), l.Stand(), r.push(l);
+        l.SetVal(this.hand[o].val), l.SetIndex(o, false), l.Stand(), r.push(l);
       }
       const h = r.length;
       if (n)
@@ -405,7 +382,7 @@ let view;
             e ? a._hand3d[i].DoAnim_FullDown() : a._hand3d[i].DoAnim_Cover();
           t.AudioMgr.PlayAudio(223);
         });
-      (this._hand3d = r), (s.active = !0);
+      (this._hand3d = r), (s.active = true);
     }),
     (i.prototype.OnDoraRefresh = function() {
       if (-1 != this.seat) {
@@ -422,17 +399,17 @@ let view;
           )
         )
           return;
-        this.during_liqi = !1;
+        this.during_liqi = false;
       } else
         this.desktop.Action_QiPai(
           this._choose_pai.val,
           this._choose_pai === this.last_tile,
-          !1
+          false
         );
       (this._prediscard_index = this._choose_pai.index),
-        (this._choose_pai.mySelf.active = !1),
+        (this._choose_pai.mySelf.active = false),
         (this._choose_pai = null),
-        (this.can_discard = !1);
+        (this.can_discard = false);
     }),
     (i.prototype.onShowPaopaiChange = function() {
       if (t.DesktopMgr.Inst.gameing)
@@ -447,9 +424,9 @@ let view;
         try {
           let i = 13 - 3 * this.container_ming.mings.length;
           t && i++;
-          for (var n = !1, a = 0; a < this.hand.length; a++)
+          for (var n = false, a = 0; a < this.hand.length; a++)
             if (this.hand[a].index != a) {
-              n = !0;
+              n = true;
               break;
             }
           for (var r = '', a = 0; a < this.hand.length; a++)
@@ -462,7 +439,7 @@ let view;
               n ||
               this.hand.length + this.handpool.length != 16)
           ) {
-            this.xianggonged = !0;
+            this.xianggonged = true;
             const s = {};
             (s.from = e),
               (s.need_discard = t),
@@ -481,11 +458,11 @@ let view;
         (this.during_liqi ||
           (this.last_tile &&
             (t.DesktopMgr.Inst.timestoped ||
-              (this.desktop.Action_QiPai(this.last_tile.val, !0, !1),
+              (this.desktop.Action_QiPai(this.last_tile.val, true, false),
               (this._prediscard_index = this.hand.length - 1),
-              (this.last_tile.mySelf.active = !1),
+              (this.last_tile.mySelf.active = false),
               (this._choose_pai = null),
-              (this.can_discard = !1)))));
+              (this.can_discard = false)))));
     }),
     (i.prototype.setChoosePai = function(e, i) {
       if (this._choose_pai !== e) {
@@ -507,9 +484,9 @@ let view;
     (i.prototype.resetMouseState = function() {
       if (
         ((this._mouse_in_pai = null),
-        (this.during_drag = !1),
-        (this.mouse_downed = !1),
-        (this.click_on_choosed = !1),
+        (this.during_drag = false),
+        (this.mouse_downed = false),
+        (this.click_on_choosed = false),
         this._choose_pai)
       ) {
         const e = this._choose_pai.mySelf.transform.localPosition.clone();
@@ -531,11 +508,11 @@ let view;
         const e = this.getMouseInfo();
         e.pai
           ? (this._choose_pai === e.pai
-              ? (this.click_on_choosed = !0)
-              : (this.setChoosePai(e.pai, !0), (this.click_on_choosed = !1)),
+              ? (this.click_on_choosed = true)
+              : (this.setChoosePai(e.pai, true), (this.click_on_choosed = false)),
             (this.mouse_downx = Laya.MouseManager.instance.mouseX),
             (this.mouse_downy = Laya.MouseManager.instance.mouseY),
-            (this.mouse_downed = !0))
+            (this.mouse_downed = true))
           : this.resetMouseState();
       }
     }),
@@ -552,7 +529,7 @@ let view;
         const i = Laya.MouseManager.instance.mouseY;
         (e - this.mouse_downx) * (e - this.mouse_downx) +
           (i - this.mouse_downy) * (i - this.mouse_downy) >
-          400 && (this.during_drag = !0);
+          400 && (this.during_drag = true);
       }
     }),
     (i.prototype.onMouseUp = function() {
@@ -565,9 +542,9 @@ let view;
         )
       ) {
         const e = this.getMouseInfo();
-        (this.mouse_downed = !1),
+        (this.mouse_downed = false),
           this.during_drag
-            ? ((this.during_drag = !1),
+            ? ((this.during_drag = false),
               null == this._choose_pai
                 ? this.resetMouseState()
                 : this.can_discard && !e.inHandRange && this._choose_pai.valid
@@ -580,9 +557,9 @@ let view;
       }
     }),
     (i.prototype.onMouseOut = function() {
-      (this.mouse_downed = !1),
-        (this.click_on_choosed = !1),
-        this.during_drag && ((this.during_drag = !1), this.resetMouseState());
+      (this.mouse_downed = false),
+        (this.click_on_choosed = false),
+        this.during_drag && ((this.during_drag = false), this.resetMouseState());
     }),
     (i.prototype.getMouseInfo = function() {
       const e = Laya.MouseManager.instance.mouseX;
@@ -632,16 +609,16 @@ let view;
           ) {
             if (e.index < this._choose_pai.index) {
               for (i = e.index; i < this._choose_pai.index; i++)
-                this.hand[i].SetIndex(i + 1, !1, !0);
+                this.hand[i].SetIndex(i + 1, false, true);
               for (i = this._choose_pai.index; i > e.index; i--)
                 (this.hand[i] = this.hand[i - 1]),
-                  this.hand[i].SetIndex(i, !1, !0);
+                  this.hand[i].SetIndex(i, false, true);
             } else
               for (var i = this._choose_pai.index; i < e.index; i++)
                 (this.hand[i] = this.hand[i + 1]),
-                  this.hand[i].SetIndex(i, !1, !0);
+                  this.hand[i].SetIndex(i, false, true);
             (this.hand[e.index] = this._choose_pai),
-              this._choose_pai.SetIndex(e.index, !1, !0);
+              this._choose_pai.SetIndex(e.index, false, true);
           }
           this._choose_pai.mySelf.parent.setChildIndex(
             this._choose_pai.mySelf,
@@ -669,7 +646,7 @@ let view;
           if (null == e.pai) this.resetMouseState();
           else if (this._mouse_in_pai && this._mouse_in_pai === e.pai) {
             Laya.timer.currTimer - this._mouse_in_start_time > 10 &&
-              (this.setChoosePai(this._mouse_in_pai, !1),
+              (this.setChoosePai(this._mouse_in_pai, false),
               (this._mouse_in_pai = null));
           } else
             (this._mouse_in_pai = e.pai),

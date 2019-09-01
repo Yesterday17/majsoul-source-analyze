@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -35,11 +12,11 @@ let uiscript;
           this,
           this.hide,
           null,
-          !1
+          false
         ));
     }),
     (i.prototype.show = function() {
-      (this.me.visible = !0),
+      (this.me.visible = true),
         Laya.LocalStorage.setItem('_pre_sociotype', ''),
         app.Log.info_net('UI_AnotherLogin  close net'),
         game.LobbyNetMgr.Inst.Close(),

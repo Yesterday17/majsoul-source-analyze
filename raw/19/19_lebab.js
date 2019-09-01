@@ -6,8 +6,8 @@ let caps;
       get() {
         return 'shader_ranshao';
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t, 'attributeMap', {
       get() {
@@ -19,8 +19,8 @@ let caps;
           a_Texcoord: Laya.VertexElementUsage.TEXTURECOORDINATE0
         };
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t, 'uniformMap', {
       get() {
@@ -49,8 +49,8 @@ let caps;
           u_bound: [this.BOUND, Laya.Shader3D.PERIOD_MATERIAL]
         };
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (t.TEXTURE1 = 1),
     (t.TEXTURE2 = 2),

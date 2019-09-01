@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -50,16 +27,16 @@ let uiscript;
             e.locking || e.close();
           },
           null,
-          !1
+          false
         ));
     }),
     (i.prototype.show = function(t, e) {
       const i = this;
-      (this.enable = !0), (this.complete = e);
+      (this.enable = true), (this.complete = e);
       for (
         let n = e => {
                 if (e < t.length) {
-                  a.items[e].container.visible = !0;
+                  a.items[e].container.visible = true;
                   const n = game.GameUtility.get_item_view(t[e].id);
                   a.items[e].icon.setSkin(n.icon),
                     (a.items[e].name.text = n.name),
@@ -84,7 +61,7 @@ let uiscript;
                       }),
                       150 * e + 400
                     );
-                } else a.items[e].container.visible = !1;
+                } else a.items[e].container.visible = false;
               },
             a = this,
             r = 0;
@@ -92,21 +69,21 @@ let uiscript;
         r++
       )
         n(r);
-      (this.btn_close.visible = !1),
+      (this.btn_close.visible = false),
         (this.root.alpha = 1),
         (this.root.scaleY = 1),
-        (this.locking = !0),
-        this.me.in.play(0, !1),
+        (this.locking = true),
+        this.me.in.play(0, false),
         Laya.timer.once(400 + 150 * t.length, this, () => {
-          (i.locking = !1), (i.btn_close.visible = !0);
+          (i.locking = false), (i.btn_close.visible = true);
         });
     }),
     (i.prototype.close = function() {
       const t = this;
-      (this.locking = !0),
-        this.me.out.play(0, !1),
+      (this.locking = true),
+        this.me.out.play(0, false),
         Laya.timer.once(200, this, () => {
-          (t.locking = !1), (t.enable = !1), t.complete && t.complete.run();
+          (t.locking = false), (t.enable = false), t.complete && t.complete.run();
         });
     }),
     (i.Inst = null),

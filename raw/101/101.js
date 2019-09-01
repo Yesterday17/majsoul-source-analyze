@@ -1,36 +1,11 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function e(e, i) {
         var n = this;
         (this.me = e),
           (this.father = i),
-          (this.me.visible = !1),
+          (this.me.visible = false),
           (this.container_info = e.getChildByName('info')),
           (this.item_icon = this.container_info.getChildByName('item')),
           (this.item_name = this.container_info.getChildByName('item_name')),
@@ -50,7 +25,7 @@ var __extends =
               e && t.UI_ItemDetail.Inst.show(e.reward_id);
             },
             null,
-            !1
+            false
           )),
           (this.label_getted = this.container_info.getChildByName('getted'));
       }
@@ -59,7 +34,7 @@ var __extends =
           var e = this,
             i = this.id,
             n = cfg.activity.exchange.get(i);
-          (this.container_info.visible = !0),
+          (this.container_info.visible = true),
             (this.item_count.text = 'x' + n.reward_count);
           var a = cfg.item_definition.currency.get(n.reward_id);
           a &&
@@ -81,8 +56,8 @@ var __extends =
             'en' == GameMgr.client_language
               ? (this.left_count.x = 55)
               : (this.left_count.x = 78),
-            (this.label_getted.visible = !1),
-            (this.btn_exchange.visible = !1),
+            (this.label_getted.visible = false),
+            (this.btn_exchange.visible = false),
             0 != o
               ? ((this.left_count.color = '#37b625'),
                 t.UI_Bag.get_item_count(n.consume_id) < n.consume_count
@@ -90,7 +65,7 @@ var __extends =
                       new Laya.ColorFilter(t.GRAY_FILTER)
                     ])
                   : (this.btn_exchange.filters = []),
-                (this.btn_exchange.visible = !0),
+                (this.btn_exchange.visible = true),
                 (this.btn_exchange.clickHandler = Laya.Handler.create(
                   this,
                   function() {
@@ -100,7 +75,7 @@ var __extends =
                             s['name_' + GameMgr.client_language]
                           ])
                         )
-                      : (game.Tools.setGrayDisable(e.btn_exchange, !0),
+                      : (game.Tools.setGrayDisable(e.btn_exchange, true),
                         app.NetAgent.sendReq2Lobby(
                           'Lobby',
                           'exchangeActivityItem',
@@ -108,7 +83,7 @@ var __extends =
                           function(n, a) {
                             if (i == e.id)
                               if (
-                                (game.Tools.setGrayDisable(e.btn_exchange, !1),
+                                (game.Tools.setGrayDisable(e.btn_exchange, false),
                                 n || a.error)
                               )
                                 t.UIMgr.Inst.showNetReqError(
@@ -150,18 +125,18 @@ var __extends =
                         ));
                   },
                   null,
-                  !1
+                  false
                 )))
               : ((this.left_count.color = '#e3283c'),
                 (this.btn_exchange.clickHandler = null),
-                (this.label_getted.visible = !0),
-                game.Tools.setGrayDisable(this.btn_exchange, !0));
+                (this.label_getted.visible = true),
+                game.Tools.setGrayDisable(this.btn_exchange, true));
         }),
         (e.prototype.show = function(t) {
           (this.id = t.exchange_id),
             (this.count = t.count),
             this.refresh(),
-            (this.me.visible = !0);
+            (this.me.visible = true);
         }),
         e
       );
@@ -178,7 +153,7 @@ var __extends =
             (this.content = this.root.getChildByName('content')),
             (this.head = this.content.getChildByName('head')),
             (this.task_templete = this.content.getChildByName('task_templete')),
-            (this.task_templete.visible = !1),
+            (this.task_templete.visible = false),
             (this.cells = []);
           for (var i = 0; i < 20; i++)
             this.cells.push(
@@ -201,7 +176,7 @@ var __extends =
               ? (this.cells[i].show(t[i]),
                 (this.cells[i].me.y = e),
                 (e += this.cells[i].me.height))
-              : (this.cells[i].me.visible = !1);
+              : (this.cells[i].me.visible = false);
           (this.total_h = e),
             this.content.refresh(),
             this.refresh_scrollbar(),
@@ -220,8 +195,8 @@ var __extends =
                 t *
                 this.scrollbar.height *
                 (1 - this.content.height / this.total_h)),
-              (this.scrollbar.visible = !0);
-          } else this.scrollbar.visible = !1;
+              (this.scrollbar.visible = true);
+          } else this.scrollbar.visible = false;
         }),
         i
       );

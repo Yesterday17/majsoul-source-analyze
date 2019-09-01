@@ -9,19 +9,19 @@ let capsui;
       (this.btn_left.clickHandler = Laya.Handler.create(
         this,
         () => {
-          i.change_page(i.current_index - 1, !1);
+          i.change_page(i.current_index - 1, false);
         },
         null,
-        !1
+        false
       )),
         (this.btn_right = this.me.getChildByName('btn_right')),
         (this.btn_right.clickHandler = Laya.Handler.create(
           this,
           () => {
-            i.change_page(i.current_index + 1, !1);
+            i.change_page(i.current_index + 1, false);
           },
           null,
-          !1
+          false
         )),
         (this.label_current_page = this.me.getChildByName('curr_page')),
         (this.btn_page = this.me.getChildByName('btn_page')),
@@ -31,7 +31,7 @@ let capsui;
             i.page_show_locking || i._show_page_choose();
           },
           null,
-          !1
+          false
         )),
         (this.container_pages = this.me.getChildByName('container_pages')),
         (this.container_pages.getChildByName(
@@ -42,23 +42,23 @@ let capsui;
             i.page_show_locking || i._close_page_choose();
           },
           null,
-          !1
+          false
         )),
         (this.scroll_pages = this.container_pages.getChildByName(
           'bg'
         ).scriptMap['capsui.CScrollView']),
         this.scroll_pages.init_scrollview(
-          Laya.Handler.create(this, this._render_page_choose_item, null, !1)
+          Laya.Handler.create(this, this._render_page_choose_item, null, false)
         );
     }
     return (t.prototype.reset = function() {
-      (this.me.visible = !1),
-        (this.container_pages.visible = !1),
+      (this.me.visible = false),
+        (this.container_pages.visible = false),
         this.scroll_pages.reset(),
-        (this.btn_left.visible = !1),
-        (this.btn_right.visible = !1),
-        (this.btn_page.visible = !1),
-        (this.page_show_locking = !1),
+        (this.btn_left.visible = false),
+        (this.btn_right.visible = false),
+        (this.btn_page.visible = false),
+        (this.page_show_locking = false),
         (this.current_index = -1),
         (this.label_current_page.text = '');
     }),
@@ -68,7 +68,7 @@ let capsui;
         (this.btn_page.visible = this.total_count > 1),
         (this.btn_left.visible = this.current_index > 0),
         (this.btn_right.visible = this.current_index + 1 < this.total_count),
-        this.change_page(this.current_index, !1);
+        this.change_page(this.current_index, false);
     }),
     (t.prototype.change_page = function(t, e) {
       t >= this.total_count && (t = this.total_count - 1),
@@ -85,9 +85,9 @@ let capsui;
     }),
     (t.prototype._show_page_choose = function() {
       const t = this;
-      if (this.total_count <= 1) this.page_show_locking = !1;
+      if (this.total_count <= 1) this.page_show_locking = false;
       else {
-        (this.container_pages.visible = !0),
+        (this.container_pages.visible = true),
           this.scroll_pages.reset(),
           this.scroll_pages.addItem(this.total_count);
         const e = this.container_pages.getChildByName('bg');
@@ -102,7 +102,7 @@ let capsui;
           (e.alpha = 0),
           Laya.Tween.to(e, { alpha: 1 }, 150),
           Laya.timer.once(150, this, () => {
-            t.page_show_locking = !1;
+            t.page_show_locking = false;
           });
       }
     }),
@@ -110,9 +110,9 @@ let capsui;
       const t = this;
       const e = this.container_pages.getChildByName('bg');
       Laya.Tween.to(e, { alpha: 0 }, 150),
-        (this.page_show_locking = !0),
+        (this.page_show_locking = true),
         Laya.timer.once(150, this, () => {
-          (t.page_show_locking = !1), (t.container_pages.visible = !1);
+          (t.page_show_locking = false), (t.container_pages.visible = false);
         });
     }),
     (t.prototype._render_page_choose_item = function({index, container}) {
@@ -123,10 +123,10 @@ let capsui;
         this,
         () => {
           e.page_show_locking ||
-            (e.change_page(i, !1), e._close_page_choose());
+            (e.change_page(i, false), e._close_page_choose());
         },
         null,
-        !1
+        false
       )),
         (n.getChildByName('page').text = (i + 1).toString());
     }),

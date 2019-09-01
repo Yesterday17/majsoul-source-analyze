@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -31,7 +6,7 @@ var __extends =
       return (
         (t.func_cancel = null),
         (t.func_confirm = null),
-        (t.locking = !1),
+        (t.locking = false),
         (i.Inst = t),
         t
       );
@@ -53,7 +28,7 @@ var __extends =
                 (t.func_confirm = null));
             },
             null,
-            !1
+            false
           )),
           (this.root.getChildByName(
             'btn_cancel'
@@ -67,7 +42,7 @@ var __extends =
                 (t.func_confirm = null));
             },
             null,
-            !1
+            false
           )),
           (this.root.getChildByName('btn_cancel').filters = [
             new Laya.ColorFilter([
@@ -94,14 +69,14 @@ var __extends =
             ])
           ]),
           (this.desc = this.root.getChildByName('desc')),
-          (this.locking = !1);
+          (this.locking = false);
       }),
       (i.prototype.show = function(e, i, n, a, r) {
         var s = this;
-        void 0 === i && (i = null),
-          void 0 === n && (n = null),
-          void 0 === a && (a = 960),
-          void 0 === r && (r = 560),
+        undefined === i && (i = null),
+          undefined === n && (n = null),
+          undefined === a && (a = 960),
+          undefined === r && (r = 560),
           (this.func_cancel = n),
           (this.func_confirm = i),
           (this.desc.text = e),
@@ -109,43 +84,43 @@ var __extends =
           (this.root.y = r),
           (this.root.getChildByName('btn_confirm').x = 114),
           (this.root.getChildByName('btn_cancel').x = 339),
-          (this.root.getChildByName('btn_cancel').visible = !0),
-          (this.locking = !0),
-          (this.enable = !0),
+          (this.root.getChildByName('btn_cancel').visible = true),
+          (this.locking = true),
+          (this.enable = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              s.locking = !1;
+              s.locking = false;
             })
           );
       }),
       (i.prototype.show_only_confirm = function(e, i, n, a) {
         var r = this;
-        void 0 === i && (i = null),
-          void 0 === n && (n = 960),
-          void 0 === a && (a = 560),
+        undefined === i && (i = null),
+          undefined === n && (n = 960),
+          undefined === a && (a = 560),
           (this.func_confirm = i),
           (this.desc.text = e),
           (this.root.x = n),
           (this.root.y = a),
           (this.root.getChildByName('btn_confirm').x = 226),
-          (this.root.getChildByName('btn_cancel').visible = !1),
-          (this.locking = !0),
-          (this.enable = !0),
+          (this.root.getChildByName('btn_cancel').visible = false),
+          (this.locking = true),
+          (this.enable = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              r.locking = !1;
+              r.locking = false;
             })
           );
       }),
       (i.prototype.close = function() {
         var e = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1), (e.enable = !1);
+              (e.locking = false), (e.enable = false);
             })
           );
       }),

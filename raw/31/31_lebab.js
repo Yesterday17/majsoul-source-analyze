@@ -5,7 +5,7 @@ let view;
     return (t.init_data = function() {
       const t = this;
       this._loaded ||
-        ((this._loaded = !0),
+        ((this._loaded = true),
         cfg.animation.animation.forEach(e => {
           const i = e.name;
           const n = e.type;
@@ -20,7 +20,7 @@ let view;
     (t.get_anim_config = function(t, e) {
       return this._map_anim[t] ? this._map_anim[t][e] : null;
     }),
-    (t._loaded = !1),
+    (t._loaded = false),
     (t._map_anim = {}),
     t
   ;

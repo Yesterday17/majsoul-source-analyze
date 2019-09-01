@@ -6,7 +6,7 @@ let uiscript;
         (this.used_skin = {}),
         (this.seen_skin_map = null),
         (this.me = t),
-        (this.me.visible = !1),
+        (this.me.visible = false),
         (this.scrollview = this.me.scriptMap['capsui.CScrollView_Heng']),
         this.scrollview.init_scrollview(
           new Laya.Handler(this, this.render_item)
@@ -27,12 +27,12 @@ let uiscript;
           )
             this.seen_skin_map[n[a]] = 1;
       }
-      let r = !1;
+      let r = false;
       return cfg.shops.goods.forEach(({category, id}) => {
         r ||
           (5 == category &&
             t.UI_Shop.goods_on_sell(id) &&
-            (e.seen_skin_map[id] || (r = !0)));
+            (e.seen_skin_map[id] || (r = true)));
       }),
       r
     ;
@@ -40,10 +40,10 @@ let uiscript;
     (e.prototype.refresh_price = (t, e, i, n) => {
       const a = t.getChildByName('container_origin_price');
       const r = t.getChildByName('container_discount');
-      if (((a.visible = !1), (r.visible = !1), i >= 1))
-        (a.visible = !0), (a.getChildByName('now_price').text = e.toString());
+      if (((a.visible = false), (r.visible = false), i >= 1))
+        (a.visible = true), (a.getChildByName('now_price').text = e.toString());
       else {
-        (r.visible = !0),
+        (r.visible = true),
           (r.getChildByName('discount').text =
             `-${100 - Math.ceil(100 * i)}%`);
         const s = r.getChildByName('now_price');
@@ -68,12 +68,12 @@ let uiscript;
         (a.getChildByName('desc').text =
           s[`desc_${GameMgr.client_language}`]);
       const l = a.getChildByName('sell_day');
-      let h = !1;
+      let h = false;
       if (s.sell_end_time && '' != s.sell_end_time) {
-        l.visible = !0;
+        l.visible = true;
         let c = game.Tools.ParseTime(s.sell_end_time) - Date.now();
         c <= 0
-          ? ((l.text = game.Tools.strOfLocalization(2818)), (h = !1))
+          ? ((l.text = game.Tools.strOfLocalization(2818)), (h = false))
           : ((c /= 1e3) <= 60
               ? (l.text = game.Tools.strOfLocalization(2819, ['1']))
               : (c /= 60) < 60
@@ -89,20 +89,20 @@ let uiscript;
                     : game.Tools.strOfLocalization(2821, [
                         Math.ceil(c / 24).toString()
                       ]))),
-            (h = !0));
-      } else (l.visible = !1), (h = !0);
+            (h = true));
+      } else (l.visible = false), (h = true);
       const u = a.getChildByName('container_buy');
       const _ = a.getChildByName('owned');
-      (u.visible = !1), (_.visible = !1);
-      let d = !1;
+      (u.visible = false), (_.visible = false);
+      let d = false;
       let f = 0;
       let p = 0;
       const m = t.UI_Shop.goods_discount_value(r);
       const g = [];
       if (100 == s.category_goods)
-        if (t.UI_Shop.buyed_count(r, !1) > 0) d = !0;
+        if (t.UI_Shop.buyed_count(r, false) > 0) d = true;
         else {
-          d = !1;
+          d = false;
           for (
             let y = s.item_id, v = cfg.shops.goods_package.getGroup(y), b = 0;
             b < v.length;
@@ -135,9 +135,9 @@ let uiscript;
           }
         }
       else (d = t.UI_Sushe.skin_owned(s.item_id)), (f = s.price);
-      if (d) _.visible = !0;
+      if (d) _.visible = true;
       else {
-        u.visible = !0;
+        u.visible = true;
         const S = Math.floor(f * m);
         100 == s.category_goods
           ? this.refresh_price(u, p, Math.ceil((S / p) * 100) / 100, S)
@@ -161,7 +161,7 @@ let uiscript;
                     'buyFromShop',
                     e,
                     (e, n) => {
-                      if ((game.Tools.setGrayDisable(T, !1), e || n.error))
+                      if ((game.Tools.setGrayDisable(T, false), e || n.error))
                         t.UIMgr.Inst.showNetReqError('buyFromShop', e, n);
                       else {
                         if (
@@ -171,7 +171,7 @@ let uiscript;
                           ),
                           100 == s.category_goods)
                         ) {
-                          t.UI_Shop.update_buyed_count(r, !1, 1);
+                          t.UI_Shop.update_buyed_count(r, false, 1);
                           for (
                             let a = s.item_id, o = cfg.shops.goods_package.getGroup(a), l = 0;
                             l < o.length;
@@ -190,7 +190,7 @@ let uiscript;
             );
           },
           null,
-          !1
+          false
         )),
           (T.visible = h);
       }
@@ -202,7 +202,7 @@ let uiscript;
               ? d ||
                 t.UI_Shop_Pack_Detail.Inst.show(
                   r,
-                  Laya.Handler.create(i, i.onPackBuyed, null, !1)
+                  Laya.Handler.create(i, i.onPackBuyed, null, false)
                 )
               : t.UI_Shop.Inst.close(
                   Laya.Handler.create(i, () => {
@@ -211,12 +211,12 @@ let uiscript;
                 ));
         },
         null,
-        !1
+        false
       );
     }),
     (e.prototype.show = function() {
       const e = this;
-      (this.me.visible = !0),
+      (this.me.visible = true),
         (this.used_skin = {}),
         (this.good_ids = []),
         cfg.shops.goods.forEach(({category, id, sort}) => {
@@ -238,14 +238,14 @@ let uiscript;
       );
     }),
     (e.prototype.close = function() {
-      this.me.visible = !1;
+      this.me.visible = false;
       for (const t in this.used_skin)
         Laya.loader.clearTextureRes(game.LoadMgr.getResImageSkin(t));
       this.used_skin = {};
     }),
     (e.prototype.onPackBuyed = function({event, goods_id}) {
       if (this.me.visible && 'success' == event) {
-        t.UI_Shop.update_buyed_count(goods_id, !1, 1);
+        t.UI_Shop.update_buyed_count(goods_id, false, 1);
         for (
           let i = cfg.shops.goods.get(goods_id).item_id, n = cfg.shops.goods_package.getGroup(i), a = 0;
           a < n.length;

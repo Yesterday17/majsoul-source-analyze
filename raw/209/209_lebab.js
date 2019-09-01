@@ -1,33 +1,10 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
     function i() {
       const t = e.call(this, new ui.lobby.shop_pack_detailUI()) || this;
       return (
-        (t.locking = !1),
+        (t.locking = false),
         (t.goods_id = 0),
         (t.packs = []),
         (t.origin_total_price = 0),
@@ -111,7 +88,7 @@ let uiscript;
             const c = h.price;
             const u = t.UI_Shop.goods_discount_value(o);
             const _ = Math.floor(c * u);
-            let d = !1;
+            let d = false;
             1 == h.category_goods && (d = t.UI_Sushe.skin_owned(h.item_id)),
               this.packs.push({
                 goods_id: o,
@@ -139,12 +116,12 @@ let uiscript;
             ).text = this.now_total_price.toString()),
             this.scrollview.reset(),
             this.scrollview.addItem(this.packs.length),
-            (this.enable = !0),
-            (this.locking = !0),
+            (this.enable = true),
+            (this.locking = true),
             t.UIBase.anim_pop_out(
               this.root,
               Laya.Handler.create(this, () => {
-                n.locking = !1;
+                n.locking = false;
               })
             );
         }
@@ -152,11 +129,11 @@ let uiscript;
     }),
     (i.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.enable = !1);
+            (e.locking = false), (e.enable = false);
           })
         );
     }),
@@ -164,10 +141,10 @@ let uiscript;
     (i.prototype.refresh_price = (t, e, i) => {
       const n = t.getChildByName('container_origin_price');
       const a = t.getChildByName('container_discount');
-      if (((n.visible = !1), (a.visible = !1), i >= 1))
-        (n.visible = !0), (n.getChildByName('now_price').text = e.toString());
+      if (((n.visible = false), (a.visible = false), i >= 1))
+        (n.visible = true), (n.getChildByName('now_price').text = e.toString());
       else {
-        (a.visible = !0),
+        (a.visible = true),
           (a.getChildByName('discount').text =
             `-${100 - Math.ceil(100 * i)}%`);
         const r = a.getChildByName('now_price');
@@ -184,14 +161,14 @@ let uiscript;
       const n = this.packs[e];
       const a = cfg.shops.goods.get(n.goods_id);
       if (1 == a.category_goods) {
-        i.getChildByName('head').getChildByName('flag_skin').visible = !0;
+        i.getChildByName('head').getChildByName('flag_skin').visible = true;
         const r = cfg.item_definition.skin.get(a.item_id);
         game.LoadMgr.setImgSkin(
           i.getChildByName('head').getChildByName('icon'),
           `${r.path}/bighead.png`
         );
       } else
-        (i.getChildByName('head').getChildByName('flag_skin').visible = !1),
+        (i.getChildByName('head').getChildByName('flag_skin').visible = false),
           game.LoadMgr.setImgSkin(
             i.getChildByName('head').getChildByName('icon'),
             a.icon
@@ -200,10 +177,10 @@ let uiscript;
         (i.getChildByName('desc').text =
           a[`desc_${GameMgr.client_language}`]),
         n.owned
-          ? ((i.getChildByName('container_buy').visible = !1),
-            (i.getChildByName('owned').visible = !0))
-          : ((i.getChildByName('container_buy').visible = !0),
-            (i.getChildByName('owned').visible = !1),
+          ? ((i.getChildByName('container_buy').visible = false),
+            (i.getChildByName('owned').visible = true))
+          : ((i.getChildByName('container_buy').visible = true),
+            (i.getChildByName('owned').visible = false),
             this.refresh_price(
               i.getChildByName('container_buy'),
               n.origin_price,

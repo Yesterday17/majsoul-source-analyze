@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -50,11 +27,11 @@ let uiscript;
                 e.Inst && e.Inst.enable && e.Inst.refresh();
             },
             null,
-            !1
+            false
           )
         );
     }),
-    (i.prototype.isopen = () => !0),
+    (i.prototype.isopen = () => true),
     (i.prototype.onCreate = function() {
       const e = this;
       (this.root = this.me.getChildByName('root')),
@@ -85,21 +62,21 @@ let uiscript;
                   (e.btn_cd = 0),
                     n || a.error
                       ? t.UIMgr.Inst.showNetReqError('gainReviveCoin', n, a)
-                      : ((e.task.btn_get.visible = !1),
-                        (e.task.alreadyget.visible = !0),
-                        (i.has_gained = !0));
+                      : ((e.task.btn_get.visible = false),
+                        (e.task.alreadyget.visible = true),
+                        (i.has_gained = true));
                 }
               ));
           },
           null,
-          !1
+          false
         ));
     }),
     (i.prototype.show = function() {
-      (this.me.visible = !0), (this.btn_cd = 0), this.refresh();
+      (this.me.visible = true), (this.btn_cd = 0), this.refresh();
     }),
     (i.prototype.hide = function() {
-      this.me.visible = !1;
+      this.me.visible = false;
     }),
     (i.prototype.findData = () => {
       let t = 0;
@@ -121,34 +98,34 @@ let uiscript;
           (this.task.bg.skin = game.Tools.localUISrc(
             'myres/lobby/bg_rules_no.png'
           )),
-            (this.task.container_info.visible = !1);
+            (this.task.container_info.visible = false);
         else {
           (this.task.bg.skin = game.Tools.localUISrc(
             'myres/lobby/bg_rules.png'
           )),
-            (this.task.container_info.visible = !0),
-            (this.task.getno.visible = !1),
-            (this.task.btn_get.visible = !1),
-            (this.task.alreadyget.visible = !1),
+            (this.task.container_info.visible = true),
+            (this.task.getno.visible = false),
+            (this.task.btn_get.visible = false),
+            (this.task.alreadyget.visible = false),
             (this.task.item_count.text = t.gold_num.toString()),
             i.has_gained
-              ? (this.task.alreadyget.visible = !0)
+              ? (this.task.alreadyget.visible = true)
               : GameMgr.Inst.account_data.gold < t.gold_limit
-              ? (this.task.btn_get.visible = !0)
-              : (this.task.getno.visible = !0);
+              ? (this.task.btn_get.visible = true)
+              : (this.task.getno.visible = true);
           const e = cfg.item_definition.currency.get(100002);
           (this.task.item_icon.skin = game.LoadMgr.getResImageSkin(e.icon)),
             (this.task.item_name.text = e[`name_${GameMgr.client_language}`]);
         }
       else
         (this.desc.text = game.Tools.strOfLocalization(2233)),
-          (this.task.container_info.visible = !1),
+          (this.task.container_info.visible = false),
           (this.task.bg.skin = game.Tools.localUISrc(
             'myres/lobby/bg_rules_no.png'
           ));
     }),
     (i.Inst = null),
-    (i.has_gained = !1),
+    (i.has_gained = false),
     i
   ;
   })(t.UI_ActivityBase);

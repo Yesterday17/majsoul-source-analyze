@@ -1,33 +1,10 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
     function i() {
       const t = e.call(this, new ui.both_ui.itemdetailUI()) || this;
       return (
-        (t.locking = !1),
+        (t.locking = false),
         (t.container_icon = null),
         (t.btn_open = null),
         (t.item_id = 0),
@@ -45,7 +22,7 @@ let uiscript;
           this.root.getChildByName('item').getChildByName('icon')
         )),
         (this.container_icon = this.root.getChildByName('item')),
-        (this.locking = !1),
+        (this.locking = false),
         (this.btn_open = this.root.getChildByName('btn_open')),
         (this.root.getChildByName(
           'btn_close'
@@ -55,7 +32,7 @@ let uiscript;
             e.locking || e.close();
           },
           null,
-          !1
+          false
         )),
         (this.btn_open.clickHandler = new Laya.Handler(this, () => {
           if (!e.locking) {
@@ -84,32 +61,32 @@ let uiscript;
     }),
     (i.prototype.show = function(e, i) {
       const n = this;
-      void 0 === i && (i = !1), (this.item_id = e);
+      undefined === i && (i = false), (this.item_id = e);
       const a = game.GameUtility.get_item_view(e);
       (this.name.text = a.name),
         (this.desc.text = a.desc),
         this.icon.setSkin(a.icon),
-        (this.btn_open.visible = !1),
-        (this.enable = !0),
-        (this.locking = !0),
+        (this.btn_open.visible = false),
+        (this.enable = true),
+        (this.locking = true),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            n.locking = !1;
+            n.locking = false;
           })
         );
       const r = cfg.item_definition.item.get(e);
       r &&
         1 == r.category &&
-        ((1 != r.type && 2 != r.type) || (i && (this.btn_open.visible = !0)));
+        ((1 != r.type && 2 != r.type) || (i && (this.btn_open.visible = true)));
     }),
     (i.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.enable = !1);
+            (e.locking = false), (e.enable = false);
           })
         );
     }),

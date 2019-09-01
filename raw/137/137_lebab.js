@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -32,7 +9,7 @@ let uiscript;
       if (!this._inited)
         if (
           ((this._complete = e),
-          (this._inited = !0),
+          (this._inited = true),
           (this._ips = GameMgr.config_data.ip),
           1 == this._ips.length)
         )
@@ -120,33 +97,33 @@ let uiscript;
                 (a.clickHandler = Laya.Handler.create(
                   t,
                   () => {
-                    i._linkLobby(n), (t.enable = !1), t.me.destroy(!0);
+                    i._linkLobby(n), (t.enable = false), t.me.destroy(true);
                   },
                   null,
-                  !1
+                  false
                 ));
             },
             null,
-            !1
+            false
           )
         ),
         (this.input = this.root.getChildByName('input')),
         (this.root.getChildByName('enter').clickHandler = new Laya.Handler(
           this,
           () => {
-            i._linkLobbyStr(t.input.text), (t.enable = !1), t.me.destroy(!0);
+            i._linkLobbyStr(t.input.text), (t.enable = false), t.me.destroy(true);
           }
         ));
     }),
     (i.prototype._show = function() {
-      (this.enable = !0),
+      (this.enable = true),
         this.scorllview.reset(),
         this.scorllview.addItem(i._ips.length);
       const t = game.LocalStorage.getItem('test_server_url');
       t && (this.input.text = t);
     }),
     (i._ips = []),
-    (i._inited = !1),
+    (i._inited = false),
     (i._complete = null),
     i
   ;

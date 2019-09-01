@@ -13,14 +13,14 @@ let view;
       get() {
         return Laya.Browser.window.conch ? '.ogg' : '.mp3';
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (i.init = function() {
       GameMgr.iniOSWebview
-        ? (Laya.SoundManager.autoStopMusic = !0)
-        : (Laya.SoundManager.autoStopMusic = !1),
-        (Laya.SoundManager.autoReleaseSound = !1);
+        ? (Laya.SoundManager.autoStopMusic = true)
+        : (Laya.SoundManager.autoStopMusic = false),
+        (Laya.SoundManager.autoReleaseSound = false);
       const t = Laya.LocalStorage.getItem('audioVolume');
       if (t && '' != t) {
         (a = parseFloat(t)) < 0 ? (a = 0) : a > 1 && (a = 1),
@@ -97,8 +97,8 @@ let view;
     (i.PlayAudio = function(t, e, i) {
       const n = this;
       if (
-        (void 0 === e && (e = 1),
-        void 0 === i && (i = 1),
+        (undefined === e && (e = 1),
+        undefined === i && (i = 1),
         this._audioMuted || 0 == this._audioVolume)
       )
         return -1;
@@ -140,15 +140,15 @@ let view;
     }),
     (i.PlayMusic = function(t, e, i) {
       return (
-        void 0 === e && (e = 1e3),
-        void 0 === i && (i = !1),
+        undefined === e && (e = 1e3),
+        undefined === i && (i = false),
         !(!i && this._current_music == t) &&
           (!(!this.lizhiMuted && this._current_lizhi_bgm) &&
-            ((this._current_music = t), this.onMusicChange(e), !0))
+            ((this._current_music = t), this.onMusicChange(e), true))
       );
     }),
     (i.StopMusic = function(t) {
-      void 0 === t && (t = 1e3),
+      undefined === t && (t = 1e3),
         (this._current_music = ''),
         (this._current_lizhi_bgm = ''),
         this._music &&
@@ -162,11 +162,11 @@ let view;
     }),
     (i.PlayLiqiBgm = function(t, e, i) {
       if (
-        (void 0 === e && (e = 1e3),
-        void 0 === i && (i = !1),
+        (undefined === e && (e = 1e3),
+        undefined === i && (i = false),
         i || this._current_lizhi_bgm != t)
       )
-        return (this._current_lizhi_bgm = t), this.onMusicChange(e), !0;
+        return (this._current_lizhi_bgm = t), this.onMusicChange(e), true;
     }),
     Object.defineProperty(i, 'lizhiVolume', {
       get() {
@@ -181,8 +181,8 @@ let view;
             (this._playing_music_volume = t),
           Laya.LocalStorage.setItem('lizhiVolume', t.toString());
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (i.setCVvolume = function(t, e) {
       (e = e < 0 ? 0 : e > 1 ? 1 : e),
@@ -216,8 +216,8 @@ let view;
           (this._audioVolume = t),
           Laya.LocalStorage.setItem('audioVolume', t.toString());
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(i, 'musicVolume', {
       get() {
@@ -231,8 +231,8 @@ let view;
             this._playing_music == this._current_music &&
             (this._playing_music_volume = t);
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(i, 'lizhiMuted', {
       get() {
@@ -243,8 +243,8 @@ let view;
           Laya.LocalStorage.setItem('lizhiMute', t ? 'true' : 'false'),
           this.onMusicChange();
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(i, 'musicMuted', {
       get() {
@@ -255,8 +255,8 @@ let view;
           Laya.LocalStorage.setItem('musicMute', t ? 'true' : 'false'),
           this.onMusicChange();
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(i, 'audioMuted', {
       get() {
@@ -266,8 +266,8 @@ let view;
         (this._audioMuted = t),
           Laya.LocalStorage.setItem('audioMute', t ? 'true' : 'false');
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(i, 'yuyinVolume', {
       get() {
@@ -277,8 +277,8 @@ let view;
         (this._character_all_volume = t),
           Laya.LocalStorage.setItem('yuyinVolume', t.toString());
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(i, 'yuyinMuted', {
       get() {
@@ -288,22 +288,22 @@ let view;
         (this._character_all_mute = t),
           Laya.LocalStorage.setItem('yuyinMute', t ? 'true' : 'false');
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (i.refresh_music_volume = function(t) {
       this._music && this._music_state == e.during && (this._bgm_light = t);
     }),
     (i.onMusicChange = function(i) {
       const n = this;
-      void 0 === i && (i = 1e3);
+      undefined === i && (i = 1e3);
       let a = '';
       let r = 0;
-      let s = !1;
+      let s = false;
       '' == a &&
         !this.lizhiMuted &&
         this._current_lizhi_bgm &&
-        ((a = this._current_lizhi_bgm), (r = this.lizhiVolume), (s = !0)),
+        ((a = this._current_lizhi_bgm), (r = this.lizhiVolume), (s = true)),
         '' == a &&
           !this.musicMuted &&
           this._current_music &&
@@ -313,7 +313,7 @@ let view;
           a &&
             (s
               ? ((this._music = Laya.SoundManager.playMusic(`audio/${a}`, 0)),
-                t.BgmListMgr.onBgmChange(a, !0))
+                t.BgmListMgr.onBgmChange(a, true))
               : ((this._music = Laya.SoundManager.playMusic(
                   `audio/${a}`,
                   1,
@@ -323,7 +323,7 @@ let view;
                       t.BgmListMgr.onBgmPlayOver();
                   })
                 )),
-                t.BgmListMgr.onBgmChange(a, !1)),
+                t.BgmListMgr.onBgmChange(a, false)),
             this._music &&
               ((this._playing_music = a),
               (this._playing_music_volume = r),
@@ -363,24 +363,24 @@ let view;
     (i._audio_id = 0),
     (i._audio_list = []),
     (i._audioVolume = 0),
-    (i._audioMuted = !1),
+    (i._audioMuted = false),
     (i._music = null),
     (i._playing_music = ''),
     (i._playing_music_volume = 0),
     (i._music_volume = 1),
-    (i._musicMuted = !1),
+    (i._musicMuted = false),
     (i._current_music = ''),
     (i._lizhiVolume = 0),
-    (i._lizhiMuted = !1),
+    (i._lizhiMuted = false),
     (i._current_lizhi_bgm = ''),
     (i._music_state = e.none),
     (i._music_state_starttime = 0),
     (i._music_state_lifetime = 0),
     (i._character_all_volume = 1),
-    (i._character_all_mute = !1),
+    (i._character_all_mute = false),
     (i._map_character_mute = {}),
     (i._map_character_volume = {}),
-    (i._bgm_light = !1),
+    (i._bgm_light = false),
     i
   ;
   })();

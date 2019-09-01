@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -39,7 +16,7 @@ let uiscript;
         (t.btn_visit = null),
         (t.btn_look = null),
         (t.select_index = 0),
-        (t.locking = !1),
+        (t.locking = false),
         t
       );
     }
@@ -65,11 +42,11 @@ let uiscript;
             e.locking ||
               (e.close(),
               Laya.timer.once(150, e, () => {
-                t.UI_Sushe.Inst.show_page_visit(!1);
+                t.UI_Sushe.Inst.show_page_visit(false);
               }));
           },
           null,
-          !1
+          false
         )),
         (this.btn_look = this.me.getChildByName('btn_look')),
         (this.btn_look.clickHandler = Laya.Handler.create(
@@ -82,7 +59,7 @@ let uiscript;
               }));
           },
           null,
-          !1
+          false
         )),
         (this.container_top.getChildByName(
           'btn_back'
@@ -92,18 +69,18 @@ let uiscript;
             e.locking || (e.close(), t.UI_Sushe.Inst.go2Lobby());
           },
           null,
-          !1
+          false
         ));
     }),
     (i.prototype.show = function(e) {
       const i = this;
-      (this.enable = !0),
-        (this.locking = !0),
+      (this.enable = true),
+        (this.locking = true),
         t.UIBase.anim_alpha_in(this.container_top, { y: -30 }, 200),
         t.UIBase.anim_alpha_in(this.container_heads, { x: 30 }, 200),
         t.UIBase.anim_alpha_in(this.btn_look, { x: 30 }, 200),
         Laya.timer.once(200, this, () => {
-          i.locking = !1;
+          i.locking = false;
         }),
         (this.select_index = e),
         this.scrollview.reset(),
@@ -111,12 +88,12 @@ let uiscript;
     }),
     (i.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_alpha_out(this.container_top, { y: -30 }, 150),
         t.UIBase.anim_alpha_out(this.container_heads, { x: 30 }, 150, 0),
         t.UIBase.anim_alpha_out(this.btn_look, { x: 30 }, 150),
         Laya.timer.once(150, this, () => {
-          (e.locking = !1), (e.enable = !1);
+          (e.locking = false), (e.enable = false);
         });
     }),
     (i.prototype.onDisable = () => {
@@ -134,7 +111,7 @@ let uiscript;
       const r = cache_data;
       (r.index = n),
         r.inited ||
-          ((r.inited = !0),
+          ((r.inited = true),
           (a.getChildByName('btn').clickHandler = new Laya.Handler(
             this,
             () => {

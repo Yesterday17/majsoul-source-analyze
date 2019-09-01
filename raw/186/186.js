@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -58,7 +33,7 @@ var __extends =
                 );
             },
             null,
-            !1
+            false
           )),
           (this.root = this.me.getChildByName('root')),
           (this.scrollview = this.root.getChildByName('scrollview').scriptMap[
@@ -78,7 +53,7 @@ var __extends =
               e._locking || e.dropdown0.locking || e.dropdown0.down();
             },
             null,
-            !1
+            false
           )),
           (this.root.getChildByName(
             'btn_dropdown1'
@@ -88,18 +63,18 @@ var __extends =
               e._locking || e.dropdown1.locking || e.dropdown1.down();
             },
             null,
-            !1
+            false
           )),
           this.scrollview.init_scrollview(
-            Laya.Handler.create(this, this.render_scrollview, null, !1)
+            Laya.Handler.create(this, this.render_scrollview, null, false)
           ),
           this.dropdown0.init(
-            Laya.Handler.create(this, this.render_dropdown0, null, !1),
-            Laya.Handler.create(this, this.onDropdown0Change, null, !1)
+            Laya.Handler.create(this, this.render_dropdown0, null, false),
+            Laya.Handler.create(this, this.onDropdown0Change, null, false)
           ),
           this.dropdown1.init(
-            Laya.Handler.create(this, this.render_dropdown1, null, !1),
-            Laya.Handler.create(this, this.onDropdown1Change, null, !1)
+            Laya.Handler.create(this, this.render_dropdown1, null, false),
+            Laya.Handler.create(this, this.onDropdown1Change, null, false)
           ),
           (this.modes = []),
           (this.mode_index = 0),
@@ -120,19 +95,19 @@ var __extends =
             this,
             function() {
               e._locking ||
-                (game.Tools.setGrayDisable(e.btn_fresh, !0),
+                (game.Tools.setGrayDisable(e.btn_fresh, true),
                 e.refresh_content(),
                 Laya.timer.once(2e3, e, function() {
-                  game.Tools.setGrayDisable(e.btn_fresh, !1);
+                  game.Tools.setGrayDisable(e.btn_fresh, false);
                 }));
             },
             null,
-            !1
+            false
           )),
           (this.check_friend = this.root
             .getChildByName('check_friend')
             .getChildByName('checkbox')),
-          (this.check_friend.visible = !1),
+          (this.check_friend.visible = false),
           (this.root.getChildByName(
             'check_friend'
           ).clickHandler = Laya.Handler.create(
@@ -143,30 +118,30 @@ var __extends =
                 e.onShowDataChange());
             },
             null,
-            !1
+            false
           )),
           (this.noinfo = this.root.getChildByName('noinfo')),
-          (this.noinfo.visible = !1);
+          (this.noinfo.visible = false);
       }),
       (i.prototype.show = function() {
         var e = this;
-        game.Scene_Lobby.Inst.change_bg('indoor', !1),
-          (this._locking = !0),
-          (this.enable = !0),
-          game.Tools.setGrayDisable(this.btn_fresh, !1),
+        game.Scene_Lobby.Inst.change_bg('indoor', false),
+          (this._locking = true),
+          (this.enable = true),
+          game.Tools.setGrayDisable(this.btn_fresh, false),
           t.UIBase.anim_alpha_in(this.container_top, { y: -30 }, 150),
           t.UIBase.anim_alpha_in(this.root, { y: 30 }, 150, 0),
           Laya.timer.once(150, this, function() {
-            e._locking = !1;
+            e._locking = false;
           }),
           -1 == this.mode_index && (this.mode_index = 0);
         var i = this.modes[this.mode_index].name0,
           n = this.modes[this.mode_index].name1;
         (this.mode0_list = []), (this.mode1_list = []);
         for (var a = 0, r = 0, s = 0; s < this.modes.length; s++) {
-          for (var o = !1, l = 0; l < this.mode0_list.length; l++)
+          for (var o = false, l = 0; l < this.mode0_list.length; l++)
             if (this.mode0_list[l] == this.modes[s].name0) {
-              o = !0;
+              o = true;
               break;
             }
           o ||
@@ -182,12 +157,12 @@ var __extends =
       }),
       (i.prototype.hide = function(e) {
         var i = this;
-        (this._locking = !0),
+        (this._locking = true),
           t.UIBase.anim_alpha_out(this.container_top, { y: -30 }, 150),
           t.UIBase.anim_alpha_out(this.root, { y: 30 }, 150, 0),
           Laya.timer.clearAll(this),
           Laya.timer.once(150, this, function() {
-            (i._locking = !1), (i.enable = !1), e && e.run();
+            (i._locking = false), (i.enable = false), e && e.run();
           });
       }),
       (i.prototype.onDisable = function() {
@@ -253,8 +228,8 @@ var __extends =
               (f.name = d.getChildByName('name')),
               (r[_] = f);
           }
-          if (u >= c) d.visible = !1;
-          else if (((d.visible = !0), u < s.players.length)) {
+          if (u >= c) d.visible = false;
+          else if (((d.visible = true), u < s.players.length)) {
             var p = s.players[u];
             (r[_].level.id = p[h ? 'level' : 'level3'].id),
               (r[_].title.id = game.Tools.titleLocalization(
@@ -289,26 +264,26 @@ var __extends =
                   ));
           },
           null,
-          !1
+          false
         );
       }),
       (i.prototype.onShowDataChange = function() {
         this.scrollview.reset(), (this.live_show_datas = []);
         for (var t = 0; t < this.live_datas.length; t++)
           if (this.check_friend.visible) {
-            for (var e = !1, i = 0; i < 4; i++)
+            for (var e = false, i = 0; i < 4; i++)
               if (!(i >= this.live_datas[t].players.length)) {
                 var n = this.live_datas[t].players[i].account_id;
                 if (game.FriendMgr.find(n)) {
-                  e = !0;
+                  e = true;
                   break;
                 }
               }
             e && this.live_show_datas.push(this.live_datas[t]);
           } else this.live_show_datas.push(this.live_datas[t]);
         0 == this.live_show_datas.length
-          ? (this.noinfo.visible = !0)
-          : ((this.noinfo.visible = !1),
+          ? (this.noinfo.visible = true)
+          : ((this.noinfo.visible = false),
             this.scrollview.addItem(this.live_show_datas.length));
       }),
       (i.prototype.refresh_content = function() {

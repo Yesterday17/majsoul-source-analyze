@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -44,19 +19,19 @@ var __extends =
         var e = t.UI_Activity.getTaskList(i.activity_id);
         if (e)
           for (var n = 0; n < e.length; n++)
-            if (!e[n].rewarded && e[n].achieved) return !0;
-        return !1;
+            if (!e[n].rewarded && e[n].achieved) return true;
+        return false;
       }),
       (i.prototype.need_popout = function() {
         var t = cfg.activity.activity.get(i.activity_id);
         return !(!t || !t.need_popout);
       }),
       (i.prototype.show = function() {
-        (this.enable = !0),
+        (this.enable = true),
           this.refreshView(t.UI_Activity.getTaskList(i.activity_id));
       }),
       (i.prototype.hide = function() {
-        this.enable = !1;
+        this.enable = false;
       }),
       (i.activity_id = 1001),
       i

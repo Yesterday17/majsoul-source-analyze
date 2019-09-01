@@ -64,7 +64,7 @@ var game;
         function e(t) {
           if (((h -= t), l >= o.length)) {
             if (h <= 0) {
-              (r.loaded = !0), (r.precent = 1);
+              (r.loaded = true), (r.precent = 1);
               for (var e = 0; e < r.complete.length; e++)
                 r.complete[e] && r.complete[e].run();
             }
@@ -80,8 +80,8 @@ var game;
             for (var t = []; h < 1e3 && l < o.length; ) t.push(o[l++]), h++;
             Laya.loader.create(
               t,
-              Laya.Handler.create(this, e, [t.length], !1),
-              Laya.Handler.create(this, i, null, !1)
+              Laya.Handler.create(this, e, [t.length], false),
+              Laya.Handler.create(this, i, null, false)
             );
           } else e(1e5);
         }
@@ -90,7 +90,7 @@ var game;
         }
         for (
           var r = {
-              loaded: !1,
+              loaded: false,
               precent: 0,
               urls: t,
               complete: [],
@@ -129,7 +129,7 @@ var game;
           this._items[n].loaded
             ? e && e.run()
             : (e && this._items[n].complete.push(e),
-              i && ((i.once = !1), this._items[n].progress.push(i)));
+              i && ((i.once = false), this._items[n].progress.push(i)));
       }),
       (i.createResImage_web = function(e) {
         var i = this;
@@ -138,11 +138,11 @@ var game;
             a = e.substr(e.length - 3);
           n = a.toLocaleLowerCase();
           var r = {
-            loaded: !1,
+            loaded: false,
             origin_url: e,
             blob_url: null,
             complete: [],
-            success: !1
+            success: false
           };
           this._resimage[e] = r;
           var s = new Laya.HttpRequest();
@@ -164,7 +164,7 @@ var game;
               Laya.Handler.create(
                 i,
                 function(t) {
-                  (r.blob_url = t), (r.loaded = !0), (r.success = !0);
+                  (r.blob_url = t), (r.loaded = true), (r.success = true);
                   for (var e = 0; e < r.complete.length; e++)
                     r.complete && r.complete[e].run();
                   r.complete = [];
@@ -177,8 +177,8 @@ var game;
           }),
             s.once(Laya.Event.ERROR, this, function(t) {
               console.log('加载' + e + '失败'),
-                (r.loaded = !0),
-                (r.success = !1);
+                (r.loaded = true),
+                (r.success = false);
               for (var i = 0; i < r.complete.length; i++)
                 r.complete[i] && r.complete[i].run();
               r.complete = [];
@@ -189,17 +189,17 @@ var game;
       (i.createResImage_conch = function(t) {
         if (!this._resimage.hasOwnProperty(t)) {
           var e = {
-            loaded: !1,
+            loaded: false,
             origin_url: t,
             blob_url: null,
             complete: [],
-            success: !1
+            success: false
           };
           (this._resimage[t] = e),
             Laya.loader.load(
               t,
               Laya.Handler.create(this, function() {
-                (e.blob_url = t), (e.loaded = !0), (e.success = !0);
+                (e.blob_url = t), (e.loaded = true), (e.success = true);
                 for (var i = 0; i < e.complete.length; i++)
                   e.complete && e.complete[i].run();
                 e.complete = [];
@@ -223,8 +223,8 @@ var game;
                   : a.createResImage_web(t));
               var i = a._resimage[t];
               i.loaded
-                ? c(!1)
-                : (o++, i.complete.push(Laya.Handler.create(a, c, [!0])));
+                ? c(false)
+                : (o++, i.complete.push(Laya.Handler.create(a, c, [true])));
             }
           },
           c = function(t) {
@@ -270,12 +270,12 @@ var game;
         r.once(Laya.Event.COMPLETE, this, function(t) {
           a &&
             ('json' == i
-              ? a.runWith({ success: !0, data: JSON.parse(t) })
-              : a.runWith({ success: !0, data: t }));
+              ? a.runWith({ success: true, data: JSON.parse(t) })
+              : a.runWith({ success: true, data: t }));
         }),
           r.once(Laya.Event.ERROR, this, function(t) {
             console.log('httpload加载' + e + '失败'),
-              a && a.runWith({ success: !1 });
+              a && a.runWith({ success: false });
           });
         var s = t.ResourceVersion.formatURL(e),
           o = [];

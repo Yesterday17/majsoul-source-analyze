@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function t(t) {
@@ -51,22 +26,22 @@ var __extends =
       return (
         (t.prototype.reset = function() {
           (this.icon_new.alpha = 1),
-            (this.icon_new.visible = !1),
+            (this.icon_new.visible = false),
             (this.icon_old.alpha = 1),
-            (this.icon_old.visible = !1);
+            (this.icon_old.visible = false);
           for (var t = 0; t < this.stars.length; t++)
             (this.stars[t].scaleX = this.stars[t].scaleY = 1),
               (this.stars[t].alpha = 1),
-              (this.stars[t].visible = !1);
-          (this.barshine.visible = !1),
+              (this.stars[t].visible = false);
+          (this.barshine.visible = false),
             (this.barshine.alpha = 1),
-            (this.f_jinji.visible = !1),
-            (this.f_jiangduan.visible = !1),
-            (this.f_shengduan.visible = !1),
-            (this.scores.visible = !1);
+            (this.f_jinji.visible = false),
+            (this.f_jiangduan.visible = false),
+            (this.f_shengduan.visible = false),
+            (this.scores.visible = false);
         }),
         (t.prototype.showInit = function() {
-          this.reset(), (this.me.visible = !0);
+          this.reset(), (this.me.visible = true);
           var t = view.DesktopMgr.Inst.levelchangeinfo,
             e = t.origin.id,
             i = t.origin.score,
@@ -79,22 +54,22 @@ var __extends =
           n.Inst.me, this.barval;
           if (
             ((this.barval.scaleY = o),
-            (this.icon_old.visible = !0),
+            (this.icon_old.visible = true),
             (this.icon_old.skin = game.LoadMgr.getResImageSkin(r.primary_icon)),
             10601 == e || 20601 == e)
           )
             for (l = 0; l < this.stars.length; l++)
-              this.stars[l].parent.visible = !1;
+              this.stars[l].parent.visible = false;
           else
             for (var l = 0; l < this.stars.length; l++)
-              (this.stars[l].parent.visible = !0),
-                (this.stars[l].visible = !0),
+              (this.stars[l].parent.visible = true),
+                (this.stars[l].visible = true),
                 (this.stars[l].alpha = l < r.secondary_level ? 1 : 0);
-          (this.icon_new.visible = !1),
+          (this.icon_new.visible = false),
             (this.icon_new.skin = game.LoadMgr.getResImageSkin(s.primary_icon)),
             (this.icon_old.scaleX = this.icon_old.scaleY = 1),
-            (this.continue_add.visible = !1),
-            (this.continue_minus.visible = !1);
+            (this.continue_add.visible = false),
+            (this.continue_minus.visible = false);
         }),
         (t.prototype.showLevelChange = function() {
           var t = this,
@@ -115,7 +90,7 @@ var __extends =
               10601 == i || 20601 == i || 10601 == r || 20601 == r
                 ? s.toString()
                 : s.toString() + '/' + l.end_point.toString()),
-            (this.scores.visible = !0),
+            (this.scores.visible = true),
             (this.scores.alpha = 0),
             (_.scaleY = h),
             i == r)
@@ -134,7 +109,7 @@ var __extends =
             }),
               (d += p),
               Laya.timer.once(d, this, function() {
-                (t.barshine.visible = !0), u.ani0.play(0, !1);
+                (t.barshine.visible = true), u.ani0.play(0, false);
               }),
               (d += u.ani0.count * u.ani0.interval),
               Laya.timer.once(d, this, function() {
@@ -142,7 +117,7 @@ var __extends =
               }),
               (d = -1);
           } else if (o.primary_level > l.primary_level) {
-            (this.icon_new.visible = !0),
+            (this.icon_new.visible = true),
               (this.icon_new.alpha = 0),
               (this.icon_new.skin = game.LoadMgr.getResImageSkin(
                 l.primary_icon
@@ -169,7 +144,7 @@ var __extends =
               }),
               (d += 1200),
               Laya.timer.once(d, this, function() {
-                (t.f_jiangduan.visible = !0), u.ani_jiangduan.play(0, !1);
+                (t.f_jiangduan.visible = true), u.ani_jiangduan.play(0, false);
               }),
               (d += 2300);
             var g = (0.78 - c) / 3e-4;
@@ -186,11 +161,11 @@ var __extends =
             }),
               (d += y),
               Laya.timer.once(d, this, function() {
-                (t.barshine.visible = !0), u.ani0.play(0, !1);
+                (t.barshine.visible = true), u.ani0.play(0, false);
               }),
               (d += u.ani0.interval * u.ani0.count),
               Laya.timer.once(d, this, function() {
-                t.f_jinji.visible = !0;
+                t.f_jinji.visible = true;
                 var e = 2 == l.secondary_level ? t.stars[1] : t.stars[2],
                   i = game.FrontEffect.Inst.create_ui_effect(
                     e.parent,
@@ -209,7 +184,7 @@ var __extends =
               (d += 1200);
             var v = c / 3e-4;
             Laya.timer.once(d, this, function() {
-              (t.barshine.visible = !1),
+              (t.barshine.visible = false),
                 (_.scaleY = 0),
                 Laya.Tween.to(_, { scaleY: c }, v),
                 t.play_exp_audio(v);
@@ -222,7 +197,7 @@ var __extends =
             }),
               (d += b),
               Laya.timer.once(d, this, function() {
-                t.f_shengduan.visible = !0;
+                t.f_shengduan.visible = true;
                 var e = 2 == l.secondary_level ? t.stars[2] : t.stars[1],
                   i = game.FrontEffect.Inst.create_ui_effect(
                     e.parent,
@@ -252,12 +227,12 @@ var __extends =
                 Laya.Tween.to(t.scores, { alpha: 1 }, 150),
                   view.DesktopMgr.Inst.ptchange > 0 &&
                     ((t.label_add.text = view.DesktopMgr.Inst.ptchange.toString()),
-                    (t.continue_add.visible = !0),
+                    (t.continue_add.visible = true),
                     (t.continue_add.alpha = 0),
                     Laya.Tween.to(t.continue_add, { alpha: 1 }, 150)),
                   view.DesktopMgr.Inst.ptchange < 0 &&
                     ((t.label_minus.text = view.DesktopMgr.Inst.ptchange.toString()),
-                    (t.continue_minus.visible = !0),
+                    (t.continue_minus.visible = true),
                     (t.continue_minus.alpha = 0),
                     Laya.Tween.to(t.continue_minus, { alpha: 1 }, 150));
               }),
@@ -276,23 +251,23 @@ var __extends =
             l = (s.end_point, (r / o.end_point) * 0.78);
           n.Inst.me, this.barval;
           if (
-            ((this.f_jinji.visible = !1),
-            (this.icon_old.visible = !0),
-            (this.barshine.visible = !1),
+            ((this.f_jinji.visible = false),
+            (this.icon_old.visible = true),
+            (this.barshine.visible = false),
             (this.icon_old.skin = game.LoadMgr.getResImageSkin(o.primary_icon)),
             10601 == a || 20601 == a)
           ) {
             for (h = 0; h < this.stars.length; h++)
-              this.stars[h].parent.visible = !1;
-            this.container_bar.visible = !1;
+              this.stars[h].parent.visible = false;
+            this.container_bar.visible = false;
           } else {
             for (var h = 0; h < this.stars.length; h++)
-              (this.stars[h].parent.visible = !0),
-                (this.stars[h].visible = !0),
+              (this.stars[h].parent.visible = true),
+                (this.stars[h].visible = true),
                 (this.stars[h].alpha = h < o.secondary_level ? 1 : 0);
-            this.container_bar.visible = !0;
+            this.container_bar.visible = true;
           }
-          (this.icon_new.visible = !1),
+          (this.icon_new.visible = false),
             (this.barval.scaleY = l),
             (this.scores.alpha = 1);
         }),
@@ -329,16 +304,16 @@ var __extends =
       return (
         (t.prototype.show = function() {
           var t = this;
-          (this.me.visible = !0),
-            (this.black.visible = !0),
+          (this.me.visible = true),
+            (this.black.visible = true),
             (this.black.alpha = 0),
-            this._ui.ani1.play(0, !1),
-            (this.btn_open.visible = !1),
+            this._ui.ani1.play(0, false),
+            (this.btn_open.visible = false),
             Laya.timer.once(500, this, function() {
               view.AudioMgr.PlayAudio(105);
             }),
             Laya.timer.once(625, this, function() {
-              (t.btn_open.visible = !0),
+              (t.btn_open.visible = true),
                 (t._effect_book = game.FrontEffect.Inst.create_ui_effect(
                   t.book_shine,
                   'scene/effect_juanzhou.lh',
@@ -353,7 +328,7 @@ var __extends =
         (t.prototype.openBook = function() {
           var t = this;
           this._effect_book && this._effect_book.destory(),
-            (this.container_main.visible = !0);
+            (this.container_main.visible = true);
           var e = view.DesktopMgr.Inst.levelchangeinfo,
             i = e.final.id,
             n = (e.final.score, new Date());
@@ -371,7 +346,7 @@ var __extends =
             (this.call.x =
               30 + this.contianer_name.x + this.contianer_name.width),
             (this.rank.skin = game.LoadMgr.getResImageSkin(a.primary_icon)),
-            this._ui.ani2.play(0, !1),
+            this._ui.ani2.play(0, false),
             (this.btn_close.clickHandler = null),
             Laya.timer.once((8 / 24) * 1e3, this, function() {
               view.AudioMgr.PlayAudio(228);
@@ -400,7 +375,7 @@ var __extends =
                   t,
                   t.closeBook,
                   null,
-                  !0
+                  true
                 );
               }
             );
@@ -409,13 +384,13 @@ var __extends =
           var t = this;
           view.AudioMgr.PlayAudio(228),
             n.Inst.pagerank.shengduanOver(),
-            (this.btn_close.visible = !1),
-            this._ui.ani3.play(0, !1),
+            (this.btn_close.visible = false),
+            this._ui.ani3.play(0, false),
             Laya.timer.once(
               this._ui.ani3.interval * this._ui.ani3.count,
               this,
               function() {
-                (t.me.visible = !1), n.Inst.AnimOver();
+                (t.me.visible = false), n.Inst.AnimOver();
               }
             );
         }),
@@ -436,16 +411,16 @@ var __extends =
         (a.prototype.onCreate = function() {
           (this.pagerank = new e(this.me.getChildByName('rank_change'))),
             (this.pagerankup = new i(this.me.getChildByName('rankup'))),
-            (this.pagerank.me.visible = !1),
-            (this.pagerankup.me.visible = !1),
+            (this.pagerank.me.visible = false),
+            (this.pagerankup.me.visible = false),
             Laya.loader.clearTextureRes(this.atlas);
         }),
         (a.prototype.show = function(e) {
           var i = this;
           (this.complete = e),
-            (this.enable = !0),
+            (this.enable = true),
             this.pagerank.showInit(),
-            (this.pagerankup.me.visible = !1),
+            (this.pagerankup.me.visible = false),
             Laya.timer.clearAll(this),
             t.UIBase.anim_alpha_in(this.pagerank.me, { x: 0 }, 100, 0),
             Laya.timer.once(500, this, function() {
@@ -457,7 +432,7 @@ var __extends =
             });
         }),
         (a.prototype.close = function() {
-          (this.enable = !1), Laya.loader.clearTextureRes(this.atlas);
+          (this.enable = false), Laya.loader.clearTextureRes(this.atlas);
         }),
         (a.prototype.ShengDuan = function() {
           this.pagerankup.show();

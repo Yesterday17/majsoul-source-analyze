@@ -16,13 +16,13 @@ var uiscript;
     return (
       (e.prototype.show = function(e) {
         (this.category = e),
-          (this.me.visible = !0),
+          (this.me.visible = true),
           this.scrollview.reset(),
           (this.items = t.UI_Bag.find_items_by_category(e)),
           this.scrollview.addItem(this.items.length);
       }),
       (e.prototype.close = function() {
-        (this.me.visible = !1), (this.items = []), this.scrollview.reset();
+        (this.me.visible = false), (this.items = []), this.scrollview.reset();
       }),
       (e.prototype.render_item = function(e) {
         var i = e.index,
@@ -41,18 +41,18 @@ var uiscript;
         (o.clickHandler = Laya.Handler.create(
           this,
           function() {
-            t.UI_ItemDetail.Inst.show(r.item_id, !0);
+            t.UI_ItemDetail.Inst.show(r.item_id, true);
           },
           null,
-          !1
+          false
         )),
-          (o.getChildByName('count').visible = !1),
-          (o.getChildByName('btn_del').visible = !1),
+          (o.getChildByName('count').visible = false),
+          (o.getChildByName('btn_del').visible = false),
           a.skin.setSkin(s.icon);
         var l = o.getChildByName('content').getChildByName('num');
         r.count <= 1
-          ? (l.visible = !1)
-          : ((l.visible = !0), (l.text = r.count.toString()));
+          ? (l.visible = false)
+          : ((l.visible = true), (l.text = r.count.toString()));
       }),
       (e.prototype.when_update_data = function() {
         this.scrollview.reset(),

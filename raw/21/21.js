@@ -7,8 +7,8 @@ var caps;
         get: function() {
           return 'outline';
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(t, 'attributeMap', {
         get: function() {
@@ -20,8 +20,8 @@ var caps;
             a_Texcoord: Laya.VertexElementUsage.TEXTURECOORDINATE0
           };
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(t, 'uniformMap', {
         get: function() {
@@ -55,8 +55,8 @@ var caps;
             u_outline_alpha: [this.OUTLINE_ALPHA, Laya.Shader3D.PERIOD_MATERIAL]
           };
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (t.OUTLINE = 1),
       (t.OUTLINE_COLOR = 2),

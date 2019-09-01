@@ -4,7 +4,7 @@ let uiscript;
     function e(e) {
       (this.change_id = 0),
         (this.skin_path = ''),
-        (this.loaded = !1),
+        (this.loaded = false),
         (this.me = e),
         (this.img = e),
         (this.origin_rect = t.UIRect.CreateFromSprite(this.img)),
@@ -22,15 +22,15 @@ let uiscript;
             1 == cfg.item_definition.character.get(n.character_id).sex
               ? this._setLoadedTexture(4e5, e)
               : this._setLoadedTexture(400001, e),
-              (this.loaded = !1),
+              (this.loaded = false),
               game.LoadMgr.loadResImage(
                 [this.skin_path],
                 Laya.Handler.create(this, () => {
                   r == i.change_id &&
-                    ((i.loaded = !0), i._setLoadedTexture(t, e));
+                    ((i.loaded = true), i._setLoadedTexture(t, e));
                 })
               );
-          } else (this.loaded = !0), this._setLoadedTexture(t, e);
+          } else (this.loaded = true), this._setLoadedTexture(t, e);
         }
       } else this.clear();
     }),
@@ -41,7 +41,7 @@ let uiscript;
           (Laya.loader.clearTextureRes(
             game.LoadMgr.getResImageSkin(this.skin_path)
           ),
-          (this.loaded = !1),
+          (this.loaded = false),
           (this.skin_path = ''));
     }),
     (e.prototype._setLoadedTexture = function(t, e) {

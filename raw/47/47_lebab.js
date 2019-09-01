@@ -35,34 +35,34 @@ let game;
         ),
         app.NetAgent.AddListener2Lobby(
           'NotifyFriendViewChange',
-          Laya.Handler.create(this, this._onFriendViewChange, null, !1)
+          Laya.Handler.create(this, this._onFriendViewChange, null, false)
         ),
         app.NetAgent.AddListener2Lobby(
           'NotifyFriendStateChange',
-          Laya.Handler.create(this, this._onFriendStateChange, null, !1)
+          Laya.Handler.create(this, this._onFriendStateChange, null, false)
         ),
         app.NetAgent.AddListener2Lobby(
           'NotifyFriendChange',
-          Laya.Handler.create(this, this._onFriendChange, null, !1)
+          Laya.Handler.create(this, this._onFriendChange, null, false)
         ),
         app.NetAgent.AddListener2Lobby(
           'NotifyNewFriendApply',
-          Laya.Handler.create(this, this._onFriendApplyChange, null, !1)
+          Laya.Handler.create(this, this._onFriendApplyChange, null, false)
         );
     }),
     Object.defineProperty(t, 'friend_list', {
       get() {
         return this._friend_list;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t, 'friendapply_list', {
       get() {
         return this._friendapply_list;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (t.find = function(t) {
       for (let e = 0; e < this._friend_list.length; e++)
@@ -76,14 +76,14 @@ let game;
       null != e
         ? (t = t.active_state) &&
           (null != t.login_time &&
-            void 0 != t.login_time &&
+            undefined != t.login_time &&
             (e.state.login_time = t.login_time),
           null != t.logout_time &&
-            void 0 != t.logout_time &&
+            undefined != t.logout_time &&
             (e.state.logout_time = t.logout_time),
           (e.state.playing = t.playing),
           null != t.is_online &&
-            void 0 != t.is_online &&
+            undefined != t.is_online &&
             (e.state.is_online = t.is_online),
           this.triggerMsg({
             type: 'singlechange',
@@ -95,16 +95,16 @@ let game;
       const e = this.find(t.target_id);
       null != e
         ? (null != t.base.avatar_id &&
-            void 0 != t.base.avatar_id &&
+            undefined != t.base.avatar_id &&
             (e.base.avatar_id = t.base.avatar_id),
           null != t.base.title &&
-            void 0 != t.base.title &&
+            undefined != t.base.title &&
             (e.base.title = t.base.title),
           null != t.base.nickname &&
-            void 0 != t.base.nickname &&
+            undefined != t.base.nickname &&
             (e.base.nickname = t.base.nickname),
           null != t.base.level &&
-            void 0 != t.base.level &&
+            undefined != t.base.level &&
             (e.base.level = t.base.level),
           this.triggerMsg({
             type: 'singlechange',

@@ -15,8 +15,8 @@ var view;
         get: function() {
           return this.player.seat;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (e.prototype.Reset = function() {
         if ((Laya.timer.clearAll(this), this.pais.length > 0)) {
@@ -28,7 +28,7 @@ var view;
       }),
       (e.prototype.AddBabei = function(e, i, n) {
         var a = this;
-        void 0 === n && (n = !0);
+        undefined === n && (n = true);
         try {
           var r = new t.ViewPai(e, t.DesktopMgr.Inst.CreatePai3D(e));
           this.pais.push(r),
@@ -49,7 +49,7 @@ var view;
               0.53 * t.PAIMODEL_HEIGHT
             )),
             (s.transform.localRotationEuler = new Laya.Vector3(90, 0, 0)),
-            (s.active = !0);
+            (s.active = true);
           if (
             (this.origin.parent.addChild(r.model),
             (r.model.transform.localPosition = this.origin.transform.localPosition.clone()),

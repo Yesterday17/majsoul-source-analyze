@@ -1,35 +1,10 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
       var t = e.call(this, new ui.lobby.openboxUI()) || this;
       return (
-        (t.locking = !1),
+        (t.locking = false),
         (t.datas = []),
         (t.choosed_index = -1),
         (i.Inst = t),
@@ -80,14 +55,14 @@ var __extends =
       }),
       (i.prototype.show = function(e) {
         var i = this;
-        (this.enable = !0),
-          (this.locking = !0),
+        (this.enable = true),
+          (this.locking = true),
           (this.blackBg.alpha = 0),
           Laya.Tween.to(this.blackBg, { alpha: 0.3 }, 150),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              i.locking = !1;
+              i.locking = false;
             })
           ),
           (this.box_id = e),
@@ -103,17 +78,17 @@ var __extends =
           this.datas.push({ item_id: a[r].res_id, count: a[r].res_count });
         this.scroll_view.reset(),
           this.scroll_view.addItem(this.datas.length),
-          game.Tools.setGrayDisable(this.btn_confirm, !0),
+          game.Tools.setGrayDisable(this.btn_confirm, true),
           (this.box_name.text = n['name_' + GameMgr.client_language]);
       }),
       (i.prototype.close = function() {
         var e = this;
-        (this.locking = !0),
+        (this.locking = true),
           Laya.Tween.to(this.blackBg, { alpha: 0 }, 150),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1), (e.enable = !1);
+              (e.locking = false), (e.enable = false);
             })
           );
       }),
@@ -131,7 +106,7 @@ var __extends =
               e.choosed_index == i ? e.changeSelect(-1) : e.changeSelect(i);
             },
             null,
-            !1
+            false
           )),
           game.LoadMgr.setImgSkin(
             s.getChildByName('icon'),
@@ -139,10 +114,10 @@ var __extends =
           ),
           r <= 1)
         )
-          s.getChildByName('num').visible = !1;
+          s.getChildByName('num').visible = false;
         else {
           var o = s.getChildByName('num');
-          (o.visible = !0), (o.text = r.toString());
+          (o.visible = true), (o.text = r.toString());
         }
         s.getChildByName('chosen').visible = this.choosed_index == i;
       }),
@@ -154,10 +129,10 @@ var __extends =
             this.scroll_view.wantToRefreshItem(this.choosed_index),
           -1 == e &&
             -1 != this.choosed_index &&
-            game.Tools.setGrayDisable(this.btn_confirm, !1),
+            game.Tools.setGrayDisable(this.btn_confirm, false),
           -1 != e &&
             -1 == this.choosed_index &&
-            game.Tools.setGrayDisable(this.btn_confirm, !0);
+            game.Tools.setGrayDisable(this.btn_confirm, true);
       }),
       i
     );

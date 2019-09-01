@@ -8,15 +8,15 @@ let capsui;
       get() {
         return this._me;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t.prototype, 'root_view', {
       get() {
         return this._root_view;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t.prototype, 'owner', {
       set(t) {
@@ -32,8 +32,8 @@ let capsui;
               e.onCreate();
           });
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (t.prototype._onEnable = function() {
       !this.me || this.me.destroyed ? this.onDestroy() : this.onEnable();

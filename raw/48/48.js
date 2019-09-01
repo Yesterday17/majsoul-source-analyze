@@ -4,15 +4,15 @@ var game;
     function t(e, n) {
       var a = this;
       (this.id = 0),
-        (this._loaded = !1),
-        (this._destoryed = !1),
+        (this._loaded = false),
+        (this._destoryed = false),
         (this._root = null),
         (this.id = t.IDcount++),
         (this.url = e),
-        (this._loaded = !1),
-        (this._destoryed = !1),
+        (this._loaded = false),
+        (this._destoryed = false),
         (this._root = new Laya.Sprite3D()),
-        (this._root.active = !0),
+        (this._root.active = true),
         this._root.on('undisplay', this, function() {
           a._root.destroyed && (a._destoryed || a.destory());
         });
@@ -22,14 +22,14 @@ var game;
         Laya.Handler.create(this, function() {
           if (null == a._root || a._root.destroyed || a._destoryed);
           else {
-            a._loaded = !0;
+            a._loaded = true;
             var t = Laya.loader.getRes(e);
             t &&
               t instanceof Laya.Sprite3D &&
               (n && (t = t.clone()),
               a._root.addChild(t),
               (t.transform.localPosition = new Laya.Vector3(0, 0, 0)),
-              (t.active = !0));
+              (t.active = true));
           }
         })
       );
@@ -39,28 +39,28 @@ var game;
         get: function() {
           return this._loaded;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(t.prototype, 'destoryed', {
         get: function() {
           return this._destoryed;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(t.prototype, 'root', {
         get: function() {
           return this._root;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (t.prototype.destory = function() {
         this._destoryed ||
-          ((this._destoryed = !0),
-          this._root && !this._root.destroyed && this._root.destroy(!0),
-          this._loaded && (this._destoryed = !0),
+          ((this._destoryed = true),
+          this._root && !this._root.destroyed && this._root.destroy(true),
+          this._loaded && (this._destoryed = true),
           i.on_effectbase_destory(this.url));
       }),
       (t.IDcount = 0),
@@ -118,7 +118,7 @@ var game;
           (this._effect_status[t].count--, this._effect_status[t].count <= 0)
         ) {
           var e = Laya.loader.getRes(t);
-          e && e.destroy(!0),
+          e && e.destroy(true),
             (this._effect_status[t].count = 0),
             (this._effect_status[t].status = 0);
         }
@@ -178,10 +178,10 @@ var game;
                             (o.transform.position = i
                               ? new Laya.Vector3(1e4, 1e4, 1e4)
                               : new Laya.Vector3(0, 0, 0)),
-                            (o.active = !0),
+                            (o.active = true),
                             Laya.timer.frameOnce(s, r, function() {
                               var t = Laya.loader.getRes(a);
-                              t && t.destroy(!0);
+                              t && t.destroy(true);
                             });
                         else {
                           var l = {};
@@ -189,7 +189,7 @@ var game;
                             (l.stack = ''),
                             (l.method = '_prehead_3d_effect'),
                             (l.name = '_prehead_3d_effect'),
-                            GameMgr.Inst.onFatalError(l, !1);
+                            GameMgr.Inst.onFatalError(l, false);
                         }
                       },
                       a = 0;
@@ -232,13 +232,13 @@ var game;
                   } else app.Log.Error('资源释放过多次1：' + i);
                 }
               var o = Laya.loader.getRes(i);
-              o && o.destroy(!0);
+              o && o.destroy(true);
             }
           } else app.Log.Error('资源释放过多次0：' + i);
         }
       }),
       (t.create_d3_effect = function(t, i) {
-        void 0 === i && (i = !1);
+        undefined === i && (i = false);
         return new e(t, i).root;
       }),
       (t.d3res_map = null),

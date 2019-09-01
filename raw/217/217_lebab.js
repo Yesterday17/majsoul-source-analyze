@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (t => {
@@ -34,10 +11,10 @@ let uiscript;
         (i.bg = null),
         (i.btn_show = null),
         (i.state = -1),
-        (i.zhengting = !1),
+        (i.zhengting = false),
         (i.tingPaiDiscardInfos = []),
         (i.tingPaiInfos = []),
-        (i.mousedowned = !1),
+        (i.mousedowned = false),
         (e.Inst = i),
         i
       );
@@ -57,7 +34,7 @@ let uiscript;
           noyi: e.getChildByName('noyi'),
           fanfu: e.getChildByName('fanfu')
         }),
-          (this.items[t].container.visible = !1);
+          (this.items[t].container.visible = false);
       }
       (this.bg = {
         bg: this.root.getChildByName('bg0'),
@@ -68,28 +45,28 @@ let uiscript;
       }),
         (this.container_effect = this.me.getChildByName('container_effect')),
         (this.btn_show = this.me.getChildByName('btn_show')),
-        this.btn_show.on('mousedown', this, this._setMouseDown, [!0]),
-        this.btn_show.on('mouseup', this, this._setMouseDown, [!1]),
-        this.btn_show.on('mouseout', this, this._setMouseDown, [!1]),
-        (this.btn_show.visible = !1),
+        this.btn_show.on('mousedown', this, this._setMouseDown, [true]),
+        this.btn_show.on('mouseup', this, this._setMouseDown, [false]),
+        this.btn_show.on('mouseout', this, this._setMouseDown, [false]),
+        (this.btn_show.visible = false),
         this.reset();
     }),
     (e.prototype.reset = function() {
-      (this.root.visible = !1),
-        (this.btn_show.visible = !1),
-        (this.mousedowned = !1),
-        (this.zhengting = !1),
+      (this.root.visible = false),
+        (this.btn_show.visible = false),
+        (this.mousedowned = false),
+        (this.zhengting = false),
         (this.state = -1),
         (this.tingPaiDiscardInfos = []),
         (this.tingPaiInfos = []);
     }),
     (e.prototype.setData0 = function({operation, tingpais}) {
       if (view.DesktopMgr.bianjietishi) {
-        let e = !1;
+        let e = false;
         if (operation)
           for (var i = operation, n = 0; n < i.operation_list.length; n++)
             if (i.operation_list[n].type == mjcore.E_PlayOperation.dapai) {
-              e = !0;
+              e = true;
               break;
             }
         if (e)
@@ -118,7 +95,7 @@ let uiscript;
               });
             }
             this.state = 0;
-          } else (this.btn_show.visible = !1), (this.state = -1);
+          } else (this.btn_show.visible = false), (this.state = -1);
       }
     }),
     (e.prototype.setData1 = function({tingpais}, e) {
@@ -142,18 +119,18 @@ let uiscript;
           this.tingPaiInfos.push(r);
         }
         if (((this.state = 1), !e)) {
-          for (var s = !1, o = {}, l = 0, h = 0; h < n.length; h++) {
+          for (var s = false, o = {}, l = 0, h = 0; h < n.length; h++) {
             o[(u = n[h].tile.toString())] || ((o[u] = 1), l++);
           }
           for (var c = 0, h = 0; h < this.tingPaiInfos.length; h++) {
             var u = this.tingPaiInfos[h].tile.toString();
             if (!o[u]) {
-              s = !0;
+              s = true;
               break;
             }
             1 == o[u] && ((o[u] = 2), c++);
           }
-          if ((c != l && (s = !0), s)) {
+          if ((c != l && (s = true), s)) {
             for (var _ = 0, h = 0; h < this.tingPaiInfos.length; h++)
               (this.tingPaiInfos[h].yiman ||
                 (this.tingPaiInfos[h].haveyi &&
@@ -187,14 +164,14 @@ let uiscript;
           }
         }
       } else
-        (this.btn_show.visible = !1),
+        (this.btn_show.visible = false),
           (this.state = -1),
           (this.tingPaiInfos = []);
     }),
     (e.prototype._show = function(t, e) {
       if (view.DesktopMgr.bianjietishi) {
         for (a = 0; a < this.items.length; a++)
-          this.items[a].container.visible = !1;
+          this.items[a].container.visible = false;
         t = t.sort(({tile}, {tile}) => mjcore.MJPai.Distance(tile, tile));
         const i = `myres2/mjp/${GameMgr.Inst.mjp_view}/ui/`;
         let n = 1;
@@ -205,7 +182,7 @@ let uiscript;
           (n = 1);
         for (var a = 0; a < t.length; a++) {
           if (
-            ((this.items[a].container.visible = !0),
+            ((this.items[a].container.visible = true),
             (this.items[a].zhengting.visible = e),
             (this.items[a].tile.skin = game.Tools.localUISrc(
               `${i + t[a].tile.toString()}.png`
@@ -220,11 +197,11 @@ let uiscript;
             n <= 1)
           ) {
             let r = t[a].haveyi || t[a].yiman || t[a].count > 0;
-            view.DesktopMgr.Inst.mainrole.during_liqi && (r = !0),
+            view.DesktopMgr.Inst.mainrole.during_liqi && (r = true),
               (this.items[a].noyi.visible = !r),
-              (this.items[a].fanfu.visible = !1);
+              (this.items[a].fanfu.visible = false);
           } else {
-            this.items[a].noyi.visible = !1;
+            this.items[a].noyi.visible = false;
             let s = t[a].count;
             t[a].yiman && (s *= 13),
               view.DesktopMgr.Inst.mainrole.during_liqi && s++,
@@ -240,7 +217,7 @@ let uiscript;
           (this.bg.mask.width = o),
           (this.bg.right.x = o - 20),
           (this.root.x = 960 - o / 2),
-          (this.root.visible = !0);
+          (this.root.visible = true);
       }
     }),
     (e.prototype.onChooseTile = function(t) {
@@ -258,12 +235,12 @@ let uiscript;
             break;
           }
         -1 == e
-          ? (this.root.visible = !1)
+          ? (this.root.visible = false)
           : this._show(
               this.tingPaiDiscardInfos[e].infos,
               this.tingPaiDiscardInfos[e].zhengting
             );
-      } else this.root.visible = !1;
+      } else this.root.visible = false;
     }),
     (e.prototype._setMouseDown = function(t) {
       app.Log.log(`_setMouseDown ${t}`),
@@ -281,8 +258,8 @@ let uiscript;
                   this.tingPaiDiscardInfos[0].infos,
                   this.tingPaiDiscardInfos[0].zhengting
                 )
-              : (this.root.visible = !1)
-            : (this.root.visible = !1));
+              : (this.root.visible = false)
+            : (this.root.visible = false));
     }),
     (e.prototype.setZhengting = function(t) {
       this.zhengting = t;

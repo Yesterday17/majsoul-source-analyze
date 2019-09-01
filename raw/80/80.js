@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  view;
+var view;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -58,13 +33,13 @@ var __extends =
           e.operation && t.ActionOperation.play(e.operation),
           e.doras &&
             e.doras.length > 0 &&
-            t.DesktopMgr.Inst.WhenDoras(e.doras, !1),
-          void 0 != e.zhenting &&
-            void 0 == e.operation &&
+            t.DesktopMgr.Inst.WhenDoras(e.doras, false),
+          undefined != e.zhenting &&
+            undefined == e.operation &&
             (uiscript.UI_DesktopInfo.Inst.setZhenting(e.zhenting),
             uiscript.UI_TingPai.Inst.setZhengting(e.zhenting)),
           i == t.DesktopMgr.Inst.seat && uiscript.UI_TingPai.Inst.setData0(e),
-          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !1);
+          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = false);
       }),
       (i.fastplay = function(e, i) {
         app.Log.log(
@@ -74,7 +49,7 @@ var __extends =
           a = e.tile;
         (t.DesktopMgr.Inst.left_tile_count = e.left_tile_count),
           n == t.DesktopMgr.Inst.seat
-            ? t.DesktopMgr.Inst.mainrole.TakePai(mjcore.MJPai.Create(a), !1)
+            ? t.DesktopMgr.Inst.mainrole.TakePai(mjcore.MJPai.Create(a), false)
             : t.DesktopMgr.Inst.players[
                 t.DesktopMgr.Inst.seat2LocalPosition(n)
               ].TakePai(mjcore.MJPai.Create('5z')),
@@ -85,16 +60,16 @@ var __extends =
           e.operation && -1 != i && t.ActionOperation.play(e.operation, i),
           e.doras &&
             e.doras.length > 0 &&
-            t.DesktopMgr.Inst.WhenDoras(e.doras, !0),
-          void 0 != e.zhenting &&
-            void 0 == e.operation &&
+            t.DesktopMgr.Inst.WhenDoras(e.doras, true),
+          undefined != e.zhenting &&
+            undefined == e.operation &&
             (uiscript.UI_DesktopInfo.Inst.setZhenting(e.zhenting),
             uiscript.UI_TingPai.Inst.setZhengting(e.zhenting)),
           n == t.DesktopMgr.Inst.seat && uiscript.UI_TingPai.Inst.setData0(e),
-          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !1);
+          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = false);
       }),
       (i.record = function(e, i) {
-        void 0 === i && (i = 0),
+        undefined === i && (i = 0),
           app.Log.log('ActionDealTile record data:' + JSON.stringify(e));
         var n = e.seat,
           a = e.tile;
@@ -111,22 +86,22 @@ var __extends =
           e.liqi && t.ActionLiqi.record(e.liqi),
           e.doras &&
             e.doras.length > 0 &&
-            t.DesktopMgr.Inst.WhenDoras(e.doras, !0),
+            t.DesktopMgr.Inst.WhenDoras(e.doras, true),
           t.DesktopMgr.Inst.mode == t.EMJMode.live_broadcast &&
             e.operation &&
             t.ActionOperation.ob(e.operation, i),
-          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !1),
+          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = false),
           300
         );
       }),
       (i.fastrecord = function(e, i) {
-        void 0 === i && (i = -1),
+        undefined === i && (i = -1),
           app.Log.log('ActionDealTile fastrecord data:' + JSON.stringify(e));
         var n = e.seat,
           a = e.tile;
         (t.DesktopMgr.Inst.left_tile_count = e.left_tile_count),
           n == t.DesktopMgr.Inst.seat
-            ? t.DesktopMgr.Inst.mainrole.TakePai(mjcore.MJPai.Create(a), !1)
+            ? t.DesktopMgr.Inst.mainrole.TakePai(mjcore.MJPai.Create(a), false)
             : t.DesktopMgr.Inst.players[
                 t.DesktopMgr.Inst.seat2LocalPosition(n)
               ].recordTakePai(mjcore.MJPai.Create(a)),
@@ -136,12 +111,12 @@ var __extends =
           e.liqi && t.ActionLiqi.fastrecord(e.liqi),
           e.doras &&
             e.doras.length > 0 &&
-            t.DesktopMgr.Inst.WhenDoras(e.doras, !0),
+            t.DesktopMgr.Inst.WhenDoras(e.doras, true),
           t.DesktopMgr.Inst.mode == t.EMJMode.live_broadcast &&
             i >= 0 &&
             e.operation &&
             t.ActionOperation.ob(e.operation, i),
-          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !1);
+          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = false);
       }),
       i
     );

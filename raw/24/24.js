@@ -7,15 +7,15 @@ var app;
         get: function() {
           return this._lobby_ip;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(e, 'mj_ip', {
         get: function() {
           return this._mj_ip;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(e, 'lobby_network_delay', {
         get: function() {
@@ -23,24 +23,24 @@ var app;
             ? this._socket_lobby.getNetworkDelay()
             : 1e7;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(e, 'mj_network_delay', {
         get: function() {
           return this._socket_mj ? this._socket_mj.getNetworkDelay() : 1e7;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (e.init = function() {
         (this._socket_lobby = new net.Socket(
           ['Lobby'],
-          Laya.Handler.create(this, this.onReceiveMsgError, null, !1)
+          Laya.Handler.create(this, this.onReceiveMsgError, null, false)
         )),
           (this._socket_mj = new net.Socket(
             ['FastTest'],
-            Laya.Handler.create(this, this.onReceiveMsgError, null, !1)
+            Laya.Handler.create(this, this.onReceiveMsgError, null, false)
           ));
       }),
       (e.connect2Lobby = function(t, e) {
@@ -86,10 +86,10 @@ var app;
                       game.Tools.strOfLocalization(2006)
                     )
                   : uiscript.UIMgr.Inst.ShowErrorInfo(r)),
-              !1
+              false
             );
           }
-          return this._socket_lobby.sendRequest(e, i, n, a), !0;
+          return this._socket_lobby.sendRequest(e, i, n, a), true;
         }
         var r = '发送' + i + '时LobbyNetMgr不存在';
         return (
@@ -97,11 +97,11 @@ var app;
           uiscript.UIMgr.Inst &&
             !GameMgr.inRelease &&
             uiscript.UIMgr.Inst.ShowErrorInfo(r),
-          !1
+          false
         );
       }),
       (e.AddListener2Lobby = function(t, e) {
-        (e.once = !1), this._socket_lobby.addMsgListener('.lq.' + t, e);
+        (e.once = false), this._socket_lobby.addMsgListener('.lq.' + t, e);
       }),
       (e.RemoveListener2Lobby = function(t, e) {
         this._socket_lobby.removeMsgListener('.lq.' + t, e);
@@ -147,10 +147,10 @@ var app;
                     game.Tools.strOfLocalization(2006)
                   )
                 : uiscript.UIMgr.Inst.ShowErrorInfo(r),
-              !1
+              false
             );
           }
-          return this._socket_mj.sendRequest(e, i, n, a), !0;
+          return this._socket_mj.sendRequest(e, i, n, a), true;
         }
         var r = '发送' + i + '时MJNetMgr不存在';
         return (
@@ -158,11 +158,11 @@ var app;
           uiscript.UIMgr.Inst &&
             !GameMgr.inRelease &&
             uiscript.UIMgr.Inst.ShowErrorInfo(r),
-          !1
+          false
         );
       }),
       (e.AddListener2MJ = function(t, e) {
-        (e.once = !1), this._socket_mj.addMsgListener('.lq.' + t, e);
+        (e.once = false), this._socket_mj.addMsgListener('.lq.' + t, e);
       }),
       (e.Close2MJ = function() {
         this._socket_mj && (this._socket_mj.close(), (this._mj_ip = ''));

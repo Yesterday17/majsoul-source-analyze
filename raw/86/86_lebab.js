@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let view;
 !(t => {
   const e = (e => {
@@ -38,23 +15,23 @@ let view;
       Laya.timer.once(n, this, () => {
         t.BgmListMgr.stopBgm();
         const n = e.players;
-        (t.DesktopMgr.Inst.gameing = !1),
+        (t.DesktopMgr.Inst.gameing = false),
           uiscript.UI_OtherPlayerInfo.Inst.close(),
           uiscript.UI_TingPai.Inst.reset(),
-          uiscript.UI_TingPai.Inst.setZhengting(!1);
+          uiscript.UI_TingPai.Inst.setZhengting(false);
         for (let a = 0; a < n.length; a++) {
           for (var r = [], s = 0; s < n[a].hand.length; s++)
             r.push(mjcore.MJPai.Create(n[a].hand[s]));
           (r = r.sort(mjcore.MJPai.Distance)),
             t.DesktopMgr.Inst.players[
               t.DesktopMgr.Inst.seat2LocalPosition(a)
-            ].Huangpai(n[a].tingpai, r, !1);
+            ].Huangpai(n[a].tingpai, r, false);
         }
         Laya.timer.once(1e3, i, () => {
           uiscript.UI_Huleshow.Inst.showLiuJu(n);
         }),
           Laya.timer.once(6e3, i, () => {
-            if (e.liujumanguan) uiscript.UIMgr.Inst.ShowWin(e.scores, !0);
+            if (e.liujumanguan) uiscript.UIMgr.Inst.ShowWin(e.scores, true);
             else {
               const i = [];
               if (e.scores && e.scores.length > 0) {
@@ -88,21 +65,21 @@ let view;
       app.Log.log(`ActionNewRound fastplay data:${JSON.stringify(e)}`);
       t.BgmListMgr.stopBgm();
       const n = e.players;
-      (t.DesktopMgr.Inst.gameing = !1),
+      (t.DesktopMgr.Inst.gameing = false),
         uiscript.UI_OtherPlayerInfo.Inst.close();
-      const a = [!1, !1, !1, !1];
+      const a = [false, false, false, false];
       uiscript.UI_TingPai.Inst.reset(),
-        uiscript.UI_TingPai.Inst.setZhengting(!1);
+        uiscript.UI_TingPai.Inst.setZhengting(false);
       for (l = 0; l < t.DesktopMgr.Inst.player_count; l++) {
         for (var r = [], s = 0; s < n[l].hand.length; s++)
           r.push(mjcore.MJPai.Create(n[l].hand[s]));
         (r = r.sort(mjcore.MJPai.Distance)),
           t.DesktopMgr.Inst.players[
             t.DesktopMgr.Inst.seat2LocalPosition(l)
-          ].Huangpai(n[l].tingpai, r, !0),
+          ].Huangpai(n[l].tingpai, r, true),
           (a[t.DesktopMgr.Inst.seat2LocalPosition(l)] = n[l].tingpai);
       }
-      if (e.liujumanguan) uiscript.UIMgr.Inst.ShowWin(e.scores, !0);
+      if (e.liujumanguan) uiscript.UIMgr.Inst.ShowWin(e.scores, true);
       else {
         const o = [];
         if (e.scores && e.scores.length > 0) {

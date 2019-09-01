@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   let e;
@@ -28,8 +5,8 @@ let uiscript;
   const i = (() => {
     function t(t) {
       const e = this;
-      (this._show_hand = !1),
-        (this._show_paopai = !1),
+      (this._show_hand = false),
+        (this._show_paopai = false),
         (this.me = t),
         (this._btn_out = this.me.getChildByName('btn_out')),
         (this._btn_out.clickHandler = Laya.Handler.create(
@@ -38,7 +15,7 @@ let uiscript;
             e.switch();
           },
           null,
-          !1
+          false
         )),
         (this.me.getChildByName(
           'btn_shoupai'
@@ -50,7 +27,7 @@ let uiscript;
               view.DesktopMgr.Inst.onShowHandChange(e._show_hand);
           },
           null,
-          !1
+          false
         )),
         (this._choosed_show_hand = this.me
           .getChildByName('btn_shoupai')
@@ -68,7 +45,7 @@ let uiscript;
               view.DesktopMgr.Inst.onShowPaopaiChange(e._show_paopai);
           },
           null,
-          !1
+          false
         )),
         (this._choosed_show_paopai = this.me
           .getChildByName('btn_paopai')
@@ -80,29 +57,29 @@ let uiscript;
     }
     return (t.prototype.reset = function() {
       Laya.Tween.clearAll(this),
-        (this._show_hand = !1),
+        (this._show_hand = false),
         (this.me.x = -258),
-        (this._btn_out.disabled = !1),
+        (this._btn_out.disabled = false),
         (this._choosed_show_hand.visible = this._show_hand),
-        (this._show_paopai = !1),
+        (this._show_paopai = false),
         (this._choosed_show_paopai.visible = this._show_paopai);
     }),
     (t.prototype.switch = function() {
       const t = this;
       let e = -258;
       this.me.x < -100 && (e = -5),
-        (this._btn_out.disabled = !0),
+        (this._btn_out.disabled = true),
         Laya.Tween.to(
           this.me,
           { x: e },
           200,
           Laya.Ease.strongOut,
           Laya.Handler.create(this, () => {
-            t._btn_out.disabled = !1;
+            t._btn_out.disabled = false;
           }),
           0,
-          !0,
-          !0
+          true,
+          true
         );
     }),
     t
@@ -125,7 +102,7 @@ let uiscript;
         (t._time_start = 0),
         (t.segment_index = 0),
         (t.unit_index = 0),
-        (t.during_asknew = !1),
+        (t.during_asknew = false),
         (t.retry_loadtime = 0),
         (t.segment_end_millisecond = 0),
         (t.guanzhanconfig = null),
@@ -145,11 +122,11 @@ let uiscript;
         (n, a) => {
           n || a.error
             ? (t.UIMgr.Inst.showNetReqError('fetchGameLiveInfo', n, a),
-              i && i.runWith({ success: !1 }))
+              i && i.runWith({ success: false }))
             : (app.Log.log(`fetchGameLiveInfo res:${JSON.stringify(a)}`),
               a.left_start_seconds
                 ? t.UI_WaitOb.Inst.show(e, a.left_start_seconds, i)
-                : i && i.runWith({ success: !0, data: a }));
+                : i && i.runWith({ success: true, data: a }));
         }
       );
     }),
@@ -157,7 +134,7 @@ let uiscript;
       const r = this;
       app.Log.log(`goToWatch res:${JSON.stringify(i)}`),
         t.UI_Loading.Inst.show('enter_mj'),
-        game.Scene_Lobby.Inst.active && (game.Scene_Lobby.Inst.active = !1);
+        game.Scene_Lobby.Inst.active && (game.Scene_Lobby.Inst.active = false);
       for (
         var s = i.live_head, o = [null, null, null, null], l = 0;
         l < s.players.length;
@@ -196,7 +173,7 @@ let uiscript;
               exp: 0,
               views: [],
               skin: 400101,
-              is_upgraded: !1
+              is_upgraded: false
             }
           });
       game.Scene_MJ.Inst.openMJRoom(
@@ -221,7 +198,7 @@ let uiscript;
           this,
           e => t.UI_Loading.Inst.setProgressVal(0.7 * e),
           null,
-          !1
+          false
         )
       );
     }),
@@ -324,7 +301,7 @@ let uiscript;
         } else
           'NotifyGameEndResult' == name
             ? ((view.DesktopMgr.Inst.gameEndResult = data.result),
-              (this.enable = !1),
+              (this.enable = false),
               t.UIMgr.Inst.ShowGameEnd())
             : 'NotifyPlayerConnectionState' == name
             ? t.UI_DesktopInfo.Inst.onPlayerConnectionState(data)
@@ -359,7 +336,7 @@ let uiscript;
       } else
         'NotifyGameEndResult' == name
           ? ((view.DesktopMgr.Inst.gameEndResult = data.result),
-            (this.enable = !1),
+            (this.enable = false),
             t.UIMgr.Inst.ShowGameEnd())
           : 'NotifyGameBroadcast' == name
           ? t.UI_DesktopInfo.Inst.onGameBroadcast(data)
@@ -409,11 +386,11 @@ let uiscript;
             o++
           )
             s.push(n._parseUnit(r.actions[o]));
-          i.runWith({ success: !0, id: t, units: s });
+          i.runWith({ success: true, id: t, units: s });
         }
       }),
         a.once(Laya.Event.ERROR, this, e => {
-          i && i.runWith({ success: !1, id: t });
+          i && i.runWith({ success: false, id: t });
         });
       a.send(e, '', 'get', 'arraybuffer', []);
     }),
@@ -423,9 +400,9 @@ let uiscript;
         (this.segments = []),
         (this._time0 = now_millisecond);
       let a = 0;
-      let r = !1;
+      let r = false;
       (this.game_uuid = e),
-        (this.enable = !0),
+        (this.enable = true),
         this.guanzhanconfig.reset(),
         (this.do_unit_cd = 0);
       for (
@@ -437,7 +414,7 @@ let uiscript;
                     for (let i = 0; i < n.segments.length; i++)
                       if (n.segments[i].segment_id == e.id) {
                         (n.segments[i].units = e.units),
-                          (n.segments[i].loaded = !0);
+                          (n.segments[i].loaded = true);
                         break;
                       }
                     app.Log.log('loadover1'),
@@ -448,7 +425,7 @@ let uiscript;
                       a == n.segments.length && n._onFirstLoadOver();
                   } else
                     app.Log.log('loadover2'),
-                      (r = !0),
+                      (r = true),
                       t.UIMgr.Inst.ShowErrorInfo(
                         game.Tools.strOfLocalization(15)
                       ),
@@ -460,7 +437,7 @@ let uiscript;
       ) {
         const l = segments[o].segment_id;
         const h = segments[o].segment_uri;
-        this.segments.push({ segment_id: l, uri: h, units: [], loaded: !1 }),
+        this.segments.push({ segment_id: l, uri: h, units: [], loaded: false }),
           this._loadUnit(l, h, Laya.Handler.create(this, s));
       }
     }),
@@ -476,10 +453,10 @@ let uiscript;
             100,
             this,
             () => {
-              i._timeDoAction(!1);
+              i._timeDoAction(false);
             },
             null,
-            !0
+            true
           ),
           Laya.timer.loop(
             3700,
@@ -488,14 +465,14 @@ let uiscript;
               i._askNewSegment();
             },
             null,
-            !1
+            false
           );
       }
     }),
     (a.prototype._unitIsTimeLast = function(t, e) {
-      if (t >= this.segments.length) return !0;
+      if (t >= this.segments.length) return true;
       const i = this.segments[t];
-      if (!i.loaded) return !0;
+      if (!i.loaded) return true;
       if (i.units.length <= e) return this._unitIsTimeLast(t + 1, 0);
       const n = this._time0 + Laya.timer.currTimer - this._time_start;
       const a = i.units[e];
@@ -529,27 +506,27 @@ let uiscript;
       return this._getTimeStop(t, e + 1, i);
     }),
     (a.prototype._timeDoAction = function(t) {
-      if (this.segment_index >= this.segments.length) return !1;
+      if (this.segment_index >= this.segments.length) return false;
       const e = this.segments[this.segment_index];
-      if (!e.loaded) return !1;
+      if (!e.loaded) return false;
       if (
         this.segment_index == this.segments.length - 1 &&
         this.unit_index >= e.units.length
       )
-        return !1;
+        return false;
       const i = e.units[this.unit_index];
       let n = this._time0 + Laya.timer.currTimer - this._time_start;
-      if (i.timestamp > n) return !0;
+      if (i.timestamp > n) return true;
       if (
         (app.Log.log('_timeDoAction name:'), 'NotifyGameEndResult' == i.name)
       )
-        return !0;
+        return true;
       if (
         1 == i.category &&
         Laya.timer.currTimer < this.do_unit_cd &&
         'RecordNewRound' != i.name
       )
-        return !0;
+        return true;
       const a = this._unitIsTimeLast(this.segment_index, this.unit_index + 1);
       if (
         (a &&
@@ -560,9 +537,9 @@ let uiscript;
           )),
         t)
       )
-        a ? this._doUnit(i, !0, n - i.timestamp) : this._doUnit(i, !0, -1);
+        a ? this._doUnit(i, true, n - i.timestamp) : this._doUnit(i, true, -1);
       else {
-        const r = this._doUnit(i, !1, n - i.timestamp);
+        const r = this._doUnit(i, false, n - i.timestamp);
         r > 0 && (this.do_unit_cd = Laya.timer.currTimer + r);
       }
       return (
@@ -581,7 +558,7 @@ let uiscript;
       ) {
         this._time0 + Laya.timer.currTimer - this._time_start + 15e3 <
           this.segment_end_millisecond ||
-          ((this.during_asknew = !0),
+          ((this.during_asknew = true),
           app.NetAgent.sendReq2Lobby(
             'Lobby',
             'fetchGameLiveLeftSegment',
@@ -591,7 +568,7 @@ let uiscript;
                 .segment_id
             },
             (e, n) => {
-              if (((i.during_asknew = !1), e || n.error))
+              if (((i.during_asknew = false), e || n.error))
                 i.retry_loadtime++,
                   i.retry_loadtime >= 3 &&
                     t.UIMgr.Inst.showNetReqError(
@@ -609,7 +586,7 @@ let uiscript;
                             for (let e = 0; e < i.segments.length; e++)
                               if (i.segments[e].segment_id == id) {
                                 (i.segments[e].units = units),
-                                  (i.segments[e].loaded = !0);
+                                  (i.segments[e].loaded = true);
                                 break;
                               }
                         },
@@ -625,9 +602,9 @@ let uiscript;
                       segment_id: l,
                       uri: h,
                       units: [],
-                      loaded: !1
+                      loaded: false
                     }),
-                    i._loadUnit(l, h, Laya.Handler.create(i, r, null, !1)));
+                    i._loadUnit(l, h, Laya.Handler.create(i, r, null, false)));
                 }
               }
             }
@@ -635,7 +612,7 @@ let uiscript;
       }
     }),
     (a.prototype._forceQuit = function() {
-      (this.state = e.none), (this.enable = !1), GameMgr.Inst.EnterLobby();
+      (this.state = e.none), (this.enable = false), GameMgr.Inst.EnterLobby();
     }),
     (a.prototype._fastSync = function() {
       let e = -1;
@@ -661,12 +638,12 @@ let uiscript;
         ? (app.Log.Error('给的数据没有RecordNewRound'),
           t.UIMgr.Inst.ShowErrorInfo(game.Tools.strOfLocalization(15)),
           this._forceQuit(),
-          !1)
+          false)
         : ((this.segment_index = e),
           (this.unit_index = i),
           (this._time_start = Laya.timer.currTimer),
-          this._timeDoAction(!0),
-          !0)
+          this._timeDoAction(true),
+          true)
     ;
     }),
     (a.prototype.onChangeMainbody = function() {
@@ -677,17 +654,17 @@ let uiscript;
     }),
     (a.prototype.onScoreChangeConfirm = function() {
       if (((this.do_unit_cd = 0), this.segment_index >= this.segments.length))
-        return !1;
+        return false;
       const e = this.segments[this.segment_index];
-      if (!e.loaded) return !1;
+      if (!e.loaded) return false;
       if (
         this.segment_index == this.segments.length - 1 &&
         this.unit_index >= e.units.length
       )
-        return !1;
+        return false;
       const i = e.units[this.unit_index];
       'NotifyGameEndResult' == i.name &&
-        ((t.UI_ScoreChange.Inst.enable = !1), this._doUnit(i, !1, 0));
+        ((t.UI_ScoreChange.Inst.enable = false), this._doUnit(i, false, 0));
     }),
     a
   ;

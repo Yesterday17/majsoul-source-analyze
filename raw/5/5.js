@@ -42,23 +42,23 @@ var uiscript;
             10601 == t || 20601 == t)
           ) {
             for (i = 0; i < this.stars.length; i++)
-              this.stars[i].parent.visible = !1;
+              this.stars[i].parent.visible = false;
             this.container_huntian
-              ? (this.container_exp && (this.container_exp.visible = !1),
-                (this.container_huntian.visible = !0))
-              : this.container_exp && (this.container_exp.visible = !0),
-              this.bgp && (this.bgp.visible = !0);
+              ? (this.container_exp && (this.container_exp.visible = false),
+                (this.container_huntian.visible = true))
+              : this.container_exp && (this.container_exp.visible = true),
+              this.bgp && (this.bgp.visible = true);
           } else {
             for (var i = 0; i < this.stars.length; i++)
               (this.stars[i].visible = i < e.secondary_level),
-                (this.stars[i].parent.visible = !0);
-            this.container_huntian && (this.container_huntian.visible = !1),
-              this.container_exp && (this.container_exp.visible = !0),
-              this.bgp && (this.bgp.visible = !1);
+                (this.stars[i].parent.visible = true);
+            this.container_huntian && (this.container_huntian.visible = false),
+              this.container_exp && (this.container_exp.visible = true),
+              this.bgp && (this.bgp.visible = false);
           }
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(t.prototype, 'exp', {
         set: function(t) {
@@ -75,8 +75,8 @@ var uiscript;
           this.level_v_huntian &&
             (this.level_v_huntian.text = Math.floor(t).toString());
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       t
     );

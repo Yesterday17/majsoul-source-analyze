@@ -2,10 +2,10 @@ var game;
 !(function(t) {
   var e = (function() {
     function e(i, n, a, r, s) {
-      void 0 === s && (s = !1),
-        (this.destoryed = !1),
+      undefined === s && (s = false),
+        (this.destoryed = false),
         (this.target = i),
-        (this.destoryed = !1),
+        (this.destoryed = false),
         (this.pos_offset = a),
         (this.scale = r),
         (this.effect = new t.EffectBase(n, s)),
@@ -51,7 +51,7 @@ var game;
         }
       }),
       (e.prototype.destory = function() {
-        this.destoryed || ((this.destoryed = !0), this.effect.destory());
+        this.destoryed || ((this.destoryed = true), this.effect.destory());
       }),
       (e.effects = []),
       e
@@ -73,15 +73,15 @@ var game;
         get: function() {
           return this._root;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(i.prototype, 'root2', {
         get: function() {
           return this._root2;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (i.init = function() {
         ((i.Inst = new i())._scene = Laya.loader.getRes(i.scene_path)),
@@ -93,12 +93,12 @@ var game;
           (i.Inst._effect_click = i.Inst._container_effect.getChildByName(
             'effect_click'
           )),
-          (i.Inst._scene.visible = !0),
+          (i.Inst._scene.visible = true),
           Laya.stage.on(Laya.Event.MOUSE_DOWN, i.Inst, i.Inst.bangClickEffect),
           (this.Inst._scene2 = Laya.loader.getRes(i.scene2_path)),
           (this.Inst._root2 = this.Inst._scene2.getChildByName('root')),
           GameMgr.Inst.root_front_scene_effect.addChild(this.Inst._scene2),
-          (this.Inst._scene2.visible = !0),
+          (this.Inst._scene2.visible = true),
           Laya.timer.frameLoop(1, this, function() {
             e.update();
           });
@@ -124,15 +124,15 @@ var game;
             i.scene_height / 2,
           l = this._effect_click.clone();
         this._root.addChild(l),
-          (l.active = !1),
-          (l.active = !0),
+          (l.active = false),
+          (l.active = true),
           (l.transform.localPosition = new Laya.Vector3(s, o, 1)),
           Laya.timer.once(1500, this, function() {
-            l.destroy(!0);
+            l.destroy(true);
           });
       }),
       (i.prototype.create_ui_effect = function(t, i, n, a, r) {
-        void 0 === r && (r = !1);
+        undefined === r && (r = false);
         var s = new e(t, i, n, a, r);
         return this._root2.addChild(s.effect.root), s;
       }),

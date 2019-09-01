@@ -7,7 +7,7 @@ let uiscript;
         (this.right_btn_cd = 0),
         (e.Inst = this),
         (this.me = i),
-        (this.me.visible = !1),
+        (this.me.visible = false),
         (this.container_left = this.me.getChildByName('left')),
         (this.container_right = this.me.getChildByName('right')),
         (this.container_nomail = this.me.getChildByName('nomail')),
@@ -15,7 +15,7 @@ let uiscript;
           'capsui.CScrollView'
         ]),
         this.left_sroll.init_scrollview(
-          Laya.Handler.create(this, this._renderLeft, null, !1)
+          Laya.Handler.create(this, this._renderLeft, null, false)
         );
       const n = this.me.getChildByName('right');
       (this.title = n.getChildByName('title')),
@@ -31,17 +31,17 @@ let uiscript;
             r.getChildByName('btn').getChildByName('icon')
           )
         }),
-          (this.items[a].me.visible = !1);
+          (this.items[a].me.visible = false);
       }
     }
     return Object.defineProperty(e, 'haveRedPoint', {
       get() {
         for (let t = 0; t < this.mails.length; t++)
-          if (0 == this.mails[t].state) return !0;
-        return !1;
+          if (0 == this.mails[t].state) return true;
+        return false;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (e.Init = function() {
       const i = this;
@@ -66,7 +66,7 @@ let uiscript;
               i.mails.unshift(mail);
             },
             null,
-            !1
+            false
           )
         ),
         app.NetAgent.AddListener2Lobby(
@@ -88,7 +88,7 @@ let uiscript;
                 }
             },
             null,
-            !1
+            false
           )
         );
     }),
@@ -98,15 +98,15 @@ let uiscript;
         e.mails.length > 0
           ? ((this.select_index = 0),
             this.left_sroll.addItem(e.mails.length),
-            this._renderRight(0, !0),
-            (this.container_left.visible = !0),
-            (this.container_right.visible = !0),
-            (this.container_nomail.visible = !1))
+            this._renderRight(0, true),
+            (this.container_left.visible = true),
+            (this.container_right.visible = true),
+            (this.container_nomail.visible = false))
           : ((this.select_index = 0),
-            (this.container_left.visible = !1),
-            (this.container_right.visible = !1),
-            (this.container_nomail.visible = !0)),
-        (this.me.visible = !0);
+            (this.container_left.visible = false),
+            (this.container_right.visible = false),
+            (this.container_nomail.visible = true)),
+        (this.me.visible = true);
     }),
     (e.prototype.onDelMail = function(i) {
       for (var n = -1, a = 0; a < e.mails.length; a++)
@@ -121,18 +121,18 @@ let uiscript;
         s == e.mails.length && s--,
           this.left_sroll.delItem(n),
           e.mails.length <= 0
-            ? ((this.container_left.visible = !1),
-              (this.container_right.visible = !1),
-              (this.container_nomail.visible = !0))
-            : ((this.container_left.visible = !0),
-              (this.container_right.visible = !0),
-              (this.container_nomail.visible = !1),
-              this._renderRight(s, !0),
+            ? ((this.container_left.visible = false),
+              (this.container_right.visible = false),
+              (this.container_nomail.visible = true))
+            : ((this.container_left.visible = true),
+              (this.container_right.visible = true),
+              (this.container_nomail.visible = false),
+              this._renderRight(s, true),
               this.left_sroll.wantToRefreshItem(s));
       }
     }),
     (e.prototype.hide = function() {
-      (this.me.visible = !1), this.left_sroll.reset();
+      (this.me.visible = false), this.left_sroll.reset();
     }),
     (e.prototype._renderLeft = function({index, container}) {
       const i = this;
@@ -156,7 +156,7 @@ let uiscript;
           () => {
             if (i.select_index != n) {
               const t = i.select_index;
-              i._renderRight(n, !1),
+              i._renderRight(n, false),
                 (r.state = 1),
                 (s.skin = game.Tools.localUISrc(
                   'myres/lobby/act_choosed.png'
@@ -166,7 +166,7 @@ let uiscript;
             }
           },
           null,
-          !1
+          false
         )),
         (a.getChildByName('title').text = r.title);
     }),
@@ -177,7 +177,7 @@ let uiscript;
         (this.select_index = i),
           (this.title.text = r.title),
           (this.content.text = r.content);
-        for (var s = !1, o = [], l = 0; l < r.attachments.length; l++)
+        for (var s = false, o = [], l = 0; l < r.attachments.length; l++)
           100099 != r.attachments[l].id &&
             100098 != r.attachments[l].id &&
             o.push(r.attachments[l]);
@@ -186,7 +186,7 @@ let uiscript;
           for (
             const h = e => {
                       if (e < o.length) {
-                        c.items[e].me.visible = !0;
+                        c.items[e].me.visible = true;
                         const i = o[e], n = i.id, a = i.count;
                         (c.items[e].me.getChildByName(
                           'btn'
@@ -196,19 +196,19 @@ let uiscript;
                             t.UI_ItemDetail.Inst.show(n);
                           },
                           null,
-                          !1
+                          false
                         )),
                           c.items[e].icon.setSkin(
                             game.GameUtility.get_item_view(n).icon
                           );
                         const r = c.items[e].me.getChildByName('count');
                         a <= 1
-                          ? (r.visible = !1)
-                          : ((r.visible = !0), (r.text = a.toString()));
+                          ? (r.visible = false)
+                          : ((r.visible = true), (r.text = a.toString()));
                         (c.items[e].me.getChildByName('getted').visible = !s),
                           (c.items[e].me.x = 12 + 120 * e),
                           (c.items[e].me.y = c.items[0].me.y);
-                      } else c.items[e].me.visible = !1;
+                      } else c.items[e].me.visible = false;
                     },
                   c = this,
                   l = 0;
@@ -218,7 +218,7 @@ let uiscript;
             h(l);
         } else
           for (l = 0; l < this.items.length; l++)
-            this.items[l].me.visible = !1;
+            this.items[l].me.visible = false;
         (this.btn_get.visible = s),
           (this.btn_del.visible = !s),
           0 == r.state &&
@@ -251,19 +251,19 @@ let uiscript;
                     else {
                       (a.btn_get.visible = !s),
                         (a.btn_del.visible = s),
-                        (r.take_attachment = !0);
+                        (r.take_attachment = true);
                       for (let n = 0; n < a.items.length; n++)
                         a.items[n].me.visible &&
                           (a.items[n].me.getChildByName(
                             'getted'
-                          ).visible = !0);
+                          ).visible = true);
                       game.Tools.showRewards({ rewards: o }, null);
                     }
                   }
                 ));
             },
             null,
-            !1
+            false
           )),
           (this.btn_del.clickHandler = Laya.Handler.create(this, () => {
             Laya.timer.currTimer < a.right_btn_cd ||

@@ -40,36 +40,36 @@ let lqc;
       get() {
         return this.table_;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t.prototype, 'sheet', {
       get() {
         return this.sheet_;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t.prototype, 'count', {
       get() {
         return this.rows_.length;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t.prototype, 'minKey', {
       get() {
         return this.minKey_;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t.prototype, 'maxKey', {
       get() {
         return this.maxKey_;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     t
   ;
@@ -86,22 +86,22 @@ let lqc;
       get() {
         return this.table_;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t.prototype, 'sheet', {
       get() {
         return this.sheet_;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t.prototype, 'count', {
       get() {
         return this.rows_.length;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     t
   ;
@@ -145,22 +145,22 @@ let lqc;
       get() {
         return this.table_;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t.prototype, 'sheet', {
       get() {
         return this.sheet_;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t.prototype, 'count', {
       get() {
         return this.rows_.length;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     t
   ;
@@ -177,15 +177,15 @@ let lqc;
       get() {
         return this.value_;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t.prototype, 'ref', {
       get() {
         return this.ref_;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     t
   ;

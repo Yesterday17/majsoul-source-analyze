@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function t(t) {
@@ -38,12 +13,12 @@ var __extends =
           (this.content = this.container_content.getChildAt(0)),
           (this.new_flag = this.me.getChildByName('new')),
           (this.btn_cd = 0),
-          (this.isopen = !1),
+          (this.isopen = false),
           (this.btn_open.clickHandler = Laya.Handler.create(
             this,
             this.switchShow,
             null,
-            !1
+            false
           ));
       }
       return (
@@ -57,8 +32,8 @@ var __extends =
               t
             );
           },
-          enumerable: !0,
-          configurable: !0
+          enumerable: true,
+          configurable: true
         }),
         (t.prototype.onEnable = function(t, e, i) {
           (this.announcement_id = t.id),
@@ -70,13 +45,13 @@ var __extends =
             (this.btn_cd = 0),
             this.isopen
               ? ((this.container_content.alpha = 1),
-                (this.container_content.visible = !0),
+                (this.container_content.visible = true),
                 (this.arrow.rotation = 0))
-              : ((this.container_content.visible = !1),
+              : ((this.container_content.visible = false),
                 (this.arrow.rotation = -180)),
             this.isnew
-              ? ((this.new_flag.visible = !0), (this.btn_open.y = 8))
-              : ((this.new_flag.visible = !1), (this.btn_open.y = 0)),
+              ? ((this.new_flag.visible = true), (this.btn_open.y = 8))
+              : ((this.new_flag.visible = false), (this.btn_open.y = 0)),
             (this.me.height = this.h);
         }),
         (t.prototype.onDisable = function() {
@@ -92,7 +67,7 @@ var __extends =
             i.read_list.push(this.announcement_id),
             i.Inst.onReadStateChange()),
             (this.announcement_id = -1),
-            (this.me.visible = !1);
+            (this.me.visible = false);
         }),
         (t.prototype.switchShow = function() {
           var t = this;
@@ -101,7 +76,7 @@ var __extends =
             Laya.timer.clearAll(this),
             (this.isopen = !this.isopen),
             this.isopen
-              ? ((this.container_content.visible = !0),
+              ? ((this.container_content.visible = true),
                 Laya.Tween.to(
                   this.container_content,
                   { alpha: 1 },
@@ -109,12 +84,12 @@ var __extends =
                   null,
                   null,
                   0,
-                  !0
+                  true
                 ),
                 (this.arrow.rotation = 0))
               : (this.isnew &&
-                  ((this.isnew = !1),
-                  (this.new_flag.visible = !1),
+                  ((this.isnew = false),
+                  (this.new_flag.visible = false),
                   Laya.Tween.to(
                     this.btn_open,
                     { y: 0 },
@@ -135,10 +110,10 @@ var __extends =
                   200,
                   null,
                   Laya.Handler.create(this, function() {
-                    t.container_content.visible = !1;
+                    t.container_content.visible = false;
                   }),
                   0,
-                  !0
+                  true
                 ),
                 (this.arrow.scaleY = 1),
                 (this.arrow.rotation = -180)),
@@ -160,8 +135,8 @@ var __extends =
             !this.announcements ||
             0 == this.announcements.length
           )
-            return !1;
-          for (var t = !1, e = [], i = 0; i < n.announcements.length; i++)
+            return false;
+          for (var t = false, e = [], i = 0; i < n.announcements.length; i++)
             e.push(i);
           for (var a = {}, i = 0; i < n.announcement_sort.length; i++)
             a[n.announcement_sort[i].toString()] = i;
@@ -176,18 +151,18 @@ var __extends =
             })),
             this.announcements.length > 0 &&
               (t = !this.isAnnouncementReaded(this.announcements[e[0]].id)),
-            !!t && (this.Inst.show(), !0)
+            !!t && (this.Inst.show(), true)
           );
         }),
         Object.defineProperty(n, 'haveRedPoint', {
           get: function() {
             for (var t = 0; t < this.announcements.length; t++)
               if (!this.isAnnouncementReaded(this.announcements[t].id))
-                return !0;
-            return !1;
+                return true;
+            return false;
           },
-          enumerable: !0,
-          configurable: !0
+          enumerable: true,
+          configurable: true
         }),
         (n.Init = function() {
           var e = this;
@@ -204,7 +179,7 @@ var __extends =
             ),
             app.NetAgent.AddListener2Lobby(
               'NotifyAnnouncementUpdate',
-              Laya.Handler.create(this, this._refreshAnnouncements, null, !1)
+              Laya.Handler.create(this, this._refreshAnnouncements, null, false)
             );
         }),
         (n._refreshAnnouncements = function(t) {
@@ -220,8 +195,8 @@ var __extends =
         }),
         (n.isAnnouncementReaded = function(t) {
           for (var e = 0; e < this.read_list.length; e++)
-            if (this.read_list[e] == t) return !0;
-          return !1;
+            if (this.read_list[e] == t) return true;
+          return false;
         }),
         (n.prototype.onCreate = function() {
           var t = this;
@@ -234,17 +209,17 @@ var __extends =
                 t.locking || t.close();
               },
               null,
-              !1
+              false
             )),
             (this.panel = this.root.getChildByName('info')),
-            (this.panel.vScrollBar.visible = !1),
+            (this.panel.vScrollBar.visible = false),
             (this.item_templete = this.panel.getChildByName('templete')),
             (this.items = []),
-            (this.item_templete.visible = !1);
+            (this.item_templete.visible = false);
         }),
         (n.prototype.show = function() {
           var i = this;
-          (this.enable = !0), (this.locking = !0);
+          (this.enable = true), (this.locking = true);
           var a = 0;
           if (n.announcements.length > this.items.length) {
             a = 5;
@@ -255,7 +230,7 @@ var __extends =
               this.items.push(new e(s));
             }
           }
-          (this.root.visible = !1),
+          (this.root.visible = false),
             Laya.timer.frameOnce(a, this, function() {
               for (var e = [], a = 0; a < n.announcements.length; a++)
                 e.push(a);
@@ -270,9 +245,9 @@ var __extends =
                 return (s = r.hasOwnProperty(o) ? r[o] : 1e3 + e), i - s;
               });
               for (a = 0; a < i.items.length; a++)
-                if (a >= e.length) i.items[a].me.visible = !1;
+                if (a >= e.length) i.items[a].me.visible = false;
                 else {
-                  i.items[a].me.visible = !0;
+                  i.items[a].me.visible = true;
                   var s = n.announcements[e[a]];
                   i.items[a].onEnable(s, !n.isAnnouncementReaded(s.id), 0 == a);
                 }
@@ -280,26 +255,26 @@ var __extends =
                 (i.panel.vScrollBar.value = 0),
                 i.panel.refresh(),
                 (i._last_time = 0),
-                (i.duringshow = !0),
+                (i.duringshow = true),
                 (i.panel.vScrollBar.value = 0),
-                (i.root.visible = !0),
+                (i.root.visible = true),
                 t.UIBase.anim_pop_out(
                   i.root,
                   Laya.Handler.create(i, function() {
-                    i.locking = !1;
+                    i.locking = false;
                   })
                 );
             });
         }),
         (n.prototype.close = function() {
           var e = this;
-          (this.duringshow = !1),
-            (this.locking = !0),
+          (this.duringshow = false),
+            (this.locking = true),
             this.panel.vScrollBar.stopScroll(),
             t.UIBase.anim_pop_hide(
               this.root,
               Laya.Handler.create(this, function() {
-                (e.locking = !1), (e.enable = !1);
+                (e.locking = false), (e.enable = false);
               })
             );
         }),
@@ -341,7 +316,7 @@ var __extends =
         (n.announcements = []),
         (n.announcement_sort = []),
         (n.read_list = []),
-        (n.first = !0),
+        (n.first = true),
         n
       );
     })(t.UIBase);

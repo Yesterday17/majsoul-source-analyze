@@ -1,32 +1,9 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let capsui;
 !(t => {
   const e = (t => {
     function e() {
       const e = t.call(this) || this;
-      return (e.origin_x = 1), (e.origin_width = 1), (e.extend_right = !0), e;
+      return (e.origin_x = 1), (e.origin_width = 1), (e.extend_right = true), e;
     }
     return __extends(e, t),
     (e.prototype.onCreate = function() {

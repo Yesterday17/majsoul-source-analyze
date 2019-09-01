@@ -180,13 +180,13 @@ let app;
       }
     }),
     (i.google_trace_force = function(t, e) {
-      if ((void 0 === e && (e = null), !(t < 1e3 || t >= 1100))) {
+      if ((undefined === e && (e = null), !(t < 1e3 || t >= 1100))) {
         const i = this._get_type_str(t);
         if ('unkown' != i) {
-          let n = !1;
+          let n = false;
 
           const a = t => {
-            n || ((n = !0), e && e());
+            n || ((n = true), e && e());
           };
 
           setTimeout(() => {

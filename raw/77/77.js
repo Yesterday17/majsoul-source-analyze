@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  view;
+var view;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -36,7 +11,7 @@ var __extends =
         var i = e.seat,
           n = t.DesktopMgr.Inst.seat2LocalPosition(i);
         if (
-          (e.doras && t.DesktopMgr.Inst.WhenDoras(e.doras, !1),
+          (e.doras && t.DesktopMgr.Inst.WhenDoras(e.doras, false),
           e.type == mjcore.E_Ming.gang_ming)
         )
           t.DesktopMgr.Inst.players[n].PlaySound('act_kan'),
@@ -44,7 +19,7 @@ var __extends =
               t.DesktopMgr.Inst.players[n].AddGang(
                 mjcore.MJPai.Create(e.tiles)
               ),
-                (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !0);
+                (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = true);
             });
         else {
           var a = new mjcore.MJMing();
@@ -53,7 +28,7 @@ var __extends =
             (a.pais = this.getAngangTile(e.tiles)),
             Laya.timer.once(500, this, function() {
               t.DesktopMgr.Inst.players[n].AddMing(a),
-                (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !0);
+                (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = true);
             }),
             t.DesktopMgr.Inst.players[n].PlaySound('act_kan');
         }
@@ -61,10 +36,10 @@ var __extends =
           Laya.timer.once(600, this, function() {
             t.ActionOperation.play(e.operation);
           }),
-          void 0 != e.zhenting &&
+          undefined != e.zhenting &&
             uiscript.UI_TingPai.Inst.setZhengting(e.zhenting),
           i == t.DesktopMgr.Inst.seat &&
-            uiscript.UI_TingPai.Inst.setData1(e, !1),
+            uiscript.UI_TingPai.Inst.setData1(e, false),
           uiscript.UI_DesktopInfo.Inst.changeHeadEmo(i, 'emoji_5', 2e3);
       }),
       (i.fastplay = function(e, i) {
@@ -77,35 +52,35 @@ var __extends =
         var n = e.seat,
           a = t.DesktopMgr.Inst.seat2LocalPosition(n);
         if (
-          (e.doras && t.DesktopMgr.Inst.WhenDoras(e.doras, !0),
+          (e.doras && t.DesktopMgr.Inst.WhenDoras(e.doras, true),
           e.type == mjcore.E_Ming.gang_ming)
         )
           t.DesktopMgr.Inst.players[a].AddGang(
             mjcore.MJPai.Create(e.tiles),
-            !1
+            false
           );
         else {
           var r = new mjcore.MJMing();
           (r.type = mjcore.E_Ming.gang_an),
             (r.from = [n, n, n, n]),
             (r.pais = this.getAngangTile(e.tiles)),
-            t.DesktopMgr.Inst.players[a].AddMing(r, !1);
+            t.DesktopMgr.Inst.players[a].AddMing(r, false);
         }
         e.operation &&
           -1 != i &&
           Laya.timer.once(500, this, function() {
             t.ActionOperation.play(e.operation, i);
           }),
-          void 0 != e.zhenting &&
+          undefined != e.zhenting &&
             uiscript.UI_TingPai.Inst.setZhengting(e.zhenting),
           n == t.DesktopMgr.Inst.seat &&
-            uiscript.UI_TingPai.Inst.setData1(e, !0),
-          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !0);
+            uiscript.UI_TingPai.Inst.setData1(e, true),
+          (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = true);
       }),
       (i.record = function(e, i) {
-        void 0 === i && (i = 0),
+        undefined === i && (i = 0),
           app.Log.log('ActionAnGangAddGang record data:' + JSON.stringify(e)),
-          e.doras && t.DesktopMgr.Inst.WhenDoras(e.doras, !0);
+          e.doras && t.DesktopMgr.Inst.WhenDoras(e.doras, true);
         var n = e.seat,
           a = t.DesktopMgr.Inst.seat2LocalPosition(n);
         if (e.type == mjcore.E_Ming.gang_ming)
@@ -114,7 +89,7 @@ var __extends =
               t.DesktopMgr.Inst.players[a].AddGang(
                 mjcore.MJPai.Create(e.tiles)
               ),
-                (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !0);
+                (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = true);
             });
         else {
           var r = new mjcore.MJMing();
@@ -123,7 +98,7 @@ var __extends =
             (r.pais = this.getAngangTile(e.tiles)),
             Laya.timer.once(500, this, function() {
               t.DesktopMgr.Inst.players[a].AddMing(r),
-                (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !0);
+                (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = true);
             }),
             t.DesktopMgr.Inst.players[a].PlaySound('act_kan');
         }
@@ -136,24 +111,24 @@ var __extends =
         return 1700;
       }),
       (i.fastrecord = function(e, i) {
-        void 0 === i && (i = -1),
+        undefined === i && (i = -1),
           app.Log.log(
             'ActionAnGangAddGang fastrecord data:' + JSON.stringify(e)
           ),
-          e.doras && t.DesktopMgr.Inst.WhenDoras(e.doras, !0);
+          e.doras && t.DesktopMgr.Inst.WhenDoras(e.doras, true);
         var n = e.seat,
           a = t.DesktopMgr.Inst.seat2LocalPosition(n);
         if (e.type == mjcore.E_Ming.gang_ming)
           t.DesktopMgr.Inst.players[a].AddGang(
             mjcore.MJPai.Create(e.tiles),
-            !1
+            false
           );
         else {
           var r = new mjcore.MJMing();
           (r.type = mjcore.E_Ming.gang_an),
             (r.from = [n, n, n, n]),
             (r.pais = this.getAngangTile(e.tiles)),
-            t.DesktopMgr.Inst.players[a].AddMing(r, !1);
+            t.DesktopMgr.Inst.players[a].AddMing(r, false);
         }
         if (
           t.DesktopMgr.Inst.mode == t.EMJMode.live_broadcast &&
@@ -162,7 +137,7 @@ var __extends =
         )
           for (var s = 0; s < e.operations.length; s++)
             t.ActionOperation.ob(e.operations[s], i, 450);
-        t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !0;
+        t.DesktopMgr.Inst.waiting_lingshang_deal_tile = true;
       }),
       (i.getAngangTile = function(e) {
         var i = [];
@@ -210,7 +185,7 @@ var __extends =
             (o.dora = 0 != s && s <= n), i.push(o);
           }
         }
-        return (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = !0), i;
+        return (t.DesktopMgr.Inst.waiting_lingshang_deal_tile = true), i;
       }),
       i
     );

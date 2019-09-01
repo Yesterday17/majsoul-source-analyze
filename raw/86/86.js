@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  view;
+var view;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -41,23 +16,23 @@ var __extends =
         Laya.timer.once(n, this, function() {
           t.BgmListMgr.stopBgm();
           var n = e.players;
-          (t.DesktopMgr.Inst.gameing = !1),
+          (t.DesktopMgr.Inst.gameing = false),
             uiscript.UI_OtherPlayerInfo.Inst.close(),
             uiscript.UI_TingPai.Inst.reset(),
-            uiscript.UI_TingPai.Inst.setZhengting(!1);
+            uiscript.UI_TingPai.Inst.setZhengting(false);
           for (var a = 0; a < n.length; a++) {
             for (var r = [], s = 0; s < n[a].hand.length; s++)
               r.push(mjcore.MJPai.Create(n[a].hand[s]));
             (r = r.sort(mjcore.MJPai.Distance)),
               t.DesktopMgr.Inst.players[
                 t.DesktopMgr.Inst.seat2LocalPosition(a)
-              ].Huangpai(n[a].tingpai, r, !1);
+              ].Huangpai(n[a].tingpai, r, false);
           }
           Laya.timer.once(1e3, i, function() {
             uiscript.UI_Huleshow.Inst.showLiuJu(n);
           }),
             Laya.timer.once(6e3, i, function() {
-              if (e.liujumanguan) uiscript.UIMgr.Inst.ShowWin(e.scores, !0);
+              if (e.liujumanguan) uiscript.UIMgr.Inst.ShowWin(e.scores, true);
               else {
                 var i = [];
                 if (e.scores && e.scores.length > 0) {
@@ -91,21 +66,21 @@ var __extends =
         app.Log.log('ActionNewRound fastplay data:' + JSON.stringify(e));
         t.BgmListMgr.stopBgm();
         var n = e.players;
-        (t.DesktopMgr.Inst.gameing = !1),
+        (t.DesktopMgr.Inst.gameing = false),
           uiscript.UI_OtherPlayerInfo.Inst.close();
-        var a = [!1, !1, !1, !1];
+        var a = [false, false, false, false];
         uiscript.UI_TingPai.Inst.reset(),
-          uiscript.UI_TingPai.Inst.setZhengting(!1);
+          uiscript.UI_TingPai.Inst.setZhengting(false);
         for (l = 0; l < t.DesktopMgr.Inst.player_count; l++) {
           for (var r = [], s = 0; s < n[l].hand.length; s++)
             r.push(mjcore.MJPai.Create(n[l].hand[s]));
           (r = r.sort(mjcore.MJPai.Distance)),
             t.DesktopMgr.Inst.players[
               t.DesktopMgr.Inst.seat2LocalPosition(l)
-            ].Huangpai(n[l].tingpai, r, !0),
+            ].Huangpai(n[l].tingpai, r, true),
             (a[t.DesktopMgr.Inst.seat2LocalPosition(l)] = n[l].tingpai);
         }
-        if (e.liujumanguan) uiscript.UIMgr.Inst.ShowWin(e.scores, !0);
+        if (e.liujumanguan) uiscript.UIMgr.Inst.ShowWin(e.scores, true);
         else {
           var o = [];
           if (e.scores && e.scores.length > 0) {

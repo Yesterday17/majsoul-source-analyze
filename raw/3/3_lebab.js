@@ -30,12 +30,12 @@ let uiscript;
                           t.UI_Recharge.Inst.show('tongbi');
                         },
                         null,
-                        !1
+                        false
                       )
                     ));
             },
             null,
-            !1
+            false
           ))),
         e.getChildByName('container_huiyu') &&
           ((this.label_diamond = e
@@ -62,12 +62,12 @@ let uiscript;
                           t.UI_Recharge.Inst.show('huiyu');
                         },
                         null,
-                        !1
+                        false
                       )
                     ));
             },
             null,
-            !1
+            false
           )),
           (e
             .getChildByName('container_huiyu')
@@ -80,7 +80,7 @@ let uiscript;
           'chs' == GameMgr.client_language &&
             (e
               .getChildByName('container_huiyu')
-              .getChildByName('btn_info').mouseEnabled = !1)),
+              .getChildByName('btn_info').mouseEnabled = false)),
         e.getChildByName('container_huishi'))
       ) {
         this.label_huishi = e
@@ -109,12 +109,12 @@ let uiscript;
                           t.UI_Recharge.Inst.show('huishi');
                         },
                         null,
-                        !1
+                        false
                       )
                     ));
             },
             null,
-            !1
+            false
           ));
       }
       e.getChildByName('container_xinyang') &&
@@ -155,7 +155,7 @@ let uiscript;
               }
             },
             null,
-            !1
+            false
           )
         );
     }
@@ -178,10 +178,10 @@ let uiscript;
           )),
         this.label_huishi &&
           ('chs' != GameMgr.client_language &&
-            (this.me.getChildByName('container_huishi').visible = !1),
+            (this.me.getChildByName('container_huishi').visible = false),
           'chs' == GameMgr.client_language &&
             this.me.getChildByName('container_xinyang') &&
-            (this.me.getChildByName('container_xinyang').visible = !1));
+            (this.me.getChildByName('container_xinyang').visible = false));
     }),
     (e.prototype.money2Desc = t => {
       if (t < 1e6) return t.toString();

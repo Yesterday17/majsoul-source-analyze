@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (t => {
@@ -44,17 +21,17 @@ let uiscript;
     }),
     (e.prototype.showRong = function(t) {
       const e = this;
-      (this.container_liuju.visible = !1),
-        (this.container_zimo.visible = !1),
-        (this.container_rong.visible = !0);
+      (this.container_liuju.visible = false),
+        (this.container_zimo.visible = false),
+        (this.container_rong.visible = true);
       for (var i = [], n = 0; n < 4; n++)
         i.push(this.container_rong.getChildByName(n.toString())),
-          (i[n].visible = !1);
+          (i[n].visible = false);
       this.black_mask.alpha = 0;
       for (
         const a = e => {
                   const n = i[t[e]];
-                  (n.visible = !0),
+                  (n.visible = true),
                     (n.alpha = 0),
                     (n.scaleX = 3),
                     (n.scaleY = 3),
@@ -65,7 +42,7 @@ let uiscript;
                       Laya.Ease.strongIn,
                       null,
                       300,
-                      !0
+                      true
                     ),
                     Laya.timer.once(300 + 30 * e, r, () => {
                       view.DesktopMgr.Inst.players[t[e]].PlaySound('act_ron');
@@ -86,23 +63,23 @@ let uiscript;
       )
         a(n);
       Laya.timer.once(1200, this, () => {
-        e.enable = !1;
+        e.enable = false;
       }),
-        (this.enable = !0);
+        (this.enable = true);
     }),
     (e.prototype.showZimo = function(t) {
       const e = this;
-      (this.container_liuju.visible = !1),
-        (this.container_rong.visible = !1),
-        (this.container_zimo.visible = !0);
+      (this.container_liuju.visible = false),
+        (this.container_rong.visible = false),
+        (this.container_zimo.visible = true);
       for (var i = [], n = 0; n < 4; n++)
         i.push(this.container_zimo.getChildByName(n.toString())),
-          (i[n].visible = !1);
+          (i[n].visible = false);
       this.black_mask.alpha = 0;
       for (
         const a = e => {
                   const n = i[t[e]];
-                  (n.visible = !0),
+                  (n.visible = true),
                     (n.alpha = 0),
                     (n.scaleX = 3),
                     (n.scaleY = 3),
@@ -113,7 +90,7 @@ let uiscript;
                       Laya.Ease.strongIn,
                       null,
                       300,
-                      !0
+                      true
                     ),
                     Laya.timer.once(300, r, () => {
                       view.DesktopMgr.Inst.players[t[e]].PlaySound('act_tumo');
@@ -134,22 +111,22 @@ let uiscript;
       )
         a(n);
       Laya.timer.once(1200, this, () => {
-        e.enable = !1;
+        e.enable = false;
       }),
-        (this.enable = !0);
+        (this.enable = true);
     }),
     (e.prototype.showLiuJu = function(t) {
       const e = this;
-      (this.container_liuju.visible = !0),
-        (this.container_zimo.visible = !1),
-        (this.container_rong.visible = !1);
+      (this.container_liuju.visible = true),
+        (this.container_zimo.visible = false),
+        (this.container_rong.visible = false);
       for (var i = [], n = [], a = 0; a < 4; a++)
         i.push(this.container_liuju.getChildByName(a.toString())),
-          (i[a].visible = !1),
+          (i[a].visible = false),
           n.push(this.container_liuju.getChildByName(`no${a}`)),
-          (n[a].visible = !1);
+          (n[a].visible = false);
       for (a = 0; a < 4; a++)
-        this.container_liuju.getChildByName(`t${a}`).visible = !1;
+        this.container_liuju.getChildByName(`t${a}`).visible = false;
       (this.black_mask.alpha = 0),
         Laya.Tween.to(this.black_mask, { alpha: 0.4 }, 150);
       const r = this.container_liuju.getChildByName('title');
@@ -159,7 +136,7 @@ let uiscript;
         a < 4;
         a++
       ) {
-        this.container_liuju.getChildByName(`t${a}`).visible = !1;
+        this.container_liuju.getChildByName(`t${a}`).visible = false;
       }
       for (
         let o = e => {
@@ -170,20 +147,20 @@ let uiscript;
                       r = l.container_liuju.getChildByName(`t${a}`);
                 if (t[n].tings && t[n].tings.length > 0) {
                   const o = i[a];
-                  r.visible = !0;
+                  r.visible = true;
                   for (var h = [], c = 0; c < t[n].tings.length; c++)
                     h.push(mjcore.MJPai.Create(t[n].tings[c].tile)),
-                      (h[c].dora = !1);
+                      (h[c].dora = false);
                   h = h.sort(mjcore.MJPai.Distance);
                   for (c = 0; c < r.numChildren; c++) {
                     const u = r.getChildAt(c);
                     c < h.length
-                      ? ((u.visible = !0),
+                      ? ((u.visible = true),
                         (u.skin = game.Tools.localUISrc(
                           `${s + h[c].toString()}.png`
                         )),
                         (u.x = 17 + 66 * c))
-                      : (u.visible = !1);
+                      : (u.visible = false);
                   }
                   const _ = 34 + 60 * h.length + 6 * (h.length - 1);
                   if (
@@ -201,9 +178,9 @@ let uiscript;
                       Laya.Ease.strongIn,
                       null,
                       300,
-                      !0
+                      true
                     ),
-                    (o.visible = !0),
+                    (o.visible = true),
                     (o.alpha = 0),
                     (o.skin = game.Tools.localUISrc(
                       'myres/mjdesktop/show_tingpai.png'
@@ -215,7 +192,7 @@ let uiscript;
                       Laya.Ease.strongIn,
                       null,
                       300,
-                      !0
+                      true
                     ),
                     n == view.DesktopMgr.Inst.seat)
                   ) {
@@ -228,7 +205,7 @@ let uiscript;
                         view.AudioMgr.PlaySound(d.path, d.volume, null);
                       });
                   }
-                } else if (((r.visible = !1), n == view.DesktopMgr.Inst.seat)) {
+                } else if (((r.visible = false), n == view.DesktopMgr.Inst.seat)) {
                   const f = game.Tools.get_chara_audio(
                     view.DesktopMgr.Inst.player_datas[n].character,
                     'gameend_noting'
@@ -246,9 +223,9 @@ let uiscript;
       )
         o(h);
       Laya.timer.once(4500, this, () => {
-        e.enable = !1;
+        e.enable = false;
       }),
-        (this.enable = !0);
+        (this.enable = true);
     }),
     (e.Inst = null),
     e

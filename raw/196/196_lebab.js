@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -31,7 +8,7 @@ let uiscript;
         (t.title = null),
         (t.tabs = []),
         (t.nolimitlist = null),
-        (t.locking = !1),
+        (t.locking = false),
         (t.usedskin = []),
         (t.container_self = null),
         (t.self_head = null),
@@ -52,14 +29,14 @@ let uiscript;
           'capsui.NoLimitList'
         ]),
         this.nolimitlist.init_nolimitlist(
-          Laya.Handler.create(this, this._loadInfo, null, !1),
+          Laya.Handler.create(this, this._loadInfo, null, false),
           Laya.Handler.create(
             this,
             ({index, container, cache_data}) => {
               e.setItemValue(index, container, cache_data);
             },
             null,
-            !1
+            false
           )
         ),
         (this.root.getChildByName(
@@ -70,7 +47,7 @@ let uiscript;
             e.locking || e.close(null);
           },
           null,
-          !1
+          false
         )),
         (this.container_self = this.root.getChildByName('self')),
         (this.self_head = new t.UI_Head(
@@ -85,7 +62,7 @@ let uiscript;
         (this.self_name = this.container_self
           .getChildByName('self')
           .getChildByName('name')),
-        (this.container_self.visible = !1),
+        (this.container_self.visible = false),
         this.datas.push({
           items: [],
           self_rank: 0,
@@ -120,13 +97,13 @@ let uiscript;
         const r = i.getChildByName('rank_img');
         const s = i.getChildByName('rankno');
         e < 3
-          ? ((s.visible = !1),
-            (r.visible = !0),
+          ? ((s.visible = false),
+            (r.visible = true),
             (r.skin = game.Tools.localUISrc(
               `myres/lobby/rank_${(e + 1).toString()}.png`
             )))
-          : ((s.visible = !0),
-            (r.visible = !1),
+          : ((s.visible = true),
+            (r.visible = false),
             (s.text = (e + 1).toString()));
         const o = this.datas[this.tab_index].items[e].detail;
         n.hasOwnProperty('head') ||
@@ -154,31 +131,31 @@ let uiscript;
               t.UI_OtherPlayerInfo.Inst.show(o.account_id, a.tab_index + 1);
             },
             null,
-            !1
+            false
           ));
       }
     }),
     (i.prototype.show = function() {
       const e = this;
       this.nolimitlist.reset(),
-        (this.enable = !0),
-        (this.locking = !0),
+        (this.enable = true),
+        (this.locking = true),
         (this.usedskin = []),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            e.locking = !1;
+            e.locking = false;
           })
         ),
         this.change_tab(0);
     }),
     (i.prototype.close = function(e) {
       const i = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (i.locking = !1), (i.enable = !1), e && e.run();
+            (i.locking = false), (i.enable = false), e && e.run();
           })
         );
     }),
@@ -194,7 +171,7 @@ let uiscript;
           0 == this.tab_index ? 2796 : 2795
         )),
         this.nolimitlist.reset(),
-        (this.container_self.visible = !1);
+        (this.container_self.visible = false);
       for (let n = 0; n < this.tabs.length; n++)
         (this.tabs[n].btn.mouseEnabled = e != n),
           (this.tabs[n].btn.skin = game.Tools.localUISrc(
@@ -207,7 +184,7 @@ let uiscript;
         ? ((this.datas[e].fetch_time = Laya.timer.currTimer),
           (this.datas[e].items = []),
           this.datas[e].version++,
-          (this.datas[e].during_load = !1),
+          (this.datas[e].during_load = false),
           (this.datas[e].load_index = 0),
           app.NetAgent.sendReq2Lobby(
             'Lobby',
@@ -223,18 +200,18 @@ let uiscript;
                   i.tab_index == e &&
                     ((i.nolimitlist.total_count = i.datas[e].items.length),
                     i.setMeRank(),
-                    (i.container_self.visible = !0));
+                    (i.container_self.visible = true));
               }
             }
           ))
         : ((this.nolimitlist.total_count = this.datas[e].items.length),
           this.setMeRank(),
-          (this.container_self.visible = !0));
+          (this.container_self.visible = true));
     }),
     (i.prototype._loadInfo = function(e) {
       const i = this;
       if (e >= this.datas[this.tab_index].items.length)
-        this.nolimitlist.loadOver(!1, 0);
+        this.nolimitlist.loadOver(false, 0);
       else {
         const n = this.datas[this.tab_index];
         if (!n.during_load) {
@@ -242,12 +219,12 @@ let uiscript;
           const r = n.load_index;
           let s = e + 20;
           if ((s > n.items.length && (s = n.items.length), s <= r))
-            this.nolimitlist.loadOver(!0, s - e);
+            this.nolimitlist.loadOver(true, s - e);
           else {
             for (let o = r; o < s; o++)
               o >= n.load_index && a.push(n.items[o].account_id);
             const l = n.version;
-            (n.during_load = !0),
+            (n.during_load = true),
               app.NetAgent.sendReq2Lobby(
                 'Lobby',
                 'fetchMultiAccountBrief',
@@ -259,10 +236,10 @@ let uiscript;
                       e,
                       a
                     ),
-                      i.nolimitlist.loadOver(!1, 0);
+                      i.nolimitlist.loadOver(false, 0);
                   else {
                     if (n.version != l) return;
-                    n.during_load = !1;
+                    n.during_load = false;
                     for (
                       var s = -1, o = a.players.length, h = 0;
                       h < o;
@@ -282,8 +259,8 @@ let uiscript;
                             (s + 1).toString()
                           ])
                         ),
-                        i.nolimitlist.loadOver(!1, 0))
-                      : ((n.load_index += o), i.nolimitlist.loadOver(!0, o));
+                        i.nolimitlist.loadOver(false, 0))
+                      : ((n.load_index += o), i.nolimitlist.loadOver(true, o));
                   }
                 }
               );
@@ -292,16 +269,16 @@ let uiscript;
       }
     }),
     (i.prototype._addusedskin = function(t) {
-      for (var e = !1, i = 0; i < this.usedskin.length; i++)
+      for (var e = false, i = 0; i < this.usedskin.length; i++)
         if (t == this.usedskin[i]) {
-          e = !0;
+          e = true;
           break;
         }
       e || this.usedskin.push(t);
     }),
     (i.prototype.setMeRank = function() {
       if (this.enable) {
-        this.container_self.visible = !0;
+        this.container_self.visible = true;
 
         const t = this.container_self
             .getChildByName('self')
@@ -313,20 +290,20 @@ let uiscript;
 
         const i = this.datas[this.tab_index].self_rank;
         i <= 0
-          ? ((e.visible = !1), (t.visible = !1))
+          ? ((e.visible = false), (t.visible = false))
           : i <= 3
-          ? ((e.visible = !1),
-            (t.visible = !0),
+          ? ((e.visible = false),
+            (t.visible = true),
             (t.skin = game.Tools.localUISrc(
               `myres/lobby/rank_${i.toString()}.png`
             )))
           : i <= 999
-          ? ((e.visible = !0),
-            (t.visible = !1),
+          ? ((e.visible = true),
+            (t.visible = false),
             (e.text = i.toString()),
             (e.fontSize = 60))
-          : ((e.visible = !0),
-            (t.visible = !1),
+          : ((e.visible = true),
+            (t.visible = false),
             (e.text = '999+'),
             (e.fontSize = 45)),
           (this.self_head.id = GameMgr.Inst.account_data.avatar_id),

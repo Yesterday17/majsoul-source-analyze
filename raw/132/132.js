@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -31,7 +6,7 @@ var __extends =
       return (
         (t.ress = []),
         (t.effect_path = 'scene/scene_shengjiban.ls'),
-        (t.locking = !1),
+        (t.locking = false),
         (i.Inst = t),
         (t.ress = []),
         t.ress.push(game.Tools.localUISrc('myres/star_up/levelup.png')),
@@ -53,7 +28,7 @@ var __extends =
               e.locking || e.close();
             },
             null,
-            !1
+            false
           )),
           (this.root = this.me.getChildByName('root')),
           (this.container_avatar = this.root.getChildByName(
@@ -65,7 +40,7 @@ var __extends =
           (this.avatar1 = new t.UI_Character_Skin(
             this.container_avatar.getChildByName('avatar1')
           )),
-          (this.avatar1.me.visible = !1),
+          (this.avatar1.me.visible = false),
           (this.bg = this.root.getChildByName('bg')),
           (this.img_word = this.root
             .getChildByName('container_hearts')
@@ -87,7 +62,7 @@ var __extends =
               e.locking || e.close();
             },
             null,
-            !1
+            false
           )),
           (this.block_chat = new t.UI_Character_Chat(
             this.me.getChildByName('chat')
@@ -96,24 +71,24 @@ var __extends =
       }),
       (i.prototype.show = function(t, e) {
         var i = this;
-        (this.locking = !0),
+        (this.locking = true),
           Laya.timer.once(2e3, this, function() {
-            i.locking = !1;
+            i.locking = false;
           }),
           this.reset(),
-          (this.enable = !0),
+          (this.enable = true),
           (this.chara_info = t),
           (this.back_func = e);
         var n = cfg.item_definition.skin.get(this.chara_info.skin);
-        (this.avatar1.me.visible = !1),
+        (this.avatar1.me.visible = false),
           n && this.avatar0.setSkin(this.chara_info.skin, 'full');
         for (var a = 0; a < this.hearts.length; a++)
           if (a >= 5)
-            (this.hearts[a].visible = !1), (this.bang_imgs[a].visible = !1);
+            (this.hearts[a].visible = false), (this.bang_imgs[a].visible = false);
           else {
-            (this.hearts[a].visible = !0),
+            (this.hearts[a].visible = true),
               (this.hearts[a].x = 314 + 107 * a - 214),
-              (this.bang_imgs[a].visible = !0);
+              (this.bang_imgs[a].visible = true);
             var r = this.hearts[a].getChildByName('v').mask;
             a < this.chara_info.level ? (r.scaleY = 1) : (r.scaleY = 0),
               t.is_upgraded
@@ -129,13 +104,13 @@ var __extends =
                   ));
           }
         if (
-          ((this.bang.visible = !1),
-          (this.img_word.visible = !0),
-          (this.container_hearts.visible = !0),
-          this.me.in.play(0, !1),
-          (this.block_chat.me.visible = !1),
-          (this.btn_bigclose.visible = !1),
-          view.AudioMgr.refresh_music_volume(!0),
+          ((this.bang.visible = false),
+          (this.img_word.visible = true),
+          (this.container_hearts.visible = true),
+          this.me.in.play(0, false),
+          (this.block_chat.me.visible = false),
+          (this.btn_bigclose.visible = false),
+          view.AudioMgr.refresh_music_volume(true),
           Laya.loader.create(this.effect_path),
           this.chara_info.is_upgraded)
         ) {
@@ -146,10 +121,10 @@ var __extends =
           ]);
         }
         Laya.timer.once(1400, this, function() {
-          (i.bang.visible = !0),
-            i.me.bang.play(0, !1),
+          (i.bang.visible = true),
+            i.me.bang.play(0, false),
             Laya.timer.once(1550, i, function() {
-              (i.bang.visible = !1),
+              (i.bang.visible = false),
                 i.chara_info.is_upgraded
                   ? i.change_full_fetter_skin()
                   : i.when_over();
@@ -157,7 +132,7 @@ var __extends =
             i.chara_info.is_upgraded ||
               Laya.timer.once(500, i, function() {
                 var t = Laya.loader.getRes(i.effect_path);
-                t && (i.container_effect.addChild(t), (t.visible = !0)),
+                t && (i.container_effect.addChild(t), (t.visible = true)),
                   view.AudioMgr.PlayAudio(113);
               });
         });
@@ -182,7 +157,7 @@ var __extends =
           if (e) {
             cfg.item_definition.skin.get(e.full_fetter_skin) &&
               (this.avatar1.setSkin(this.chara_info.skin, 'full'),
-              (this.avatar1.me.visible = !0),
+              (this.avatar1.me.visible = true),
               (this.avatar1.me.filters = [
                 new Laya.ColorFilter([
                   0,
@@ -217,14 +192,14 @@ var __extends =
                   t.enable &&
                     (Laya.timer.once(1e3, t, function() {
                       t.avatar0.setSkin(e.full_fetter_skin, 'full'),
-                        (t.avatar1.me.visible = !1),
+                        (t.avatar1.me.visible = false),
                         Laya.timer.once(500, t, function() {
                           t.when_over();
                         });
                     }),
                     Laya.timer.once(1e3, t, function() {
                       var e = Laya.loader.getRes(t.effect_path);
-                      e && (t.container_effect.addChild(e), (e.visible = !0)),
+                      e && (t.container_effect.addChild(e), (e.visible = true)),
                         view.AudioMgr.PlayAudio(113);
                     }));
                 })
@@ -274,16 +249,16 @@ var __extends =
                 ? (l = 0)
                 : (l *= view.AudioMgr.getCVvolume(i.id)),
               (this.sound_channel = view.AudioMgr.PlaySound(s, l)),
-              (this.img_word.visible = !1),
-              (this.container_hearts.visible = !1);
+              (this.img_word.visible = false),
+              (this.container_hearts.visible = false);
           }
         }
         Laya.timer.once(a + 2e3, this, function() {
-          t.btn_bigclose.visible = !0;
+          t.btn_bigclose.visible = true;
         });
       }),
       (i.prototype.onDisable = function() {
-        view.AudioMgr.refresh_music_volume(!1);
+        view.AudioMgr.refresh_music_volume(false);
         for (e = 0; e < this.ress.length; e++)
           Laya.loader.clearTextureRes(this.ress[e]);
         if (
@@ -312,11 +287,11 @@ var __extends =
             Laya.SoundManager.removeChannel(this.sound_channel),
             (this.sound_channel = null));
         var i = Laya.loader.getRes(this.effect_path);
-        i && i.destroy(!0);
+        i && i.destroy(true);
       }),
       (i.prototype.close = function() {
-        (this.locking = !0),
-          (this.enable = !1),
+        (this.locking = true),
+          (this.enable = false),
           this.back_func && this.back_func.run();
       }),
       (i.Inst = null),

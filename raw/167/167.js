@@ -1,48 +1,23 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function e(e, n) {
         var a = this;
         (this.me = e),
-          (e.visible = !1),
+          (e.visible = false),
           (this.me.x = 543),
           (this.me.y = -260),
           (this.data = n),
           Laya.timer.frameOnce(5, this, function() {
-            (a.locking = !0),
-              (a.me.visible = !0),
+            (a.locking = true),
+              (a.me.visible = true),
               Laya.Tween.to(
                 a.me,
                 { y: -44 },
                 150,
                 Laya.Ease.strongInOut,
                 Laya.Handler.create(a, function() {
-                  a.locking = !1;
+                  a.locking = false;
                 })
               ),
               (a.me.getChildByName('name').text = n.nickname);
@@ -58,7 +33,7 @@ var __extends =
                   a.locking || (i.addBanned(n.account_id), a.close());
                 },
                 null,
-                !1
+                false
               )),
               (a.me.getChildByName('cancel').clickHandler = Laya.Handler.create(
                 a,
@@ -66,7 +41,7 @@ var __extends =
                   a.locking || (i.onCancel(n.account_id), a.close());
                 },
                 null,
-                !1
+                false
               )),
               (a.me.getChildByName('join').clickHandler = Laya.Handler.create(
                 a,
@@ -84,7 +59,7 @@ var __extends =
                           t.UIMgr.Inst.closeUIWithTag_Lobby(),
                           t.UIMgr.Inst.closeUIWithTag_Both();
                       else {
-                        var e = !1,
+                        var e = false,
                           r = Laya.Handler.create(
                             a,
                             function(i) {
@@ -100,7 +75,7 @@ var __extends =
                                             i,
                                             n
                                           ),
-                                          e && (t.UI_Lobby.Inst.enable = !0))
+                                          e && (t.UI_Lobby.Inst.enable = true))
                                         : (t.UIMgr.Inst.closeUIWithTag_Lobby(),
                                           t.UIMgr.Inst.closeUIWithTag_Both(),
                                           t.UI_WaitingRoom.Inst.updateData(
@@ -109,22 +84,22 @@ var __extends =
                                           t.UIMgr.Inst.ShowWaitingRoom());
                                     }
                                   )
-                                : e && (t.UI_Lobby.Inst.enable = !0);
+                                : e && (t.UI_Lobby.Inst.enable = true);
                             },
                             null,
-                            !1
+                            false
                           );
                         t.UI_WaitingRoom.Inst.enable
-                          ? ((e = !0), t.UI_WaitingRoom.Inst.tryToClose(r))
+                          ? ((e = true), t.UI_WaitingRoom.Inst.tryToClose(r))
                           : t.UI_PiPei.Inst.enable
                           ? t.UI_PiPei.Inst.tryToClose(r)
-                          : r.runWith(!0);
+                          : r.runWith(true);
                       }
                       a.close();
                     }
                 },
                 null,
-                !1
+                false
               )),
               Laya.timer.once(
                 n.time + 18e4 - Laya.timer.currTimer,
@@ -138,20 +113,20 @@ var __extends =
       return (
         (e.prototype.close = function() {
           var t = this;
-          (this.locking = !0),
+          (this.locking = true),
             Laya.Tween.to(
               this.me,
               { y: -260 },
               150,
               Laya.Ease.strongOut,
               Laya.Handler.create(this, function() {
-                (t.locking = !1), i.Inst.onBlockClose(t);
+                (t.locking = false), i.Inst.onBlockClose(t);
               })
             );
         }),
         (e.prototype.destory = function() {
-          (this.me.visible = !1),
-            this.me.destroy(!0),
+          (this.me.visible = false),
+            this.me.destroy(true),
             Laya.timer.clearAll(this),
             Laya.Tween.clearAll(this);
         }),
@@ -214,7 +189,7 @@ var __extends =
         }),
         (n.prototype.onCreate = function() {
           (this.templete = this.me.getChildByName('templete')),
-            (this.templete.visible = !1);
+            (this.templete.visible = false);
         }),
         (n.prototype.onEnable = function() {
           this._blocks = [];

@@ -1,34 +1,9 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
       var t = e.call(this, new ui.common.closeappUI()) || this;
-      return (t.locking = !1), (i.Inst = t), t;
+      return (t.locking = false), (i.Inst = t), t;
     }
     return (
       __extends(i, e),
@@ -47,7 +22,7 @@ var __extends =
                   Laya.Browser.window.conch.exit());
             },
             null,
-            !1
+            false
           )),
           (this.root.getChildByName(
             'btn_cancel'
@@ -57,7 +32,7 @@ var __extends =
               e.locking || e.close();
             },
             null,
-            !1
+            false
           )),
           (this.root.getChildByName('btn_cancel').filters = [
             new Laya.ColorFilter([
@@ -85,7 +60,7 @@ var __extends =
           ]),
           (this.desc = this.root.getChildByName('desc')),
           (this.desc.text = game.Tools.strOfLocalization(22)),
-          (this.locking = !1),
+          (this.locking = false),
           GameMgr.inConch &&
             Laya.Browser.window.conch.setOnBackPressedFunction &&
             Laya.Browser.window.conch.setOnBackPressedFunction(function() {
@@ -94,22 +69,22 @@ var __extends =
       }),
       (i.prototype.show = function() {
         var e = this;
-        (this.locking = !0),
-          (this.enable = !0),
+        (this.locking = true),
+          (this.enable = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              e.locking = !1;
+              e.locking = false;
             })
           );
       }),
       (i.prototype.close = function() {
         var e = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1), (e.enable = !1);
+              (e.locking = false), (e.enable = false);
             })
           );
       }),

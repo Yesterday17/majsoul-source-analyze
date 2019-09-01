@@ -4,7 +4,7 @@ let uiscript;
     function t(t) {
       (this.change_id = 0),
         (this.skin_path = ''),
-        (this.loaded = !1),
+        (this.loaded = false),
         (this.me = t),
         (this.me.skin = '');
     }
@@ -21,16 +21,16 @@ let uiscript;
             ? ((this.me.skin = game.LoadMgr.getResImageSkin(
                 'extendRes/emo/default.png'
               )),
-              (this.loaded = !1),
+              (this.loaded = false),
               game.LoadMgr.loadResImage(
                 [this.skin_path],
                 Laya.Handler.create(this, () => {
                   r == i.change_id &&
-                    ((i.loaded = !0),
+                    ((i.loaded = true),
                     (i.me.skin = game.LoadMgr.getResImageSkin(i.skin_path)));
                 })
               ))
-            : ((this.loaded = !0), (this.me.skin = s));
+            : ((this.loaded = true), (this.me.skin = s));
         }
       } else this.clear();
     }),
@@ -41,7 +41,7 @@ let uiscript;
           (Laya.loader.clearTextureRes(
             game.LoadMgr.getResImageSkin(this.skin_path)
           ),
-          (this.loaded = !1),
+          (this.loaded = false),
           (this.skin_path = ''));
     }),
     t

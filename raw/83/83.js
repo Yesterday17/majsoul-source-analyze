@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  view;
+var view;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -51,7 +26,7 @@ var __extends =
           a = e.score;
         t.DesktopMgr.Inst.players[
           t.DesktopMgr.Inst.seat2LocalPosition(n)
-        ].ShowLiqi(!1),
+        ].ShowLiqi(false),
           t.DesktopMgr.Inst.players[
             t.DesktopMgr.Inst.seat2LocalPosition(n)
           ].SetScore(a, t.DesktopMgr.Inst.mainrole.score),
@@ -70,7 +45,7 @@ var __extends =
           n = e.score;
         t.DesktopMgr.Inst.players[
           t.DesktopMgr.Inst.seat2LocalPosition(i)
-        ].ShowLiqi(!1),
+        ].ShowLiqi(false),
           t.DesktopMgr.Inst.players[
             t.DesktopMgr.Inst.seat2LocalPosition(i)
           ].SetScore(n, t.DesktopMgr.Inst.mainrole.score),

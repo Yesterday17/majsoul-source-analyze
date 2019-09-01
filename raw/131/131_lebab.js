@@ -1,32 +1,9 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
     function i() {
       const t = e.call(this, new ui.lobby.chang_nicknameUI()) || this;
-      return (t.locking = !1), (i.Inst = t), t;
+      return (t.locking = false), (i.Inst = t), t;
     }
     return __extends(i, e),
     (i.prototype.onCreate = function() {
@@ -44,10 +21,10 @@ let uiscript;
           this,
           this.onBtnConfrim,
           null,
-          !1
+          false
         )),
         this.input.on('focus', this, () => {
-          (t.lb.visible = !1), (t.input_no.visible = !1);
+          (t.lb.visible = false), (t.input_no.visible = false);
         }),
         this.input.on('blur', this, () => {
           t.lb.visible = !t.input.text || '' == t.input.text;
@@ -65,7 +42,7 @@ let uiscript;
             t.close();
           },
           null,
-          !1
+          false
         )),
         (this.container_input.getChildByName('en_no_space').visible =
           'en' == GameMgr.client_language);
@@ -78,14 +55,14 @@ let uiscript;
         30 - Math.floor((i - GameMgr.Inst.last_mod_name_time) / 3600 / 24);
 
       if (n > 0)
-        (this.container_no.visible = !0),
+        (this.container_no.visible = true),
           (this.label_count.text = n.toString()),
-          (this.container_input.visible = !1);
+          (this.container_input.visible = false);
       else {
-        (this.container_input.visible = !0),
-          (this.container_no.visible = !1),
-          (this.input_no.visible = !1),
-          (this.lb.visible = !0),
+        (this.container_input.visible = true),
+          (this.container_no.visible = false),
+          (this.input_no.visible = false),
+          (this.lb.visible = true),
           (this.input.text = ''),
           (this.notice.text = game.Tools.strOfLocalization(2675));
         const a = this.container_input.getChildByName('price');
@@ -95,17 +72,17 @@ let uiscript;
         (s.text = 'x1'),
           t.UI_Bag.get_item_count(302013) > 0
             ? ((s.color = '#00ff00'),
-              game.Tools.setGrayDisable(this.btn_confirm, !1))
+              game.Tools.setGrayDisable(this.btn_confirm, false))
             : ((s.color = '#ff0000'),
-              game.Tools.setGrayDisable(this.btn_confirm, !0)),
+              game.Tools.setGrayDisable(this.btn_confirm, true)),
           game.Tools.child_align_center(a, [10, 10, 10]);
       }
-      (this.enable = !0),
-        (this.locking = !0),
+      (this.enable = true),
+        (this.locking = true),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            e.locking = !1;
+            e.locking = false;
           })
         );
     }),
@@ -120,15 +97,15 @@ let uiscript;
             (i >= 11904 && i <= 40959)
           )
         ) {
-          for (var n = !1, a = 0; a < '~@!#%&()_+={}:;<>'.length; a++)
+          for (var n = false, a = 0; a < '~@!#%&()_+={}:;<>'.length; a++)
             if ('~@!#%&()_+={}:;<>'[a] == t[e]) {
-              n = !0;
+              n = true;
               break;
             }
-          if (!n) return !0;
+          if (!n) return true;
         }
       }
-      return !1;
+      return false;
     }),
     (i.prototype.onBtnConfrim = function() {
       const e = this;
@@ -150,8 +127,8 @@ let uiscript;
         if (a == i.length) {
           const s = this.input.text;
           this.have_invalid_char(s) || t.UI_Entrance.Accountforbidden(s)
-            ? (this.input_no.visible = !0)
-            : (game.Tools.setGrayDisable(this.btn_confirm, !0),
+            ? (this.input_no.visible = true)
+            : (game.Tools.setGrayDisable(this.btn_confirm, true),
               app.NetAgent.sendReq2Lobby(
                 'Lobby',
                 'modifyNickname',
@@ -159,7 +136,7 @@ let uiscript;
                 (i, n) => {
                   i || n.error
                     ? (t.UIMgr.Inst.showNetReqError('modifyNickname', i, n),
-                      game.Tools.setGrayDisable(e.btn_confirm, !1))
+                      game.Tools.setGrayDisable(e.btn_confirm, false))
                     : ((GameMgr.Inst.account_data.nickname = s),
                       (GameMgr.Inst.last_mod_name_time = Date.now() / 1e3),
                       t.UI_PlayerInfo.Inst.refreshBaseInfo(),
@@ -172,11 +149,11 @@ let uiscript;
     }),
     (i.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.enable = !1);
+            (e.locking = false), (e.enable = false);
           })
         );
     }),

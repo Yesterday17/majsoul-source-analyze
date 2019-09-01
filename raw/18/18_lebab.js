@@ -52,8 +52,8 @@ let uiscript;
         (this._both_root = null),
         (this._common_root = null),
         (this._error_root = null),
-        (this._mj_inited = !1),
-        (this._lobby_inited = !1),
+        (this._mj_inited = false),
+        (this._lobby_inited = false),
         (this._uis = new Array()),
         (this._lobby_uis = []),
         (this._mj_uis = []),
@@ -93,7 +93,7 @@ let uiscript;
         ? (i && i.runWith(1), e && e.run())
         : game.Scene_Lobby.Inst.addLoadListenter(
             Laya.Handler.create(this, () => {
-              (n._lobby_inited = !0),
+              (n._lobby_inited = true),
                 n.AddLobbyUI((n._ui_lobby = new t.UI_Lobby())),
                 n.AddBothUI(new t.UI_XinShouYinDao()),
                 n.AddLobbyUI((n._ui_waitingroom = new t.UI_WaitingRoom())),
@@ -179,7 +179,7 @@ let uiscript;
         : game.LoadMgr.loadRes(
             game.E_LoadType.ui_mj,
             Laya.Handler.create(this, () => {
-              (n._mj_inited = !0),
+              (n._mj_inited = true),
                 n.AddMJUI(new t.UI_Live_Broadcast()),
                 n.AddMJUI(new t.UI_ReplayWheel()),
                 n.AddMJUI((n._ui_desktop = new t.UI_DesktopInfo())),
@@ -199,7 +199,7 @@ let uiscript;
                 n.AddMJUI(new t.UI_MJTask_Progress()),
                 n.AddMJUI(new t.UI_MJReward_Activity()),
                 n.AddMJUI(new t.UI_GameStop()),
-                (n._mj_root.visible = !1),
+                (n._mj_root.visible = false),
                 Laya.timer.frameOnce(6, n, () => {
                   e && e.run();
                 });
@@ -208,10 +208,10 @@ let uiscript;
           );
     }),
     (e.prototype.disableMouse = function() {
-      (this._mj_root.mouseEnabled = !1), (this._lobby_root.mouseEnabled = !1);
+      (this._mj_root.mouseEnabled = false), (this._lobby_root.mouseEnabled = false);
     }),
     (e.prototype.enableMouse = function() {
-      (this._mj_root.mouseEnabled = !0), (this._lobby_root.mouseEnabled = !0);
+      (this._mj_root.mouseEnabled = true), (this._lobby_root.mouseEnabled = true);
     }),
     (e.prototype.closeUIWithTag_Lobby = function() {
       for (let e = 0; e < this._lobby_uis.length; e++)
@@ -219,43 +219,43 @@ let uiscript;
           this._lobby_uis[e] !== t.UI_PiPeiChengGong.Inst &&
           this._lobby_uis[e] &&
           this._lobby_uis[e].enable &&
-          (this._lobby_uis[e].enable = !1);
+          (this._lobby_uis[e].enable = false);
     }),
     (e.prototype.closeUIWithTag_Both = function() {
       for (let e = 0; e < this._both_uis.length; e++)
         this._both_uis[e] &&
           this._both_uis[e].enable &&
-          (this._both_uis[e].enable = !1);
+          (this._both_uis[e].enable = false);
       t.UI_ShiMingRenZheng.Inst &&
         t.UI_ShiMingRenZheng.Inst.enable &&
-        (t.UI_ShiMingRenZheng.Inst.enable = !1);
+        (t.UI_ShiMingRenZheng.Inst.enable = false);
     }),
     (e.prototype.showLobby = function() {
-      (this._lobby_root.visible = !0),
+      (this._lobby_root.visible = true),
         t.UI_Ob.Inst.enable ||
           t.UI_PaiPu.Inst.enable ||
-          (t.UI_Lobby.Inst.enable = !0);
+          (t.UI_Lobby.Inst.enable = true);
     }),
     (e.prototype.intoMJDesktop = function() {
-      this._lobby_root.visible = !1;
+      this._lobby_root.visible = false;
     }),
     (e.prototype.onSceneMJ_Enable = function() {
-      (this._mj_root.visible = !0),
+      (this._mj_root.visible = true),
         this.CloseLiuJu(),
         this.CloseWin(),
         this.CloseChipenghu(),
         this.CloseLiqiZimo();
     }),
     (e.prototype.onSceneMJ_Disable = function() {
-      (this._mj_root.visible = !1),
-        (t.UI_Replay.Inst.enable = !1),
-        (t.UI_Live_Broadcast.Inst.enable = !1);
+      (this._mj_root.visible = false),
+        (t.UI_Replay.Inst.enable = false),
+        (t.UI_Live_Broadcast.Inst.enable = false);
     }),
     (e.prototype.onSceneLobby_Enable = function() {
-      this._lobby_root.visible = !0;
+      this._lobby_root.visible = true;
     }),
     (e.prototype.onSceneLobby_Disable = function() {
-      this._lobby_root.visible = !1;
+      this._lobby_root.visible = false;
     }),
     (e.prototype.showRemind = function() {
       null == t.UI_Remind.Inst
@@ -263,9 +263,9 @@ let uiscript;
           Laya.timer.frameOnce(5, this, () => {
             t.UI_Remind.Inst &&
               !t.UI_Remind.Inst.me.destroyed &&
-              (t.UI_Remind.Inst.enable = !0);
+              (t.UI_Remind.Inst.enable = true);
           }))
-        : (t.UI_Remind.Inst.enable = !0);
+        : (t.UI_Remind.Inst.enable = true);
     }),
     (e.prototype.showEntrance = function() {
       const e = this;
@@ -288,7 +288,7 @@ let uiscript;
               null == t.UI_Common.Inst &&
                 (e.AddCommonUI(new t.UI_Common()),
                 Laya.timer.frameOnce(5, e, () => {
-                  GameMgr.inRelease || (t.UI_Common.Inst.enable = !0);
+                  GameMgr.inRelease || (t.UI_Common.Inst.enable = true);
                 })),
               t.UI_Remind.Inst && t.UI_Remind.Inst.setprocess(10),
               e.AddLobbyUI((e._ui_entrance = new t.UI_Entrance())),
@@ -302,25 +302,25 @@ let uiscript;
                   null != t.UI_Remind.Inst && t.UI_Remind.Inst.destroy();
               });
           })
-        : (this._ui_entrance.enable = !0);
+        : (this._ui_entrance.enable = true);
     }),
     (e.prototype.ShowChipenghu = function(t) {
       this._ui_chipenghu && this._ui_chipenghu.show(t);
     }),
     (e.prototype.CloseChipenghu = function() {
-      this._ui_chipenghu && (this._ui_chipenghu.enable = !1);
+      this._ui_chipenghu && (this._ui_chipenghu.enable = false);
     }),
     (e.prototype.ShowLiqiZimo = function(t) {
       this._ui_liqizimo.show(t);
     }),
     (e.prototype.CloseLiqiZimo = function() {
-      this._ui_liqizimo.enable = !1;
+      this._ui_liqizimo.enable = false;
     }),
     (e.prototype.ShowWin = function(t, e) {
       this._ui_win.show(t, e);
     }),
     (e.prototype.CloseWin = function() {
-      this._ui_win.enable = !1;
+      this._ui_win.enable = false;
     }),
     (e.prototype.ShowPreventAddiction = function() {
       const e = this;
@@ -329,14 +329,14 @@ let uiscript;
           (this._ui_preventaddiction = new t.UI_PreventAddiction())
         ),
         Laya.timer.frameOnce(10, this, () => {
-          e._ui_preventaddiction.enable = !0;
+          e._ui_preventaddiction.enable = true;
         }));
     }),
     (e.prototype.ShowLiuJu = function(t) {
       this._ui_liuju.Show(t);
     }),
     (e.prototype.CloseLiuJu = function() {
-      this._ui_liuju.enable = !1;
+      this._ui_liuju.enable = false;
     }),
     (e.prototype.ShowGameEnd = function() {
       this._ui_gameend.show();

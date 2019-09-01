@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function t(t, e) {
@@ -34,13 +9,13 @@ var __extends =
           (this.wrong = t.getChildByName('no')),
           (this.accept = t.getChildByName('yes')),
           this.txtinput.on('focus', this, function() {
-            (i.wrong.visible = !1), (i.accept.visible = !1);
+            (i.wrong.visible = false), (i.accept.visible = false);
           }),
           this.txtinput.on('blur', this, function() {
-            (i.wrong.visible = !1),
-              (i.accept.visible = !1),
+            (i.wrong.visible = false),
+              (i.accept.visible = false),
               '' != i.txtinput.text &&
-                (i.isOK ? (i.accept.visible = !0) : (i.wrong.visible = !0));
+                (i.isOK ? (i.accept.visible = true) : (i.wrong.visible = true));
           }),
           this.reset();
       }
@@ -49,20 +24,20 @@ var __extends =
           get: function() {
             return this.txtinput.text;
           },
-          enumerable: !0,
-          configurable: !0
+          enumerable: true,
+          configurable: true
         }),
         Object.defineProperty(t.prototype, 'isOK', {
           get: function() {
             return !this.func_pending || this.func_pending.run();
           },
-          enumerable: !0,
-          configurable: !0
+          enumerable: true,
+          configurable: true
         }),
         (t.prototype.reset = function() {
           (this.txtinput.text = ''),
-            (this.wrong.visible = !1),
-            (this.accept.visible = !1);
+            (this.wrong.visible = false),
+            (this.accept.visible = false);
         }),
         t
       );
@@ -70,7 +45,7 @@ var __extends =
     i = (function(i) {
       function n() {
         var t = i.call(this, new ui.entrance.reset_passwordUI()) || this;
-        return (t.sended = !1), (n.Inst = t), t;
+        return (t.sended = false), (n.Inst = t), t;
       }
       return (
         __extends(n, i),
@@ -85,13 +60,13 @@ var __extends =
             (this.btn_send = this.container_input_mail.getChildByName(
               'btn_send'
             ));
-          var n = !1,
+          var n = false,
             a = 0,
             r = 0,
             s = function() {
               n ||
                 Laya.timer.currTimer < r ||
-                game.Tools.setGrayDisable(i.btn_send, !1);
+                game.Tools.setGrayDisable(i.btn_send, false);
             };
           (this.btn_send.clickHandler = new Laya.Handler(this, function() {
             if (
@@ -100,8 +75,8 @@ var __extends =
               i.input_email.isOK &&
               !n
             ) {
-              game.Tools.setGrayDisable(i.btn_send, !0),
-                (n = !0),
+              game.Tools.setGrayDisable(i.btn_send, true),
+                (n = true),
                 a++,
                 (r = Laya.timer.currTimer + 1300 * a),
                 Laya.timer.once(1300 * a, i, function() {
@@ -111,20 +86,20 @@ var __extends =
                 o = new Laya.HttpRequest();
               o.once(Laya.Event.COMPLETE, i, function(a) {
                 var r = JSON.parse(a);
-                (n = !1),
+                (n = false),
                   s(),
                   r.error && r.error.code
                     ? t.UI_Entrance.Inst.showError('', r.error.code)
-                    : ((i.sended = !0),
+                    : ((i.sended = true),
                       (i.label_email.text = game.Tools.encode_email(e)),
                       i.refresh_show());
               }),
                 o.once(Laya.Event.ERROR, i, function(e) {
-                  (n = !1),
+                  (n = false),
                     s(),
                     t.UI_Entrance_Error.Inst.show(
                       game.Tools.strOfLocalization(2790),
-                      !1
+                      false
                     );
                 }),
                 o.send(
@@ -159,29 +134,29 @@ var __extends =
         (n.prototype.show = function() {
           var e = this;
           this.refresh_show(),
-            (this.locking = !0),
-            (this.enable = !0),
+            (this.locking = true),
+            (this.enable = true),
             t.UIBase.anim_pop_out(
               this.root,
               Laya.Handler.create(this, function() {
-                e.locking = !1;
+                e.locking = false;
               })
             );
         }),
         (n.prototype.refresh_show = function() {
           this.sended
-            ? ((this.container_input_mail.visible = !1),
-              (this.container_success.visible = !0))
-            : ((this.container_input_mail.visible = !0),
-              (this.container_success.visible = !1));
+            ? ((this.container_input_mail.visible = false),
+              (this.container_success.visible = true))
+            : ((this.container_input_mail.visible = true),
+              (this.container_success.visible = false));
         }),
         (n.prototype.close = function() {
           var e = this;
-          (this.locking = !0),
+          (this.locking = true),
             t.UIBase.anim_pop_hide(
               this.root,
               Laya.Handler.create(this, function() {
-                (e.locking = !1), (e.enable = !1);
+                (e.locking = false), (e.enable = false);
               })
             );
         }),

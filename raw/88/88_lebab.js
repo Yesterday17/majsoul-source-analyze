@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let view;
 !(t => {
   (t.PAIMODEL_HEIGHT = 0.043225 * 0.94),
@@ -49,7 +26,7 @@ let view;
       const e = a.call(this) || this;
       return (e.rule_mode = i.Liqi4),
       (e.mode = n.play),
-      (e.active = !1),
+      (e.active = false),
       (e.game_config = null),
       (e.seat = 0),
       (e.dora = []),
@@ -63,17 +40,17 @@ let view;
       (e.effect_dora3D = null),
       (e.effect_doraPlane = null),
       (e.effect_shadow = null),
-      (e.auto_hule = !1),
-      (e.auto_nofulu = !1),
-      (e.auto_moqie = !1),
-      (e.auto_liqi = !0),
-      (e.duringReconnect = !1),
-      (e.gameing = !1),
+      (e.auto_hule = false),
+      (e.auto_nofulu = false),
+      (e.auto_moqie = false),
+      (e.auto_liqi = true),
+      (e.duringReconnect = false),
+      (e.gameing = false),
       (e.lastpai_seat = 0),
       (e.lastqipai = null),
       (e.oplist = []),
       (e.liqi_select = []),
-      (e.operation_showing = !1),
+      (e.operation_showing = false),
       (e.myaccountid = 0),
       (e.player_datas = []),
       (e.player_effects = []),
@@ -89,18 +66,18 @@ let view;
       (e.current_step = 0),
       (e.actionMap = null),
       (e.tingpais = []),
-      (e.record_show_hand = !1),
-      (e.record_show_paopai = !1),
+      (e.record_show_hand = false),
+      (e.record_show_paopai = false),
       (e.ptchange = 0),
-      (e.waiting_lingshang_deal_tile = !1),
+      (e.waiting_lingshang_deal_tile = false),
       (e.md5 = ''),
       (e.paipu_config = 0),
       (e.ai_level = 1),
-      (e.timestoped = !1),
+      (e.timestoped = false),
       (e.handles_after_timerun = []),
       (e.doactioncd = 0),
-      (e.dochain_fast = !1),
-      (e.action_running = !1),
+      (e.dochain_fast = false),
+      (e.action_running = false),
       (e.hangupCount = 0),
       (e.state_cache = {}),
       (r.Inst = e),
@@ -121,7 +98,7 @@ let view;
         ;
         },
         null,
-        !1
+        false
       )),
       (e.actionMap.ActionNewRound = new Laya.Handler(
         e,
@@ -149,7 +126,7 @@ let view;
         ;
         },
         null,
-        !1
+        false
       )),
       (e.actionMap.ActionDiscardTile = new Laya.Handler(
         e,
@@ -163,7 +140,7 @@ let view;
               500);
         },
         null,
-        !1
+        false
       )),
       (e.actionMap.ActionDealTile = new Laya.Handler(
         e,
@@ -175,7 +152,7 @@ let view;
             : (t.ActionDealTile.play(n), 500);
         },
         null,
-        !1
+        false
       )),
       (e.actionMap.ActionChiPengGang = new Laya.Handler(
         e,
@@ -187,7 +164,7 @@ let view;
             : (t.ActionChiPengGang.play(n), 1100);
         },
         null,
-        !1
+        false
       )),
       (e.actionMap.ActionAnGangAddGang = new Laya.Handler(
         e,
@@ -199,7 +176,7 @@ let view;
             : (t.ActionAnGangAddGang.play(n), 1100);
         },
         null,
-        !1
+        false
       )),
       (e.actionMap.ActionHule = new Laya.Handler(
         e,
@@ -209,7 +186,7 @@ let view;
           return t.ActionHule.play(n), 5e3;
         },
         null,
-        !1
+        false
       )),
       (e.actionMap.ActionNoTile = new Laya.Handler(
         e,
@@ -219,7 +196,7 @@ let view;
           return t.ActionNoTile.play(n), 5e3;
         },
         null,
-        !1
+        false
       )),
       (e.actionMap.ActionLiuJu = new Laya.Handler(
         e,
@@ -229,7 +206,7 @@ let view;
           return t.ActionLiuJu.play(n), 5e3;
         },
         null,
-        !1
+        false
       )),
       (e.actionMap.ActionBaBei = new Laya.Handler(
         e,
@@ -241,7 +218,7 @@ let view;
             : (t.ActionBabei.play(n), 1e3);
         },
         null,
-        !1
+        false
       )),
       app.NetAgent.AddListener2MJ(
         'NotifyGameEndResult',
@@ -331,22 +308,22 @@ let view;
       get() {
         return `${this.index_change}-${this.index_ju}-${this.index_ben}`;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(r.prototype, 'main_role_character_info', {
       get() {
         return this.player_datas[this.seat].character;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(r.prototype, 'player_count', {
       get() {
         return this.rule_mode == i.Liqi3 ? 3 : 4;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (r.prototype.seat2LocalPosition = function(t) {
       if (this.rule_mode == i.Liqi3) {
@@ -372,11 +349,11 @@ let view;
       get() {
         return this.mode != n.play;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (r.prototype.ActionRunComplete = function() {
-      this.action_running = !1;
+      this.action_running = false;
     }),
     (r.prototype.StartChainAction = function(t) {
       (this.doactioncd = Laya.timer.currTimer + t),
@@ -387,7 +364,7 @@ let view;
       if (this.action_index >= this.actionList.length)
         (this.action_index = 0),
           (this.actionList = []),
-          (this.dochain_fast = !1),
+          (this.dochain_fast = false),
           Laya.timer.clear(this, this.DoChainAction),
           this.duringReconnect &&
             (app.Log.log('finishSyncGame0'),
@@ -397,7 +374,7 @@ let view;
               {},
               (t, e) => {}
             ),
-            (this.duringReconnect = !1));
+            (this.duringReconnect = false));
       else {
         if (!this.dochain_fast) {
           if (this.action_running) return;
@@ -407,17 +384,17 @@ let view;
         }
         this.action_index == this.actionList.length - 1 &&
           this.duringReconnect &&
-          ((this.duringReconnect = !1),
+          ((this.duringReconnect = false),
           app.Log.log('finishSyncGame1'),
           app.NetAgent.sendReq2MJ('FastTest', 'finishSyncGame', {}, (t, e) => {})),
           this.dochain_fast
             ? this.action_index + 2 < this.actionList.length
-              ? this.DoMJAction(this.actionList[this.action_index++], !0)
-              : ((this.dochain_fast = !1),
-                this.DoMJAction(this.actionList[this.action_index++], !1))
-            : ((this.dochain_fast = !1),
+              ? this.DoMJAction(this.actionList[this.action_index++], true)
+              : ((this.dochain_fast = false),
+                this.DoMJAction(this.actionList[this.action_index++], false))
+            : ((this.dochain_fast = false),
               this.action_index + 4 < this.actionList.length &&
-                (this.dochain_fast = !0),
+                (this.dochain_fast = true),
               this.dochain_fast
                 ? Laya.timer.once(800, this, () => {
                     for (
@@ -429,9 +406,9 @@ let view;
                         t.action_index = e;
                         break;
                       }
-                    t.DoMJAction(t.actionList[t.action_index++], !0);
+                    t.DoMJAction(t.actionList[t.action_index++], true);
                   })
-                : this.DoMJAction(this.actionList[this.action_index++], !1));
+                : this.DoMJAction(this.actionList[this.action_index++], false));
       }
     }),
     (r.prototype.DoMJAction = function(t, e) {
@@ -455,7 +432,7 @@ let view;
         let s = 0;
         if (((this.current_step = a), this.actionMap.hasOwnProperty(t.name)))
           try {
-            e || (this.action_running = !0),
+            e || (this.action_running = true),
               (s = this.actionMap[t.name].runWith({ msg: r, fast: e }));
           } catch (e) {
             const o = {};
@@ -479,7 +456,7 @@ let view;
     }),
     (r.prototype._load = function(e) {
       (this.desktop3D = e),
-        (this.desktop3D.getChildByName('all').active = !1);
+        (this.desktop3D.getChildByName('all').active = false);
       const i = this.desktop3D.getChildByName('poss');
       (this.players = new Array()),
         (this.mainrole = i
@@ -495,11 +472,11 @@ let view;
           i.getChildByName('babei_1').getChildAt(0)
         ),
         (this.mainrole.trans_hand3D = i.getChildByName('pai_1')),
-        (this.mainrole.trans_hand3D.getChildAt(0).active = !1),
-        (this.mainrole.trans_hand3D.active = !1),
+        (this.mainrole.trans_hand3D.getChildAt(0).active = false),
+        (this.mainrole.trans_hand3D.active = false),
         (this.mainrole.trans_hand3DCover = i.getChildByName('pai_1_cover')),
-        (this.mainrole.trans_hand3DCover.getChildAt(0).active = !1),
-        (this.mainrole.trans_hand3DCover.active = !1),
+        (this.mainrole.trans_hand3DCover.getChildAt(0).active = false),
+        (this.mainrole.trans_hand3DCover.active = false),
         this.players.push(this.mainrole);
       for (let n = 2; n <= 4; n++) {
         const a = i.getChildByName(`man_${n}`).addComponent(t.ViewPlayer_Other);
@@ -535,13 +512,13 @@ let view;
         (this.effect_shadow = this.trans_container_effect.getChildByName(
           'effect_shadow'
         )),
-        (this.effect_pai_canchi.active = !0),
-        (this.effect_dora3D.active = !0),
-        (this.effect_shadow.active = !0),
+        (this.effect_pai_canchi.active = true),
+        (this.effect_dora3D.active = true),
+        (this.effect_shadow.active = true),
         (this.effect_doraPlane = game.Scene_MJ.Inst.root2
           .getChildByName('hands')
           .getChildByName('effect_dora')),
-        (this.effect_doraPlane.active = !1);
+        (this.effect_doraPlane.active = false);
     }),
     (r.prototype.initRoom = function(e, a, s, o, l) {
       const h = this;
@@ -559,22 +536,22 @@ let view;
         (this.levelchangeinfo = null),
         (this.activity_reward = null),
         (this.rewardinfo = null),
-        (this.active = !0),
+        (this.active = true),
         (this.ptchange = 0),
         (this.paipu_config = 0),
-        (this.timestoped = !1),
-        (this.action_running = !1),
+        (this.timestoped = false),
+        (this.action_running = false),
         (this.hangupCount = 0),
         (this.handles_after_timerun = []),
         uiscript.UI_GameStop.Inst.close(),
         this.mode == n.paipu
-          ? (this.record_show_hand = this.record_show_paopai = !0)
-          : (this.record_show_hand = this.record_show_paopai = !1),
+          ? (this.record_show_hand = this.record_show_paopai = true)
+          : (this.record_show_hand = this.record_show_paopai = false),
         this.mode == n.play
-          ? ((uiscript.UI_Invite.Inst.enable = !1),
+          ? ((uiscript.UI_Invite.Inst.enable = false),
             4 == e.category &&
               (GameMgr.Inst.custom_match_id = e.meta.contest_uid))
-          : (uiscript.UI_Invite.Inst.enable = !0),
+          : (uiscript.UI_Invite.Inst.enable = true),
         (this.myaccountid = s);
       for (var c = {}, u = 0; u < a.length; u++)
         for (
@@ -608,7 +585,7 @@ let view;
       }
       if (
         ((uiscript.UI_Replay.Inst.enable = this.mode == n.paipu),
-        (r.bianjietishi = !0),
+        (r.bianjietishi = true),
         o == n.play)
       ) {
         if (e.mode && e.mode.detail_rule) {
@@ -617,7 +594,7 @@ let view;
         }
         if (2 == e.category && e.meta) {
           const v = cfg.desktop.matchmode.get(e.meta.mode_id);
-          v && 6 == v.room && (r.bianjietishi = !1);
+          v && 6 == v.room && (r.bianjietishi = false);
         }
         uiscript.UI_MJTask_Progress.record();
       }
@@ -668,7 +645,7 @@ let view;
             exp: 0,
             views: [],
             skin: 400101,
-            is_upgraded: !1
+            is_upgraded: false
           }),
             this.player_effects.push({
               effect_hupai: 'scene/effect_hupai_default.lh',
@@ -680,30 +657,30 @@ let view;
       }
       uiscript.UI_DesktopInfo.Inst.initRoom(),
         uiscript.UI_DesktopInfo.Inst.refreshSeat(),
-        (uiscript.UI_Hangup_Warn.Inst.enable = !1),
-        (uiscript.UI_TingPai.Inst.enable = !0),
+        (uiscript.UI_Hangup_Warn.Inst.enable = false),
+        (uiscript.UI_TingPai.Inst.enable = true),
         (this.index_change = 0),
         (this.index_ju = 0),
         (this.index_ben = 0),
         (this.index_player = 0),
-        (this.gameing = !0),
+        (this.gameing = true),
         (this.left_tile_count = 69),
-        (this.duringReconnect = !1),
+        (this.duringReconnect = false),
         (this.current_step = 0),
         (this.action_index = 0),
-        (this.dochain_fast = !1),
+        (this.dochain_fast = false),
         (this.actionList = []),
-        this.setAutoHule(!1),
-        this.setAutoMoQie(!1),
-        this.setAutoNoFulu(!1),
+        this.setAutoHule(false),
+        this.setAutoMoQie(false),
+        this.setAutoNoFulu(false),
         uiscript.UI_DesktopInfo.Inst.resetFunc(),
         this.SetChangJuShow(this.index_change, this.index_ju),
         uiscript.UI_DesktopInfo.Inst.setBen(this.index_ben),
-        uiscript.UI_DesktopInfo.Inst.setZhenting(!1);
+        uiscript.UI_DesktopInfo.Inst.setZhenting(false);
       for (u = 0; u < 4; u++)
         this.players[u].onInitRoom(this.localPosition2Seat(u)),
           this.players[u].SetScore(0, 0),
-          (this.players[u].trans_ind.active = !1),
+          (this.players[u].trans_ind.active = false),
           this.players[u].RefreshDir();
       this.RefreshPaiLeft(),
         uiscript.UI_GameEnd.Inst.forceclose(),
@@ -727,10 +704,10 @@ let view;
     }),
     (r.prototype.changeMainbody = function(t) {
       if (this.mode != n.play) {
-        (this.seat = t), uiscript.UI_DesktopInfo.Inst.refreshSeat(!0);
+        (this.seat = t), uiscript.UI_DesktopInfo.Inst.refreshSeat(true);
         for (let e = 0; e < 4; e++)
           this.players[e].onInitRoom(this.localPosition2Seat(e)),
-            (this.players[e].trans_ind.active = !1),
+            (this.players[e].trans_ind.active = false),
             this.players[e].RefreshDir();
         this.Reset(),
           this.mode == n.paipu && uiscript.UI_Replay.Inst.onChangeMainBody(),
@@ -741,7 +718,7 @@ let view;
     (r.prototype.trySyncGame = function() {
       const t = this;
       this.Reset(),
-        (this.duringReconnect = !0),
+        (this.duringReconnect = true),
         (this.hangupCount = 0),
         app.NetAgent.sendReq2MJ(
           'FastTest',
@@ -759,29 +736,29 @@ let view;
                     game.Scene_MJ.Inst.GameEnd())
                   : (t.fetchLinks(),
                     t.Reset(),
-                    (t.duringReconnect = !0),
+                    (t.duringReconnect = true),
                     t.syncGameByStep(i.game_restore)));
           }
         );
     }),
     (r.prototype.syncGameByStep = function(e) {
       const i = this;
-      let n = !1;
+      let n = false;
       if (
-        ((this.timestoped = !1),
+        ((this.timestoped = false),
         (this.handles_after_timerun = []),
-        (this.action_running = !1),
+        (this.action_running = false),
         uiscript.UI_GameStop.Inst.close(),
         (this.hangupCount = 0),
-        (uiscript.UI_Hangup_Warn.Inst.enable = !1),
-        e && 5 === e.game_state && (this.timestoped = !0),
+        (uiscript.UI_Hangup_Warn.Inst.enable = false),
+        e && 5 === e.game_state && (this.timestoped = true),
         GameMgr.Inst.EnterMJ(),
         e && e.actions && e.actions.length > 0)
       ) {
         this.actionList = [];
         let a = -1;
         null != e.passed_waiting_time &&
-          void 0 != e.passed_waiting_time &&
+          undefined != e.passed_waiting_time &&
           (a = 1e3 * e.passed_waiting_time);
         for (let s = 0; s < e.actions.length; s++) {
           const o = e.actions[s];
@@ -809,13 +786,13 @@ let view;
                 t.ActionAnGangAddGang.fastplay(c, l);
                 break;
               case 'ActionHule':
-                t.ActionHule.fastplay(c, l), (n = !0);
+                t.ActionHule.fastplay(c, l), (n = true);
                 break;
               case 'ActionLiuJu':
-                t.ActionLiuJu.fastplay(c, l), (n = !0);
+                t.ActionLiuJu.fastplay(c, l), (n = true);
                 break;
               case 'ActionNoTile':
-                t.ActionNoTile.fastplay(c, l), (n = !0);
+                t.ActionNoTile.fastplay(c, l), (n = true);
                 break;
               case 'ActionBaBei':
                 t.ActionBabei.fastplay(c, l);
@@ -833,13 +810,13 @@ let view;
           }
         }
         Laya.timer.once(1e3, this, () => {
-          (i.duringReconnect = !1),
+          (i.duringReconnect = false),
             uiscript.UI_Loading.Inst.close(),
             n || t.BgmListMgr.PlayMJBgm(),
             i.DoChainAction();
         });
       } else
-        (this.duringReconnect = !1),
+        (this.duringReconnect = false),
           this.timestoped
             ? this.handles_after_timerun.push(
                 Laya.Handler.create(this, () => {
@@ -960,7 +937,7 @@ let view;
     }),
     (r.prototype.Reset = function() {
       app.Log.log('DesktopMgr.Reset'),
-        (this.operation_showing = !1),
+        (this.operation_showing = false),
         (this.oplist = []),
         Laya.timer.clearAll(t.ActionAnGangAddGang),
         Laya.timer.clearAll(t.ActionChiPengGang),
@@ -975,7 +952,7 @@ let view;
         Laya.timer.clearAll(this),
         uiscript.UI_DesktopInfo.Inst.reset_rounds(),
         uiscript.UI_Replay.Inst.reset(),
-        (this.effect_pai_canchi.active = !1);
+        (this.effect_pai_canchi.active = false);
       for (let e = 0; e < 4; e++) this.players[e].Reset();
       (this.tingpais = [[], [], [], []]),
         (this.md5 = ''),
@@ -989,16 +966,16 @@ let view;
         );
     }),
     (r.prototype._PendingAuto = function() {
-      if (null == this.oplist || 0 == this.oplist.length) return !1;
+      if (null == this.oplist || 0 == this.oplist.length) return false;
       app.Log.log('_PendingAuto');
       try {
-        var t = !1;
-        let e = !1;
-        let i = !1;
-        let n = !1;
-        let a = !1;
+        var t = false;
+        let e = false;
+        let i = false;
+        let n = false;
+        let a = false;
         const r = this.operation_showing;
-        this.operation_showing = !0;
+        this.operation_showing = true;
         let s = null;
         this.liqi_select = [];
         for (_ = 0; _ < this.oplist.length; _++) {
@@ -1007,35 +984,35 @@ let view;
             case mjcore.E_PlayOperation.peng:
             case mjcore.E_PlayOperation.ming_gang:
             case mjcore.E_PlayOperation.rong:
-              t = !0;
+              t = true;
               break;
             case mjcore.E_PlayOperation.an_gang:
             case mjcore.E_PlayOperation.add_gang:
             case mjcore.E_PlayOperation.liqi:
             case mjcore.E_PlayOperation.zimo:
             case mjcore.E_PlayOperation.babei:
-              e = !0;
+              e = true;
             case mjcore.E_PlayOperation.jiuzhongjiupai:
-              e = !0;
+              e = true;
           }
           if (
             (this.oplist[_].type == mjcore.E_PlayOperation.dapai &&
-              ((a = !0), (s = this.oplist[_].combination)),
+              ((a = true), (s = this.oplist[_].combination)),
             this.oplist[_].type == mjcore.E_PlayOperation.liqi)
           ) {
-            (a = !0), (this.liqi_select = []);
+            (a = true), (this.liqi_select = []);
             for (let o = 0; o < this.oplist[_].combination.length; o++)
               this.liqi_select.push(
                 mjcore.MJPai.Create(this.oplist[_].combination[o])
               );
           }
-          this.oplist[_].type == mjcore.E_PlayOperation.rong && (i = !0),
-            this.oplist[_].type == mjcore.E_PlayOperation.zimo && (n = !0);
+          this.oplist[_].type == mjcore.E_PlayOperation.rong && (i = true),
+            this.oplist[_].type == mjcore.E_PlayOperation.zimo && (n = true);
         }
         const l = this.auto_hule;
         let h = this.auto_nofulu;
         let c = this.auto_moqie;
-        if ((this.hangupCount >= 5 && ((h = !0), (c = !0)), l && (i || n)))
+        if ((this.hangupCount >= 5 && ((h = true), (c = true)), l && (i || n)))
           return Laya.timer.once(800, this, () => {
             i
               ? app.NetAgent.sendReq2MJ(
@@ -1053,18 +1030,18 @@ let view;
                 );
           }),
           this.ClearOperationShow(),
-          !1
+          false
         ;
         if (t) {
           if (h && !i && !n)
             return app.NetAgent.sendReq2MJ(
               'FastTest',
               'inputChiPengGang',
-              { cancel_operation: !0 },
+              { cancel_operation: true },
               (t, e) => {}
             ),
             this.ClearOperationShow(),
-            !1
+            false
           ;
           r || uiscript.UIMgr.Inst.ShowChipenghu(this.oplist);
         } else if (
@@ -1075,13 +1052,13 @@ let view;
             !uiscript.UI_LiQiZiMo.Inst.enable &&
             null != this.mainrole.last_tile
           )
-            return this.Action_QiPai(this.mainrole.last_tile.val, !0, !0), !1;
-          if (!r && ((this.mainrole.can_discard = !0), s && s.length > 0)) {
+            return this.Action_QiPai(this.mainrole.last_tile.val, true, true), false;
+          if (!r && ((this.mainrole.can_discard = true), s && s.length > 0)) {
             for (var u = [], _ = 0; _ < s.length; _++)
               u.push(mjcore.MJPai.Create(s[_]));
             this.mainrole.ChiTiSelect(u);
           }
-        } else this.mainrole.can_discard = !1;
+        } else this.mainrole.can_discard = false;
       } catch (t) {
         const d = {};
         (d.error = t.message),
@@ -1090,17 +1067,17 @@ let view;
           (d.name = 'DesktopMgr'),
           GameMgr.Inst.onFatalError(d);
       }
-      return !0;
+      return true;
     }),
     (r.prototype.OperationTimeOut = function() {
       if (null != this.oplist && 0 != this.oplist.length) {
-        let t = !1;
-        let e = !1;
-        let i = !1;
-        let n = !1;
-        let a = !1;
+        let t = false;
+        let e = false;
+        let i = false;
+        let n = false;
+        let a = false;
         this.operation_showing;
-        this.operation_showing = !0;
+        this.operation_showing = true;
         this.hangupCount++,
           this.hangupCount >= 5 &&
             !uiscript.UI_Hangup_Warn.Inst.enable &&
@@ -1111,22 +1088,22 @@ let view;
             case mjcore.E_PlayOperation.peng:
             case mjcore.E_PlayOperation.ming_gang:
             case mjcore.E_PlayOperation.rong:
-              t = !0;
+              t = true;
               break;
             case mjcore.E_PlayOperation.an_gang:
             case mjcore.E_PlayOperation.add_gang:
             case mjcore.E_PlayOperation.liqi:
             case mjcore.E_PlayOperation.zimo:
             case mjcore.E_PlayOperation.babei:
-              e = !0;
+              e = true;
           }
           (this.oplist[o].type != mjcore.E_PlayOperation.dapai &&
             this.oplist[o].type != mjcore.E_PlayOperation.liqi) ||
-            ((a = !0),
+            ((a = true),
             this.oplist[o].type == mjcore.E_PlayOperation.dapai &&
               this.oplist[o].combination),
-            this.oplist[o].type == mjcore.E_PlayOperation.rong && (i = !0),
-            this.oplist[o].type == mjcore.E_PlayOperation.zimo && (n = !0);
+            this.oplist[o].type == mjcore.E_PlayOperation.rong && (i = true),
+            this.oplist[o].type == mjcore.E_PlayOperation.zimo && (n = true);
         }
         if (t)
           i
@@ -1139,14 +1116,14 @@ let view;
             : app.NetAgent.sendReq2MJ(
                 'FastTest',
                 'inputChiPengGang',
-                { cancel_operation: !0, timeuse: 1e6 },
+                { cancel_operation: true, timeuse: 1e6 },
                 (t, e) => {}
               ),
             this.ClearOperationShow();
         else if (a)
           if (this.mainrole.during_liqi) {
             for (
-              var r = null, s = !1, o = 0;
+              var r = null, s = false, o = 0;
               o < this.mainrole.hand.length;
               o++
             )
@@ -1156,20 +1133,20 @@ let view;
             this.Action_LiQi(r, s);
           } else {
             let l = null;
-            var s = !1;
+            var s = false;
             if (
               (null == l &&
                 this.mainrole.last_tile &&
                 this.mainrole.last_tile.valid &&
-                ((l = this.mainrole.last_tile.val), (s = !0)),
+                ((l = this.mainrole.last_tile.val), (s = true)),
               null == l)
             )
               for (o = this.mainrole.hand.length - 1; o >= 0; o--)
                 if (this.mainrole.hand[o].valid) {
-                  (l = this.mainrole.hand[o].val), (s = !1);
+                  (l = this.mainrole.hand[o].val), (s = false);
                   break;
                 }
-            this.Action_QiPai(l, s, !0);
+            this.Action_QiPai(l, s, true);
           }
         else
           e &&
@@ -1187,7 +1164,7 @@ let view;
               : app.NetAgent.sendReq2MJ(
                   'FastTest',
                   'inputOperation',
-                  { cancel_operation: !0, timeuse: 1e6 },
+                  { cancel_operation: true, timeuse: 1e6 },
                   (t, e) => {}
                 ),
             this.ClearOperationShow());
@@ -1196,19 +1173,19 @@ let view;
     (r.prototype.WhenDoOperation = function() {
       (this.hangupCount = 0),
         uiscript.UI_Hangup_Warn.Inst.enable &&
-          (uiscript.UI_Hangup_Warn.Inst.enable = !1),
+          (uiscript.UI_Hangup_Warn.Inst.enable = false),
         this.ClearOperationShow();
     }),
     (r.prototype.ClearOperationShow = function() {
-      (this.operation_showing = !1),
+      (this.operation_showing = false),
         (this.oplist = []),
         uiscript.UIMgr.Inst.CloseLiuJu(),
         uiscript.UIMgr.Inst.CloseWin(),
         uiscript.UIMgr.Inst.CloseChipenghu(),
         uiscript.UIMgr.Inst.CloseLiqiZimo(),
         Laya.timer.clearAll(t.ActionOperation),
-        (uiscript.UI_ScoreChange.Inst.enable = !1),
-        (this.mainrole.can_discard = !1),
+        (uiscript.UI_ScoreChange.Inst.enable = false),
+        (this.mainrole.can_discard = false),
         uiscript.UI_DesktopInfo.Inst.closeCountDown();
     }),
     (r.prototype.WhenLiqiInfo = function(t) {
@@ -1227,7 +1204,7 @@ let view;
       if (
         !(
           null == e ||
-          void 0 == e ||
+          undefined == e ||
           0 == e.length ||
           e.length <= this.dora.length
         ) &&
@@ -1263,10 +1240,10 @@ let view;
         i ? this.ClearOperationShow() : this.WhenDoOperation();
     }),
     (r.prototype.Action_LiQi = function(t, e) {
-      if (!this.liqi_select || 0 == this.liqi_select.length) return !1;
-      for (var i = !1, n = 0; n < this.liqi_select.length; n++)
+      if (!this.liqi_select || 0 == this.liqi_select.length) return false;
+      for (var i = false, n = 0; n < this.liqi_select.length; n++)
         if (0 == mjcore.MJPai.Distance(this.liqi_select[n], t)) {
-          i = !0;
+          i = true;
           break;
         }
       return !!i &&
@@ -1286,12 +1263,12 @@ let view;
         }
       ),
       this.WhenDoOperation(),
-      !0);
+      true);
     }),
     (r.prototype.SetLastQiPai = function(t, e) {
       (this.lastqipai = e),
         (this.lastpai_seat = t),
-        (this.effect_pai_canchi.active = !1);
+        (this.effect_pai_canchi.active = false);
     }),
     (r.prototype.ShowHuleEffect = function(e, i) {
       const n = this;
@@ -1300,7 +1277,7 @@ let view;
         const a = game.EffectMgr.create_d3_effect(i);
         this.trans_container_effect.addChild(a),
           (a.transform.position = e),
-          (a.active = !0);
+          (a.active = true);
         let r = 213;
         switch (i) {
           case 'scene/effect_hupai_default.lh':
@@ -1344,7 +1321,7 @@ let view;
         }
         t.AudioMgr.PlayAudio(r),
           Laya.timer.once(2e3, this, () => {
-            a.destroy(!0);
+            a.destroy(true);
           }),
           'scene/effect_hupai_yanhua.lh' == i &&
             Laya.timer.once(600, this, () => {
@@ -1353,9 +1330,9 @@ let view;
               );
               n.desktop3D.addChild(t),
                 (t.transform.position = new Laya.Vector3(0, 0, 0)),
-                (t.active = !0),
+                (t.active = true),
                 Laya.timer.once(2e3, n, () => {
-                  t.destroy(!0);
+                  t.destroy(true);
                 });
             });
       }
@@ -1366,24 +1343,24 @@ let view;
         (this.lastqipai.model.parent.addChild(this.effect_pai_canchi),
         (this.effect_pai_canchi.transform.localPosition = this.lastqipai.model.transform.localPosition.clone()),
         (this.effect_pai_canchi.transform.localRotation = this.lastqipai.model.transform.localRotation.clone()),
-        (this.effect_pai_canchi.active = !0));
+        (this.effect_pai_canchi.active = true));
     }),
     (r.prototype.CloseChiPngEffect = function() {
       this.effect_pai_canchi &&
-        ((this.effect_pai_canchi.active = !1),
+        ((this.effect_pai_canchi.active = false),
         this.trans_container_effect &&
           this.trans_container_effect.addChild(this.effect_pai_canchi));
     }),
     (r.prototype.setChoosedPai = function(t) {
-      let e = !1;
+      let e = false;
       if (
-        (e || !t || this.choosed_pai || (e = !0),
-        e || t || !this.choosed_pai || (e = !0),
+        (e || !t || this.choosed_pai || (e = true),
+        e || t || !this.choosed_pai || (e = true),
         !e &&
           t &&
           this.choosed_pai &&
           0 != mjcore.MJPai.Distance(this.choosed_pai, t) &&
-          (e = !0),
+          (e = true),
         e && ((this.choosed_pai = t ? t.Clone() : null), r.bianjietishi))
       ) {
         for (let i = 0; i < 4; i++) this.players[i].OnChoosePai();
@@ -1391,11 +1368,11 @@ let view;
       }
     }),
     (r.prototype.setTingpai = function(e, i) {
-      for (var n = !1, a = [], r = 0; r < i.length; r++)
+      for (var n = false, a = [], r = 0; r < i.length; r++)
         a.push(mjcore.MJPai.Create(i[r].tile));
-      this.tingpais[e].length != a.length && (n = !0);
+      this.tingpais[e].length != a.length && (n = true);
       for (r = 0; r < a.length && !n; r++)
-        0 != mjcore.MJPai.Distance(a[r], this.tingpais[e][r]) && (n = !0);
+        0 != mjcore.MJPai.Distance(a[r], this.tingpais[e][r]) && (n = true);
       if (n) {
         this.tingpais[e] = a;
         for (r = 0; r < t.DesktopMgr.Inst.players.length; r++) {
@@ -1455,7 +1432,7 @@ let view;
                 var l = s.hand[o].pai3D;
                 this.record_show_hand
                   ? (l.ispaopai = this.isPaoPai(l.val))
-                  : (l.ispaopai = !1),
+                  : (l.ispaopai = false),
                   l.OnChoosedPai();
               }
           }
@@ -1463,11 +1440,11 @@ let view;
       }
     }),
     (r.prototype.isPaoPai = function(t) {
-      if (!this.record_show_paopai) return !1;
+      if (!this.record_show_paopai) return false;
       for (let e = 0; e < this.tingpais.length; e++)
         for (let i = 0; i < this.tingpais[e].length; i++)
-          if (0 == mjcore.MJPai.Distance(this.tingpais[e][i], t)) return !0;
-      return !1;
+          if (0 == mjcore.MJPai.Distance(this.tingpais[e][i], t)) return true;
+      return false;
     }),
     (r.prototype.getPaiLeft = function(t) {
       for (var e = 0, i = 0; i < 4; i++) {
@@ -1585,8 +1562,8 @@ let view;
     (r.player_link_state = [e.NULL, e.NULL, e.NULL, e.NULL]),
     (r.click_prefer = 0),
     (r.double_click_pass = 0),
-    (r.en_mjp = !1),
-    (r.bianjietishi = !0),
+    (r.en_mjp = false),
+    (r.bianjietishi = true),
     r
   ;
   })(Laya.Script);

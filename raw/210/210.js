@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e;
   !(function(t) {
@@ -142,7 +117,7 @@ var __extends =
           i < this.skin_cells.length;
           i++
         )
-          e.push(!1);
+          e.push(false);
         for (var n = this.container_chooses.width / 2, i = 0; i <= 6; i++) {
           var a = t + 30 * i,
             r = a - this.current_angle;
@@ -150,11 +125,11 @@ var __extends =
             var s = a / 30,
               o = s % this.skin_cells.length;
             if (s >= 0 && s < this.goods_lst.length) {
-              e[o] = !0;
+              e[o] = true;
               var l = this.skin_cells[o];
               if (this.skin_cells[o].goods_index != s) {
                 var h = this.goods_lst[s];
-                (l.me.visible = !0),
+                (l.me.visible = true),
                   (l.goods_index = s),
                   game.LoadMgr.setImgSkin(l.icon, h.icon + '/waitingroom.png');
               }
@@ -175,16 +150,16 @@ var __extends =
         for (i = 0; i < this.skin_cells.length; i++)
           e[i] ||
             ((this.skin_cells[i].goods_index = -1),
-            (this.skin_cells[i].me.visible = !1),
+            (this.skin_cells[i].me.visible = false),
             (this.skin_cells[i].me.width = 0));
       }),
       (n.prototype.refresh_price = function(t, e, i) {
         var n = t.getChildByName('container_origin_price'),
           a = t.getChildByName('container_discount');
-        if (((n.visible = !1), (a.visible = !1), i >= 1))
-          (n.visible = !0), (n.getChildByName('now_price').text = e.toString());
+        if (((n.visible = false), (a.visible = false), i >= 1))
+          (n.visible = true), (n.getChildByName('now_price').text = e.toString());
         else {
-          (a.visible = !0),
+          (a.visible = true),
             (a.getChildByName('discount').text =
               '-' + (100 - Math.ceil(100 * i)) + '%');
           var r = a.getChildByName('now_price'),
@@ -203,21 +178,21 @@ var __extends =
         if (t.UI_Sushe.skin_owned(i.item_id))
           (this.container_buy.getChildByName(
             'container_discount'
-          ).visible = !1),
+          ).visible = false),
             (this.container_buy.getChildByName(
               'container_origin_price'
-            ).visible = !1),
-            (this.container_buy.getChildByName('btn_buy').visible = !1),
-            (this.container_buy.getChildByName('owned').visible = !0);
+            ).visible = false),
+            (this.container_buy.getChildByName('btn_buy').visible = false),
+            (this.container_buy.getChildByName('owned').visible = true);
         else {
-          (this.container_buy.getChildByName('owned').visible = !1),
+          (this.container_buy.getChildByName('owned').visible = false),
             this.refresh_price(
               this.container_buy,
               i.price,
               t.UI_Shop.goods_discount_value(i.id)
             );
           var n = this.container_buy.getChildByName('btn_buy');
-          (n.visible = !0),
+          (n.visible = true),
             (n.clickHandler = Laya.Handler.create(
               this,
               function() {
@@ -237,7 +212,7 @@ var __extends =
                         )
                       },
                       function(a, r) {
-                        game.Tools.setGrayDisable(n, !1),
+                        game.Tools.setGrayDisable(n, false),
                           a || r.error
                             ? t.UIMgr.Inst.showNetReqError('buyFromShop', a, r)
                             : (view.AudioMgr.PlayAudio(106),
@@ -252,7 +227,7 @@ var __extends =
                 );
               },
               null,
-              !1
+              false
             ));
         }
         Laya.Tween.clearAll(this.container_buy),
@@ -317,7 +292,7 @@ var __extends =
       }),
       (n.prototype.show = function(i) {
         var n = this;
-        void 0 === i && (i = -1),
+        undefined === i && (i = -1),
           (this.goods_lst = []),
           (this.current_angle = 0),
           (this.choosed_goods_index = 0),
@@ -335,33 +310,33 @@ var __extends =
                 (n.current_angle = 30 * n.choosed_goods_index)));
           }),
           (this.target_angle = this.current_angle),
-          (this.enable = !0),
+          (this.enable = true),
           this.onCenterCharacterChange(),
           this.refresh_scroll(),
           (this.mouse_state = e.none),
           Laya.timer.clearAll(this),
           Laya.timer.frameLoop(1, this, this.update_anim),
-          (this.locking = !0),
+          (this.locking = true),
           t.UIBase.anim_alpha_in(this.container_right, { x: 100 }, 200),
           Laya.timer.once(350, this, function() {
-            n.locking = !1;
+            n.locking = false;
           });
       }),
       (n.prototype.close = function() {
         var e = this;
         Laya.timer.clearAll(this),
-          (this.locking = !0),
+          (this.locking = true),
           t.UIBase.anim_alpha_out(this.container_right, { x: 100 }, 200),
           t.UIBase.anim_alpha_out(this.container_illust, { x: -100 }, 200),
           t.UIBase.anim_alpha_out(this.container_info, { x: -100 }, 200),
           Laya.timer.once(200, this, function() {
-            (e.locking = !1), (e.enable = !1), t.UI_Shop.Inst.show(4);
+            (e.locking = false), (e.enable = false), t.UI_Shop.Inst.show(4);
           });
       }),
       (n.prototype.onDisable = function() {
         for (t = 0; t < this.skin_cells.length; t++)
           (this.skin_cells[t].icon.skin = ''),
-            (this.skin_cells[t].me.visible = !1),
+            (this.skin_cells[t].me.visible = false),
             (this.skin_cells[t].me.width = 0),
             (this.skin_cells[t].mask.width = 0),
             (this.skin_cells[t].goods_index = -1);

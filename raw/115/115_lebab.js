@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => {
@@ -32,15 +9,15 @@ let uiscript;
           (this.wrong = t.getChildByName('no')),
           (this.accept = t.getChildByName('yes')),
           this.txtinput.on('focus', this, () => {
-            (i.wrong.visible = !1), (i.accept.visible = !1);
+            (i.wrong.visible = false), (i.accept.visible = false);
           }),
           this.txtinput.on('blur', this, () => {
-            (i.wrong.visible = !1),
-              (i.accept.visible = !1),
+            (i.wrong.visible = false),
+              (i.accept.visible = false),
               '' != i.txtinput.text &&
                 (!i.func_pending || i.func_pending.run()
-                  ? (i.accept.visible = !0)
-                  : (i.wrong.visible = !0));
+                  ? (i.accept.visible = true)
+                  : (i.wrong.visible = true));
           }),
           this.reset();
       }
@@ -48,23 +25,23 @@ let uiscript;
         get() {
           return this.txtinput.text;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(t.prototype, 'isOK', {
         get() {
           return !this.func_pending || this.func_pending.run();
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (t.prototype.showError = function() {
-        (this.accept.visible = !1), (this.wrong.visible = !0);
+        (this.accept.visible = false), (this.wrong.visible = true);
       }),
       (t.prototype.reset = function() {
         (this.txtinput.text = ''),
-          (this.wrong.visible = !1),
-          (this.accept.visible = !1);
+          (this.wrong.visible = false),
+          (this.accept.visible = false);
       }),
       t
     ;
@@ -73,14 +50,14 @@ let uiscript;
   const i = (i => {
     function n() {
       const t = i.call(this, new ui.entrance.mail_registUI()) || this;
-      return (t.during_send_cd = !1), (t.last_send_time = 0), (n.Inst = t), t;
+      return (t.during_send_cd = false), (t.last_send_time = 0), (n.Inst = t), t;
     }
     return __extends(n, i),
     (n.prototype.onCreate = function() {
       const i = this;
       (this.root = this.me.getChildByName('page_mail_regist')),
         (this.connect_loading = this.me.getChildByName('loading')),
-        (this.connect_loading.visible = !1),
+        (this.connect_loading.visible = false),
         (this.content = this.root.getChildByName('root')),
         (this.account = new e(
           this.content.getChildByName('container_account'),
@@ -110,7 +87,7 @@ let uiscript;
             i.locking || i.close();
           },
           null,
-          !1
+          false
         )),
         (this.btn_regist = this.content.getChildByName('btn_regist')),
         (this.btn_regist.clickHandler = Laya.Handler.create(
@@ -119,7 +96,7 @@ let uiscript;
             i.locking || i.onRegist();
           },
           null,
-          !1
+          false
         )),
         (this.btn_send_code = this.content.getChildByName('btn_send_code')),
         (this.label_send_code = this.btn_send_code.getChildByName('info')),
@@ -130,8 +107,8 @@ let uiscript;
               if ('' != i.account.text) {
                 if (i.account.isOK) {
                   const e = i.account.text;
-                  (i.btn_send_code.mouseEnabled = !1),
-                    (i.during_send_cd = !0),
+                  (i.btn_send_code.mouseEnabled = false),
+                    (i.during_send_cd = true),
                     (i.last_send_time = Laya.timer.currTimer),
                     i.refresh_send();
                   i.account.text;
@@ -148,7 +125,7 @@ let uiscript;
                     n.once(Laya.Event.ERROR, i, e => {
                       t.UI_Entrance_Error.Inst.show(
                         game.Tools.strOfLocalization(2790),
-                        !1
+                        false
                       ),
                         (i.last_send_time = 0);
                     }),
@@ -161,15 +138,15 @@ let uiscript;
               } else i.account.showError();
           }
         )),
-        (this.root.visible = !1),
-        (this.locking = !1),
+        (this.root.visible = false),
+        (this.locking = false),
         (this.container_social = this.content.getChildByName('social')),
         (this.social_btns = []);
       for (s = 0; s < 4; s++)
         this.social_btns.push(
           this.container_social.getChildByName(`btn${s}`)
         ),
-          (this.social_btns[s].visible = !1);
+          (this.social_btns[s].visible = false);
       let n = [];
       'chs' == GameMgr.client_language &&
         (n = [
@@ -192,13 +169,13 @@ let uiscript;
         var a = e => {
             const i = r.social_btns[e];
             e < n.length
-              ? ((i.visible = !0),
+              ? ((i.visible = true),
                 (i.getChildAt(0).skin = game.Tools.localUISrc(n[e].img)),
                 (i.clickHandler = new Laya.Handler(r, () => {
                   t.UI_Entrance.trySocio(n[e].type);
                 })),
                 (i.x = (465 * e) / (n.length - 1) - 40))
-              : (i.visible = !1);
+              : (i.visible = false);
           },
           r = this,
           s = 0;
@@ -219,12 +196,12 @@ let uiscript;
           () => {
             t.UI_User_Xieyi.Inst.show(
               Laya.Handler.create(i, () => {
-                i.onchangecheck(!0);
+                i.onchangecheck(true);
               })
             );
           },
           null,
-          !1
+          false
         )),
         (this.container_checkbox.getChildByName(
           'btn_check'
@@ -234,7 +211,7 @@ let uiscript;
             i.onchangecheck(!i.checkbox.visible);
           },
           null,
-          !1
+          false
         )),
         this.account.reset(),
         this.password0.reset(),
@@ -243,33 +220,33 @@ let uiscript;
     }),
     (n.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.content,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.enable = !1);
+            (e.locking = false), (e.enable = false);
           })
         ),
         Laya.timer.clearAll(this);
     }),
     (n.prototype.show = function() {
       const e = this;
-      (this.root.visible = !0),
-        (this.locking = !0),
+      (this.root.visible = true),
+        (this.locking = true),
         Laya.timer.clearAll(this),
-        (this.enable = !0),
+        (this.enable = true),
         t.UIBase.anim_pop_out(
           this.content,
           Laya.Handler.create(this, () => {
-            e.locking = !1;
+            e.locking = false;
           })
         ),
-        (this.connect_loading.visible = !1),
-        this.onchangecheck(!0),
+        (this.connect_loading.visible = false),
+        this.onchangecheck(true),
         this.during_send_cd
           ? this.refresh_send()
-          : ((this.during_send_cd = !1),
-            (this.btn_send_code.mouseEnabled = !0),
+          : ((this.during_send_cd = false),
+            (this.btn_send_code.mouseEnabled = true),
             (this.label_send_code.text = game.Tools.strOfLocalization(
               2787
             ))),
@@ -291,7 +268,7 @@ let uiscript;
           t.UI_Entrance.Inst.server_region_name ==
             game.LobbyNetMgr.gateway_region_name
             ? t.UI_Entrance.Inst._try_regist_account(i, n, a)
-            : ((this.connect_loading.visible = !0),
+            : ((this.connect_loading.visible = true),
               Laya.timer.once(500, this, () => {
                 game.LobbyNetMgr.Inst.OpenConnect(
                   t.UI_Entrance.Inst.server_region_name,
@@ -301,7 +278,7 @@ let uiscript;
                       : maintenance
                       ? t.UI_Entrance_Maintenance.Inst.show(maintenance)
                       : t.UI_Entrance.Inst.showInfo(info),
-                      (e.connect_loading.visible = !1);
+                      (e.connect_loading.visible = false);
                   })
                 );
               })));
@@ -315,8 +292,8 @@ let uiscript;
       if (this.during_send_cd) {
         const t = Laya.timer.currTimer - this.last_send_time;
         t >= 6e4
-          ? ((this.during_send_cd = !1),
-            (this.btn_send_code.mouseEnabled = !0),
+          ? ((this.during_send_cd = false),
+            (this.btn_send_code.mouseEnabled = true),
             (this.label_send_code.text = game.Tools.strOfLocalization(
               2787
             )))

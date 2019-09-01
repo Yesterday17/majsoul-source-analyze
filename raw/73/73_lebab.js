@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let game;
 !(t => {
   const e = (() => {
@@ -53,19 +30,19 @@ let game;
       get() {
         return this._height;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(e.prototype, 'width', {
       get() {
         return this._width;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (e.prototype.render = function(t) {
       const e = t.getChildByName('word');
-      (e.text = this.val), (e.visible = !0);
+      (e.text = this.val), (e.visible = true);
     }),
     e
   ;
@@ -82,11 +59,11 @@ let game;
     return (t.prototype.addInfo = function(t, i, n) {
       const a = e.Create(JSON.parse(i));
       return null == a
-        ? (app.Log.Error(`未找到合适的聊天类型 data:${i}`), !1)
+        ? (app.Log.Error(`未找到合适的聊天类型 data:${i}`), false)
         : ((a.timeStamp = t),
           this.infos.push({ info: a, isme: n }),
           (this.lastTimeStamp = t),
-          !0);
+          true);
     }),
     t
   ;
@@ -98,7 +75,7 @@ let game;
     }
     return (
       (t.prototype.addInfo = function(t) {
-        return null != e.Create(t.content) && (this.infos.push(t), !0);
+        return null != e.Create(t.content) && (this.infos.push(t), true);
       }),
       t
     );
@@ -116,7 +93,7 @@ let game;
         (this.friend_chat = []),
         app.NetAgent.AddListener2Lobby(
           'NotifyChatMessage',
-          Laya.Handler.create(this, this._onReceiveChat, null, !1)
+          Laya.Handler.create(this, this._onReceiveChat, null, false)
         );
     }),
     (t.prototype._onReceiveChat = function({type, world_chat, private_chat}) {
@@ -124,10 +101,10 @@ let game;
       else if (private_chat) {
         const e = private_chat;
         let i = 0;
-        let n = !1;
+        let n = false;
         e.sender_id == GameMgr.Inst.account_id
-          ? ((n = !0), (i = e.target_id))
-          : ((n = !1), (i = e.sender_id));
+          ? ((n = true), (i = e.target_id))
+          : ((n = false), (i = e.sender_id));
         this.findFriend(i).addInfo(e.timestamp, e.content, n);
       }
     }),

@@ -1,34 +1,9 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function e(t) {
         var e = this;
-        (this.locking = !1),
+        (this.locking = false),
           (this.match_id = 0),
           (this.contest_id = 0),
           (this.me = t),
@@ -52,7 +27,7 @@ var __extends =
               e.locking || e.close();
             },
             null,
-            !1
+            false
           )),
           (this.root.getChildByName(
             'btn_close1'
@@ -62,7 +37,7 @@ var __extends =
               e.locking || e.close();
             },
             null,
-            !1
+            false
           )),
           (this.root.getChildByName(
             'btn_enter'
@@ -73,31 +48,31 @@ var __extends =
                 (e.close(), n.Inst.enter_match(e.match_id, e.contest_id));
             },
             null,
-            !1
+            false
           ));
       }
       return (
         (e.prototype.show = function(e) {
           var i = this;
-          (this.locking = !0),
-            (this.me.visible = !0),
+          (this.locking = true),
+            (this.me.visible = true),
             t.UIBase.anim_pop_out(
               this.root,
               Laya.Handler.create(this, function() {
-                i.locking = !1;
+                i.locking = false;
               })
             ),
             (this.label_name.text = e.contest_name),
             (this.label_starttime.text =
               game.Tools.time2YearMounthDate(e.start_time) +
               ' ' +
-              game.Tools.time2HourMinute(e.start_time, !0) +
+              game.Tools.time2HourMinute(e.start_time, true) +
               ' ' +
               game.Tools.strOfLocalization(2081) +
               ' ' +
               game.Tools.time2YearMounthDate(e.finish_time) +
               ' ' +
-              game.Tools.time2HourMinute(e.finish_time, !0)),
+              game.Tools.time2HourMinute(e.finish_time, true)),
             (this.match_id = e.unique_id),
             (this.contest_id = e.contest_id),
             (this.label_info.text = game.Tools.strWithoutForbidden(
@@ -112,11 +87,11 @@ var __extends =
         }),
         (e.prototype.close = function() {
           var e = this;
-          (this.locking = !0),
+          (this.locking = true),
             t.UIBase.anim_pop_hide(
               this.root,
               Laya.Handler.create(this, function() {
-                (e.locking = !1), (e.me.visible = !1);
+                (e.locking = false), (e.me.visible = false);
               })
             );
         }),
@@ -130,8 +105,8 @@ var __extends =
                 t *
                 this.scrollbar.height *
                 (1 - this.panel.height / this.label_info.height)),
-              (this.scrollbar.visible = !0);
-          } else this.scrollbar.visible = !1;
+              (this.scrollbar.visible = true);
+          } else this.scrollbar.visible = false;
         }),
         e
       );
@@ -139,12 +114,12 @@ var __extends =
     i = (function() {
       function e(e) {
         var i = this;
-        (this.have_data = !1),
+        (this.have_data = false),
           (this.match_infos = {}),
           (this.match_ids = []),
-          (this.only_follow = !1),
+          (this.only_follow = false),
           (this.all_match_list = []),
-          (this.follow_changed = !1),
+          (this.follow_changed = false),
           (this.me = e),
           (e.getChildByName(
             'btn_checkmatchID'
@@ -183,7 +158,7 @@ var __extends =
               );
             },
             null,
-            !1
+            false
           )),
           (this.input = e.getChildByName('input').getChildByName('txtinput')),
           (e
@@ -196,7 +171,7 @@ var __extends =
               i.refresh_match_list(-1, i.input.text);
             },
             null,
-            !1
+            false
           )),
           this.input.on(laya.events.Event.KEY_DOWN, this, function(t) {
             t.keyCode == Laya.Keyboard.ENTER &&
@@ -213,7 +188,7 @@ var __extends =
                 i.refresh_match_list();
             },
             null,
-            !1
+            false
           )),
           (this.noinfo = this.me.getChildByName('noinfo')),
           (this.nolimitlist = e.scriptMap['capsui.NoLimitList']),
@@ -245,7 +220,7 @@ var __extends =
                     if (
                       (app.Log.log(JSON.stringify(n)),
                       (n = JSON.parse(JSON.stringify(n))),
-                      (e.have_data = !0),
+                      (e.have_data = true),
                       n.contests)
                     )
                       for (a = 0; a < n.contests.length; a++) {
@@ -253,7 +228,7 @@ var __extends =
                         e.match_infos[r.unique_id] ||
                           (e.all_match_list.push(r.unique_id),
                           (e.match_infos[r.unique_id] = r)),
-                          (e.match_infos[r.unique_id].follow = !1);
+                          (e.match_infos[r.unique_id].follow = false);
                       }
                     if (n.follow_contests)
                       for (var a = 0; a < n.follow_contests.length; a++) {
@@ -261,22 +236,22 @@ var __extends =
                         e.match_infos[r.unique_id] ||
                           (e.all_match_list.push(r.unique_id),
                           (e.match_infos[r.unique_id] = r)),
-                          (e.match_infos[r.unique_id].follow = !0);
+                          (e.match_infos[r.unique_id].follow = true);
                       }
                     e.refresh_match_list();
                   }
                 }
               ),
-            (this.follow_changed = !1);
+            (this.follow_changed = false);
         }),
         (e.prototype.clearData = function() {
-          (this.have_data = !1),
+          (this.have_data = false),
             (this.match_infos = {}),
             (this.all_match_list = []),
             (this.match_ids = []),
-            (this.only_follow = !1),
-            (this.check_follow.visible = !1),
-            (this.follow_changed = !1),
+            (this.only_follow = false),
+            (this.check_follow.visible = false),
+            (this.follow_changed = false),
             this.nolimitlist.reset();
         }),
         (e.prototype.load_info = function(e) {
@@ -289,7 +264,7 @@ var __extends =
             null == this.match_infos[s].public_notice && n.push(s), a++;
           }
           0 == n.length
-            ? this.nolimitlist.loadOver(!0, a)
+            ? this.nolimitlist.loadOver(true, a)
             : app.NetAgent.sendReq2Lobby(
                 'Lobby',
                 'fetchCustomizedContestExtendInfo',
@@ -301,7 +276,7 @@ var __extends =
                       e,
                       a.error
                     ),
-                      i.nolimitlist.loadOver(!1, 0);
+                      i.nolimitlist.loadOver(false, 0);
                   else {
                     app.Log.log(JSON.stringify(a));
                     var r = 0;
@@ -313,11 +288,11 @@ var __extends =
                           r++;
                       }
                     r != n.length
-                      ? (i.nolimitlist.loadOver(!1, 0),
+                      ? (i.nolimitlist.loadOver(false, 0),
                         t.UIMgr.Inst.ShowErrorInfo(
                           game.Tools.strOfLocalization(2084)
                         ))
-                      : i.nolimitlist.loadOver(!0, r);
+                      : i.nolimitlist.loadOver(true, r);
                   }
                 }
               );
@@ -325,8 +300,8 @@ var __extends =
         (e.prototype.refresh_match_list = function(t, e) {
           var i = this;
           if (
-            (void 0 === t && (t = -1),
-            void 0 === e && (e = ''),
+            (undefined === t && (t = -1),
+            undefined === e && (e = ''),
             (this.match_ids = []),
             -1 != t)
           )
@@ -336,10 +311,10 @@ var __extends =
               var a = this.all_match_list[n],
                 r = this.match_infos[a];
               if (!this.only_follow || r.follow) {
-                var s = !0;
+                var s = true;
                 if ('' != e) {
                   var o = r.contest_name;
-                  game.Tools.stringContainerSub(o, e) || (s = !1);
+                  game.Tools.stringContainerSub(o, e) || (s = false);
                 }
                 s && this.match_ids.push(a);
               }
@@ -365,7 +340,7 @@ var __extends =
                 ? this.show_noinfo(game.Tools.strOfLocalization(2085))
                 : this.show_noinfo(game.Tools.strOfLocalization(2086))
               : ((this.nolimitlist.total_count = this.match_ids.length),
-                (this.noinfo.visible = !1));
+                (this.noinfo.visible = false));
         }),
         (e.prototype.render_item = function(t) {
           var e = t.index,
@@ -391,9 +366,9 @@ var __extends =
               s.text = o.substring(0, c - 1) + '...';
             }
           } else s.text = '';
-          (i.getChildByName('prepare').visible = !1),
-            (i.getChildByName('start').visible = !1),
-            (i.getChildByName('end').visible = !1),
+          (i.getChildByName('prepare').visible = false),
+            (i.getChildByName('start').visible = false),
+            (i.getChildByName('end').visible = false),
             (i.getChildByName('id').text = 'ID:' + r.contest_id);
           var u,
             _ = 0;
@@ -408,18 +383,18 @@ var __extends =
               (u = i.getChildByName('end')), (_ = r.finish_time);
           }
           u &&
-            ((u.visible = !0),
+            ((u.visible = true),
             (u.getChildByName('time').text =
               game.Tools.time2YearMounthDate(_) +
               ' ' +
-              game.Tools.time2HourMinute(_, !0))),
+              game.Tools.time2HourMinute(_, true))),
             (i.getChildByName('check').clickHandler = Laya.Handler.create(
               this,
               function() {
                 n.Inst.pop_out_notice(r);
               },
               null,
-              !1
+              false
             )),
             (i.getChildByName('btn_enter').clickHandler = Laya.Handler.create(
               this,
@@ -427,15 +402,15 @@ var __extends =
                 n.Inst.enter_match(a, r.contest_id);
               },
               null,
-              !1
+              false
             ));
         }),
         (e.prototype.change_match_follow = function(t, e) {
           this.match_infos[t] &&
-            ((this.match_infos[t].follow = e), (this.follow_changed = !0));
+            ((this.match_infos[t].follow = e), (this.follow_changed = true));
         }),
         (e.prototype.show_noinfo = function(t) {
-          (this.noinfo.text = t), (this.noinfo.visible = !0);
+          (this.noinfo.text = t), (this.noinfo.visible = true);
         }),
         (e.prototype.get_match_data = function(t) {
           return this.match_infos[t];
@@ -446,7 +421,7 @@ var __extends =
     n = (function(n) {
       function a() {
         var t = n.call(this, new ui.lobby.match_lobbyUI()) || this;
-        return (t.locking = !1), (a.Inst = t), t;
+        return (t.locking = false), (a.Inst = t), t;
       }
       return (
         __extends(a, n),
@@ -462,35 +437,35 @@ var __extends =
                   (n.content.clearData(),
                   n.close(),
                   Laya.timer.once(200, n, function() {
-                    t.UI_Lobby.Inst.enable = !0;
+                    t.UI_Lobby.Inst.enable = true;
                   }));
               },
               null,
-              !1
+              false
             )),
             (this.content = new i(this.me.getChildByName('root'))),
             (this.pop_info = new e(this.me.getChildByName('pop_info')));
         }),
         (a.prototype.show = function() {
           var e = this;
-          game.Scene_Lobby.Inst.change_bg('indoor', !1),
-            (this.locking = !0),
-            (this.enable = !0),
-            (this.pop_info.me.visible = !1),
+          game.Scene_Lobby.Inst.change_bg('indoor', false),
+            (this.locking = true),
+            (this.enable = true),
+            (this.pop_info.me.visible = false),
             this.content.onShow(),
             t.UIBase.anim_alpha_in(this.container_top, { y: -30 }, 150),
             t.UIBase.anim_alpha_in(this.content.me, { y: 30 }, 150),
             Laya.timer.once(200, this, function() {
-              e.locking = !1;
+              e.locking = false;
             });
         }),
         (a.prototype.close = function() {
           var e = this;
-          (this.locking = !0),
+          (this.locking = true),
             t.UIBase.anim_alpha_out(this.container_top, { y: -30 }, 150),
             t.UIBase.anim_alpha_out(this.content.me, { y: 30 }, 150),
             Laya.timer.once(200, this, function() {
-              (e.locking = !1), (e.enable = !1);
+              (e.locking = false), (e.enable = false);
             });
         }),
         (a.prototype.enter_match = function(e, i) {

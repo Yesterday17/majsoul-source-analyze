@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let game;
 !(t => {
   const e = (e => {
@@ -45,8 +22,8 @@ let game;
         (t.bg_back_mat = null),
         (t._current_bg = ''),
         (t._change_start_time = 0),
-        (t._during_change_bg = !1),
-        (t._check_idcard = !1),
+        (t._during_change_bg = false),
+        (t._check_idcard = false),
         (t._load_listener = []),
         (t._progress_listener = []),
         (t._yard_img_url = ''),
@@ -107,7 +84,7 @@ let game;
                             GameMgr.Inst.addScene(
                               (i.scene_container = new Laya.Sprite())
                             ),
-                              (i.scene_container.visible = !0),
+                              (i.scene_container.visible = true),
                               (i._load_state = t.E_LoadState.loaded);
                             for (
                               let e = 0;
@@ -126,7 +103,7 @@ let game;
                     i,
                     t => i.onProgressUpdate(0.7 + 0.3 * t),
                     null,
-                    !1
+                    false
                   )
                 );
               }),
@@ -134,7 +111,7 @@ let game;
                 i,
                 t => i.onProgressUpdate(0.5 + 0.2 * t),
                 null,
-                !1
+                false
               )
             );
           }),
@@ -142,7 +119,7 @@ let game;
             this,
             t => i.onProgressUpdate(0.5 * t),
             null,
-            !1
+            false
           )
         );
     }),
@@ -184,10 +161,10 @@ let game;
                       .getChildByName('bg_back')),
                     (n.bg_back_mat =
                       n.bg_back_plane.meshRender.sharedMaterial),
-                    (n.bg_front_plane.active = !1),
+                    (n.bg_front_plane.active = false),
                     i.runWith(0.6),
                     Laya.timer.frameOnce(8, n, () => {
-                      (n.scene.visible = !0),
+                      (n.scene.visible = true),
                         i.runWith(0.8),
                         n.preheart_effect(
                           e,
@@ -197,7 +174,7 @@ let game;
                               i.runWith(0.8 + 0.2 * t);
                             },
                             null,
-                            !1
+                            false
                           )
                         );
                     });
@@ -206,7 +183,7 @@ let game;
                   n,
                   t => i.runWith(0.3 + 0.3 * t),
                   null,
-                  !1
+                  false
                 )
               );
           }),
@@ -214,7 +191,7 @@ let game;
             this,
             t => i.runWith(0.3 * t),
             null,
-            !1
+            false
           )
         );
     }),
@@ -224,7 +201,7 @@ let game;
         t.EffectMgr.preheat_3d_effect(
           this.ui_effect_list,
           t.FrontEffect.Inst.root2,
-          !0,
+          true,
           Laya.Handler.create(this, () => {
             Laya.timer.frameOnce(5, n, () => {
               i.runWith(1), e.run();
@@ -234,13 +211,13 @@ let game;
         );
     }),
     (i.prototype.onEnable = function() {
-      (this._during_change_bg = !1),
+      (this._during_change_bg = false),
         uiscript.UIMgr.Inst.onSceneLobby_Enable(),
-        this.scene && (this.scene.visible = !0),
+        this.scene && (this.scene.visible = true),
         view.BgmListMgr.PlayLobbyBgm(),
         this.pending_enter_event(),
-        (uiscript.UI_Invite.Inst.enable = !0),
-        Laya.timer.frameLoop(1, this, this._update, null, !0);
+        (uiscript.UI_Invite.Inst.enable = true),
+        Laya.timer.frameLoop(1, this, this._update, null, true);
     }),
     (i.prototype.pending_enter_event = function() {
       const e = this;
@@ -255,7 +232,7 @@ let game;
               GameMgr.Inst.mj_game_token,
               GameMgr.Inst.mj_game_uuid,
               GameMgr.Inst.mj_server_location,
-              !0,
+              true,
               null
             );
         else if (uiscript.UI_WaitingRoom.Inst.inRoom)
@@ -298,23 +275,23 @@ let game;
             uiscript.UI_Match_Room.Inst.enable ||
               uiscript.UI_Match_Room.Inst.show(GameMgr.Inst.custom_match_id);
         else {
-          let h = !0;
+          let h = true;
           if (
             ((uiscript.UI_Ob.Inst.enable ||
               uiscript.UI_PaiPu.Inst.enable ||
               uiscript.UI_Match_Room.Inst.enable) &&
-              ((h = !1), (i = 'indoor')),
+              ((h = false), (i = 'indoor')),
             h)
           ) {
-            uiscript.UI_Lobby.Inst.enable = !0;
-            let c = !1;
+            uiscript.UI_Lobby.Inst.enable = true;
+            let c = false;
             if (!this._check_idcard) {
-              this._check_idcard = !0;
+              this._check_idcard = true;
               'chs' != GameMgr.client_language ||
                 uiscript.UI_ShiMingRenZheng.renzhenged ||
                 GameMgr.Inst.player_in_haiwai ||
                 !GameMgr.inRelease ||
-                ((c = !0),
+                ((c = true),
                 Laya.LocalStorage.setItem(
                   `shiming_time_${t.Tools.encode_account_id(GameMgr.Inst.account_id)}`,
                   Date.now().toString()
@@ -353,7 +330,7 @@ let game;
           }
         }
       else uiscript.UI_Nickname.show();
-      this.change_bg(i, !0);
+      this.change_bg(i, true);
     }),
     (i.prototype.pending_pop2 = () => {
       uiscript.UI_Info.lobbyPopout() ||
@@ -363,20 +340,20 @@ let game;
     (i.prototype.onDisable = function() {
       Laya.AtlasResourceManager.instance.freeAll(),
         uiscript.UIMgr.Inst.onSceneLobby_Disable(),
-        (this.scene.visible = !1),
+        (this.scene.visible = false),
         t.LoadMgr.disposeSceneRes('lobby'),
         (this._current_bg = ''),
         (this.bg_back_mat = null),
         (this.bg_back_plane = null),
         (this.bg_front_mat = null),
         (this.bg_front_plane = null),
-        this.scene.destroy(!0),
+        this.scene.destroy(true),
         (this.scene = null),
         (this._lobby_effet_name = ''),
         (this._loading_yard_img_url = ''),
         t.EffectMgr.dispose_3d_effect(this.ui_effect_list),
         t.EffectMgr.force_dispose_3d_res(this.scene_path),
-        (this._during_change_bg = !1),
+        (this._during_change_bg = false),
         Laya.timer.clearAll(this);
     }),
     (i.prototype.addLoadListenter = function(e, i) {
@@ -405,17 +382,17 @@ let game;
               r < a.numChildren;
               r++
             )
-              a.getChildAt(r).active = !1;
+              a.getChildAt(r).active = false;
             this._lobby_effet_name = n;
           }
-          '' == this._current_bg && (e = !0),
+          '' == this._current_bg && (e = true),
             e
-              ? ((this.bg_front_plane.active = !1),
-                (this._during_change_bg = !1),
+              ? ((this.bg_front_plane.active = false),
+                (this._during_change_bg = false),
                 (this.scene
                   .getChildByName('effects')
-                  .getChildByName(this._lobby_effet_name).active = !0))
-              : ((this.bg_front_plane.active = !0),
+                  .getChildByName(this._lobby_effet_name).active = true))
+              : ((this.bg_front_plane.active = true),
                 (this.bg_front_mat.albedoTexture = this.bg_back_mat.albedoTexture),
                 (this.bg_front_mat.albedoColor = new Laya.Vector4(
                   1,
@@ -423,7 +400,7 @@ let game;
                   1,
                   1
                 )),
-                (this._during_change_bg = !0),
+                (this._during_change_bg = true),
                 (this._change_start_time = Laya.timer.currTimer)),
             (this.bg_back_mat.albedoTexture = Laya.loader.getRes(i));
         }
@@ -441,7 +418,7 @@ let game;
                   if (e._yard_img_url != t) {
                     const i = e._yard_img_url;
                     (e._yard_img_url = t),
-                      'yard' == e._current_bg && e.change_bg('yard', !0),
+                      'yard' == e._current_bg && e.change_bg('yard', true),
                       Laya.loader.clearTextureRes(i);
                   }
                   e._loading_yard_img_url = '';
@@ -454,11 +431,11 @@ let game;
       if (this._during_change_bg) {
         const t = Laya.timer.currTimer - this._change_start_time;
         if (t >= 200)
-          (this._during_change_bg = !1),
-            (this.bg_front_plane.active = !1),
+          (this._during_change_bg = false),
+            (this.bg_front_plane.active = false),
             (this.scene
               .getChildByName('effects')
-              .getChildByName(this._lobby_effet_name).active = !0);
+              .getChildByName(this._lobby_effet_name).active = true);
         else {
           const e = 1 - t / 200;
           this.bg_front_mat.albedoColor = new Laya.Vector4(1, 1, 1, e);

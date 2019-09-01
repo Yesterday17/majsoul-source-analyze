@@ -108,20 +108,20 @@ let game;
       if (e == i.character) {
         if ((a = uiscript.UI_Sushe.characters))
           for (r = 0; r < a.length; r++)
-            if (a[r] && a[r].charid == t) return !0;
+            if (a[r] && a[r].charid == t) return true;
       } else if (e == i.item) {
         const n = cfg.item_definition.item.get(t);
         if (n && (4 == n.category || 5 == n.category)) {
-          if (uiscript.UI_Bag.get_item_count(t) > 0) return !0;
+          if (uiscript.UI_Bag.get_item_count(t) > 0) return true;
         }
       } else {
         if (e == i.skin) return uiscript.UI_Sushe.skin_owned(t);
         if (e == i.title) {
           var a = uiscript.UI_TitleBook.owned_title;
-          if (a) for (var r = 0; r < a.length; r++) if (a[r] == t) return !0;
+          if (a) for (var r = 0; r < a.length; r++) if (a[r] == t) return true;
         }
       }
-      return !1;
+      return false;
     }),
     t
   ;

@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -31,7 +6,7 @@ var __extends =
       return (
         (t.panel = null),
         (t.desc = null),
-        (t.locking = !1),
+        (t.locking = false),
         (t.title = null),
         (i.Inst = t),
         t
@@ -43,10 +18,10 @@ var __extends =
         var t = this;
         (this.root = this.me.getChildByName('root')),
           (this.panel = this.root.getChildByName('content')),
-          (this.panel.vScrollBar.visible = !1),
+          (this.panel.vScrollBar.visible = false),
           (this.desc = this.panel.getChildByName('desc')),
           (this.title = this.root.getChildByName('title')),
-          (this.locking = !1),
+          (this.locking = false),
           (this.root.getChildByName(
             'btn_confirm'
           ).clickHandler = Laya.Handler.create(
@@ -55,31 +30,31 @@ var __extends =
               t.close();
             },
             null,
-            !1
+            false
           ));
       }),
       (i.prototype.show = function(e, i) {
         var n = this;
-        (this.me.visible = !0),
+        (this.me.visible = true),
           (this.title.text = e),
           (this.panel.vScrollBar.value = 0),
           (this.desc.text = i),
           (this.desc.height = this.desc.textField.textHeight),
-          (this.locking = !0),
+          (this.locking = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              n.locking = !1;
+              n.locking = false;
             })
           );
       }),
       (i.prototype.close = function() {
         var e = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1), (e.me.visible = !1);
+              (e.locking = false), (e.me.visible = false);
             })
           );
       }),

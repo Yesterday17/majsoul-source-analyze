@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -59,7 +34,7 @@ var __extends =
                 ));
             },
             null,
-            !1
+            false
           )),
           (this.btn_close.clickHandler = Laya.Handler.create(
             this,
@@ -67,12 +42,12 @@ var __extends =
               e.locking || e.close();
             },
             null,
-            !1
+            false
           ));
       }),
       (i.prototype.show = function(e, i, n) {
         var a = this;
-        (this.enable = !0), (this.locking = !0);
+        (this.enable = true), (this.locking = true);
         var r = '生年月日を' + e + '年' + i + '月に設定しますか？';
         this.nianling.text = r;
         var s = new Date();
@@ -80,27 +55,27 @@ var __extends =
           s.setHours(1, 0, 0, 0),
           (this.birth_day = Math.floor(s.getTime() / 1e3)),
           n < 0
-            ? ((this.shangxian.visible = !1),
-              (this.root.getChildByName('xiaofei1').visible = !1),
-              (this.root.getChildByName('xiaofei0').visible = !1))
+            ? ((this.shangxian.visible = false),
+              (this.root.getChildByName('xiaofei1').visible = false),
+              (this.root.getChildByName('xiaofei0').visible = false))
             : ((this.shangxian.text = n.toString()),
-              (this.shangxian.visible = !0),
-              (this.root.getChildByName('xiaofei1').visible = !0),
-              (this.root.getChildByName('xiaofei0').visible = !0)),
+              (this.shangxian.visible = true),
+              (this.root.getChildByName('xiaofei1').visible = true),
+              (this.root.getChildByName('xiaofei0').visible = true)),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              a.locking = !1;
+              a.locking = false;
             })
           );
       }),
       (i.prototype.close = function() {
         var e = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1), (e.enable = !1);
+              (e.locking = false), (e.enable = false);
             })
           );
       }),

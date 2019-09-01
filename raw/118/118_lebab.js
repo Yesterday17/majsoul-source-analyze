@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => {
@@ -32,13 +9,13 @@ let uiscript;
           (this.wrong = t.getChildByName('no')),
           (this.accept = t.getChildByName('yes')),
           this.txtinput.on('focus', this, () => {
-            (i.wrong.visible = !1), (i.accept.visible = !1);
+            (i.wrong.visible = false), (i.accept.visible = false);
           }),
           this.txtinput.on('blur', this, () => {
-            (i.wrong.visible = !1),
-              (i.accept.visible = !1),
+            (i.wrong.visible = false),
+              (i.accept.visible = false),
               '' != i.txtinput.text &&
-                (i.isOK ? (i.accept.visible = !0) : (i.wrong.visible = !0));
+                (i.isOK ? (i.accept.visible = true) : (i.wrong.visible = true));
           }),
           this.reset();
       }
@@ -46,20 +23,20 @@ let uiscript;
         get() {
           return this.txtinput.text;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(t.prototype, 'isOK', {
         get() {
           return !this.func_pending || this.func_pending.run();
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (t.prototype.reset = function() {
         (this.txtinput.text = ''),
-          (this.wrong.visible = !1),
-          (this.accept.visible = !1);
+          (this.wrong.visible = false),
+          (this.accept.visible = false);
       }),
       t
     ;
@@ -68,7 +45,7 @@ let uiscript;
   const i = (i => {
     function n() {
       const t = i.call(this, new ui.entrance.reset_passwordUI()) || this;
-      return (t.sended = !1), (n.Inst = t), t;
+      return (t.sended = false), (n.Inst = t), t;
     }
     return __extends(n, i),
     (n.prototype.onCreate = function() {
@@ -82,14 +59,14 @@ let uiscript;
         (this.btn_send = this.container_input_mail.getChildByName(
           'btn_send'
         ));
-      let n = !1;
+      let n = false;
       let a = 0;
       let r = 0;
 
       const s = () => {
         n ||
           Laya.timer.currTimer < r ||
-          game.Tools.setGrayDisable(i.btn_send, !1);
+          game.Tools.setGrayDisable(i.btn_send, false);
       };
 
       (this.btn_send.clickHandler = new Laya.Handler(this, () => {
@@ -99,8 +76,8 @@ let uiscript;
           i.input_email.isOK &&
           !n
         ) {
-          game.Tools.setGrayDisable(i.btn_send, !0),
-            (n = !0),
+          game.Tools.setGrayDisable(i.btn_send, true),
+            (n = true),
             a++,
             (r = Laya.timer.currTimer + 1300 * a),
             Laya.timer.once(1300 * a, i, () => {
@@ -109,20 +86,20 @@ let uiscript;
           const e = i.input_email.text, o = new Laya.HttpRequest();
           o.once(Laya.Event.COMPLETE, i, a => {
             const r = JSON.parse(a);
-            (n = !1),
+            (n = false),
               s(),
               r.error && r.error.code
                 ? t.UI_Entrance.Inst.showError('', r.error.code)
-                : ((i.sended = !0),
+                : ((i.sended = true),
                   (i.label_email.text = game.Tools.encode_email(e)),
                   i.refresh_show());
           }),
             o.once(Laya.Event.ERROR, i, e => {
-              (n = !1),
+              (n = false),
                 s(),
                 t.UI_Entrance_Error.Inst.show(
                   game.Tools.strOfLocalization(2790),
-                  !1
+                  false
                 );
             }),
             o.send(
@@ -154,29 +131,29 @@ let uiscript;
     (n.prototype.show = function() {
       const e = this;
       this.refresh_show(),
-        (this.locking = !0),
-        (this.enable = !0),
+        (this.locking = true),
+        (this.enable = true),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            e.locking = !1;
+            e.locking = false;
           })
         );
     }),
     (n.prototype.refresh_show = function() {
       this.sended
-        ? ((this.container_input_mail.visible = !1),
-          (this.container_success.visible = !0))
-        : ((this.container_input_mail.visible = !0),
-          (this.container_success.visible = !1));
+        ? ((this.container_input_mail.visible = false),
+          (this.container_success.visible = true))
+        : ((this.container_input_mail.visible = true),
+          (this.container_success.visible = false));
     }),
     (n.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.enable = !1);
+            (e.locking = false), (e.enable = false);
           })
         );
     }),

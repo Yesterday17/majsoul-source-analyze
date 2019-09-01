@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -59,7 +34,7 @@ var __extends =
       }),
       (i.prototype.show = function(e) {
         var i = this;
-        (this.enable = !0),
+        (this.enable = true),
           view.AudioMgr.PlayAudio(115, 1, 1.4),
           t.UIMgr.Inst.closeUIWithTag_Lobby(),
           Laya.timer.once(3e3, this, function() {
@@ -154,13 +129,13 @@ var __extends =
             i.label_time.text = 'Go!!!';
           }),
           Laya.timer.once(4e3, this, function() {
-            (i.enable = !1),
+            (i.enable = false),
               t.UI_PiPeiYuYue.Inst.onPiPeiOver(),
               game.MJNetMgr.Inst.OpenConnect(
                 e.connect_token,
                 e.game_uuid,
                 e.location,
-                !1,
+                false,
                 null
               );
           });

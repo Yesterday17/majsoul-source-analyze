@@ -18,7 +18,7 @@ let uiscript;
     }
     return (t.prototype.show = function(t, e) {
       const i = this;
-      void 0 === e && (e = 1),
+      undefined === e && (e = 1),
         Laya.timer.clearAll(this),
         1 == e && 'en' == GameMgr.client_language && (e = 3),
         (this._speed = e),
@@ -26,21 +26,21 @@ let uiscript;
         (this.info.text = ''),
         (this._info = t),
         (this._index = 0),
-        (this.me.visible = !0),
+        (this.me.visible = true),
         (this.me.alpha = 0),
-        Laya.Tween.to(this.me, { alpha: 1 }, 200, null, null, 0, !0),
+        Laya.Tween.to(this.me, { alpha: 1 }, 200, null, null, 0, true),
         (this._start_time = Laya.timer.currTimer),
         (this._word_span = 50),
         (this.info.y = 10),
         (this.info.width = this.content.width),
-        (this.content.mouseEnabled = !1),
+        (this.content.mouseEnabled = false),
         Laya.timer.once(200, this, () => {
           i._nextchar();
         });
     }),
     (t.prototype._nextchar = function() {
       if (this._info.length <= this._index)
-        return this.content.refresh(), void (this.content.mouseEnabled = !0);
+        return this.content.refresh(), void (this.content.mouseEnabled = true);
       if ('[' == this._info[this._index]) {
         for (var t = -1, e = this._index + 1; e < this._info.length; e++)
           if (']' == this._info[e]) {
@@ -128,10 +128,10 @@ let uiscript;
     (t.prototype.close = function(t) {
       const e = this;
       t
-        ? ((this.me.visible = !1), Laya.timer.clearAll(this))
-        : (Laya.Tween.to(this.me, { alpha: 0 }, 200, null, null, 0, !0),
+        ? ((this.me.visible = false), Laya.timer.clearAll(this))
+        : (Laya.Tween.to(this.me, { alpha: 0 }, 200, null, null, 0, true),
           Laya.timer.once(200, this, () => {
-            (e.me.visible = !1), Laya.timer.clearAll(e);
+            (e.me.visible = false), Laya.timer.clearAll(e);
           }));
     }),
     t

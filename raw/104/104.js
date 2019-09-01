@@ -1,35 +1,10 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function e(t) {
         (this.id = 0),
           (this.me = t),
-          (this.me.visible = !1),
+          (this.me.visible = false),
           (this.container_info = t.getChildByName('info')),
           (this.plane_task_name = this.container_info.getChildByName(
             'container_taskname'
@@ -50,31 +25,31 @@ var __extends =
       return (
         (e.prototype.show = function(e) {
           var i = this;
-          this.me.visible = !0;
+          this.me.visible = true;
           var n = e.id;
           this.id = n;
           var a = cfg.activity.task.get(e.id),
             r = cfg.events.base_task.get(a.base_task_id);
           if (
-            ((this.container_info.visible = !0),
-            (this.btn_get.visible = !1),
-            (this.flag_getted.visible = !1),
+            ((this.container_info.visible = true),
+            (this.btn_get.visible = false),
+            (this.flag_getted.visible = false),
             e.rewarded
-              ? (this.flag_getted.visible = !0)
-              : ((this.btn_get.visible = !0),
+              ? (this.flag_getted.visible = true)
+              : ((this.btn_get.visible = true),
                 e.achieved
-                  ? (game.Tools.setGrayDisable(this.btn_get, !1),
+                  ? (game.Tools.setGrayDisable(this.btn_get, false),
                     (this.btn_get.clickHandler = Laya.Handler.create(
                       this,
                       function() {
-                        game.Tools.setGrayDisable(i.btn_get, !0),
+                        game.Tools.setGrayDisable(i.btn_get, true),
                           app.NetAgent.sendReq2Lobby(
                             'Lobby',
                             'completeActivityTask',
                             { task_id: n },
                             function(e, a) {
                               if (
-                                (game.Tools.setGrayDisable(i.btn_get, !1),
+                                (game.Tools.setGrayDisable(i.btn_get, false),
                                 e || a.error)
                               )
                                 t.UIMgr.Inst.showNetReqError(
@@ -84,8 +59,8 @@ var __extends =
                                 );
                               else {
                                 if (i.id == n) {
-                                  (i.btn_get.visible = !1),
-                                    (i.flag_getted.visible = !0);
+                                  (i.btn_get.visible = false),
+                                    (i.flag_getted.visible = true);
                                   var r =
                                     game.Tools.strOfLocalization(2234) +
                                     (i.item_name.text + ' ') +
@@ -98,9 +73,9 @@ var __extends =
                           );
                       },
                       null,
-                      !1
+                      false
                     )))
-                  : (game.Tools.setGrayDisable(this.btn_get, !0),
+                  : (game.Tools.setGrayDisable(this.btn_get, true),
                     (this.btn_get.clickHandler = null))),
             (this.task_name.text = r['desc_' + GameMgr.client_language]),
             (this.task_name.width = this.task_name.textField.textWidth),
@@ -146,7 +121,7 @@ var __extends =
     i = (function(t) {
       function i(e, i) {
         return (
-          void 0 === i && (i = 'activity_taskUI'),
+          undefined === i && (i = 'activity_taskUI'),
           t.call(this, e, new ui.lobby.activitys[i]()) || this
         );
       }
@@ -168,7 +143,7 @@ var __extends =
             (this.content = this.root.getChildByName('content')),
             (this.head = this.content.getChildByName('head')),
             (this.task_templete = this.content.getChildByName('task_templete')),
-            (this.task_templete.visible = !1),
+            (this.task_templete.visible = false),
             (this.task_cells = []);
           for (var i = 0; i < 25; i++)
             this.task_cells.push(
@@ -194,7 +169,7 @@ var __extends =
               ? (this.task_cells[i].show(t[i]),
                 (this.task_cells[i].me.y = e),
                 (e += this.task_cells[i].me.height))
-              : (this.task_cells[i].me.visible = !1);
+              : (this.task_cells[i].me.visible = false);
           (this.total_h = e), this.content.refresh(), this.refresh_scrollbar();
         }),
         (i.prototype.refresh_scrollbar = function() {
@@ -206,8 +181,8 @@ var __extends =
                 t *
                 this.scrollbar.height *
                 (1 - this.content.height / this.total_h)),
-              (this.scrollbar.visible = !0);
-          } else this.scrollbar.visible = !1;
+              (this.scrollbar.visible = true);
+          } else this.scrollbar.visible = false;
         }),
         (i.prototype.onDisable = function() {
           for (var t = 0; t < this.task_cells.length; t++)

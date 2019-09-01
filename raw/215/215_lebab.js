@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => {
@@ -32,8 +9,8 @@ let uiscript;
           (this.btn_next.clickHandler = Laya.Handler.create(
             this,
             this.close,
-            [!1],
-            !1
+            [false],
+            false
           )),
           (this.bg_sakura = e.getChildByName('bg_sakura')),
           (this.container_item = e.getChildByName('item'));
@@ -44,7 +21,7 @@ let uiscript;
             t.UI_ItemDetail.Inst.show(n.item_id);
           },
           null,
-          !1
+          false
         )),
           (this.icon = new t.UI_Item_Skin(a.getChildByName('icon_origin'))),
           (this.label_count = this.icon.me.getChildByName('count')),
@@ -57,7 +34,7 @@ let uiscript;
         this.icon.setSkin(r.icon),
           r.category == t.EItemCategory.common_view ||
           r.category == t.EItemCategory.character_view
-            ? ((this.bg_sakura.visible = !0),
+            ? ((this.bg_sakura.visible = true),
               Laya.timer.once(250, this, () => {
                 const t = game.FrontEffect.Inst.create_ui_effect(
                   n.effect_root,
@@ -70,40 +47,40 @@ let uiscript;
                 }),
                   view.AudioMgr.PlayAudio(110);
               }))
-            : ((this.bg_sakura.visible = !1),
+            : ((this.bg_sakura.visible = false),
               Laya.timer.once(250, this, () => {
                 view.AudioMgr.PlayAudio(109);
               })),
           i > 1
-            ? ((this.label_count.visible = !0),
+            ? ((this.label_count.visible = true),
               (this.label_count.text = i.toString()))
-            : (this.label_count.visible = !1),
+            : (this.label_count.visible = false),
           (this.label_name.text = r[`name_${GameMgr.client_language}`]),
-          (this.me.visible = !0),
+          (this.me.visible = true),
           (this.me.alpha = 1),
           (this.me.y = 574),
-          a.Inst.me.WPin.play(0, !1),
-          (this.btn_next.visible = !1),
+          a.Inst.me.WPin.play(0, false),
+          (this.btn_next.visible = false),
           Laya.timer.once((10 / 24) * 1e3 + 200, this, () => {
-            (n.btn_next.visible = !0),
-              (a.Inst.btn_pass.visible = !0),
+            (n.btn_next.visible = true),
+              (a.Inst.btn_pass.visible = true),
               (a.Inst.btn_pass.clickHandler = Laya.Handler.create(
                 n,
                 () => {
-                  (a.Inst.btn_pass.visible = !1), n.close(!0);
+                  (a.Inst.btn_pass.visible = false), n.close(true);
                 },
                 null,
-                !1
+                false
               ));
           });
       }),
       (e.prototype.close = function(t) {
         const e = this;
-        (a.Inst.btn_pass.visible = !1),
-          (this.btn_next.visible = !1),
-          a.Inst.me.WPout.play(0, !1),
+        (a.Inst.btn_pass.visible = false),
+          (this.btn_next.visible = false),
+          a.Inst.me.WPout.play(0, false),
           Laya.timer.once((5 / 24) * 1e3 + 500, this, () => {
-            (e.me.visible = !1),
+            (e.me.visible = false),
               t ? a.Inst.show_result() : a.Inst.show_next();
           });
       }),
@@ -119,8 +96,8 @@ let uiscript;
         (this.btn_next.clickHandler = Laya.Handler.create(
           this,
           this.close,
-          [!1],
-          !1
+          [false],
+          false
         ));
       const n = e.getChildByName('jianying');
       (this.jianying_girl = n.getChildByName('jianying_girl')),
@@ -130,9 +107,9 @@ let uiscript;
       let r = null;
       'chs' == GameMgr.client_language
         ? ((r = a.getChildByName('container_name_chs')),
-          (a.getChildByName('container_name_en').visible = !1))
+          (a.getChildByName('container_name_en').visible = false))
         : ((r = a.getChildByName('container_name_en')),
-          (a.getChildByName('container_name_chs').visible = !1)),
+          (a.getChildByName('container_name_chs').visible = false)),
         (this.label_name = r.getChildByName('label_name')),
         (this.label_cv = r.getChildByName('label_cv')),
         (this.chat = new t.UI_Character_Chat(a.getChildByName('chat')));
@@ -151,15 +128,15 @@ let uiscript;
         (this.label_name.text = i[`name_${GameMgr.client_language}`]),
         (this.label_cv.text =
           `cv:${i[`desc_cv_${GameMgr.client_language}`]}`),
-        this.chat.close(!0),
+        this.chat.close(true),
         (this.jianying_boy.visible = 2 == i.sex),
         (this.jianying_girl.visible = 1 == i.sex),
         this.close_sound(),
-        (this.btn_next.visible = !1),
+        (this.btn_next.visible = false),
         (this.illust.me.parent.alpha = 1),
         (this.illust.me.parent.y = -8),
-        (this.me.visible = !0),
-        a.Inst.me.JSin.play(0, !1),
+        (this.me.visible = true),
+        a.Inst.me.JSin.play(0, false),
         Laya.timer.once((100 / 24) * 1e3, this, () => {
           (e.effect = game.FrontEffect.Inst.create_ui_effect(
             e.effect_root,
@@ -196,27 +173,27 @@ let uiscript;
               ));
           }
           '' != n && e.chat.show(n),
-            (e.btn_next.visible = !0),
-            (a.Inst.btn_pass.visible = !0),
+            (e.btn_next.visible = true),
+            (a.Inst.btn_pass.visible = true),
             (a.Inst.btn_pass.clickHandler = Laya.Handler.create(
               e,
               () => {
-                (a.Inst.btn_pass.visible = !1), e.close(!0);
+                (a.Inst.btn_pass.visible = false), e.close(true);
               },
               null,
-              !1
+              false
             ));
         });
     }),
     (e.prototype.close = function(t) {
       const e = this;
-      (a.Inst.btn_pass.visible = !1),
-        (this.btn_next.visible = !1),
-        a.Inst.me.JSout.play(0, !1),
-        this.chat.close(!1),
+      (a.Inst.btn_pass.visible = false),
+        (this.btn_next.visible = false),
+        a.Inst.me.JSout.play(0, false),
+        this.chat.close(false),
         this.close_sound(),
         Laya.timer.once(800, this, () => {
-          (e.me.visible = !1),
+          (e.me.visible = false),
             e.illust.clear(),
             t ? a.Inst.show_result() : a.Inst.show_next();
         }),
@@ -240,27 +217,27 @@ let uiscript;
             e.close(), a.Inst.close();
           },
           null,
-          !1
+          false
         ));
     }
     return (e.prototype.show = function(t) {
       if ((Laya.timer.clearAll(this), 1 == t.length))
-        (this.single_item.visible = !0),
-          (this.container10.visible = !1),
+        (this.single_item.visible = true),
+          (this.container10.visible = false),
           this.render_item(t[0], this.single_item);
       else {
-        (this.single_item.visible = !1), (this.container10.visible = !0);
+        (this.single_item.visible = false), (this.container10.visible = true);
         for (let e = 0; e < this.container10.numChildren; e++) {
           const i = this.container10.getChildAt(e);
           e < t.length
-            ? ((i.visible = !0), this.render_item(t[e], i))
-            : (i.visible = !1);
+            ? ((i.visible = true), this.render_item(t[e], i))
+            : (i.visible = false);
         }
       }
-      (this.me.visible = !0), a.Inst.me.XMJGin.play(0, !1);
+      (this.me.visible = true), a.Inst.me.XMJGin.play(0, false);
     }),
     (e.prototype.close = function() {
-      Laya.timer.clearAll(this), (this.me.visible = !1);
+      Laya.timer.clearAll(this), (this.me.visible = false);
       for (let t = 0; t < this.effects.length; t++)
         this.effects[t].destory();
       this.effects = [];
@@ -274,17 +251,17 @@ let uiscript;
             t.UI_ItemDetail.Inst.show(reward.id);
         },
         null,
-        !1
+        false
       );
       const r = a.getChildByName('icon_origin'), s = a.getChildByName('icon_final'), o = i.getChildByName('name_orgin'), l = i.getChildByName('name_final'), h = a.getChildByName('gold_bg');
-      if (((h.visible = !1), 20 == Math.floor(reward.id / 1e4))) {
+      if (((h.visible = false), 20 == Math.floor(reward.id / 1e4))) {
         var c = cfg.item_definition.character.get(reward.id),
           u = cfg.item_definition.skin.get(c.init_skin);
         game.LoadMgr.setImgSkin(r, `${u.path}/smallhead.png`),
-          (r.getChildByName('count').visible = !1),
+          (r.getChildByName('count').visible = false),
           (o.text = c[`name_${GameMgr.client_language}`]),
           Laya.timer.once((10 / 24) * 1e3, this, () => {
-            (h.visible = !0),
+            (h.visible = true),
               n.effects.push(
                 game.FrontEffect.Inst.create_ui_effect(
                   h,
@@ -293,7 +270,7 @@ let uiscript;
                     : 'scene/effect_item_shine_big.lh',
                   new Laya.Point(0, 0),
                   1,
-                  !0
+                  true
                 )
               );
           });
@@ -302,29 +279,29 @@ let uiscript;
         game.LoadMgr.setImgSkin(r, _.icon);
         d = r.getChildByName('count');
         reward.count > 1
-          ? ((d.visible = !0), (d.text = reward.count.toString()))
-          : (d.visible = !1),
+          ? ((d.visible = true), (d.text = reward.count.toString()))
+          : (d.visible = false),
           (o.text = _[`name_${GameMgr.client_language}`]),
-          (h.visible = !1);
+          (h.visible = false);
       }
       if (replace) {
         if (
-          ((s.visible = !0),
-          (l.visible = !0),
+          ((s.visible = true),
+          (l.visible = true),
           20 == Math.floor(replace.id / 1e4))
         ) {
           var c = cfg.item_definition.character.get(replace.id),
             u = cfg.item_definition.skin.get(c.init_skin);
           game.LoadMgr.setImgSkin(s, `${u.path}/smallhead.png`),
-            (s.getChildByName('count').visible = !1),
+            (s.getChildByName('count').visible = false),
             (l.text = c[`name_${GameMgr.client_language}`]);
         } else {
           var _ = cfg.item_definition.item.get(replace.id);
           game.LoadMgr.setImgSkin(s, _.icon);
           var d = s.getChildByName('count');
           replace.count > 1
-            ? ((d.visible = !0), (d.text = replace.count.toString()))
-            : (d.visible = !1),
+            ? ((d.visible = true), (d.text = replace.count.toString()))
+            : (d.visible = false),
             (l.text = _[`name_${GameMgr.client_language}`]);
         }
         const f = Laya.timer.currTimer;
@@ -345,7 +322,7 @@ let uiscript;
             }
           });
       } else
-        (s.visible = !1), (l.visible = !1), (r.alpha = 1), (o.alpha = 1);
+        (s.visible = false), (l.visible = false), (r.alpha = 1), (o.alpha = 1);
     }),
     e
   ;
@@ -366,7 +343,7 @@ let uiscript;
             t.show_next();
           },
           null,
-          !1
+          false
         )),
         (this.tf_wupin = new e(
           this.me.getChildByName('tanfang_wupin'),
@@ -383,7 +360,7 @@ let uiscript;
             t.show_result();
           },
           null,
-          !1
+          false
         )),
         (this.final_result = new n(
           this.me.getChildByName('container_final_info')
@@ -405,36 +382,36 @@ let uiscript;
         const i = Math.floor(Math.random() * (r + 1)), n = this.results[r];
         (this.results[r] = this.results[i]), (this.results[i] = n);
       }
-      for (var a = !1, r = 0; r < this.results.length; r++)
+      for (var a = false, r = 0; r < this.results.length; r++)
         if (20 == Math.floor(this.results[r].reward.id / 1e4)) {
-          a = !0;
+          a = true;
           break;
         }
       if (
-        ((this.enable = !0),
-        (this.tf_wupin.me.visible = !1),
-        (this.tf_juese.me.visible = !1),
-        (this.final_result.me.visible = !1),
-        (this.left_tree.visible = !0),
-        (this.right_tree.visible = !0),
-        (this.btn_next.visible = !1),
-        (this.btn_pass.visible = !1),
+        ((this.enable = true),
+        (this.tf_wupin.me.visible = false),
+        (this.tf_juese.me.visible = false),
+        (this.final_result.me.visible = false),
+        (this.left_tree.visible = true),
+        (this.right_tree.visible = true),
+        (this.btn_next.visible = false),
+        (this.btn_pass.visible = false),
         (this.index = 0),
-        this.me.XMin_new.play(0, !1),
+        this.me.XMin_new.play(0, false),
         Laya.timer.once(1250, this, () => {
-          (e.btn_next.visible = !0), (e.btn_pass.visible = !0);
+          (e.btn_next.visible = true), (e.btn_pass.visible = true);
         }),
         Laya.timer.once((20 / 24) * 1e3, this, () => {
           view.AudioMgr.PlayAudio(108);
         }),
         (this.me
           .getChildByName('container_scene')
-          .getChildByName('light').visible = !1),
+          .getChildByName('light').visible = false),
         Laya.timer.once(1200, this, () => {
           (e.me
             .getChildByName('container_scene')
-            .getChildByName('light').visible = !0),
-            e.me.light.play(0, !0);
+            .getChildByName('light').visible = true),
+            e.me.light.play(0, true);
         }),
         a && Math.random() < 0.8)
       ) {
@@ -445,7 +422,7 @@ let uiscript;
             Laya.timer.once(1500, e, () => {
               (e._scene_liuxing = Laya.loader.getRes(s)),
                 e.container_liuxing.addChild(e._scene_liuxing),
-                (e._scene_liuxing.visible = !0);
+                (e._scene_liuxing.visible = true);
             });
           })
         );
@@ -456,33 +433,33 @@ let uiscript;
         Laya.Handler.create(this, () => {
           (e._scene_jianying_sakura = Laya.loader.getRes(o)),
             e.container_jianying_sakura.addChild(e._scene_jianying_sakura),
-            (e._scene_jianying_sakura.visible = !1);
+            (e._scene_jianying_sakura.visible = false);
         })
       );
     }),
     (r.prototype.close = function() {
-      (this.enable = !1),
+      (this.enable = false),
         t.UI_TanfangRoot.Inst.close(),
         this._scene_liuxing &&
-          (this._scene_liuxing.destroy(!0), (this._scene_liuxing = null)),
+          (this._scene_liuxing.destroy(true), (this._scene_liuxing = null)),
         this._scene_jianying_sakura &&
-          (this._scene_jianying_sakura.destroy(!0),
+          (this._scene_jianying_sakura.destroy(true),
           (this._scene_jianying_sakura = null)),
         this.me.light.stop(),
         t.UI_Treasure.Inst.refresh_show();
     }),
     (r.prototype.show_next = function() {
       const t = this;
-      (this.btn_next.visible = !1),
-        (this.btn_pass.visible = !1),
+      (this.btn_next.visible = false),
+        (this.btn_pass.visible = false),
         this.index < this.results.length
           ? (20 == Math.floor(this.results[this.index].reward.id / 1e4)
               ? (this.tf_juese.show(this.results[this.index].reward.id),
                 Laya.timer.once(400, this, () => {
                   t._scene_jianying_sakura &&
-                    ((t._scene_jianying_sakura.visible = !0),
+                    ((t._scene_jianying_sakura.visible = true),
                     Laya.timer.once(2500, t, () => {
-                      t._scene_jianying_sakura.visible = !1;
+                      t._scene_jianying_sakura.visible = false;
                     }));
                 }))
               : this.tf_wupin.show(
@@ -493,8 +470,8 @@ let uiscript;
           : this.show_result();
     }),
     (r.prototype.show_result = function() {
-      (this.btn_next.visible = !1),
-        (this.btn_pass.visible = !1),
+      (this.btn_next.visible = false),
+        (this.btn_pass.visible = false),
         (this.index = this.results.length),
         this.final_result.show(this.results);
     }),

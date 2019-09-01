@@ -1,35 +1,10 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function e(t, e) {
         var i = this;
         (this.scale = 1),
-          (this.during_move = !1),
+          (this.during_move = false),
           (this.mouse_start_x = 0),
           (this.mouse_start_y = 0),
           (this.me = t),
@@ -37,7 +12,7 @@ var __extends =
           (this.illust = this.container_illust.getChildByName('illust')),
           (this.container_move = t.getChildByName('move')),
           this.container_move.on('mousedown', this, function() {
-            (i.during_move = !0),
+            (i.during_move = true),
               (i.mouse_start_x = i.container_move.mouseX),
               (i.mouse_start_y = i.container_move.mouseY);
           }),
@@ -51,10 +26,10 @@ var __extends =
               (i.mouse_start_y = i.container_move.mouseY));
           }),
           this.container_move.on('mouseup', this, function() {
-            i.during_move = !1;
+            i.during_move = false;
           }),
           this.container_move.on('mouseout', this, function() {
-            i.during_move = !1;
+            i.during_move = false;
           }),
           (this.btn_big = t.getChildByName('btn_big')),
           (this.btn_big.clickHandler = Laya.Handler.create(
@@ -63,7 +38,7 @@ var __extends =
               i.locking || i.bigger();
             },
             null,
-            !1
+            false
           )),
           (this.btn_small = t.getChildByName('btn_small')),
           (this.btn_small.clickHandler = Laya.Handler.create(
@@ -72,7 +47,7 @@ var __extends =
               i.locking || i.smaller();
             },
             null,
-            !1
+            false
           )),
           (this.btn_close = t.getChildByName('btn_close')),
           (this.btn_close.clickHandler = Laya.Handler.create(
@@ -81,13 +56,13 @@ var __extends =
               i.locking || i.close();
             },
             null,
-            !1
+            false
           ));
       }
       return (
         (e.prototype.show = function(e) {
           var n = this;
-          (this.locking = !0),
+          (this.locking = true),
             (this.when_close = e),
             (this.illust_start_x = this.illust.x),
             (this.illust_start_y = this.illust.y),
@@ -95,11 +70,11 @@ var __extends =
             (this.illust_center_y = this.illust.y + 11 - 84),
             (this.container_illust.getChildByName(
               'container_name'
-            ).visible = !1),
+            ).visible = false),
             (this.container_illust.getChildByName(
               'container_name_en'
-            ).visible = !1),
-            (this.container_illust.getChildByName('btn').visible = !1),
+            ).visible = false),
+            (this.container_illust.getChildByName('btn').visible = false),
             i.Inst.stopsay(),
             (this.scale = 1),
             Laya.Tween.to(
@@ -110,23 +85,23 @@ var __extends =
             t.UIBase.anim_pop_out(this.btn_big, null),
             t.UIBase.anim_pop_out(this.btn_small, null),
             t.UIBase.anim_pop_out(this.btn_close, null),
-            (this.during_move = !1),
+            (this.during_move = false),
             Laya.timer.once(250, this, function() {
-              n.locking = !1;
+              n.locking = false;
             }),
-            (this.me.visible = !0);
+            (this.me.visible = true);
         }),
         (e.prototype.close = function() {
           var e = this;
-          (this.locking = !0),
+          (this.locking = true),
             'chs' == GameMgr.client_language
               ? (this.container_illust.getChildByName(
                   'container_name'
-                ).visible = !0)
+                ).visible = true)
               : (this.container_illust.getChildByName(
                   'container_name_en'
-                ).visible = !0),
-            (this.container_illust.getChildByName('btn').visible = !0),
+                ).visible = true),
+            (this.container_illust.getChildByName('btn').visible = true),
             Laya.Tween.to(
               this.illust,
               {
@@ -141,7 +116,7 @@ var __extends =
             t.UIBase.anim_pop_hide(this.btn_small, null),
             t.UIBase.anim_pop_hide(this.btn_close, null),
             Laya.timer.once(250, this, function() {
-              (e.locking = !1), (e.me.visible = !1), e.when_close.run();
+              (e.locking = false), (e.me.visible = false), e.when_close.run();
             });
         }),
         (e.prototype.bigger = function() {
@@ -154,8 +129,8 @@ var __extends =
               null,
               null,
               0,
-              !0,
-              !0
+              true,
+              true
             ));
         }),
         (e.prototype.smaller = function() {
@@ -168,8 +143,8 @@ var __extends =
               null,
               null,
               0,
-              !0,
-              !0
+              true,
+              true
             ));
         }),
         (e.prototype.move = function(t, e) {
@@ -244,7 +219,7 @@ var __extends =
                       exp: 0,
                       views: [],
                       skin: 400101,
-                      is_upgraded: !1,
+                      is_upgraded: false,
                       extra_emoji: []
                     }),
                     i.characters.push({
@@ -253,7 +228,7 @@ var __extends =
                       exp: 0,
                       views: [],
                       skin: 400201,
-                      is_upgraded: !1,
+                      is_upgraded: false,
                       extra_emoji: []
                     }),
                     (i.skin_map[400101] = 1),
@@ -273,7 +248,7 @@ var __extends =
             var i = JSON.parse(JSON.stringify(e.character));
             if (i.characters)
               for (var n = i.characters, a = 0; a < n.length; a++) {
-                for (var r = !1, s = 0; s < this.characters.length; s++)
+                for (var r = false, s = 0; s < this.characters.length; s++)
                   if (this.characters[s].charid == n[a].charid) {
                     (this.characters[s] = n[a]),
                       t.UI_Sushe_Visit.Inst &&
@@ -281,7 +256,7 @@ var __extends =
                         t.UI_Sushe_Visit.Inst.chara_info.charid ==
                           this.characters[s].charid &&
                         (t.UI_Sushe_Visit.Inst.chara_info = this.characters[s]),
-                      (r = !0);
+                      (r = true);
                     break;
                   }
                 r || this.characters.push(n[a]);
@@ -295,8 +270,8 @@ var __extends =
         }),
         (n.chara_owned = function(t) {
           for (var e = 0; e < this.characters.length; e++)
-            if (this.characters[e].charid == t) return !0;
-          return !1;
+            if (this.characters[e].charid == t) return true;
+          return false;
         }),
         (n.skin_owned = function(t) {
           return this.skin_map.hasOwnProperty(t.toString());
@@ -311,8 +286,8 @@ var __extends =
                 return this.characters[t];
             return null;
           },
-          enumerable: !0,
-          configurable: !0
+          enumerable: true,
+          configurable: true
         }),
         (n.prototype.onCreate = function() {
           var i = this;
@@ -336,7 +311,7 @@ var __extends =
                   (i.sound_channel ? i.stopsay() : i.say('lobby_normal'));
               },
               null,
-              !1
+              false
             )),
             (this.container_name = null),
             'chs' == GameMgr.client_language
@@ -345,13 +320,13 @@ var __extends =
                 )),
                 (this.contianer_illust.getChildByName(
                   'container_name_en'
-                ).visible = !1))
+                ).visible = false))
               : ((this.container_name = this.contianer_illust.getChildByName(
                   'container_name_en'
                 )),
                 (this.contianer_illust.getChildByName(
                   'container_name'
-                ).visible = !1)),
+                ).visible = false)),
             (this.label_name = this.container_name.getChildByName(
               'label_name'
             )),
@@ -369,9 +344,9 @@ var __extends =
         }),
         (n.prototype.show = function() {
           GameMgr.Inst.BehavioralStatistics(15),
-            game.Scene_Lobby.Inst.change_bg('indoor', !1),
-            (this.enable = !0),
-            (this.page_visit_character.me.visible = !1);
+            game.Scene_Lobby.Inst.change_bg('indoor', false),
+            (this.enable = true),
+            (this.page_visit_character.me.visible = false);
           for (var t = 0, e = 0; e < n.characters.length; e++)
             if (n.characters[e].charid == n.main_character_id) {
               t = e;
@@ -379,12 +354,12 @@ var __extends =
             }
           this.change_select(t),
             this.show_page_select(),
-            (this.container_look_illust.me.visible = !1);
+            (this.container_look_illust.me.visible = false);
         }),
         (n.prototype.starup_back = function() {
-          (this.enable = !0),
+          (this.enable = true),
             this.change_select(this.select_index),
-            this.show_page_visit(!0);
+            this.show_page_visit(true);
         }),
         (n.prototype.go2Lobby = function() {
           this.close(
@@ -397,7 +372,7 @@ var __extends =
           var i = this;
           t.UIBase.anim_alpha_out(this.contianer_illust, { x: -30 }, 150, 0),
             Laya.timer.once(150, this, function() {
-              (i.enable = !1), e.run();
+              (i.enable = false), e.run();
             });
         }),
         (n.prototype.onDisable = function() {
@@ -465,7 +440,7 @@ var __extends =
           r && (this.chat_block.show(r.words), (this.sound_channel = r.sound));
         }),
         (n.prototype.stopsay = function() {
-          this.chat_block.close(!1),
+          this.chat_block.close(false),
             this.sound_channel &&
               (this.sound_channel.stop(),
               Laya.SoundManager.removeChannel(this.sound_channel),

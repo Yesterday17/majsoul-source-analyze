@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -37,7 +14,7 @@ let uiscript;
     }
     return __extends(i, e),
     (i.init = function(t) {
-      if (((this.point = 0), (this.reward_getted = !1), t))
+      if (((this.point = 0), (this.reward_getted = false), t))
         for (let e = t.rank_data_list, i = 0; i < e.length; i++) {
           const n = e[i];
           n.leaderboard_id == this.activity_id &&
@@ -59,10 +36,10 @@ let uiscript;
           new Laya.Handler(this, this.render_item)
         ),
         (this.noinfo = e.getChildByName('noinfo')),
-        (this.label_alreadyget.visible = !1),
-        (this.noinfo.visible = !1),
+        (this.label_alreadyget.visible = false),
+        (this.noinfo.visible = false),
         this.scrollview.reset(),
-        (this.btn_getreward.visible = !1),
+        (this.btn_getreward.visible = false),
         (this.label_rank.text = '--'),
         (this.label_reward.text = '--'),
         (this.label_score.text = '--'),
@@ -112,7 +89,7 @@ let uiscript;
             t.UI_OtherPlayerInfo.Inst.show(r.account_id);
           },
           null,
-          !1
+          false
         )),
         (i.getChildByName('score').text = r.point.toString());
     }),
@@ -123,7 +100,7 @@ let uiscript;
     (i.prototype.need_popout = () => 1 == cfg.activity.activity.get(i.activity_id).need_popout),
     (i.prototype.show = function() {
       const e = this;
-      (this.enable = !0),
+      (this.enable = true),
         game.LoadMgr.setImgSkin(
           this.head,
           'myres2/treasurehead/duanwu_rank.jpg'
@@ -218,7 +195,7 @@ let uiscript;
           (this.btn_getreward.clickHandler = Laya.Handler.create(
             this,
             () => {
-              game.Tools.setGrayDisable(e.btn_getreward, !0),
+              game.Tools.setGrayDisable(e.btn_getreward, true),
                 app.NetAgent.sendReq2Lobby(
                   'Lobby',
                   'gainRankPointReward',
@@ -227,16 +204,16 @@ let uiscript;
                     activity_id: i.activity_id
                   },
                   (n, a) => {
-                    game.Tools.setGrayDisable(e.btn_getreward, !1),
+                    game.Tools.setGrayDisable(e.btn_getreward, false),
                       n || a.error
                         ? t.UIMgr.Inst.showNetReqError(
                             'gainRankPointReward',
                             n,
                             a
                           )
-                        : ((i.reward_getted = !0),
-                          (e.btn_getreward.visible = !1),
-                          (e.label_alreadyget.visible = !0),
+                        : ((i.reward_getted = true),
+                          (e.btn_getreward.visible = false),
+                          (e.label_alreadyget.visible = true),
                           t.UI_LightTips.Inst.show(
                             game.Tools.strOfLocalization(2211)
                           ));
@@ -244,12 +221,12 @@ let uiscript;
                 );
             },
             null,
-            !1
+            false
           ));
       } else
         (this.label_reward.text = game.Tools.strOfLocalization(2780)),
-          (this.btn_getreward.visible = !1),
-          (this.label_alreadyget.visible = !1),
+          (this.btn_getreward.visible = false),
+          (this.label_alreadyget.visible = false),
           i.gainable_time > 0 &&
             Date.now() / 1e3 > i.gainable_time &&
             (i.reward_getted ||
@@ -259,17 +236,17 @@ let uiscript;
                 { leaderboard_id: i.activity_id, activity_id: i.activity_id },
                 (t, e) => {}
               ),
-              (i.reward_getted = !0))),
+              (i.reward_getted = true))),
           (this.btn_getreward.clickHandler = null);
     }),
     (i.prototype.hide = function() {
-      this.enable = !1;
+      this.enable = false;
       const t = game.Tools.localUISrc('myres2/treasurehead/duanwu_rank.jpg');
       Laya.loader.clearTextureRes(t);
     }),
     (i.activity_id = 1010),
     (i.point = 0),
-    (i.reward_getted = !1),
+    (i.reward_getted = false),
     (i.gainable_time = -1),
     i
   ;

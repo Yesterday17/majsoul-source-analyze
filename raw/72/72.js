@@ -1,34 +1,9 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  game;
+var game;
 !(function(t) {
   var e = (function(e) {
     function i() {
       var t = e.call(this) || this;
-      return (t.inited = !1), (i.Inst = t), t;
+      return (t.inited = false), (i.Inst = t), t;
     }
     return (
       __extends(i, e),
@@ -185,7 +160,7 @@ var __extends =
             e = n[a].product_id;
             break;
           }
-        if ('' == e) return !1;
+        if ('' == e) return false;
         for (
           var r = function(t) {
               if (i.orders[t].sku == e) {
@@ -218,7 +193,7 @@ var __extends =
                       }
                     }
                   ),
-                  { value: !0 }
+                  { value: true }
                 );
               }
             },
@@ -229,7 +204,7 @@ var __extends =
           var s = r(a);
           if ('object' == typeof s) return s.value;
         }
-        return !1;
+        return false;
       }),
       (i.prototype.getGoodsInfo = function(t) {
         for (

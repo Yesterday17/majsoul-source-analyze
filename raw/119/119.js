@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function e(e) {
@@ -34,13 +9,13 @@ var __extends =
           (this.notask = null),
           (this.opening_tasks = []),
           (this.me = e),
-          (this.me.visible = !1),
+          (this.me.visible = false),
           (this.notask = this.me.getChildByName('notask')),
           (this.left_scrollview = this.me.getChildByName('left').scriptMap[
             'capsui.CScrollView'
           ]),
           this.left_scrollview.init_scrollview(
-            Laya.Handler.create(this, this.renderLeft, null, !1)
+            Laya.Handler.create(this, this.renderLeft, null, false)
           ),
           (this.panel_right = this.me.getChildByName('right')),
           cfg.activity &&
@@ -54,44 +29,44 @@ var __extends =
         (e.prototype.haveRedPoint = function() {
           for (var t = 0; t < this.tasks.length; t++)
             if (this.tasks[t].isopen() && this.tasks[t].haveRedPoint())
-              return !0;
-          return !1;
+              return true;
+          return false;
         }),
         (e.prototype.need_popout = function() {
           var t = 0,
             e = Laya.LocalStorage.getItem('activity_popout');
           e && '' != e && (t = parseInt(e));
           var i = Date.now();
-          if (i < t + 864e5) return !1;
+          if (i < t + 864e5) return false;
           for (var n = 0; n < this.tasks.length; n++)
             if (this.tasks[n].isopen() && this.tasks[n].need_popout())
               return (
-                Laya.LocalStorage.setItem('activity_popout', i.toString()), !0
+                Laya.LocalStorage.setItem('activity_popout', i.toString()), true
               );
-          return !1;
+          return false;
         }),
         (e.prototype.addTask = function(t) {
           this.panel_right.addChild(t.me), this.tasks.push(t);
         }),
         (e.prototype.show = function() {
-          (this.me.visible = !0),
+          (this.me.visible = true),
             this.left_scrollview.reset(),
             (this.select_index = 0),
             (this.opening_tasks = []);
           for (var t = 0; t < this.tasks.length; t++)
             this.tasks[t].isopen() && this.opening_tasks.push(t);
           this.opening_tasks.length > 0
-            ? ((this.left_scrollview.me.visible = !0),
-              (this.panel_right.visible = !0),
-              (this.notask.visible = !1),
+            ? ((this.left_scrollview.me.visible = true),
+              (this.panel_right.visible = true),
+              (this.notask.visible = false),
               this.left_scrollview.addItem(this.opening_tasks.length),
               this.tasks[this.opening_tasks[this.select_index]].show())
-            : ((this.left_scrollview.me.visible = !1),
-              (this.panel_right.visible = !1),
-              (this.notask.visible = !0));
+            : ((this.left_scrollview.me.visible = false),
+              (this.panel_right.visible = false),
+              (this.notask.visible = true));
         }),
         (e.prototype.hide = function() {
-          (this.me.visible = !1),
+          (this.me.visible = false),
             this.select_index >= 0 &&
               this.select_index < this.opening_tasks.length &&
               (this.tasks[this.opening_tasks[this.select_index]].hide(),
@@ -127,7 +102,7 @@ var __extends =
                 }
               },
               null,
-              !1
+              false
             )),
             (n.getChildByName('title').text = this.tasks[
               this.opening_tasks[i]
@@ -153,7 +128,7 @@ var __extends =
           (t.redpoint = null),
           (t.page_huodong = null),
           (t.select_tab = -1),
-          (t.locking = !1),
+          (t.locking = false),
           (n.Inst = t),
           t
         );
@@ -164,15 +139,15 @@ var __extends =
           get: function() {
             return !(!this.Inst || !this.Inst.page_huodong.haveRedPoint());
           },
-          enumerable: !0,
-          configurable: !0
+          enumerable: true,
+          configurable: true
         }),
         Object.defineProperty(n, 'need_popout', {
           get: function() {
             return !(!this.Inst || !this.Inst.page_huodong.need_popout());
           },
-          enumerable: !0,
-          configurable: !0
+          enumerable: true,
+          configurable: true
         }),
         (n.init = function() {
           var e = this;
@@ -282,7 +257,7 @@ var __extends =
             this.activity_exchange[t].count++;
         }),
         (n.onTaskRewarded = function(e) {
-          this.activity_tasks[e] && (this.activity_tasks[e].rewarded = !0),
+          this.activity_tasks[e] && (this.activity_tasks[e].rewarded = true),
             this.Inst && this.Inst.page_huodong.refreshAllLeft(),
             t.UI_Lobby.Inst.refreshInfo();
         }),
@@ -346,11 +321,11 @@ var __extends =
               (this.tabs[n].clickHandler = Laya.Handler.create(
                 this,
                 this._switchTab,
-                [n, !1],
-                !1
+                [n, false],
+                false
               ));
           (this.redpoint = this.tabs[1].getChildByName('redpoint')),
-            (this.redpoint.visible = !1),
+            (this.redpoint.visible = false),
             new t.UI_Mail(this.root.getChildByName('page_mail')),
             (this.page_huodong = new e(
               this.root.getChildByName('page_huodong')
@@ -363,29 +338,29 @@ var __extends =
                 i.close();
               },
               null,
-              !1
+              false
             ));
         }),
         (n.prototype.show = function() {
           var e = this;
-          (this.enable = !0),
-            (this.locking = !0),
-            this._switchTab(0, !0),
+          (this.enable = true),
+            (this.locking = true),
+            this._switchTab(0, true),
             this.refresh_redpoint(),
             t.UIBase.anim_pop_out(
               this.root,
               Laya.Handler.create(this, function() {
-                e.locking = !1;
+                e.locking = false;
               })
             );
         }),
         (n.prototype.close = function() {
           var e = this;
-          (this.locking = !0),
+          (this.locking = true),
             t.UIBase.anim_pop_hide(
               this.root,
               Laya.Handler.create(this, function() {
-                (e.locking = !1), (e.enable = !1);
+                (e.locking = false), (e.enable = false);
               })
             );
         }),

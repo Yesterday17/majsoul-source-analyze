@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -40,7 +15,7 @@ var __extends =
     return (
       __extends(i, e),
       (i.init = function(t) {
-        if (((this.point = 0), (this.reward_getted = !1), t))
+        if (((this.point = 0), (this.reward_getted = false), t))
           for (var e = t.rank_data_list, i = 0; i < e.length; i++) {
             var n = e[i];
             n.leaderboard_id == this.activity_id &&
@@ -62,10 +37,10 @@ var __extends =
             new Laya.Handler(this, this.render_item)
           ),
           (this.noinfo = e.getChildByName('noinfo')),
-          (this.label_alreadyget.visible = !1),
-          (this.noinfo.visible = !1),
+          (this.label_alreadyget.visible = false),
+          (this.noinfo.visible = false),
           this.scrollview.reset(),
-          (this.btn_getreward.visible = !1),
+          (this.btn_getreward.visible = false),
           (this.label_rank.text = '--'),
           (this.label_reward.text = '--'),
           (this.label_score.text = '--'),
@@ -115,7 +90,7 @@ var __extends =
               t.UI_OtherPlayerInfo.Inst.show(r.account_id);
             },
             null,
-            !1
+            false
           )),
           (i.getChildByName('score').text = r.point.toString());
       }),
@@ -134,7 +109,7 @@ var __extends =
       }),
       (i.prototype.show = function() {
         var e = this;
-        (this.enable = !0),
+        (this.enable = true),
           game.LoadMgr.setImgSkin(
             this.head,
             'myres2/treasurehead/duanwu_rank.jpg'
@@ -231,7 +206,7 @@ var __extends =
             (this.btn_getreward.clickHandler = Laya.Handler.create(
               this,
               function() {
-                game.Tools.setGrayDisable(e.btn_getreward, !0),
+                game.Tools.setGrayDisable(e.btn_getreward, true),
                   app.NetAgent.sendReq2Lobby(
                     'Lobby',
                     'gainRankPointReward',
@@ -240,16 +215,16 @@ var __extends =
                       activity_id: i.activity_id
                     },
                     function(n, a) {
-                      game.Tools.setGrayDisable(e.btn_getreward, !1),
+                      game.Tools.setGrayDisable(e.btn_getreward, false),
                         n || a.error
                           ? t.UIMgr.Inst.showNetReqError(
                               'gainRankPointReward',
                               n,
                               a
                             )
-                          : ((i.reward_getted = !0),
-                            (e.btn_getreward.visible = !1),
-                            (e.label_alreadyget.visible = !0),
+                          : ((i.reward_getted = true),
+                            (e.btn_getreward.visible = false),
+                            (e.label_alreadyget.visible = true),
                             t.UI_LightTips.Inst.show(
                               game.Tools.strOfLocalization(2211)
                             ));
@@ -257,12 +232,12 @@ var __extends =
                   );
               },
               null,
-              !1
+              false
             ));
         } else
           (this.label_reward.text = game.Tools.strOfLocalization(2780)),
-            (this.btn_getreward.visible = !1),
-            (this.label_alreadyget.visible = !1),
+            (this.btn_getreward.visible = false),
+            (this.label_alreadyget.visible = false),
             i.gainable_time > 0 &&
               Date.now() / 1e3 > i.gainable_time &&
               (i.reward_getted ||
@@ -272,17 +247,17 @@ var __extends =
                   { leaderboard_id: i.activity_id, activity_id: i.activity_id },
                   function(t, e) {}
                 ),
-                (i.reward_getted = !0))),
+                (i.reward_getted = true))),
             (this.btn_getreward.clickHandler = null);
       }),
       (i.prototype.hide = function() {
-        this.enable = !1;
+        this.enable = false;
         var t = game.Tools.localUISrc('myres2/treasurehead/duanwu_rank.jpg');
         Laya.loader.clearTextureRes(t);
       }),
       (i.activity_id = 1010),
       (i.point = 0),
-      (i.reward_getted = !1),
+      (i.reward_getted = false),
       (i.gainable_time = -1),
       i
     );

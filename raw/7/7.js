@@ -14,21 +14,21 @@ var uiscript;
         set: function(t) {
           (this._id = t), this.img_head.setSkin(t, 'smallhead');
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (e.prototype.setEmo = function(t, e) {
         var i = this;
-        void 0 === e && (e = -1),
+        undefined === e && (e = -1),
           Laya.timer.clearAll(this),
           this.img_emo &&
             (t && '' != t
-              ? ((this.img_emo.visible = !0),
+              ? ((this.img_emo.visible = true),
                 e > 0 &&
                   Laya.timer.once(e, this, function() {
-                    i.img_emo.visible = !1;
+                    i.img_emo.visible = false;
                   }))
-              : (this.img_emo.visible = !1));
+              : (this.img_emo.visible = false));
       }),
       e
     );

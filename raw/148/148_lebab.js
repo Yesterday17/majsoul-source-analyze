@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   let e;
@@ -95,21 +72,21 @@ let uiscript;
     }),
     (n.prototype._onShow = function() {
       const t = this;
-      (this.enable = !0),
+      (this.enable = true),
         app.Log.log('UI_FightBegin _onShow'),
         (this.me.alpha = 1);
       for (
         let e = t => {
                 const e = i.cells[t], n = view.DesktopMgr.Inst.localPosition2Seat(t);
                 if (-1 == n)
-                  (e.container.getChildByName('illust').visible = !1),
-                    (e.container.getChildByName('container_name').visible = !1);
+                  (e.container.getChildByName('illust').visible = false),
+                    (e.container.getChildByName('container_name').visible = false);
                 else {
-                  (e.container.getChildByName('illust').visible = !0),
-                    (e.container.getChildByName('container_name').visible = !0);
+                  (e.container.getChildByName('illust').visible = true),
+                    (e.container.getChildByName('container_name').visible = true);
                   const a = view.DesktopMgr.Inst.player_datas[n];
                   (e.name.text = a.nickname),
-                    game.Tools.charaPart(a.avatar_id, e.body, 'half', e.rect, !0),
+                    game.Tools.charaPart(a.avatar_id, e.body, 'half', e.rect, true),
                     (e.rank.id =
                       a[
                         view.DesktopMgr.Inst.game_config.mode.mode < 10
@@ -135,7 +112,7 @@ let uiscript;
                   case 3:
                     (r = -1298), (s = 612);
                 }
-                (e.container.visible = !0),
+                (e.container.visible = true),
                   (e.container.x = r),
                   (e.container.y = s),
                   Laya.timer.once(500, i, () => {
@@ -194,11 +171,11 @@ let uiscript;
             if (!e) return 'continue';
             const i = view.DesktopMgr.Inst.localPosition2Seat(t);
             if (-1 == i)
-              (e.container.getChildByName('illust').visible = !1),
-                (e.container.getChildByName('container_name').visible = !1);
+              (e.container.getChildByName('illust').visible = false),
+                (e.container.getChildByName('container_name').visible = false);
             else {
-              (e.container.getChildByName('illust').visible = !0),
-                (e.container.getChildByName('container_name').visible = !0);
+              (e.container.getChildByName('illust').visible = true),
+                (e.container.getChildByName('container_name').visible = true);
               const a = view.DesktopMgr.Inst.player_datas[i];
               e.name.text = a.nickname;
             }
@@ -224,7 +201,7 @@ let uiscript;
             ),
               Laya.timer.once(500, n, () => {
                 Laya.loader.clearTextureRes(e.body.skin),
-                  (e.container.visible = !1);
+                  (e.container.visible = false);
               });
           },
           n = this,
@@ -238,7 +215,7 @@ let uiscript;
         Laya.Tween.to(t.me, { alpha: 0 }, 300);
       }),
       Laya.timer.once(400, this, () => {
-        t.enable = !1;
+        t.enable = false;
       }),
       500
     ;

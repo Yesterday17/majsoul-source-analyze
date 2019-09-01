@@ -87,14 +87,14 @@ let uiscript;
       get() {
         return this._h;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (i.prototype.show = function() {
       let e = 0;
       this._h = 0;
       for (let i = 0; i < this.cells.length; i++)
-        (this.cells[i].me.visible = !1), (this.cells[i].bgm = '');
+        (this.cells[i].me.visible = false), (this.cells[i].bgm = '');
       const n = this;
       cfg.audio.bgm.forEach(i => {
         if (
@@ -106,21 +106,21 @@ let uiscript;
           (r.bgm = i.path),
             (r.me.y = (r.me.height + 10) * e),
             (r.me.x = 230),
-            (r.me.visible = !0),
+            (r.me.visible = true),
             (r.name.text = i[`name_${GameMgr.client_language}`]),
             !n.is_lobby || (t.UI_Lobby.Inst && t.UI_Lobby.Inst.enable)
-              ? game.Tools.setGrayDisable(r.me, !1)
-              : game.Tools.setGrayDisable(r.me, !0),
+              ? game.Tools.setGrayDisable(r.me, false)
+              : game.Tools.setGrayDisable(r.me, true),
             i.unlock_item && 0 == t.UI_Bag.get_item_count(i.unlock_item)
-              ? ((r.flag.visible = !1),
-                (r.lock.visible = !0),
-                (r.btn_play.visible = !1),
+              ? ((r.flag.visible = false),
+                (r.lock.visible = true),
+                (r.btn_play.visible = false),
                 (r.lock.getChildByName('info').text =
                   i[`unlock_desc_${GameMgr.client_language}`]),
-                (r.me.getChildByName('btn_choose').visible = !1))
-              : ((r.flag.visible = !1),
-                (r.lock.visible = !1),
-                (r.btn_play.visible = !0),
+                (r.me.getChildByName('btn_choose').visible = false))
+              : ((r.flag.visible = false),
+                (r.lock.visible = false),
+                (r.btn_play.visible = true),
                 (r.btn_play.clickHandler = Laya.Handler.create(
                   n,
                   () => {
@@ -129,9 +129,9 @@ let uiscript;
                       : view.BgmListMgr.tryPlayBgm(i.path);
                   },
                   null,
-                  !1
+                  false
                 )),
-                (r.me.getChildByName('btn_choose').visible = !0),
+                (r.me.getChildByName('btn_choose').visible = true),
                 (r.me.getChildByName(
                   'btn_choose'
                 ).clickHandler = Laya.Handler.create(
@@ -185,7 +185,7 @@ let uiscript;
                     view.BgmListMgr.saveConfig();
                   },
                   null,
-                  !1
+                  false
                 ))),
             e++,
             (n._h = r.me.y + r.me.height + 10);
@@ -204,7 +204,7 @@ let uiscript;
               '' != view.BgmListMgr.playing_bgm &&
               view.BgmListMgr.playing_bgm == e.bgm;
 
-          let n = !1;
+          let n = false;
           this.is_lobby &&
             (n = view.BgmListMgr.findIndexInLobby(e.bgm) >= 0),
             this.is_lobby ||

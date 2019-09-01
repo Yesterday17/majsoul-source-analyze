@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (t => {
@@ -34,17 +11,17 @@ let uiscript;
       this.me.getChildByName('btn_ok').clickHandler = Laya.Handler.create(
         this,
         () => {
-          (t.enable = !1),
+          (t.enable = false),
             game.MJNetMgr.Inst.OpenConnect(
               GameMgr.Inst.mj_game_token,
               GameMgr.Inst.mj_game_uuid,
               GameMgr.Inst.mj_server_location,
-              !0,
+              true,
               null
             );
         },
         null,
-        !1
+        false
       );
     }),
     (e.Inst = null),

@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (t => {
@@ -40,18 +17,18 @@ let uiscript;
     }),
     (e.prototype.onCreate = function() {
       (this.templete = this.me.getChildByName('templete')),
-        (this.templete.visible = !1),
+        (this.templete.visible = false),
         (this.clone = this.templete.scriptMap['capsui.UICopy']);
     }),
     (e.prototype._fly_tips = function(t) {
       const e = this;
-      this.enable = !0;
+      this.enable = true;
       const i = this.clone.getNodeClone();
       i.text = t;
       let n = 540;
       this.last_tips && (n = Math.max(n, this.last_tips.y + 50)),
         (i.y = n),
-        (i.visible = !0),
+        (i.visible = true),
         (this.last_tips = i),
         Laya.Tween.to(
           i,
@@ -60,9 +37,9 @@ let uiscript;
           Laya.Ease.linearNone,
           Laya.Handler.create(this, () => {
             e.last_tips === i &&
-              (e.last_tips.destroy(!0),
+              (e.last_tips.destroy(true),
               (e.last_tips = null),
-              (e.enable = !1));
+              (e.enable = false));
           })
         );
     }),

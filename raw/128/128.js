@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e;
   !(function(t) {
@@ -40,7 +15,7 @@ var __extends =
       return (
         (t.container_top = null),
         (t.container_content = null),
-        (t.locking = !1),
+        (t.locking = false),
         (t.tabs = []),
         (t.page_item = null),
         (t.page_gift = null),
@@ -67,7 +42,7 @@ var __extends =
                 t.update_daily_gain_data(i.bag));
             },
             null,
-            !1
+            false
           )
         ),
           this.fetch();
@@ -234,12 +209,12 @@ var __extends =
               e.locking ||
                 e.hide(
                   Laya.Handler.create(e, function() {
-                    t.UI_Lobby.Inst.enable = !0;
+                    t.UI_Lobby.Inst.enable = true;
                   })
                 );
             },
             null,
-            !1
+            false
           )),
           (this.container_content = this.me.getChildByName('content'));
         for (
@@ -255,7 +230,7 @@ var __extends =
                     e.select_index != t && e.on_change_tab(t);
                   },
                   null,
-                  !1
+                  false
                 ));
             },
             n = this,
@@ -279,16 +254,16 @@ var __extends =
       }),
       (n.prototype.show = function(e) {
         var i = this;
-        void 0 === e && (e = 0),
-          (this.enable = !0),
-          (this.locking = !0),
+        undefined === e && (e = 0),
+          (this.enable = true),
+          (this.locking = true),
           t.UIBase.anim_alpha_in(this.container_top, { y: -30 }, 200),
           t.UIBase.anim_alpha_in(this.container_content, { y: 30 }, 200),
           Laya.timer.once(300, this, function() {
-            i.locking = !1;
+            i.locking = false;
           }),
           this.on_change_tab(e),
-          game.Scene_Lobby.Inst.change_bg('indoor', !1),
+          game.Scene_Lobby.Inst.change_bg('indoor', false),
           4 != e && this.page_skin.when_update_data(),
           (this.tabs[3].getChildByName(
             'redpoint'
@@ -296,11 +271,11 @@ var __extends =
       }),
       (n.prototype.hide = function(e) {
         var i = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_alpha_out(this.container_top, { y: -30 }, 200),
           t.UIBase.anim_alpha_out(this.container_content, { y: 30 }, 200),
           Laya.timer.once(300, this, function() {
-            (i.locking = !1), (i.enable = !1), e && e.run();
+            (i.locking = false), (i.enable = false), e && e.run();
           });
       }),
       (n.prototype.onDisable = function() {
@@ -318,7 +293,7 @@ var __extends =
           (this.page_item.close(),
           this.page_gift.close(),
           this.page_desktop.close(),
-          (this.page_skin.me.visible = !1),
+          (this.page_skin.me.visible = false),
           t)
         ) {
           case 0:
@@ -345,7 +320,7 @@ var __extends =
         this.page_skin.when_update_data();
       }),
       (n.prototype.clear_desktop_btn_redpoint = function() {
-        this.tabs[3].getChildByName('redpoint').visible = !1;
+        this.tabs[3].getChildByName('redpoint').visible = false;
       }),
       (n._item_map = {}),
       (n._item_listener = {}),

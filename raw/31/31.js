@@ -6,7 +6,7 @@ var view;
       (t.init_data = function() {
         var t = this;
         this._loaded ||
-          ((this._loaded = !0),
+          ((this._loaded = true),
           cfg.animation.animation.forEach(function(e) {
             var i = e.name,
               n = e.type,
@@ -21,7 +21,7 @@ var view;
       (t.get_anim_config = function(t, e) {
         return this._map_anim[t] ? this._map_anim[t][e] : null;
       }),
-      (t._loaded = !1),
+      (t._loaded = false),
       (t._map_anim = {}),
       t
     );

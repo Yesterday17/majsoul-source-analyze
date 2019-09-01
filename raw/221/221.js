@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -54,7 +29,7 @@ var __extends =
               t.locking || t.close();
             },
             null,
-            !1
+            false
           ));
       }),
       (i.prototype.refresh_scroll_bar = function() {
@@ -67,12 +42,12 @@ var __extends =
       }),
       (i.prototype.show = function(e) {
         var i = this;
-        (this.locking = !0),
-          (this.me.visible = !0),
+        (this.locking = true),
+          (this.me.visible = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              i.locking = !1;
+              i.locking = false;
             })
           ),
           (this.label_title.text = ''),
@@ -102,12 +77,12 @@ var __extends =
       }),
       (i.prototype.close = function() {
         var e = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1),
-                (e.me.visible = !1),
+              (e.locking = false),
+                (e.me.visible = false),
                 (e.label_content.text = '');
             })
           );

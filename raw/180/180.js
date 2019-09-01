@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function t(t) {
@@ -41,7 +16,7 @@ var __extends =
             (this.label_add.text = ''),
             (this.title.text = e['name_' + GameMgr.client_language]),
             game.LoadMgr.setImgSkin(this.icon, e.icon),
-            (this.me.visible = !0);
+            (this.me.visible = true);
         }),
         (t.prototype.doanim = function(t) {
           var e = this,
@@ -79,7 +54,7 @@ var __extends =
           });
         }),
         (t.prototype.close = function() {
-          (this.me.visible = !1), game.LoadMgr.clearImgSkin(this.icon);
+          (this.me.visible = false), game.LoadMgr.clearImgSkin(this.icon);
         }),
         t
       );
@@ -92,7 +67,7 @@ var __extends =
           (this.label_add = e.getChildByName('bar').getChildByName('num')),
           (this.icon = e.getChildByName('icon')),
           (this.container_gift = e.getChildByName('gift')),
-          (this.container_gift.visible = !1),
+          (this.container_gift.visible = false),
           (this.container_item = this.container_gift.getChildByName('item')),
           (this.icon_gift = this.container_item.getChildByName('icon')),
           (this.gift_num = this.container_gift.getChildByName('num')),
@@ -116,8 +91,8 @@ var __extends =
             i = cfg.item_definition.item.find(e);
           game.LoadMgr.setImgSkin(this.icon, i.icon_transparent),
             game.LoadMgr.setImgSkin(this.icon_gift, i.icon),
-            (this.container_gift.visible = !1),
-            (this.me.visible = !0);
+            (this.container_gift.visible = false),
+            (this.me.visible = true);
         }),
         (e.prototype.doanim = function(e) {
           var i = this,
@@ -140,7 +115,7 @@ var __extends =
                   ? ((i.container_gift.x = i.icon.x),
                     (i.container_gift.y = i.icon.y),
                     (i.container_gift.alpha = 1),
-                    (i.container_gift.visible = !0),
+                    (i.container_gift.visible = true),
                     (i.container_item.scaleX = 1),
                     (i.container_item.scaleY = 1),
                     (i.container_item.alpha = 0),
@@ -191,7 +166,7 @@ var __extends =
           });
         }),
         (e.prototype.close = function() {
-          (this.me.visible = !1), game.LoadMgr.clearImgSkin(this.icon);
+          (this.me.visible = false), game.LoadMgr.clearImgSkin(this.icon);
         }),
         e
       );
@@ -209,7 +184,7 @@ var __extends =
       }
       return (
         (e.prototype.show = function() {
-          this.me.visible = !0;
+          this.me.visible = true;
           var e = view.DesktopMgr.Inst.rewardinfo;
           (this.target_level = e.main_character.level),
             (this.target_exp = e.main_character.exp);
@@ -318,7 +293,7 @@ var __extends =
           );
         }),
         (e.prototype.close = function() {
-          this.me.visible = !1;
+          this.me.visible = false;
         }),
         e
       );
@@ -342,8 +317,8 @@ var __extends =
         (r.prototype.show = function(e) {
           var i = this,
             n = view.DesktopMgr.Inst.rewardinfo;
-          (this.page_jiban.me.visible = !1),
-            (this.page_jiban_gift.me.visible = !1),
+          (this.page_jiban.me.visible = false),
+            (this.page_jiban_gift.me.visible = false),
             (this.complete = e),
             this.page_box.show(),
             t.UIBase.anim_alpha_in(this.page_box.me, { x: -50 }, 150),
@@ -379,13 +354,13 @@ var __extends =
                 })
               );
             }),
-            (this.enable = !0);
+            (this.enable = true);
         }),
         (r.prototype.close = function() {
           this.page_box.close(),
             this.page_jiban_gift.close(),
             this.page_jiban.close(),
-            (this.enable = !1);
+            (this.enable = false);
         }),
         r
       );

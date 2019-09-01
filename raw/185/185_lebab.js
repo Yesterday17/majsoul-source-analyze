@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -29,7 +6,7 @@ let uiscript;
       return (
         (t.title = null),
         (t.txtinput = null),
-        (t.locking = !1),
+        (t.locking = false),
         (t.root = null),
         (t._when_inputed = null),
         (t._when_cancel = null),
@@ -49,7 +26,7 @@ let uiscript;
             t._btn_cancel();
           },
           null,
-          !1
+          false
         )),
         (this.root.getChildByName(
           'btn_confirm'
@@ -57,7 +34,7 @@ let uiscript;
           this,
           this._btn_confirm,
           null,
-          !1
+          false
         )),
         (this.txtinput = this.root
           .getChildByName('input')
@@ -68,22 +45,22 @@ let uiscript;
           i = i => {
             const a = e.getChildByName(`n${i}`), r = a.getChildByName('s');
             r.alpha = 0;
-            let s = !1;
+            let s = false;
             a.on('mousedown', n, () => {
               (r.alpha = 0),
-                (s = !0),
-                Laya.Tween.to(r, { alpha: 1 }, 50, null, null, 0, !0, !0);
+                (s = true),
+                Laya.Tween.to(r, { alpha: 1 }, 50, null, null, 0, true, true);
             }),
               a.on('mouseup', n, () => {
-                Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, !0, !0),
+                Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, true, true),
                   s &&
                     t.txtinput.text.length < t.txtinput.maxChars &&
                     (t.txtinput.text = t.txtinput.text + i.toString()),
-                  (s = !1);
+                  (s = false);
               }),
               a.on('mouseout', n, () => {
-                Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, !0, !0),
-                  (s = !1);
+                Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, true, true),
+                  (s = false);
               });
           },
           n = this,
@@ -94,67 +71,67 @@ let uiscript;
         i(a);
       const r = (o = e.getChildByName('clear')).getChildByName('s');
       r.alpha = 0;
-      let s = !1;
+      let s = false;
       o.on('mousedown', this, () => {
         (r.alpha = 0),
-          (s = !0),
-          Laya.Tween.to(r, { alpha: 1 }, 50, null, null, 0, !0, !0);
+          (s = true),
+          Laya.Tween.to(r, { alpha: 1 }, 50, null, null, 0, true, true);
       }),
         o.on('mouseup', this, () => {
-          Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, !0, !0),
+          Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, true, true),
             s && (t.txtinput.text = ''),
-            (s = !1);
+            (s = false);
         }),
         o.on('mouseout', this, () => {
-          Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, !0, !0), (s = !1);
+          Laya.Tween.to(r, { alpha: 0 }, 50, null, null, 0, true, true), (s = false);
         });
       var o = e.getChildByName('del');
       const l = o.getChildByName('s');
       l.alpha = 0;
-      let h = !1;
+      let h = false;
       o.on('mousedown', this, () => {
         (l.alpha = 0),
-          (h = !0),
-          Laya.Tween.to(l, { alpha: 1 }, 50, null, null, 0, !0, !0);
+          (h = true),
+          Laya.Tween.to(l, { alpha: 1 }, 50, null, null, 0, true, true);
       }),
         o.on('mouseup', this, () => {
           if (
-            (Laya.Tween.to(l, { alpha: 0 }, 50, null, null, 0, !0, !0), h)
+            (Laya.Tween.to(l, { alpha: 0 }, 50, null, null, 0, true, true), h)
           ) {
             let e = t.txtinput.text;
             e.length > 0 && (e = e.substr(0, e.length - 1)),
               (t.txtinput.text = e);
           }
-          h = !1;
+          h = false;
         }),
         o.on('mouseout', this, () => {
-          Laya.Tween.to(l, { alpha: 0 }, 50, null, null, 0, !0, !0), (h = !1);
+          Laya.Tween.to(l, { alpha: 0 }, 50, null, null, 0, true, true), (h = false);
         });
     }),
     (i.prototype.show = function(e, i, n) {
       const a = this;
-      void 0 === n && (n = null),
-        (this.enable = !0),
+      undefined === n && (n = null),
+        (this.enable = true),
         (this.txtinput.text = ''),
         (this.title.text = e),
         (this._when_cancel = n),
         (this._when_inputed = i),
         this.locking ||
-          ((this.locking = !0),
+          ((this.locking = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, () => {
-              a.locking = !1;
+              a.locking = false;
             })
           ));
     }),
     (i.prototype._hide = function(e) {
       const i = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (i.locking = !1), (i.enable = !1), e.run();
+            (i.locking = false), (i.enable = false), e.run();
           })
         );
     }),

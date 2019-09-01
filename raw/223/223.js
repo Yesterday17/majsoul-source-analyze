@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -44,12 +19,12 @@ var __extends =
               t.locking ||
                 t.close(
                   Laya.Handler.create(t, function() {
-                    t._func && t._func.runWith({ success: !1 });
+                    t._func && t._func.runWith({ success: false });
                   })
                 );
             },
             null,
-            !1
+            false
           ));
       }),
       (i.prototype.show = function(e, i, n) {
@@ -57,12 +32,12 @@ var __extends =
         (this._func = n),
           (this.label_sec.text = i.toString()),
           (this._sec = i),
-          (this.locking = !0),
-          (this.enable = !0),
+          (this.locking = true),
+          (this.enable = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              (a.locking = !1),
+              (a.locking = false),
                 (a._start_time = Laya.timer.currTimer),
                 Laya.timer.loop(100, a, function() {
                   var i = Math.ceil(
@@ -84,11 +59,11 @@ var __extends =
       (i.prototype.close = function(e) {
         var i = this;
         Laya.timer.clearAll(this),
-          (this.locking = !0),
+          (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (i.locking = !1), (i.enable = !1), e && e.run();
+              (i.locking = false), (i.enable = false), e && e.run();
             })
           );
       }),

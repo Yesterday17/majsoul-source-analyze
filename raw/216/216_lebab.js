@@ -1,35 +1,12 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
     function i() {
       const t = e.call(this, new ui.lobby.tanfang0UI()) || this;
       return (
-        (t.need_show_loading = !1),
-        (t.loadover = !1),
-        (t.waiting_to_show = !1),
+        (t.need_show_loading = false),
+        (t.loadover = false),
+        (t.waiting_to_show = false),
         (t.results = null),
         (i.Inst = t),
         t
@@ -52,7 +29,7 @@ let uiscript;
             Laya.Handler.create(this, () => {
               e.root.addChild(new t.UI_Tanfang().me),
                 Laya.timer.frameOnce(8, e, () => {
-                  (e.loadover = !0), e.waiting_to_show && e.show_result();
+                  (e.loadover = true), e.waiting_to_show && e.show_result();
                 });
             })
           );
@@ -60,13 +37,13 @@ let uiscript;
     }),
     (i.prototype.show = function(e, i, n) {
       const a = this;
-      (this.loading.visible = !1),
-        (this.need_show_loading = !0),
+      (this.loading.visible = false),
+        (this.need_show_loading = true),
         Laya.timer.clearAll(this),
         Laya.timer.once(500, this, () => {
-          a.need_show_loading && (a.loading.visible = !0);
+          a.need_show_loading && (a.loading.visible = true);
         }),
-        (this.waiting_to_show = !1),
+        (this.waiting_to_show = false),
         app.NetAgent.sendReq2Lobby(
           'Lobby',
           'openChest',
@@ -81,38 +58,38 @@ let uiscript;
                     total_open_count: n.total_open_count
                   }
                 ]),
-                a.loadover ? a.show_result() : (a.waiting_to_show = !0));
+                a.loadover ? a.show_result() : (a.waiting_to_show = true));
           }
         ),
-        (this.enable = !0);
+        (this.enable = true);
     }),
     (i.prototype.test = function() {
       const t = this;
-      (this.loading.visible = !1),
-        (this.need_show_loading = !0),
+      (this.loading.visible = false),
+        (this.need_show_loading = true),
         Laya.timer.clearAll(this),
         Laya.timer.once(500, this, () => {
-          t.need_show_loading && (t.loading.visible = !0);
+          t.need_show_loading && (t.loading.visible = true);
         }),
-        (this.waiting_to_show = !1),
+        (this.waiting_to_show = false),
         this._test10(),
-        this.loadover ? this.show_result() : (this.waiting_to_show = !0),
+        this.loadover ? this.show_result() : (this.waiting_to_show = true),
         Laya.timer.once(1e3, this, () => {
           t.beginload();
         }),
-        (this.enable = !0);
+        (this.enable = true);
     }),
     (i.prototype.close = function() {
-      (this.need_show_loading = !1), (this.loading.visible = !1);
+      (this.need_show_loading = false), (this.loading.visible = false);
       for (let e = 0; e < this.urls.length; e++)
         Laya.loader.clearTextureRes(this.urls[e].url);
       Laya.loader.clearTextureRes(t.UI_Get_Character.Inst.atlas_url),
-        (this.enable = !1),
+        (this.enable = false),
         view.BgmListMgr.PlayLobbyBgm();
     }),
     (i.prototype.show_result = function() {
-      (this.need_show_loading = !1),
-        (this.loading.visible = !1),
+      (this.need_show_loading = false),
+        (this.loading.visible = false),
         t.UI_Tanfang.Inst.show(this.results),
         view.BgmListMgr.stopBgm();
     }),

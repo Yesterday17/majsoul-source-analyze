@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (t => {
@@ -33,12 +10,12 @@ let uiscript;
       get() {
         return this.__activity_name;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
-    (e.prototype.isopen = () => !1),
-    (e.prototype.haveRedPoint = () => !1),
-    (e.prototype.need_popout = () => !1),
+    (e.prototype.isopen = () => false),
+    (e.prototype.haveRedPoint = () => false),
+    (e.prototype.need_popout = () => false),
     (e.prototype.show = () => {}),
     (e.prototype.hide = () => {}),
     e

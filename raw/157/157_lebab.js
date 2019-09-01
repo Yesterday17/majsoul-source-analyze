@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -41,7 +18,7 @@ let uiscript;
             e.locking || e.close();
           },
           null,
-          !1
+          false
         )),
         (this.btn_confirm = this.root.getChildByName('btn_confirm')),
         (this.btn_confirm.clickHandler = Laya.Handler.create(
@@ -63,7 +40,7 @@ let uiscript;
               ));
           },
           null,
-          !1
+          false
         )),
         this.input.on('input', this, () => {
           e.btn_confirm.visible = 12 == e.input.text.length;
@@ -71,25 +48,25 @@ let uiscript;
     }),
     (i.prototype.show = function() {
       const e = this;
-      (this.enable = !0),
-        (this.locking = !0),
+      (this.enable = true),
+        (this.locking = true),
         (this.input.text = ''),
         (this.btn_cd = 0),
-        (this.btn_confirm.visible = !1),
+        (this.btn_confirm.visible = false),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            e.locking = !1;
+            e.locking = false;
           })
         );
     }),
     (i.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.enable = !1);
+            (e.locking = false), (e.enable = false);
           })
         );
     }),

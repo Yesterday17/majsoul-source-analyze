@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -34,7 +11,7 @@ let uiscript;
       (this.root = this.me
         .getChildByName('servers')
         .getChildByName('container')),
-        (this.me.visible = !1),
+        (this.me.visible = false),
         (this.root.getChildByName(
           'btn_close'
         ).clickHandler = Laya.Handler.create(
@@ -43,7 +20,7 @@ let uiscript;
             e.close();
           },
           null,
-          !1
+          false
         ));
       for (
         let i = i => {
@@ -61,21 +38,21 @@ let uiscript;
         i(a);
     }),
     (i.prototype.show = function() {
-      (this.enable = !0),
+      (this.enable = true),
         t.UIBase.anim_pop_out(this.root, null),
         game.LobbyNetMgr.gateway_regions.mainland
-          ? (this.btns[0].visible = !0)
-          : (this.btns[0].visible = !1),
+          ? (this.btns[0].visible = true)
+          : (this.btns[0].visible = false),
         game.LobbyNetMgr.gateway_regions.hk
-          ? (this.btns[1].visible = !0)
-          : (this.btns[1].visible = !1);
+          ? (this.btns[1].visible = true)
+          : (this.btns[1].visible = false);
     }),
     (i.prototype.close = function() {
       const e = this;
       t.UIBase.anim_pop_hide(
         this.root,
         Laya.Handler.create(this, () => {
-          e.enable = !1;
+          e.enable = false;
         })
       );
     }),

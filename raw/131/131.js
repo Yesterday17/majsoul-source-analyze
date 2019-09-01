@@ -1,34 +1,9 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
       var t = e.call(this, new ui.lobby.chang_nicknameUI()) || this;
-      return (t.locking = !1), (i.Inst = t), t;
+      return (t.locking = false), (i.Inst = t), t;
     }
     return (
       __extends(i, e),
@@ -47,10 +22,10 @@ var __extends =
             this,
             this.onBtnConfrim,
             null,
-            !1
+            false
           )),
           this.input.on('focus', this, function() {
-            (t.lb.visible = !1), (t.input_no.visible = !1);
+            (t.lb.visible = false), (t.input_no.visible = false);
           }),
           this.input.on('blur', this, function() {
             t.lb.visible = !t.input.text || '' == t.input.text;
@@ -68,7 +43,7 @@ var __extends =
               t.close();
             },
             null,
-            !1
+            false
           )),
           (this.container_input.getChildByName('en_no_space').visible =
             'en' == GameMgr.client_language);
@@ -79,14 +54,14 @@ var __extends =
           n =
             30 - Math.floor((i - GameMgr.Inst.last_mod_name_time) / 3600 / 24);
         if (n > 0)
-          (this.container_no.visible = !0),
+          (this.container_no.visible = true),
             (this.label_count.text = n.toString()),
-            (this.container_input.visible = !1);
+            (this.container_input.visible = false);
         else {
-          (this.container_input.visible = !0),
-            (this.container_no.visible = !1),
-            (this.input_no.visible = !1),
-            (this.lb.visible = !0),
+          (this.container_input.visible = true),
+            (this.container_no.visible = false),
+            (this.input_no.visible = false),
+            (this.lb.visible = true),
             (this.input.text = ''),
             (this.notice.text = game.Tools.strOfLocalization(2675));
           var a = this.container_input.getChildByName('price'),
@@ -96,17 +71,17 @@ var __extends =
           (s.text = 'x1'),
             t.UI_Bag.get_item_count(302013) > 0
               ? ((s.color = '#00ff00'),
-                game.Tools.setGrayDisable(this.btn_confirm, !1))
+                game.Tools.setGrayDisable(this.btn_confirm, false))
               : ((s.color = '#ff0000'),
-                game.Tools.setGrayDisable(this.btn_confirm, !0)),
+                game.Tools.setGrayDisable(this.btn_confirm, true)),
             game.Tools.child_align_center(a, [10, 10, 10]);
         }
-        (this.enable = !0),
-          (this.locking = !0),
+        (this.enable = true),
+          (this.locking = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              e.locking = !1;
+              e.locking = false;
             })
           );
       }),
@@ -121,15 +96,15 @@ var __extends =
               (i >= 11904 && i <= 40959)
             )
           ) {
-            for (var n = !1, a = 0; a < '~@!#%&()_+={}:;<>'.length; a++)
+            for (var n = false, a = 0; a < '~@!#%&()_+={}:;<>'.length; a++)
               if ('~@!#%&()_+={}:;<>'[a] == t[e]) {
-                n = !0;
+                n = true;
                 break;
               }
-            if (!n) return !0;
+            if (!n) return true;
           }
         }
-        return !1;
+        return false;
       }),
       (i.prototype.onBtnConfrim = function() {
         var e = this;
@@ -151,8 +126,8 @@ var __extends =
           if (a == i.length) {
             var s = this.input.text;
             this.have_invalid_char(s) || t.UI_Entrance.Accountforbidden(s)
-              ? (this.input_no.visible = !0)
-              : (game.Tools.setGrayDisable(this.btn_confirm, !0),
+              ? (this.input_no.visible = true)
+              : (game.Tools.setGrayDisable(this.btn_confirm, true),
                 app.NetAgent.sendReq2Lobby(
                   'Lobby',
                   'modifyNickname',
@@ -160,7 +135,7 @@ var __extends =
                   function(i, n) {
                     i || n.error
                       ? (t.UIMgr.Inst.showNetReqError('modifyNickname', i, n),
-                        game.Tools.setGrayDisable(e.btn_confirm, !1))
+                        game.Tools.setGrayDisable(e.btn_confirm, false))
                       : ((GameMgr.Inst.account_data.nickname = s),
                         (GameMgr.Inst.last_mod_name_time = Date.now() / 1e3),
                         t.UI_PlayerInfo.Inst.refreshBaseInfo(),
@@ -173,11 +148,11 @@ var __extends =
       }),
       (i.prototype.close = function() {
         var e = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1), (e.enable = !1);
+              (e.locking = false), (e.enable = false);
             })
           );
       }),

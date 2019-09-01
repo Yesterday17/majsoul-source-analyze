@@ -6,8 +6,8 @@ let game;
       get() {
         return Math.floor(Date.now() / 1e3);
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (e.time2YearMounthDate = t => {
       const e = new Date(1e3 * t);
@@ -20,7 +20,7 @@ let game;
     ;
     }),
     (e.time2HourMinute = (t, e) => {
-      void 0 === e && (e = !1);
+      undefined === e && (e = false);
       const i = new Date(1e3 * t);
       let n = '';
       return (n += `${(i.getHours() < 10 ? '0' : '') + i.getHours()}:`),
@@ -81,9 +81,9 @@ let game;
     }),
     (e.setGrayDisable = (t, e) => {
       e
-        ? ((t.mouseEnabled = !1),
+        ? ((t.mouseEnabled = false),
           (t.filters = [new Laya.ColorFilter(uiscript.GRAY_FILTER)]))
-        : ((t.mouseEnabled = !0), (t.filters = []));
+        : ((t.mouseEnabled = true), (t.filters = []));
     }),
     (e.generateUUID = () => {
       let t = new Date().getTime();
@@ -122,8 +122,8 @@ let game;
         } else e.device = 'unknown';
         return e;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (e.strWithoutForbidden = t => {
       let e = t;
@@ -150,7 +150,7 @@ let game;
     ;
     }),
     (e.faceOn = (e, i, n, a, {width, height}) => {
-      a.visible = !1;
+      a.visible = false;
       const s = cfg.item_definition.skin.get(e);
       if (s) {
         a.skin = t.LoadMgr.getResImageSkin(`${s.path}/${i}.png`);
@@ -162,11 +162,11 @@ let game;
           (a.height = s.face_height * l),
           (a.x = (s.face_x - s[`${n}_x`]) * o),
           (a.y = (s.face_y - s[`${n}_y`]) * l),
-          (a.visible = !0);
+          (a.visible = true);
       }
     }),
     (e.charaPart = (e, i, n, {width, height, x, y}, r) => {
-      void 0 === r && (r = !1);
+      undefined === r && (r = false);
       const s = cfg.item_definition.skin.get(400101);
       if (s) {
         const o = cfg.item_definition.skin.get(e);
@@ -220,7 +220,7 @@ let game;
             : uiscript.UI_LightTips.Inst.show(
                 t.Tools.strOfLocalization(2024)
               ));
-      let o = !1;
+      let o = false;
       let l = 0;
 
       const h = () => {
@@ -231,7 +231,7 @@ let game;
               h();
             })
           ),
-          void (o = !0)
+          void (o = true)
         ;
         l < r.length
           ? uiscript.UI_Gettitle.Inst.show(
@@ -297,11 +297,11 @@ let game;
       return i;
     }),
     (e.get_room_desc = function(e) {
-      if (!e) return { text: '', isSimhei: !1 };
+      if (!e) return { text: '', isSimhei: false };
       let i = '';
       if (e.meta && e.meta.tournament_id) {
         const n = cfg.tournament.tournaments.get(e.meta.tournament_id);
-        return n && (i = n.name), { text: i, isSimhei: !0 };
+        return n && (i = n.name), { text: i, isSimhei: true };
       }
       if (1 == e.category) i += `${t.Tools.strOfLocalization(2023)}·`;
       else if (4 == e.category) i += `${t.Tools.strOfLocalization(2025)}·`;
@@ -313,7 +313,7 @@ let game;
         }
       }
       const s = e.mode.mode;
-      return (i += this.room_mode_desc(s)), { text: i, isSimhei: !1 };
+      return (i += this.room_mode_desc(s)), { text: i, isSimhei: false };
     }),
     (e.get_chara_audio = ({charid, level}, e) => {
       if (e && '' != e) {
@@ -485,14 +485,14 @@ let game;
       return new Blob([r], { type: n });
     }),
     (e.stringContainerSub = (t, e) => {
-      if (!e || '' == e) return !0;
-      if (!t || '' == t) return !1;
+      if (!e || '' == e) return true;
+      if (!t || '' == t) return false;
       for (let i = 0, n = 0; n < t.length; n++)
-        if (t.charAt(n) == e.charAt(i) && ++i >= e.length) return !0;
-      return !1;
+        if (t.charAt(n) == e.charAt(i) && ++i >= e.length) return true;
+      return false;
     }),
     (e.strOfLocalization = (t, e) => {
-      void 0 === e && (e = []);
+      undefined === e && (e = []);
       let i = cfg.str.str.find(t)[GameMgr.client_language];
       if (e)
         for (let n = 0; n < e.length; n++) {
@@ -568,14 +568,14 @@ let game;
     Math.floor((Math.floor(Date.now() / 1e3) + 10800) / 86400)),
     (e.ParseTime = t => {
       for (
-        var e = [], i = '0'.charCodeAt(0), n = 0, a = !1, r = 0;
+        var e = [], i = '0'.charCodeAt(0), n = 0, a = false, r = 0;
         r < t.length;
         r++
       ) {
         const s = t.charCodeAt(r) - i;
         s >= 0 && s <= 9
-          ? ((a = !0), (n = 10 * n + s))
-          : a && ((a = !1), e.push(n), (n = 0));
+          ? ((a = true), (n = 10 * n + s))
+          : a && ((a = false), e.push(n), (n = 0));
       }
       a && e.push(n);
       const o = new Date();

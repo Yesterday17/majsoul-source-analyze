@@ -9,8 +9,8 @@ var view;
         (this.cy = 0),
         (this.x_count = 0),
         (this.last_pai = null),
-        (this.last_is_liqi = !1),
-        (this.after_liqi = !1),
+        (this.last_is_liqi = false),
+        (this.after_liqi = false),
         (this.waiting_offset = new Laya.Vector2(
           0.4 * t.PAIMODEL_WIDTH,
           0.4 * t.PAIMODEL_HEIGHT
@@ -23,13 +23,13 @@ var view;
     return (
       (e.prototype.AddQiPai = function(e, i, n, a) {
         var r = this;
-        void 0 === a && (a = !0), this.QiPaiPass();
+        undefined === a && (a = true), this.QiPaiPass();
         var s = new t.ViewPai(e, t.DesktopMgr.Inst.CreatePai3D(e));
         t.DesktopMgr.Inst.showingPaopai &&
           ((s.ismoqie = n), (s.ispaopai = t.DesktopMgr.Inst.isPaoPai(s.val))),
           s.OnChoosedPai(),
           this.origin.parent.addChild(s.model),
-          this.last_is_liqi && !i && (i = !0);
+          this.last_is_liqi && !i && (i = true);
         var o = Math.atan(t.PAIMODEL_HEIGHT / t.PAIMODEL_WIDTH),
           l = 2 * (Math.random() - 0.5) * 2,
           h = 0,
@@ -80,7 +80,7 @@ var view;
           (_ = 2 * (Math.random() - 0.5) * t.PAIMODEL_HEIGHT * 0.025),
           (f += _),
           (s.model.transform.localPosition = this.origin.transform.localPosition.clone()),
-          (s.model.active = !0),
+          (s.model.active = true),
           (s.model.transform.localPosition.x += d),
           (s.model.transform.localPosition.z -= f),
           a)
@@ -132,12 +132,12 @@ var view;
                       Laya.timer.frameLoop(1, e, function() {
                         s && s.model && !s.model.destroyed
                           ? (e.transform.worldMatrix = s.model.transform.worldMatrix.clone())
-                          : (Laya.timer.clearAll(e), e.destroy(!0));
+                          : (Laya.timer.clearAll(e), e.destroy(true));
                       }),
                       Laya.timer.once(5e3, r, function() {
                         e &&
                           !e.destroyed &&
-                          (Laya.timer.clearAll(e), e.destroy(!0));
+                          (Laya.timer.clearAll(e), e.destroy(true));
                       });
                   }))
                 : ((m = t.ModelAnimationController.get_anim_config(
@@ -162,12 +162,12 @@ var view;
                       Laya.timer.frameLoop(1, e, function() {
                         s && s.model && !s.model.destroyed
                           ? (e.transform.worldMatrix = s.model.transform.worldMatrix.clone())
-                          : (Laya.timer.clearAll(e), e.destroy(!0));
+                          : (Laya.timer.clearAll(e), e.destroy(true));
                       }),
                       Laya.timer.once(1500, r, function() {
                         e &&
                           !e.destroyed &&
-                          (Laya.timer.clearAll(e), e.destroy(!0));
+                          (Laya.timer.clearAll(e), e.destroy(true));
                       });
                   }))
               : (m = t.ModelAnimationController.get_anim_config(
@@ -213,7 +213,7 @@ var view;
             0.53 * t.PAIMODEL_HEIGHT
           )),
           (y.transform.localRotationEuler = new Laya.Vector3(90, 0, 0)),
-          (y.active = !0);
+          (y.active = true);
       }),
       (e.prototype.QiPaiPass = function() {
         null != this.last_pai &&
@@ -225,7 +225,7 @@ var view;
               (this.x_count = 0))
             : (this.cx += this.xwidth),
           (this.last_pai = null),
-          (this.last_is_liqi = !1));
+          (this.last_is_liqi = false));
       }),
       (e.prototype.QiPaiNoPass = function() {
         this.last_pai && this.last_pai.model.destroy(), (this.last_pai = null);
@@ -240,8 +240,8 @@ var view;
           (this.x_count = 0),
           null != this.last_pai && this.last_pai.model.destroy(),
           (this.last_pai = null),
-          (this.last_is_liqi = !1),
-          (this.after_liqi = !1),
+          (this.last_is_liqi = false),
+          (this.after_liqi = false),
           Laya.timer.clearAll(this);
       }),
       (e.prototype.OnDoraRefresh = function() {

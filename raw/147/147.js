@@ -1,34 +1,9 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
       var t = e.call(this, new ui.common.errorinfoUI()) || this;
-      return (t.locking = !1), t;
+      return (t.locking = false), t;
     }
     return (
       __extends(i, e),
@@ -42,7 +17,7 @@ var __extends =
             this,
             this.close,
             null,
-            !1
+            false
           )),
           (this.btn_restart.clickHandler = Laya.Handler.create(
             this,
@@ -54,20 +29,20 @@ var __extends =
                 : (Laya.Browser.window.location.href = GameMgr.Inst.link_url);
             },
             null,
-            !1
+            false
           )),
-          (this.btn_restart.visible = !1),
-          (this.btn_cancel.visible = !1),
-          (this.blackbg.visible = !1);
+          (this.btn_restart.visible = false),
+          (this.btn_cancel.visible = false),
+          (this.blackbg.visible = false);
       }),
       (i.prototype.showStr = function(t) {
-        (this.btn_cancel.visible = !0), (this.info.text = t), this._show();
+        (this.btn_cancel.visible = true), (this.info.text = t), this._show();
       }),
       (i.prototype.showNetReqError = function(t, e, i) {
-        this.btn_cancel.visible = !0;
+        this.btn_cancel.visible = true;
         var n = '',
           a = '',
-          r = !0;
+          r = true;
         if (e && '' != e) {
           var s = '';
           if (
@@ -94,7 +69,7 @@ var __extends =
                 n += '服务器断开连接';
             }
         } else if (i && i.error && i.error.code) {
-          r = !1;
+          r = false;
           var o = i.error.code,
             l = cfg.info.error.get(o);
           l
@@ -105,7 +80,7 @@ var __extends =
         (this.info.text = n), this._show();
         var h = {};
         (h.timestamp = Math.floor(Date.now() / 1e3)),
-          (h.fatal = !1),
+          (h.fatal = false),
           (h.lobby_ip = app.NetAgent.lobby_ip),
           (h.mj_ip = app.NetAgent.mj_ip),
           GameMgr.Inst &&
@@ -133,30 +108,30 @@ var __extends =
         } else app.Log.log(JSON.stringify(c));
       }),
       (i.prototype.showFE = function() {
-        (this.enable = !0),
+        (this.enable = true),
           (this.info.text = game.Tools.strOfLocalization(14)),
-          (this.blackbg.visible = !0),
-          (this.btn_restart.visible = !0);
+          (this.blackbg.visible = true),
+          (this.btn_restart.visible = true);
       }),
       (i.prototype._show = function() {
         var e = this;
-        (this.me.visible = !0),
-          (this.locking = !0),
+        (this.me.visible = true),
+          (this.locking = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              e.locking = !1;
+              e.locking = false;
             })
           );
       }),
       (i.prototype.close = function() {
         var e = this;
         this.locking ||
-          ((this.locking = !0),
+          ((this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1), (e.me.visible = !1), e.me.destroy(!0);
+              (e.locking = false), (e.me.visible = false), e.me.destroy(true);
             })
           ));
       }),

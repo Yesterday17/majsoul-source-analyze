@@ -4,12 +4,12 @@ var view;
     function e(t, e) {
       (this.val = null),
         (this.model = null),
-        (this.ismoqie = !1),
-        (this.ispaopai = !1),
-        (this.isDora = !1),
+        (this.ismoqie = false),
+        (this.ispaopai = false),
+        (this.isDora = false),
         (this.val = t),
         (this.model = e),
-        (this.isDora = !1),
+        (this.isDora = false),
         this.RefreshDora();
     }
     return (
@@ -24,10 +24,10 @@ var view;
       }),
       (e.prototype.RefreshDora = function() {
         if (t.DesktopMgr.bianjietishi && !this.isDora) {
-          if ((this.val.dora && (this.isDora = !0), !this.isDora))
+          if ((this.val.dora && (this.isDora = true), !this.isDora))
             for (var e = 0; e < t.DesktopMgr.Inst.dora.length; e++)
               if (mjcore.MJPai.DoraMet(this.val, t.DesktopMgr.Inst.dora[e])) {
-                this.isDora = !0;
+                this.isDora = true;
                 break;
               }
           if (this.isDora) {
@@ -36,7 +36,7 @@ var view;
               (i.transform.localPosition = new Laya.Vector3(0, 0, 0)),
               (i.transform.localScale = new Laya.Vector3(1, 1, 1)),
               (i.transform.localRotationEuler = new Laya.Vector3(0, 0, 0)),
-              (i.active = !0);
+              (i.active = true);
             i.getChildAt(0).addComponent(anim.RunUV);
           }
         }

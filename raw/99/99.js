@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function e(t, e, i, n, a, r, s) {
@@ -52,13 +27,13 @@ var __extends =
             (this.label_lock_time = this.container_lock.getChildByName('time')),
             (this.btn_reward.clickHandler = new Laya.Handler(this, function() {
               e.game_score >= e.me_score && !e.getted
-                ? (game.Tools.setGrayDisable(e.btn_reward, !0),
+                ? (game.Tools.setGrayDisable(e.btn_reward, true),
                   app.NetAgent.sendReq2Lobby(
                     'Lobby',
                     'gainAccumulatedPointActivityReward',
                     { activity_id: i.activity_id, reward_id: e.id },
                     function(n, a) {
-                      game.Tools.setGrayDisable(e.btn_reward, !1),
+                      game.Tools.setGrayDisable(e.btn_reward, false),
                         n || a.error
                           ? t.UIMgr.Inst.showNetReqError(
                               'gainAccumulatedPointActivityReward',
@@ -79,65 +54,65 @@ var __extends =
             (this.label_score.text = this.me_score.toString()),
             -1 == this.pre_score)
           )
-            this.line_up.visible = !1;
+            this.line_up.visible = false;
           else {
-            this.line_up.visible = !0;
+            this.line_up.visible = true;
             (r =
               ((t - (this.pre_score + this.me_score) / 2) /
                 (this.me_score - this.pre_score)) *
               2) < 0
-              ? (this.line_up.getChildByName('value').visible = !1)
+              ? (this.line_up.getChildByName('value').visible = false)
               : (r > 1 && (r = 1),
-                (this.line_up.getChildByName('value').visible = !0),
+                (this.line_up.getChildByName('value').visible = true),
                 (this.line_up.getChildByName('value').scaleY = r));
           }
-          if (-1 == this.next_score) this.line_down.visible = !1;
+          if (-1 == this.next_score) this.line_down.visible = false;
           else {
-            this.line_down.visible = !0;
+            this.line_down.visible = true;
             var r =
               ((t - this.me_score) / (this.next_score - this.me_score)) * 2;
             r < 0
-              ? (this.line_down.getChildByName('value').visible = !1)
+              ? (this.line_down.getChildByName('value').visible = false)
               : (r > 1 && (r = 1),
-                (this.line_down.getChildByName('value').visible = !0),
+                (this.line_down.getChildByName('value').visible = true),
                 (this.line_down.getChildByName('value').scaleY = r));
           }
           t < this.me_score
-            ? ((this.line_reward.getChildByName('value').visible = !1),
-              (this.reward_shine.visible = !1),
+            ? ((this.line_reward.getChildByName('value').visible = false),
+              (this.reward_shine.visible = false),
               (this.shine_point.skin = game.Tools.localUISrc(
                 'myres/activity_duanwu/point_unshine.png'
               )),
               (this.label_score.color = '#bababa'))
-            : ((this.line_reward.getChildByName('value').visible = !0),
-              (this.reward_shine.visible = !0),
+            : ((this.line_reward.getChildByName('value').visible = true),
+              (this.reward_shine.visible = true),
               (this.shine_point.skin = game.Tools.localUISrc(
                 'myres/activity_duanwu/point_shine.png'
               )),
               (this.label_score.color = '#ffd52b')),
             (this.flag_getted.visible = !!e),
-            game.Tools.setGrayDisable(this.btn_reward, !1),
+            game.Tools.setGrayDisable(this.btn_reward, false),
             this.item_count <= 1
-              ? (this.label_count.visible = !1)
-              : ((this.label_count.visible = !0),
+              ? (this.label_count.visible = false)
+              : ((this.label_count.visible = true),
                 (this.label_count.text = this.item_count.toString()));
           var s = n - i,
             o =
               24 * cfg.activity.game_point.get(this.id).unlock_day * 3600 * 1e3;
           if (s < o) {
-            this.container_lock.visible = !0;
+            this.container_lock.visible = true;
             var l = (i + o) / 1e3,
               h =
                 game.Tools.time2YearMounthDate(l) +
                 ' ' +
                 game.Tools.time2HourMinute(l);
             this.label_lock_time.text = game.Tools.strOfLocalization(2825, [h]);
-          } else this.container_lock.visible = !1;
+          } else this.container_lock.visible = false;
         }),
         (e.prototype.onGetted = function() {
-          (this.getted = !0),
+          (this.getted = true),
             Laya.timer.clearAll(this),
-            (this.flag_getted.visible = !0);
+            (this.flag_getted.visible = true);
           var e = this.flag_getted.getChildByName('bg');
           (e.alpha = 0), Laya.Tween.to(e, { alpha: 0.5 }, 150);
           var i = this.flag_getted.getChildByName('gou');
@@ -286,13 +261,13 @@ var __extends =
           return t.UI_Activity.activities[n.activity_id];
         }),
         (n.prototype.haveRedPoint = function() {
-          var t = !1;
+          var t = false;
           return (
             cfg.activity.game_point.forEach(function(e) {
               e.activity_id == n.activity_id &&
                 e.point < n.point &&
                 !n.getted_rewards[e.id] &&
-                (t = !0);
+                (t = true);
             }),
             t
           );
@@ -301,7 +276,7 @@ var __extends =
           return 1 == cfg.activity.activity.get(n.activity_id).need_popout;
         }),
         (n.prototype.show = function() {
-          (this.enable = !0),
+          (this.enable = true),
             game.LoadMgr.setImgSkin(
               this.head,
               'myres2/treasurehead/quehunji_huodong.jpg'
@@ -332,7 +307,7 @@ var __extends =
               'en' == GameMgr.client_language ? 747 : 686);
         }),
         (n.prototype.hide = function() {
-          this.enable = !1;
+          this.enable = false;
           var t = game.Tools.localUISrc(
             'myres2/treasurehead/quehunji_huodong.jpg'
           );

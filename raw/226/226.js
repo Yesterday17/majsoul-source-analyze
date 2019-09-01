@@ -7,7 +7,7 @@ var GameMgr = (function() {
       (this.root_scene = null),
       (this.root_front_scene_effect = null),
       (this.root_front_effect = null),
-      (this.logined = !1),
+      (this.logined = false),
       (this.link_url = ''),
       (this.account = ''),
       (this.password = ''),
@@ -19,14 +19,14 @@ var GameMgr = (function() {
       (this.account_data = null),
       (this.account_numerical_resource = null),
       (this.yostar_accessToken = ''),
-      (this.player_in_haiwai = !1),
+      (this.player_in_haiwai = false),
       (this.commonview_slot = {}),
       (this.mjp_view = ''),
       (this.mjp_item_id = 0),
       (this.mj_server_location = ''),
       (this.mj_game_token = ''),
       (this.mj_game_uuid = ''),
-      (this.ingame = !1),
+      (this.ingame = false),
       (this.beinvited_roomid = -1),
       (this.outsee_paipuid = ''),
       (this.custom_match_id = 0),
@@ -34,11 +34,11 @@ var GameMgr = (function() {
       (this._current_scene = null),
       (this._scene_lobby = null),
       (this._scene_mj = null),
-      (this.duringPaipu = !1),
+      (this.duringPaipu = false),
       (this._statisticinfo = {}),
       (this._last_heatbeat_time = 0),
       (this._pre_mouse_point = new Laya.Point(0, 0)),
-      (this._fastin = !1),
+      (this._fastin = false),
       (this.comment_allow = 0),
       (this.server_time_delta = 0),
       (this.client_endpoint = null),
@@ -49,7 +49,7 @@ var GameMgr = (function() {
         !!Laya.Browser.window.conch ||
         (!document.getElementById('environment') ||
           'dev' != document.getElementById('environment').innerText)),
-      Laya3D.init(1920, 1080, !0),
+      Laya3D.init(1920, 1080, true),
       (Laya.stage.scaleMode = Laya.Stage.SCALE_SHOWALL),
       Laya.Browser.onMobile
         ? (Laya.stage.screenMode = Laya.Stage.SCREEN_HORIZONTAL)
@@ -90,7 +90,7 @@ var GameMgr = (function() {
               }
             },
             null,
-            !1
+            false
           ));
   }
   return (
@@ -98,22 +98,22 @@ var GameMgr = (function() {
       get: function() {
         return this._inRes;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t, 'inConch', {
       get: function() {
         return Laya.Browser.window.conch;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t, 'iniOSWebview', {
       get: function() {
         return Laya.Browser.window.wkbridge;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t, 'inHttps', {
       get: function() {
@@ -121,29 +121,29 @@ var GameMgr = (function() {
           this.iniOSWebview || 'https:' == Laya.Browser.window.location.protocol
         );
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t, 'inChina', {
       get: function() {
         return this._in_china;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t, 'inGooglePlay', {
       get: function() {
         return this._in_google_play;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     Object.defineProperty(t, 'ClientRegion', {
       get: function() {
         return this._client_region;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (t.encodeP = function(t) {
       return CryptoJS.HmacSHA256(t, 'lailai').toString();
@@ -169,9 +169,9 @@ var GameMgr = (function() {
         Laya.stage.addChild(this.root_scene),
         Laya.stage.addChild(this.root_ui),
         Laya.stage.addChild(this.root_front_effect),
-        (this.logined = !1),
+        (this.logined = false),
         (this._current_scene = null),
-        (this.duringPaipu = !1),
+        (this.duringPaipu = false),
         (this._scene_lobby = new game.Scene_Lobby()),
         (this._scene_mj = new game.Scene_MJ()),
         view.AudioMgr.init();
@@ -182,10 +182,10 @@ var GameMgr = (function() {
         ((view.DesktopMgr.double_click_pass = a && '1' == a ? 1 : 0),
         'en' == t.client_language)
       ) {
-        view.DesktopMgr.en_mjp = !0;
+        view.DesktopMgr.en_mjp = true;
         'false' == game.LocalStorage.getItem('en_mjp') &&
-          (view.DesktopMgr.en_mjp = !1);
-      } else view.DesktopMgr.en_mjp = !1;
+          (view.DesktopMgr.en_mjp = false);
+      } else view.DesktopMgr.en_mjp = false;
       var r = Laya.LocalStorage.getItem('_pre_room');
       if (
         (r && '' != r && (this.beinvited_roomid = parseInt(r)),
@@ -199,7 +199,7 @@ var GameMgr = (function() {
         o.callWithBack(function(t) {
           var e = JSON.parse(t);
           e.type &&
-            ((this._fastin = !0),
+            ((this._fastin = true),
             Laya.LocalStorage.setItem('_pre_sociotype', e.type),
             Laya.LocalStorage.setItem('_pre_code', e.code)),
             Laya.LocalStorage.setItem('_pre_st', '');
@@ -207,21 +207,21 @@ var GameMgr = (function() {
           s.call('clearSocioCode'),
           s.call('initWXPay', 'wxa81767d38cb2f4ff'),
           o.callWithBack(function(e) {
-            (t._in_china = !0),
+            (t._in_china = true),
               'ingoogleplay' == e &&
-                ((t._in_google_play = !0), (t._in_china = !1));
+                ((t._in_google_play = true), (t._in_china = false));
           }, 'getAppConfig');
       }
     }),
     (t.prototype.trasform_storage = function() {
       (t = Laya.LocalStorage.getItem('_pre_st')) &&
         '' != t &&
-        ((this._fastin = !0),
+        ((this._fastin = true),
         Laya.LocalStorage.setItem('_pre_sociotype', t),
         Laya.LocalStorage.setItem('_pre_st', ''));
       (t = Laya.LocalStorage.getItem('_pre_xdsfdl')) &&
         '' != t &&
-        ((this._fastin = !0),
+        ((this._fastin = true),
         Laya.LocalStorage.setItem('_pre_sociotype', t),
         Laya.LocalStorage.setItem('_pre_xdsfdl', ''));
       (t = Laya.LocalStorage.getItem('_pre_uid')) &&
@@ -237,7 +237,7 @@ var GameMgr = (function() {
       !e ||
         '' == e ||
         ('xdsfdl3' != e && 'xdsfdl4' != e) ||
-        ((this._fastin = !0),
+        ((this._fastin = true),
         Laya.LocalStorage.setItem('_pre_sociotype', '3'),
         Laya.LocalStorage.setItem('_pre_st', '')),
         Laya.LocalStorage.setItem('_pre_state', '');
@@ -361,7 +361,7 @@ var GameMgr = (function() {
       game.LoadMgr.httpload(
         'config.json',
         'json',
-        !1,
+        false,
         Laya.Handler.create(this, function(i) {
           if (
             (window && window.conch && window.loadingView.loading(70),
@@ -513,14 +513,14 @@ var GameMgr = (function() {
           '/' != this.link_url.charAt(this.link_url.length - 1) &&
             (this.link_url += '/'));
       }
-      var c = !1,
+      var c = false,
         u = '';
       for (var _ in n)
         'mv_' == _.substr(0, 3) ||
           ('utm_' == _.substr(0, 4)
             ? ('' != u && (u += '&'), (u += _ + '=' + n[_]))
             : Laya.LocalStorage.setItem('_pre_' + _, n[_])),
-          (c = !0);
+          (c = true);
       return (
         u &&
           (Laya.LocalStorage.setItem('__ad_s', u),
@@ -545,7 +545,7 @@ var GameMgr = (function() {
           game.LoadMgr.httpload(
             'iOSver',
             'text',
-            !1,
+            false,
             Laya.Handler.create(e, function(i) {
               Laya.Browser.window.wkbridge.callNative(
                 'closeloadview',
@@ -696,11 +696,11 @@ var GameMgr = (function() {
           i
         ) {
           e || i.error
-            ? (uiscript.UI_ShiMingRenZheng.renzhenged = !1)
+            ? (uiscript.UI_ShiMingRenZheng.renzhenged = false)
             : 'CN' == i.country
-            ? ((t.player_in_haiwai = !1),
+            ? ((t.player_in_haiwai = false),
               (uiscript.UI_ShiMingRenZheng.renzhenged = i.is_authed))
-            : ((t.player_in_haiwai = !0),
+            : ((t.player_in_haiwai = true),
               (uiscript.UI_ShiMingRenZheng.renzhenged = i.is_authed));
         });
     }),
@@ -724,29 +724,29 @@ var GameMgr = (function() {
             uiscript.UIMgr.Inst.showNetReqError('fetchServerSettings', t, e);
           else if (
             (app.Log.log('fetchServerSettings: ' + JSON.stringify(e)),
-            (uiscript.UI_Recharge.open_payment = !1),
+            (uiscript.UI_Recharge.open_payment = false),
             (uiscript.UI_Recharge.payment_info = ''),
-            (uiscript.UI_Recharge.open_wx = !0),
+            (uiscript.UI_Recharge.open_wx = true),
             (uiscript.UI_Recharge.wx_type = 0),
-            (uiscript.UI_Recharge.open_alipay = !0),
+            (uiscript.UI_Recharge.open_alipay = true),
             (uiscript.UI_Recharge.alipay_type = 0),
             e.settings && e.settings.payment_setting)
           ) {
             var i = e.settings.payment_setting;
-            i.open_payment && (uiscript.UI_Recharge.open_payment = !0),
+            i.open_payment && (uiscript.UI_Recharge.open_payment = true),
               null != i.payment_info_show_type &&
                 (uiscript.UI_Recharge.payment_info_show_type =
                   i.payment_info_show_type),
               null != i.payment_info &&
                 (uiscript.UI_Recharge.payment_info = i.payment_info),
               i.wechat &&
-                (i.wechat.disable_create && (uiscript.UI_Recharge.open_wx = !1),
+                (i.wechat.disable_create && (uiscript.UI_Recharge.open_wx = false),
                 null != i.wechat.payment_source_platform &&
                   (uiscript.UI_Recharge.wx_type =
                     i.wechat.payment_source_platform)),
               i.alipay &&
                 (i.alipay.disable_create &&
-                  (uiscript.UI_Recharge.open_alipay = !1),
+                  (uiscript.UI_Recharge.open_alipay = false),
                 null != i.alipay.payment_source_platform &&
                   (uiscript.UI_Recharge.alipay_type =
                     i.alipay.payment_source_platform));
@@ -796,7 +796,7 @@ var GameMgr = (function() {
               }
             },
             null,
-            !1
+            false
           )
         ),
         app.NetAgent.AddListener2Lobby(
@@ -823,16 +823,16 @@ var GameMgr = (function() {
           'NotifyServerSetting',
           Laya.Handler.create(this, function(t) {
             if (
-              ((uiscript.UI_Recharge.open_payment = !1),
+              ((uiscript.UI_Recharge.open_payment = false),
               (uiscript.UI_Recharge.payment_info = ''),
-              (uiscript.UI_Recharge.open_wx = !0),
+              (uiscript.UI_Recharge.open_wx = true),
               (uiscript.UI_Recharge.wx_type = 0),
-              (uiscript.UI_Recharge.open_alipay = !0),
+              (uiscript.UI_Recharge.open_alipay = true),
               (uiscript.UI_Recharge.alipay_type = 0),
               t.settings && t.settings.payment_setting)
             ) {
               var e = t.settings.payment_setting;
-              e.open_payment && (uiscript.UI_Recharge.open_payment = !0),
+              e.open_payment && (uiscript.UI_Recharge.open_payment = true),
                 null != e.payment_info_show_type &&
                   (uiscript.UI_Recharge.payment_info_show_type =
                     e.payment_info_show_type),
@@ -840,13 +840,13 @@ var GameMgr = (function() {
                   (uiscript.UI_Recharge.payment_info = e.payment_info),
                 e.wechat &&
                   (e.wechat.disable_create &&
-                    (uiscript.UI_Recharge.open_wx = !1),
+                    (uiscript.UI_Recharge.open_wx = false),
                   null != e.wechat.payment_source_platform &&
                     (uiscript.UI_Recharge.wx_type =
                       e.wechat.payment_source_platform)),
                 e.alipay &&
                   (e.alipay.disable_create &&
-                    (uiscript.UI_Recharge.open_alipay = !1),
+                    (uiscript.UI_Recharge.open_alipay = false),
                   null != e.alipay.payment_source_platform &&
                     (uiscript.UI_Recharge.alipay_type =
                       e.alipay.payment_source_platform));
@@ -893,7 +893,7 @@ var GameMgr = (function() {
     }),
     (t.prototype.afterLogin = function() {
       var e = this;
-      this.gameInit(), (this.logined = !0);
+      this.gameInit(), (this.logined = true);
       Laya.LocalStorage.setItem('_pre_room', ''),
         Laya.LocalStorage.setItem('_pre_paipu', ''),
         (t.Inst.account_data.nickname && '' != t.Inst.account_data.nickname) ||
@@ -916,7 +916,7 @@ var GameMgr = (function() {
               return uiscript.UI_Loading.Inst.setProgressVal(0.2 + 0.7 * t);
             },
             null,
-            !1
+            false
           )
         ),
         app.PlayerBehaviorStatistic.google_trace_force(
@@ -966,20 +966,20 @@ var GameMgr = (function() {
       this._current_scene !== this._scene_mj &&
         (this._current_scene &&
           this._current_scene.active &&
-          (this._current_scene.active = !1),
+          (this._current_scene.active = false),
         (this._current_scene = this._scene_mj),
-        (this._current_scene.active = !0));
+        (this._current_scene.active = true));
     }),
     (t.prototype.EnterLobby = function() {
       var t = this;
       this._current_scene !== this._scene_lobby
-        ? (this._current_scene && (this._current_scene.active = !1),
+        ? (this._current_scene && (this._current_scene.active = false),
           (this._current_scene = this._scene_lobby),
           uiscript.UI_Loading.Inst.show('enter_lobby'),
           this._scene_lobby.buildScene(
             Laya.Handler.create(this, function() {
               uiscript.UI_Loading.Inst.close(),
-                (t._current_scene.active = !0),
+                (t._current_scene.active = true),
                 game.Scene_MJ.Inst.load_common_texture2d();
             }),
             Laya.Handler.create(
@@ -988,10 +988,10 @@ var GameMgr = (function() {
                 return uiscript.UI_Loading.Inst.setProgressVal(t);
               },
               null,
-              !1
+              false
             )
           ))
-        : (uiscript.UI_Loading.Inst.close(), (this._current_scene.active = !0));
+        : (uiscript.UI_Loading.Inst.close(), (this._current_scene.active = true));
     }),
     (t.prototype.checkPaiPu = function(t, e, i) {
       var n = this;
@@ -1005,7 +1005,7 @@ var GameMgr = (function() {
       ),
         this.duringPaipu
           ? app.Log.Error('已经在看牌谱了')
-          : ((this.duringPaipu = !0),
+          : ((this.duringPaipu = true),
             uiscript.UI_Loading.Inst.show('enter_mj'),
             app.NetAgent.sendReq2Lobby(
               'Lobby',
@@ -1016,7 +1016,7 @@ var GameMgr = (function() {
                   uiscript.UIMgr.Inst.showNetReqError('fetchGameRecord', t, a),
                     uiscript.UI_Loading.Inst.close(null),
                     uiscript.UIMgr.Inst.showLobby(),
-                    (n.duringPaipu = !1);
+                    (n.duringPaipu = false);
                 else {
                   uiscript.UI_Loading.Inst.setProgressVal(0.1);
                   var r = a.head,
@@ -1041,7 +1041,7 @@ var GameMgr = (function() {
                           views: [],
                           skin: cfg.item_definition.character.get(h.avatar_id)
                             .init_skin,
-                          is_upgraded: !1
+                          is_upgraded: false
                         }),
                         (h.avatar_id = h.character.skin),
                         (s[h.seat] = h));
@@ -1059,16 +1059,16 @@ var GameMgr = (function() {
                           exp: 0,
                           views: [],
                           skin: 400101,
-                          is_upgraded: !1
+                          is_upgraded: false
                         }
                       });
                   var u = Laya.Handler.create(n, function(t) {
                       game.Scene_Lobby.Inst.active &&
-                        (game.Scene_Lobby.Inst.active = !1),
+                        (game.Scene_Lobby.Inst.active = false),
                         game.Scene_MJ.Inst.openMJRoom(
                           s,
                           Laya.Handler.create(n, function() {
-                            (n.duringPaipu = !1),
+                            (n.duringPaipu = false),
                               view.DesktopMgr.Inst.initRoom(
                                 JSON.parse(JSON.stringify(r.config)),
                                 s,
@@ -1077,7 +1077,7 @@ var GameMgr = (function() {
                                 Laya.Handler.create(n, function() {
                                   (view.DesktopMgr.Inst.paipu_config = i),
                                     uiscript.UI_Replay.Inst.initData(t),
-                                    (uiscript.UI_Replay.Inst.enable = !0),
+                                    (uiscript.UI_Replay.Inst.enable = true),
                                     Laya.timer.once(1e3, n, function() {
                                       n.EnterMJ();
                                     }),
@@ -1092,7 +1092,7 @@ var GameMgr = (function() {
                                         uiscript.UI_Loading.Inst.close();
                                     }),
                                     Laya.timer.once(1e3, n, function() {
-                                      uiscript.UI_Replay.Inst.nextStep(!0);
+                                      uiscript.UI_Replay.Inst.nextStep(true);
                                     });
                                 })
                               );
@@ -1105,7 +1105,7 @@ var GameMgr = (function() {
                               );
                             },
                             null,
-                            !1
+                            false
                           )
                         );
                     }),
@@ -1117,7 +1117,7 @@ var GameMgr = (function() {
                       : game.LoadMgr.httpload(
                           a.data_url,
                           'arraybuffer',
-                          !1,
+                          false,
                           Laya.Handler.create(n, function(t) {
                             if (t.success) {
                               var e = new Laya.Byte();
@@ -1126,7 +1126,7 @@ var GameMgr = (function() {
                                 e.getUint8Array(0, e.length)
                               );
                               (_.game = i), u.runWith(_);
-                            } else uiscript.UIMgr.Inst.ShowErrorInfo(game.Tools.strOfLocalization(2005) + a.data_url), uiscript.UI_Loading.Inst.close(null), uiscript.UIMgr.Inst.showLobby(), (n.duringPaipu = !1);
+                            } else uiscript.UIMgr.Inst.ShowErrorInfo(game.Tools.strOfLocalization(2005) + a.data_url), uiscript.UI_Loading.Inst.close(null), uiscript.UIMgr.Inst.showLobby(), (n.duringPaipu = false);
                           })
                         );
                 }
@@ -1134,7 +1134,7 @@ var GameMgr = (function() {
             ));
     }),
     (t.prototype.BehavioralStatistics = function(t, e) {
-      void 0 === e && (e = 1);
+      undefined === e && (e = 1);
       var i = t.toString();
       this._statisticinfo.hasOwnProperty[i] || (this._statisticinfo[i] = 0),
         (this._statisticinfo[i] += e);
@@ -1154,10 +1154,10 @@ var GameMgr = (function() {
       return Laya.timer.currTimer - this._last_heatbeat_time;
     }),
     (t.prototype.onFatalError = function(e, i) {
-      void 0 === i && (i = !0), app.Log.Error('onFatalError');
+      undefined === i && (i = true), app.Log.Error('onFatalError');
       var n = {};
       (n.timestamp = Math.floor(Date.now() / 1e3)),
-        (n.fatal = !0),
+        (n.fatal = true),
         (n.lobby_ip = app.NetAgent.lobby_ip),
         (n.mj_ip = app.NetAgent.mj_ip),
         t.Inst && (n.account_id = t.Inst.account_id),
@@ -1208,7 +1208,7 @@ var GameMgr = (function() {
       } else app.Log.Error(JSON.stringify(e));
     }),
     (t.prototype.handleWindowError = function(t, e, i, n, a) {
-      return !1;
+      return false;
     }),
     (t.prototype.load_mjp_view = function(e) {
       var i = 'mjp_default',
@@ -1229,13 +1229,13 @@ var GameMgr = (function() {
           Laya.loader.load([a + 'myres2/mjp/' + this.mjp_view + '/ui.atlas']);
       }
     }),
-    (t._inRes = !0),
+    (t._inRes = true),
     (t.error_url = 'http://47.98.236.52:5031/api/v0/client_report_message'),
     (t.Inst = null),
     (t.config_data = {}),
     (t.device_id = ''),
-    (t._in_china = !0),
-    (t._in_google_play = !1),
+    (t._in_china = true),
+    (t._in_google_play = false),
     (t._client_region = 'mainland'),
     (t.client_language = 'chs'),
     t

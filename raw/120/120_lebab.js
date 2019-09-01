@@ -1,32 +1,9 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
     function i() {
       const t = e.call(this, new ui.entrance.add2desktopUI()) || this;
-      return (t.skin = ''), (t.loaded = !1), (i.Inst = t), t;
+      return (t.skin = ''), (t.loaded = false), (i.Inst = t), t;
     }
     return __extends(i, e),
     (i.prototype.onCreate = function() {
@@ -49,37 +26,37 @@ let uiscript;
     }),
     (i.prototype.show = function() {
       const e = this;
-      (this.enable = !0),
-        (this.locking = !0),
+      (this.enable = true),
+        (this.locking = true),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            e.locking = !1;
+            e.locking = false;
           })
         ),
-        (this.loaded = !1),
+        (this.loaded = false),
         (this.img.skin = ''),
         '' != this.skin &&
           Laya.loader.load(
             this.skin,
             Laya.Handler.create(this, () => {
-              (e.loaded = !0),
+              (e.loaded = true),
                 e.enable
                   ? (e.img.skin = e.skin)
-                  : ((e.loaded = !1), Laya.loader.clearTextureRes(e.skin));
+                  : ((e.loaded = false), Laya.loader.clearTextureRes(e.skin));
             })
           );
     }),
     (i.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1),
-              (e.enable = !1),
+            (e.locking = false),
+              (e.enable = false),
               e.loaded &&
-                ((e.loaded = !1), Laya.loader.clearTextureRes(e.skin));
+                ((e.loaded = false), Laya.loader.clearTextureRes(e.skin));
           })
         );
     }),

@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => {
@@ -29,7 +6,7 @@ let uiscript;
         (this.btn_next_flag = 0),
           (this.btn_prev_flag = 0),
           (this.maskflag = 0),
-          (this.locking = !1),
+          (this.locking = false),
           (this.loadover = []),
           (this.pageid = []),
           (this.pageindex = 0),
@@ -62,7 +39,7 @@ let uiscript;
           (this.btn1 = this.buttonCrew.getChildByName('btn1')),
           (this.btn2 = this.buttonCrew.getChildByName('btn2')),
           (this.btn3 = this.buttonCrew.getChildByName('btn3')),
-          (this.buttonCrew.visible = !1),
+          (this.buttonCrew.visible = false),
           (this.yijibg = this.me.getChildByName('yjbg')),
           (this.Dialogue = this.me.getChildByName('Dialogue')),
           (this.Dtext = this.Dialogue.getChildByName('content').getChildByName(
@@ -86,7 +63,7 @@ let uiscript;
                   ((i.effectprev = 1), (i.btn_next_flag = 0), i.btnprev()));
             },
             null,
-            !1
+            false
           )),
           (this.btn_next.clickHandler = Laya.Handler.create(
             this,
@@ -110,7 +87,7 @@ let uiscript;
               }
             },
             null,
-            !1
+            false
           )),
           (this.btn1.clickHandler = Laya.Handler.create(
             this,
@@ -118,7 +95,7 @@ let uiscript;
               i.locking || i.changepage(i.pageindex, 0);
             },
             null,
-            !1
+            false
           )),
           (this.btn2.clickHandler = Laya.Handler.create(
             this,
@@ -126,7 +103,7 @@ let uiscript;
               i.locking || i.changepage(i.pageindex, 1);
             },
             null,
-            !1
+            false
           )),
           (this.btn3.clickHandler = Laya.Handler.create(
             this,
@@ -134,7 +111,7 @@ let uiscript;
               i.locking || i.changepage(i.pageindex, 2);
             },
             null,
-            !1
+            false
           )),
           (this.btn_back.clickHandler = Laya.Handler.create(
             this,
@@ -146,12 +123,12 @@ let uiscript;
                   ((i.effectprev = 1), i.btnprev()));
             },
             null,
-            !1
+            false
           ));
       }
       return (e.prototype.btnvisible = function(t, e) {
         this.buttonCrew.visible != e &&
-          (e ? i.Inst.me.ani1.play(0, !0) : i.Inst.me.ani1.stop()),
+          (e ? i.Inst.me.ani1.play(0, true) : i.Inst.me.ani1.stop()),
           (this.buttonCrew.visible = e);
         for (let n = 1; n < t + 1; n++) {
           const a = `btn${n}`;
@@ -177,10 +154,10 @@ let uiscript;
       }),
       (e.prototype.show = function() {
         const t = this;
-        game.Scene_Lobby.Inst.change_bg('indoor', !1),
+        game.Scene_Lobby.Inst.change_bg('indoor', false),
           (this.effectnext = 1),
           (this.effectprev = 0),
-          (this.me.visible = !0);
+          (this.me.visible = true);
         const e = `res/atlas/${game.Tools.localUISrc('myres/course_ui.atlas')}`;
         Laya.loader.load(
           e,
@@ -248,18 +225,18 @@ let uiscript;
                     n = i => {
                       t.data.datas[i].page_id.length <= 13 &&
                         ((t.pageid[e] = i), e++),
-                        t.loadover.push(!1);
+                        t.loadover.push(false);
                       const n = game.Tools.localUISrc(t.data.datas[i].img);
                       Laya.loader.load(
                         n,
                         Laya.Handler.create(t, () => {
                           Laya.timer.frameOnce(3, t, () => {
-                            (t.loadover[i] = !0),
+                            (t.loadover[i] = true),
                               t.me.visible &&
                                 t.pageindex == i &&
-                                ((t.loading.visible = !1),
+                                ((t.loading.visible = false),
                                 (t.page.source = Laya.loader.getRes(n)),
-                                (t.page.visible = !0)),
+                                (t.page.visible = true)),
                               t.me.visible || Laya.loader.clearTextureRes(n);
                           });
                         })
@@ -270,7 +247,7 @@ let uiscript;
                 a++
               )
                 n(a);
-              (t.loadover[0] = !0), t.showPage(t.pageindex, 0);
+              (t.loadover[0] = true), t.showPage(t.pageindex, 0);
             })
           );
       }),
@@ -278,19 +255,19 @@ let uiscript;
         (this.pageindex = t),
           (this.btn_prev.visible = 0 != t),
           (this.btn_next.visible = t != this.data.page_count - 1),
-          (this.yijibg.visible = !1),
-          (this.btn_exit.visible = !1),
-          (this.btn_back.visible = !1),
-          this.btnvisible(3, !1),
-          (this.img_correct.visible = !1),
-          (this.img_error.visible = !1),
+          (this.yijibg.visible = false),
+          (this.btn_exit.visible = false),
+          (this.btn_back.visible = false),
+          this.btnvisible(3, false),
+          (this.img_correct.visible = false),
+          (this.img_error.visible = false),
           t > 0
-            ? ((this.blackground.visible = !0),
-              (this.skip_text.visible = !1),
-              (this.btn_prev.visible = !0))
-            : ((this.blackground.visible = !1),
-              (this.skip_text.visible = !0)),
-          t == this.data.datas.length - 1 && (this.btn_exit.visible = !0),
+            ? ((this.blackground.visible = true),
+              (this.skip_text.visible = false),
+              (this.btn_prev.visible = true))
+            : ((this.blackground.visible = false),
+              (this.skip_text.visible = true)),
+          t == this.data.datas.length - 1 && (this.btn_exit.visible = true),
           this.chat_block.show(
             this.data.datas[t].text,
             'en' == GameMgr.client_language ? 10 : 5
@@ -303,15 +280,15 @@ let uiscript;
                 ? ((i = `extendRes/charactor/${this.data.datas[t].img}`),
                   game.LoadMgr.setImgSkin(this.yijibg, i),
                   (this.yijibg.scaleX = parseFloat(this.data.datas[t].flip)),
-                  (this.blackground.visible = !1),
-                  (this.yijibg.visible = !0),
-                  (this.page.visible = !1))
-                : ((this.page.visible = !0),
+                  (this.blackground.visible = false),
+                  (this.yijibg.visible = true),
+                  (this.page.visible = false))
+                : ((this.page.visible = true),
                   (this.page.source = Laya.loader.getRes(
                     game.Tools.localUISrc(this.data.datas[t].img)
                   ))),
-              (this.loading.visible = !1))
-            : ((this.page.visible = !1), (this.loading.visible = !0)),
+              (this.loading.visible = false))
+            : ((this.page.visible = false), (this.loading.visible = true)),
           this.data.datas[t].answers &&
             null != this.data.datas[t].answers &&
             this.buttonChoose(t),
@@ -340,9 +317,9 @@ let uiscript;
       }),
       (e.prototype.pinshan = function(t, e) {
         const i = this, n = this.buttonCrew.visible;
-        (this.btn_next.mouseEnabled = !1),
-          (this.btn_prev.mouseEnabled = !1),
-          (this.buttonCrew.visible = !1),
+        (this.btn_next.mouseEnabled = false),
+          (this.btn_prev.mouseEnabled = false),
+          (this.buttonCrew.visible = false),
           1 == e
             ? ((this.mask.x = 1700),
               Laya.Tween.to(
@@ -351,8 +328,8 @@ let uiscript;
                 250,
                 null,
                 Laya.Handler.create(this, () => {
-                  (i.btn_next.mouseEnabled = !0),
-                    (i.btn_prev.mouseEnabled = !0),
+                  (i.btn_next.mouseEnabled = true),
+                    (i.btn_prev.mouseEnabled = true),
                     (i.buttonCrew.visible = n),
                     (i.effectnext = 0);
                 })
@@ -365,47 +342,47 @@ let uiscript;
                 250,
                 null,
                 Laya.Handler.create(this, () => {
-                  (i.btn_next.mouseEnabled = !0),
-                    (i.btn_prev.mouseEnabled = !0),
+                  (i.btn_next.mouseEnabled = true),
+                    (i.btn_prev.mouseEnabled = true),
                     (i.buttonCrew.visible = n),
                     (i.effectprev = 0);
                 })
               ))
-            : ((this.mask.visible = !1),
+            : ((this.mask.visible = false),
               (this.mask.x = -260),
-              (this.btn_next.mouseEnabled = !0),
-              (this.btn_prev.mouseEnabled = !0),
+              (this.btn_next.mouseEnabled = true),
+              (this.btn_prev.mouseEnabled = true),
               (this.buttonCrew.visible = n));
       }),
       (e.prototype.buttonChoose = function(t) {
-        this.btnvisible(3, !0), (this.btn_next.visible = !1);
+        this.btnvisible(3, true), (this.btn_next.visible = false);
         for (let e = 0; e < 3; e++)
           if (null != this.data.datas[t].answers[e].flag) {
             if ('correct' == this.data.datas[t].answers[e].flag) {
               (this.img_correct.x = this.data.datas[t].answers[e].x),
                 (this.img_correct.y = this.data.datas[t].answers[e].y),
-                (this.img_correct.visible = !0),
-                (this.btn_next.visible = !0),
+                (this.img_correct.visible = true),
+                (this.btn_next.visible = true),
                 (this.btn_next_flag = 1),
-                this.btnvisible(3, !1),
-                i.Inst.me.correct.play(0, !1);
+                this.btnvisible(3, false),
+                i.Inst.me.correct.play(0, false);
               for (n = 0; n < this.data.datas.length; n++)
                 this.data.datas[n].page_id == this.data.datas[t].next &&
                   ((this.pagecorrect = n),
-                  (this.btn_prev.visible = !0),
+                  (this.btn_prev.visible = true),
                   (this.btn_prev_flag = 1),
                   (this.pagewrong = this.pagecorrect - 4));
             }
             if ('wrong' == this.data.datas[t].answers[e].flag) {
               (this.img_error.x = this.data.datas[t].answers[e].x),
                 (this.img_error.y = this.data.datas[t].answers[e].y),
-                (this.img_error.visible = !0),
-                (this.btn_back.visible = !0),
-                i.Inst.me.error.play(0, !1);
+                (this.img_error.visible = true),
+                (this.btn_back.visible = true),
+                i.Inst.me.error.play(0, false);
               for (var n = 0; n < this.data.datas.length; n++)
                 this.data.datas[n].page_id == this.data.datas[t].next &&
                   ((this.btn_prev_flag = 1), (this.pagewrong = n));
-              this.btnvisible(3, !1);
+              this.btnvisible(3, false);
             }
           }
       }),
@@ -417,12 +394,12 @@ let uiscript;
       }),
       (e.prototype.onEnter = function() {
         (this.pageindex = 0),
-          (this.btn_back.mouseEnabled = !0),
-          (this.btn_prev.mouseEnabled = !0),
-          (this.mask.visible = !0);
+          (this.btn_back.mouseEnabled = true),
+          (this.btn_prev.mouseEnabled = true),
+          (this.mask.visible = true);
       }),
       (e.prototype.close = function() {
-        this.me.visible = !1;
+        this.me.visible = false;
         for (let t = 0; t < this.data.datas.length; t++)
           this.loadover[t] &&
             Laya.loader.clearTextureRes(
@@ -432,9 +409,9 @@ let uiscript;
           Laya.loader.clearTextureRes(
             `res/atlas/${game.Tools.localUISrc('myres/course_ui.atlas')}`
           ),
-          game.Scene_Lobby.Inst.change_bg('yard', !1),
-          this.chat_block.close(!1),
-          (this.mask.visible = !1);
+          game.Scene_Lobby.Inst.change_bg('yard', false),
+          this.chat_block.close(false),
+          (this.mask.visible = false);
       }),
       e
     ;
@@ -447,7 +424,7 @@ let uiscript;
         (t.root = null),
         (t.blackmask = null),
         (t.page_course = null),
-        (t.locking = !1),
+        (t.locking = false),
         (t.func_close = null),
         (n.Inst = t),
         t
@@ -487,7 +464,7 @@ let uiscript;
             t.close();
           },
           null,
-          !1
+          false
         )),
         (this.root
           .getChildByName('xinshouzhidao')
@@ -497,15 +474,15 @@ let uiscript;
             t.close();
           },
           null,
-          !1
+          false
         ));
     }),
     (n.prototype.show = function(e, i) {
       const n = this;
-      void 0 === e && (e = 0),
-        void 0 === i && (i = null),
-        (this.locking = !0),
-        (this.enable = !0),
+      undefined === e && (e = 0),
+        undefined === i && (i = null),
+        (this.locking = true),
+        (this.enable = true),
         this.page_course.onEnter(),
         t.UIBase.anim_alpha_in(
           this.root,
@@ -513,7 +490,7 @@ let uiscript;
           300,
           0,
           Laya.Handler.create(this, () => {
-            n.locking = !1;
+            n.locking = false;
           })
         ),
         (this.blackmask.alpha = 0),
@@ -529,7 +506,7 @@ let uiscript;
     }),
     (n.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         Laya.Tween.to(this.blackmask, { alpha: 0 }, 150),
         t.UIBase.anim_alpha_out(
           this.root,
@@ -537,8 +514,8 @@ let uiscript;
           150,
           0,
           Laya.Handler.create(this, () => {
-            (e.locking = !1),
-              (e.enable = !1),
+            (e.locking = false),
+              (e.enable = false),
               e.func_close && e.func_close.run();
           })
         );

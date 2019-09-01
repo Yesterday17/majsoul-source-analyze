@@ -51,8 +51,8 @@ let mjcore;
       const n = new t();
       switch (
         ('0' == i.charAt(0)
-          ? ((n.dora = !0), (n.index = 5))
-          : ((n.dora = !1), (n.index = +i.charAt(0))),
+          ? ((n.dora = true), (n.index = 5))
+          : ((n.dora = false), (n.index = +i.charAt(0))),
         i.charAt(1))
       ) {
         case 'z':
@@ -83,7 +83,7 @@ let mjcore;
     (t.isSame = ({type, index, dora}, {type, index, dora}) => type == type && index == index && dora == dora),
     (t.Distance = (t, e) => t.numValue() - e.numValue()),
     (t.DoraMet = ({type, index}, {type, index}) => {
-      if (type != type) return !1;
+      if (type != type) return false;
       let n = index + 1;
       return view.DesktopMgr.Inst.rule_mode == view.ERuleMode.Liqi4
         ? type == e.z

@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => {
@@ -38,7 +15,7 @@ let uiscript;
               i.close();
             },
             null,
-            !1
+            false
           )),
           (this.container_item = this.root.getChildByName('item')),
           (this.buyed = this.container_item.getChildByName('buyed')),
@@ -51,12 +28,12 @@ let uiscript;
             this,
             this.on_buy,
             null,
-            !1
+            false
           )),
           (this.owned_count = this.root.getChildByName('owned_count'));
       }
       return (e.prototype.show = function(e, i, n) {
-        (this.me.visible = !0),
+        (this.me.visible = true),
           (this.inzhp = e),
           t.UIBase.anim_pop_out(this.root, null),
           (this.shop_item_id = i),
@@ -78,11 +55,11 @@ let uiscript;
             (this.my_currency_num = t.UI_Bag.get_item_count(r));
         }
         a.show_has
-          ? ((this.owned_count.visible = !0),
+          ? ((this.owned_count.visible = true),
             (this.owned_count.text = game.Tools.strOfLocalization(2212, [
               t.UI_Bag.get_item_count(a.item_id).toString()
             ])))
-          : (this.owned_count.visible = !1);
+          : (this.owned_count.visible = false);
         const s = cfg.item_definition.item.get(a.item_id);
         (this.name.text = s[`name_${GameMgr.client_language}`]),
           (this.desc.text = s[`desc_${GameMgr.client_language}`]),
@@ -94,17 +71,17 @@ let uiscript;
           this.refresh_cost(this.single_price);
         const o = a.buy_limit;
         null != o && o < 0
-          ? ((this.buyed.visible = !1),
+          ? ((this.buyed.visible = false),
             (this.icon.me.filters = []),
             game.Tools.setGrayDisable(
               this.btn_buy,
               this.single_price > this.my_currency_num
             ))
           : a.buy_limit <= n
-          ? ((this.buyed.visible = !0),
+          ? ((this.buyed.visible = true),
             (this.icon.me.filters = [new Laya.ColorFilter(t.DARK_FILTER)]),
-            game.Tools.setGrayDisable(this.btn_buy, !0))
-          : ((this.buyed.visible = !1),
+            game.Tools.setGrayDisable(this.btn_buy, true))
+          : ((this.buyed.visible = false),
             (this.icon.me.filters = []),
             game.Tools.setGrayDisable(
               this.btn_buy,
@@ -116,7 +93,7 @@ let uiscript;
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            e.me.visible = !1;
+            e.me.visible = false;
           })
         );
       }),
@@ -130,7 +107,7 @@ let uiscript;
       }),
       (e.prototype.on_buy = function() {
         this.close(),
-          game.Tools.setGrayDisable(this.btn_buy, !0),
+          game.Tools.setGrayDisable(this.btn_buy, true),
           this.inzhp
             ? n.Inst.want_to_buy_zhp(this.shop_item_id, 1)
             : n.Inst.want_to_buy_othershop(this.shop_item_id, 1);
@@ -142,7 +119,7 @@ let uiscript;
   const i = (() => {
     function e(e) {
       const i = this;
-      (this.mounthly = !1),
+      (this.mounthly = false),
         (this.me = e),
         (this.root = this.me.getChildByName('root')),
         (this.name = this.root.getChildByName('label_name')),
@@ -155,7 +132,7 @@ let uiscript;
             i.close();
           },
           null,
-          !1
+          false
         )),
         (this.container_item = this.root.getChildByName('item')),
         (this.buyed = this.container_item.getChildByName('buyed')),
@@ -172,22 +149,22 @@ let uiscript;
           this,
           this.on_buy,
           null,
-          !1
+          false
         ));
       for (
         let n = ['-10', '-1', '+1', '+10'],
             a = t => {
               const e = r.root.getChildByName(n[t]), a = e.getChildByName('s');
               a.alpha = 0;
-              let s = !1;
+              let s = false;
               e.on('mousedown', r, () => {
                 (a.alpha = 0),
-                  (s = !0),
-                  Laya.Tween.to(a, { alpha: 1 }, 50, null, null, 0, !0, !0);
+                  (s = true),
+                  Laya.Tween.to(a, { alpha: 1 }, 50, null, null, 0, true, true);
               }),
                 e.on('mouseup', r, () => {
                   if (
-                    (Laya.Tween.to(a, { alpha: 0 }, 50, null, null, 0, !0, !0),
+                    (Laya.Tween.to(a, { alpha: 0 }, 50, null, null, 0, true, true),
                     s)
                   )
                     switch (t) {
@@ -203,11 +180,11 @@ let uiscript;
                       case 3:
                         i.on_num_change(10);
                     }
-                  s = !1;
+                  s = false;
                 }),
                 e.on('mouseout', r, () => {
-                  Laya.Tween.to(a, { alpha: 0 }, 50, null, null, 0, !0, !0),
-                    (s = !1);
+                  Laya.Tween.to(a, { alpha: 0 }, 50, null, null, 0, true, true),
+                    (s = false);
                 });
             },
             r = this,
@@ -219,7 +196,7 @@ let uiscript;
       this.owned_count = this.root.getChildByName('owned_count');
     }
     return (e.prototype.show = function(e, i, n) {
-      (this.me.visible = !0),
+      (this.me.visible = true),
         (this.inzhp = e),
         (this.buyed_count = n),
         (this.shop_item_id = i),
@@ -231,7 +208,7 @@ let uiscript;
         ).icon),
           (this.my_currency_num = GameMgr.Inst.account_data.gold),
           (a = cfg.shops.zhp_goods.get(i)),
-          (this.mounthly = !1);
+          (this.mounthly = false);
       else {
         const r = (a = cfg.shops.goods.get(i)).currency;
         10 == Math.floor(r / 1e4)
@@ -248,11 +225,11 @@ let uiscript;
           'icon'
         ).skin = game.LoadMgr.getResImageSkin(this.currency_icon)),
         a.show_has
-          ? ((this.owned_count.visible = !0),
+          ? ((this.owned_count.visible = true),
             (this.owned_count.text = game.Tools.strOfLocalization(2212, [
               t.UI_Bag.get_item_count(a.item_id).toString()
             ])))
-          : (this.owned_count.visible = !1);
+          : (this.owned_count.visible = false);
       const s = cfg.item_definition.item.get(a.item_id);
       (this.name.text = s[`name_${GameMgr.client_language}`]),
         (this.desc.text = s[`desc_${GameMgr.client_language}`]),
@@ -261,9 +238,9 @@ let uiscript;
         this.refresh(),
         (this.label_refresh_info.visible = this.mounthly),
         null != a.buy_limit && a.buy_limit < 0
-          ? ((this.container_left_count.visible = !1),
+          ? ((this.container_left_count.visible = false),
             (this.container_danjia.x = 393))
-          : ((this.container_left_count.visible = !0),
+          : ((this.container_left_count.visible = true),
             (this.container_danjia.x = 300),
             (this.container_left_count.getChildByName('count').text =
               (this.mounthly ? game.Tools.strOfLocalization(2184) : '') +
@@ -280,13 +257,13 @@ let uiscript;
       t.UIBase.anim_pop_hide(
         this.root,
         Laya.Handler.create(this, () => {
-          e.me.visible = !1;
+          e.me.visible = false;
         })
       );
     }),
     (e.prototype.on_buy = function() {
       this.close(),
-        game.Tools.setGrayDisable(this.btn_buy, !0),
+        game.Tools.setGrayDisable(this.btn_buy, true),
         this.inzhp
           ? n.Inst.want_to_buy_zhp(this.shop_item_id, this.count)
           : n.Inst.want_to_buy_othershop(this.shop_item_id, this.count);
@@ -305,17 +282,17 @@ let uiscript;
       this.label_count.text = this.count.toString();
       const e = this.shop_table.buy_limit;
       null != e && e < 0
-        ? ((this.buyed.visible = !1),
+        ? ((this.buyed.visible = false),
           (this.icon.me.filters = []),
           game.Tools.setGrayDisable(
             this.btn_buy,
             this.single_price * this.count > this.my_currency_num
           ))
         : this.shop_table.buy_limit <= this.buyed_count
-        ? ((this.buyed.visible = !0),
+        ? ((this.buyed.visible = true),
           (this.icon.me.filters = [new Laya.ColorFilter(t.DARK_FILTER)]),
-          game.Tools.setGrayDisable(this.btn_buy, !0))
-        : ((this.buyed.visible = !1),
+          game.Tools.setGrayDisable(this.btn_buy, true))
+        : ((this.buyed.visible = false),
           (this.icon.me.filters = []),
           game.Tools.setGrayDisable(
             this.btn_buy,
@@ -343,7 +320,7 @@ let uiscript;
         (t.tabs = []),
         (t.heads = []),
         (t.currencys = {}),
-        (t.locking = !1),
+        (t.locking = false),
         (t.shop_index = -1),
         (t.items = []),
         (t.usd_item_icon = {}),
@@ -368,7 +345,7 @@ let uiscript;
                 e.Inst && e.Inst.enable && e.Inst.refresh_info();
             },
             null,
-            !1
+            false
           )
         );
     }),
@@ -394,16 +371,16 @@ let uiscript;
           (n = this.shopinfo.zhp.buy_records))
         : (this.shopinfo.buy_records || (this.shopinfo.buy_records = []),
           (n = this.shopinfo.buy_records));
-      for (var a = !1, r = 0; r < n.length; r++)
+      for (var a = false, r = 0; r < n.length; r++)
         if (n[r].id == t) {
-          (n[r].count = i), (a = !0);
+          (n[r].count = i), (a = true);
           break;
         }
       a || n.push({ id: t, count: i });
     }),
     (a.goods_on_sell = t => {
       const e = cfg.shops.goods.get(t);
-      if (!e) return !1;
+      if (!e) return false;
       const i = Date.now();
       return (
         !(
@@ -440,12 +417,12 @@ let uiscript;
             n.locking ||
               n.close(
                 Laya.Handler.create(n, () => {
-                  t.UI_Lobby.Inst.enable = !0;
+                  t.UI_Lobby.Inst.enable = true;
                 })
               );
           },
           null,
-          !1
+          false
         )),
         (this.money = new t.UI_Money(
           this.container_top,
@@ -455,13 +432,13 @@ let uiscript;
               n.close(t);
             },
             null,
-            !1
+            false
           ),
           Laya.Handler.create(
             this,
             () => n.locking,
             null,
-            !1
+            false
           )
         )),
         (this.container_content = this.me.getChildByName('content')),
@@ -479,7 +456,7 @@ let uiscript;
                   n.shop_index != t && n.change_tab(t);
                 },
                 null,
-                !1
+                false
               ));
           },
           r = this,
@@ -495,7 +472,7 @@ let uiscript;
           .getChildByName('time')),
         (this.scrollview = o.scriptMap['capsui.CScrollView']),
         this.scrollview.init_scrollview(
-          Laya.Handler.create(this, this.render_item, null, !1),
+          Laya.Handler.create(this, this.render_item, null, false),
           -1,
           4
         ),
@@ -524,7 +501,7 @@ let uiscript;
               );
           },
           null,
-          !1
+          false
         )),
         t.UI_Bag.add_item_listener(
           302002,
@@ -534,7 +511,7 @@ let uiscript;
               1 == n.shop_index && n.refresh_head_show();
             },
             null,
-            !1
+            false
           )
         ),
         t.UI_Bag.add_item_listener(
@@ -545,7 +522,7 @@ let uiscript;
               2 == n.shop_index && n.refresh_head_show();
             },
             null,
-            !1
+            false
           )
         ),
         t.UI_Bag.add_item_listener(
@@ -556,7 +533,7 @@ let uiscript;
               3 == n.shop_index && n.refresh_head_show();
             },
             null,
-            !1
+            false
           )
         ),
         (this.page_skin = new t.UI_Shop_Skin(
@@ -583,18 +560,18 @@ let uiscript;
     }),
     (a.prototype.show = function(e) {
       const i = this;
-      void 0 === e && (e = 0),
-        (this.enable = !0),
-        (this.locking = !0),
+      undefined === e && (e = 0),
+        (this.enable = true),
+        (this.locking = true),
         (this.usd_item_icon = {}),
-        game.Scene_Lobby.Inst.change_bg('indoor', !1),
+        game.Scene_Lobby.Inst.change_bg('indoor', false),
         t.UIBase.anim_alpha_in(this.container_top, { y: -30 }, 150),
         t.UIBase.anim_alpha_in(this.container_content, { y: 30 }, 150),
         this.refresh_info(e),
         this.money.onEnable(),
         (this.timerefresh.text = this.getLocalTime()),
         Laya.timer.once(150, this, () => {
-          i.locking = !1;
+          i.locking = false;
         }),
         (this.tabs[4].getChildByName(
           'redpoint'
@@ -602,11 +579,11 @@ let uiscript;
     }),
     (a.prototype.close = function(e) {
       const i = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_alpha_out(this.container_top, { y: -30 }, 150),
         t.UIBase.anim_alpha_out(this.container_content, { y: 30 }, 150),
         Laya.timer.once(150, this, () => {
-          (i.locking = !1), (i.enable = !1), e && e.run();
+          (i.locking = false), (i.enable = false), e && e.run();
         });
     }),
     (a.prototype.onDisable = function() {
@@ -616,9 +593,9 @@ let uiscript;
       this.usd_item_icon = {};
     }),
     (a.prototype.refresh_info = function(t) {
-      void 0 === t && (t = 0),
-        (this.buy_single.me.visible = !1),
-        (this.buy_multi.me.visible = !1),
+      undefined === t && (t = 0),
+        (this.buy_single.me.visible = false),
+        (this.buy_multi.me.visible = false),
         a.shopinfo ? this.change_tab(t) : this.change_tab(-1);
     }),
     (a.prototype.change_tab = function(t) {
@@ -633,15 +610,15 @@ let uiscript;
           (this.tabs[l].getChildAt(0).color =
             t == l ? '#d9b263' : '#8cb65f');
       if (
-        ((this.container_right.visible = !1),
+        ((this.container_right.visible = false),
         this.page_skin.close(),
         4 == this.shop_index)
       )
         this.page_skin.show(),
-          (this.tabs[4].getChildByName('redpoint').visible = !1);
+          (this.tabs[4].getChildByName('redpoint').visible = false);
       else {
         if (
-          ((this.container_right.visible = !0),
+          ((this.container_right.visible = true),
           this.refresh_head_show(),
           (this.items = []),
           this.scrollview.reset(),
@@ -725,14 +702,14 @@ let uiscript;
         if (i) {
           const n = this.heads[0].getChildByName('refresh'), r = this.heads[0].getChildByName('noinfo'), s = this.heads[0].getChildByName('count');
           if (
-            ((n.visible = !1),
-            (r.visible = !1),
+            ((n.visible = false),
+            (r.visible = false),
             (s.text = ''),
             i.free_refresh && i.free_refresh.count < i.free_refresh.limit)
           )
-            (n.visible = !0),
-              (n.getChildByName('pay').visible = !1),
-              (n.getChildByName('free').visible = !0),
+            (n.visible = true),
+              (n.getChildByName('pay').visible = false),
+              (n.getChildByName('free').visible = true),
               (n.getChildByName('free').text = game.Tools.strOfLocalization(
                 2185
               )),
@@ -747,9 +724,9 @@ let uiscript;
               i.cost_refresh.count + 1
             );
             if (o) {
-              (n.visible = !0), (n.getChildByName('free').visible = !1);
+              (n.visible = true), (n.getChildByName('free').visible = false);
               const l = n.getChildByName('pay');
-              l.visible = !0;
+              l.visible = true;
               const h = l.getChildByName('count'), c = l.getChildByName('icon'), u = l.getChildByName('money');
               (h.text = game.Tools.strOfLocalization(2187)),
                 (s.text =
@@ -762,11 +739,11 @@ let uiscript;
                 game.Tools.child_align_center(n.getChildByName('pay'), [
                   30
                 ]);
-            } else r.visible = !0;
-          } else r.visible = !0;
-        } else this.heads[0].visible = !1;
+            } else r.visible = true;
+          } else r.visible = true;
+        } else this.heads[0].visible = false;
       } else if (this.shop_index >= 1 && this.shop_index <= 3) {
-        let _ = void 0;
+        let _ = undefined;
         switch (this.shop_index) {
           case 1:
             _ = 302002;
@@ -831,7 +808,7 @@ let uiscript;
                 );
           },
           null,
-          !1
+          false
         )),
         (c.getChildByName('label_name').text =
           s[`name_${GameMgr.client_language}`]),
@@ -841,21 +818,21 @@ let uiscript;
       )
         if (4 == s.category)
           if (l.buyed_count >= s.buy_limit)
-            (c.getChildByName('buyed').visible = !0),
+            (c.getChildByName('buyed').visible = true),
               (c.getChildByName('icon').filters = [
                 new Laya.ColorFilter(t.DARK_FILTER)
               ]),
               (c.getChildByName('btn_buy').filters = [
                 new Laya.ColorFilter(t.GRAY_FILTER)
               ]),
-              (c.getChildByName('count').visible = !0),
+              (c.getChildByName('count').visible = true),
               (c.getChildByName('count').text =
                 `${game.Tools.strOfLocalization(2189)}0`);
           else {
             (c.getChildByName('icon').filters = []),
               (c.getChildByName('btn_buy').filters = []),
-              (c.getChildByName('buyed').visible = !1),
-              (c.getChildByName('count').visible = !0);
+              (c.getChildByName('buyed').visible = false),
+              (c.getChildByName('count').visible = true);
             u = s.buy_limit - l.buyed_count;
             c.getChildByName('count').text =
               game.Tools.strOfLocalization(2189) + u;
@@ -867,13 +844,13 @@ let uiscript;
             (c.getChildByName('btn_buy').filters = [
               new Laya.ColorFilter(t.GRAY_FILTER)
             ]),
-            (c.getChildByName('buyed').visible = !0),
-            (c.getChildByName('count').visible = !1);
+            (c.getChildByName('buyed').visible = true),
+            (c.getChildByName('count').visible = false);
         else {
           (c.getChildByName('icon').filters = []),
             (c.getChildByName('btn_buy').filters = []),
-            (c.getChildByName('buyed').visible = !1),
-            (c.getChildByName('count').visible = !0);
+            (c.getChildByName('buyed').visible = false),
+            (c.getChildByName('count').visible = true);
           var u = s.buy_limit - l.buyed_count;
           c.getChildByName('count').text =
             u > 1 ? game.Tools.strOfLocalization(2190) + u.toString() : '';
@@ -881,8 +858,8 @@ let uiscript;
       else
         (c.getChildByName('icon').filters = []),
           (c.getChildByName('btn_buy').filters = []),
-          (c.getChildByName('buyed').visible = !1),
-          (c.getChildByName('count').visible = !1);
+          (c.getChildByName('buyed').visible = false),
+          (c.getChildByName('count').visible = false);
       (c
         .getChildByName('btn_buy')
         .getChildByName('currency').skin = game.LoadMgr.getResImageSkin(o)),
@@ -914,9 +891,9 @@ let uiscript;
             const o = a.shopinfo.zhp;
             if (o) {
               o.buy_records || (o.buy_records = []);
-              for (var l = !1, h = 0; h < o.buy_records.length; h++)
+              for (var l = false, h = 0; h < o.buy_records.length; h++)
                 if (o.buy_records[h].id == e) {
-                  (o.buy_records[h].count += i), (l = !0);
+                  (o.buy_records[h].count += i), (l = true);
                   break;
                 }
               l || o.buy_records.push({ id: e, count: i });
@@ -948,12 +925,12 @@ let uiscript;
                 }
             a.shopinfo.buy_records || (a.shopinfo.buy_records = []);
             for (
-              var o = a.shopinfo.buy_records, l = !1, h = 0;
+              var o = a.shopinfo.buy_records, l = false, h = 0;
               h < o.length;
               h++
             )
               if (o[h].id == e) {
-                (o[h].count += i), (l = !0);
+                (o[h].count += i), (l = true);
                 break;
               }
             l || o.push({ id: e, count: i }),
@@ -968,10 +945,10 @@ let uiscript;
     }),
     (a.prototype.refresh_zhp = function() {
       const e = this;
-      game.Tools.setGrayDisable(this.btn_refreshZHP, !0),
+      game.Tools.setGrayDisable(this.btn_refreshZHP, true),
         app.NetAgent.sendReq2Lobby('Lobby', 'refreshZHPShop', {}, (i, n) => {
           if (
-            (game.Tools.setGrayDisable(e.btn_refreshZHP, !1), i || n.error)
+            (game.Tools.setGrayDisable(e.btn_refreshZHP, false), i || n.error)
           )
             t.UIMgr.Inst.showNetReqError('refreshZHPShop', i, n);
           else {

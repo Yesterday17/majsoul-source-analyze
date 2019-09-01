@@ -77,7 +77,7 @@ let bin;
     }
     return (t.pb_classname = (t, e) => `${t}_${e}`),
     (t.prototype.parseSync = function(a, r) {
-      this.root = protobuf.parse(a, { keepCase: !0 }).root;
+      this.root = protobuf.parse(a, { keepCase: true }).root;
       for (
         var s = this.root.lookupType('lq.config.ConfigTables').decode(r),
           o = s.schemas,

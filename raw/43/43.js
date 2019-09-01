@@ -18,7 +18,7 @@ var game;
         (this.reconnect_count = 0),
         (this.reconnect_span = [500, 1e3, 3e3, 6e3, 1e4, 15e3]),
         (this.lasterrortime = 0),
-        (this.inMaintenance = !1),
+        (this.inMaintenance = false),
         (this.maintenanceInfo = ''),
         (this._connect_listeners = []);
     }
@@ -27,20 +27,20 @@ var game;
         get: function() {
           return null == this._Inst ? (this._Inst = new i()) : this._Inst;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       Object.defineProperty(i.prototype, 'isOK', {
         get: function() {
           return this.connect_state == e.connecting;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (i.prototype.OpenConnect = function(t, n) {
         var a = this;
         if ((app.Log.log('LobbyNetMgr OpenConnect'), this.inMaintenance))
-          n && n.runWith({ open: !1, maintenance: this.maintenanceInfo });
+          n && n.runWith({ open: false, maintenance: this.maintenanceInfo });
         else if (
           this.connect_state != e.connecting ||
           (t != i.gateway_region_name && '' != t)
@@ -63,14 +63,14 @@ var game;
             Laya.timer.once(500, this, function() {
               a._setState(e.tryconnect), a._fetch_gateway();
             });
-        } else n && n.runWith({ open: !0 });
+        } else n && n.runWith({ open: true });
       }),
       (i.prototype.Close = function() {
         app.Log.log('LobbyNetMgr close '),
           app.Log.info_net(
             'LobbyNetMgr Close connect_state:' + this.connect_state
           ),
-          (GameMgr.Inst.logined = !1),
+          (GameMgr.Inst.logined = false),
           (this.open_func = null),
           this._setState(e.none),
           app.NetAgent.Close2Lobby();
@@ -84,7 +84,7 @@ var game;
                 ? this._try_to_linknext()
                 : this.connect_state == e.connecting
                 ? GameMgr.Inst.logined
-                  ? ((GameMgr.Inst.logined = !1),
+                  ? ((GameMgr.Inst.logined = false),
                     this._setState(e.reconnecting),
                     (this.reconnect_count = 0),
                     this._fetch_gateway(),
@@ -92,7 +92,7 @@ var game;
                   : (this._setState(e.none),
                     this.open_func &&
                       this.open_func.runWith({
-                        open: !1,
+                        open: false,
                         info: t.Tools.strOfLocalization(11) + ' tyr'
                       }),
                     (this.open_func = null))
@@ -101,7 +101,7 @@ var game;
             : i == Laya.Event.OPEN &&
               (this.connect_state == e.tryconnect
                 ? (this._setState(e.connecting),
-                  this.open_func && this.open_func.runWith({ open: !0 }),
+                  this.open_func && this.open_func.runWith({ open: true }),
                   (this.open_func = null))
                 : this.connect_state == e.reconnecting &&
                   (this._setState(e.connecting), this._ReconnectSuccess()));
@@ -152,7 +152,7 @@ var game;
                 {
                   account: GameMgr.Inst.account,
                   password: GameMgr.encodeP(GameMgr.Inst.password),
-                  reconnect: !0,
+                  reconnect: true,
                   device: i,
                   random_key: GameMgr.device_id,
                   client_version: t.ResourceVersion.version,
@@ -164,7 +164,7 @@ var game;
                         t.Tools.strOfLocalization(2007)
                       )
                     : (app.Log.log('LobbyNetMgr 重连成功'),
-                      (GameMgr.Inst.logined = !0));
+                      (GameMgr.Inst.logined = true));
                 }
               )
             : app.NetAgent.sendReq2Lobby(
@@ -173,7 +173,7 @@ var game;
                 {
                   type: GameMgr.Inst.sociotype,
                   access_token: GameMgr.Inst.access_token,
-                  reconnect: !0,
+                  reconnect: true,
                   device: i,
                   random_key: GameMgr.device_id,
                   client_version: t.ResourceVersion.version,
@@ -185,7 +185,7 @@ var game;
                         t.Tools.strOfLocalization(2007)
                       )
                     : (app.Log.log('LobbyNetMgr 重连成功'),
-                      (GameMgr.Inst.logined = !0),
+                      (GameMgr.Inst.logined = true),
                       e._trigger_connect_msg('reconnect_success'));
                 }
               );
@@ -247,11 +247,11 @@ var game;
                 var r = JSON.parse(a);
                 if (r.maintenance)
                   n.connect_state == e.tryconnect
-                    ? ((n.inMaintenance = !0),
+                    ? ((n.inMaintenance = true),
                       (n.maintenanceInfo = r.maintenance.message),
                       n.open_func &&
                         n.open_func.runWith({
-                          open: !1,
+                          open: false,
                           maintenance: n.maintenanceInfo
                         }),
                       (n.open_func = null),
@@ -269,7 +269,7 @@ var game;
                 } else
                   n.open_func &&
                     n.open_func.runWith({
-                      open: !1,
+                      open: false,
                       info: t.Tools.strOfLocalization(62)
                     }),
                     (n.open_func = null),
@@ -282,7 +282,7 @@ var game;
                 n.connect_state == e.tryconnect
                   ? (n.open_func &&
                       n.open_func.runWith({
-                        open: !1,
+                        open: false,
                         info: t.Tools.strOfLocalization(61)
                       }),
                     (n.open_func = null),
@@ -306,7 +306,7 @@ var game;
               ? (this._setState(e.none),
                 this.open_func &&
                   this.open_func.runWith({
-                    open: !1,
+                    open: false,
                     info: t.Tools.strOfLocalization(11)
                   }),
                 (this.open_func = null))
@@ -314,7 +314,7 @@ var game;
             : ((this.servername = i.gateway_name),
               app.NetAgent.connect2Lobby(
                 this.urls[this.link_index].url,
-                Laya.Handler.create(this, this._OnConnent, null, !1)
+                Laya.Handler.create(this, this._OnConnent, null, false)
               ));
       }),
       (i.prototype.add_connect_listener = function(t) {

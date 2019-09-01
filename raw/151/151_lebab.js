@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => {
@@ -35,10 +12,10 @@ let uiscript;
           (this.img_title.skin = game.LoadMgr.getResImageSkin(
             cfg.achievement.achievement.find(t).icon
           )),
-            this.anim_in && this.anim_in.play(0, !1);
+            this.anim_in && this.anim_in.play(0, false);
         }),
         (t.prototype.hide = function() {
-          this.anim_out.play(0, !1);
+          this.anim_out.play(0, false);
         }),
         t
       );
@@ -55,10 +32,10 @@ let uiscript;
         (t.origin_illust_rect = null),
         (t.step = 0),
         (t.second_step = 0),
-        (t.locking = !1),
+        (t.locking = false),
         (t.page_gettitle = null),
         (t.newachievements = []),
-        (t.duringshowing = !1),
+        (t.duringshowing = false),
         (n.Inst = t),
         t
       );
@@ -76,7 +53,7 @@ let uiscript;
             i.onConfirm();
           },
           null,
-          !1
+          false
         ));
       for (let n = 0; n < 4; n++) {
         const a = this.me
@@ -107,12 +84,12 @@ let uiscript;
           t.UIMgr.Inst.ShowErrorInfo(game.Tools.strOfLocalization(2077)),
           void game.Scene_MJ.Inst.GameEnd()
         );
-      (this.duringshowing = !0),
-        (this.page_gettitle.me.visible = !1),
+      (this.duringshowing = true),
+        (this.page_gettitle.me.visible = false),
         (this.root.alpha = 0),
         Laya.Tween.to(this.root, { alpha: 1 }, 1e3);
       for (o = 0; o < this.players.length; o++)
-        this.players[o].root.visible = !1;
+        this.players[o].root.visible = false;
       let n = [];
       n = i.players;
       const a = view.DesktopMgr.Inst.player_datas[n[0].seat];
@@ -157,7 +134,7 @@ let uiscript;
               l < a.container_score.numChildren;
               l++
             )
-              a.container_score.getChildAt(l).visible = !1;
+              a.container_score.getChildAt(l).visible = false;
             for (
               let h = 0;
               h < o.length && h < a.container_score.numChildren;
@@ -173,14 +150,14 @@ let uiscript;
                   : game.Tools.localUISrc(
                       `myres/mjdesktop/ww_${u}.png`
                     )),
-                (c.visible = !0);
+                (c.visible = true);
             }
-            (a.root.visible = !1),
+            (a.root.visible = false),
               (a.img_mySelf.visible = i.seat == view.DesktopMgr.Inst.seat),
               i.seat == view.DesktopMgr.Inst.seat &&
                 (view.DesktopMgr.Inst.ptchange = i.grading_score),
               Laya.timer.once(1800 + 800 * e, s, () => {
-                (a.root.visible = !0),
+                (a.root.visible = true),
                   t.UIBase.anim_alpha_in(
                     a.root,
                     { x: -200 },
@@ -200,12 +177,12 @@ let uiscript;
         o++
       )
         r(o);
-      (this.locking = !0),
-        (this.btn_next.visible = !1),
+      (this.locking = true),
+        (this.btn_next.visible = false),
         Laya.timer.once(1800 + 800 * n.length, this, () => {
-          (e.locking = !1), (e.btn_next.visible = !0);
+          (e.locking = false), (e.btn_next.visible = true);
         }),
-        (this.enable = !0),
+        (this.enable = true),
         view.DesktopMgr.Inst.mode == view.EMJMode.play &&
           (Laya.timer.once(3500, this, GameMgr.Inst.updateAccountInfo),
           4 == view.DesktopMgr.Inst.game_config.category &&
@@ -222,12 +199,12 @@ let uiscript;
         if (0 == this.step) (this.step = 30), this.onConfirm();
         else if (30 == this.step)
           view.DesktopMgr.Inst.levelchangeinfo
-            ? ((this.btn_next.visible = !1),
+            ? ((this.btn_next.visible = false),
               this.closeRankList(
                 Laya.Handler.create(this, () => {
                   t.UI_RankChange.Inst.show(
                     Laya.Handler.create(e, () => {
-                      (e.step = 31), (e.btn_next.visible = !0);
+                      (e.step = 31), (e.btn_next.visible = true);
                     })
                   );
                 })
@@ -238,12 +215,12 @@ let uiscript;
         else if (50 == this.step)
           view.DesktopMgr.Inst.rewardinfo &&
           view.DesktopMgr.Inst.rewardinfo.match_chest
-            ? ((this.btn_next.visible = !1),
+            ? ((this.btn_next.visible = false),
               this.closeRankList(
                 Laya.Handler.create(this, () => {
                   t.UI_MJReward.Inst.show(
                     Laya.Handler.create(e, () => {
-                      (e.step = 51), (e.btn_next.visible = !0);
+                      (e.step = 51), (e.btn_next.visible = true);
                     })
                   );
                 })
@@ -255,13 +232,13 @@ let uiscript;
           const i = t.UI_MJTask_Progress.needShow();
           app.Log.log(`pengding need show lst:${i.length}`),
             i.length > 0
-              ? ((this.btn_next.visible = !1),
+              ? ((this.btn_next.visible = false),
                 this.closeRankList(
                   Laya.Handler.create(this, () => {
                     t.UI_MJTask_Progress.Inst.show(
                       i,
                       Laya.Handler.create(e, () => {
-                        (e.step = 70), (e.btn_next.visible = !0);
+                        (e.step = 70), (e.btn_next.visible = true);
                       })
                     );
                   })
@@ -270,13 +247,13 @@ let uiscript;
         } else if (70 == this.step) {
           const n = view.DesktopMgr.Inst.activity_reward;
           n && n.activity_reward && n.activity_reward.length > 0
-            ? ((this.btn_next.visible = !1),
+            ? ((this.btn_next.visible = false),
               this.closeRankList(
                 Laya.Handler.create(this, () => {
                   t.UI_MJReward_Activity.Inst.show(
                     n,
                     Laya.Handler.create(e, () => {
-                      (e.step = 80), (e.btn_next.visible = !0);
+                      (e.step = 80), (e.btn_next.visible = true);
                     })
                   );
                 })
@@ -286,17 +263,17 @@ let uiscript;
           80 == this.step
             ? ((this.step = 81), this.onConfirm())
             : 81 == this.step &&
-              ((this.enable = !1),
+              ((this.enable = false),
               Laya.loader.clearTextureRes(this.illust.skin),
               game.Scene_MJ.Inst.GameEnd());
     }),
     (n.prototype.forceclose = function() {
-      (this.enable = !1), Laya.timer.clearAll(this);
+      (this.enable = false), Laya.timer.clearAll(this);
     }),
     (n.prototype.closeRankList = function(e) {
       const i = this;
       if (this.duringshowing) {
-        this.duringshowing = !1;
+        this.duringshowing = false;
         for (let n = 0; n < this.players.length; n++)
           t.UIBase.anim_alpha_out(
             this.players[n].root,
@@ -319,7 +296,7 @@ let uiscript;
                 'full',
                 i.origin_illust_rect
               ),
-              (i.illust.getChildAt(0).visible = !1),
+              (i.illust.getChildAt(0).visible = false),
               t.UIBase.anim_alpha_in(i.illust, {}, 200, 100);
           })
         ),

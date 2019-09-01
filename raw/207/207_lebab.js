@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (e => {
@@ -44,7 +21,7 @@ let uiscript;
             t.locking || t.renzheng();
           },
           null,
-          !1
+          false
         )),
         (this.root.getChildByName(
           'btn_close'
@@ -54,27 +31,27 @@ let uiscript;
             t.locking || t.close();
           },
           null,
-          !1
+          false
         ));
     }),
     (i.prototype.show = function() {
       const e = this;
-      (this.locking = !0),
-        (this.enable = !0),
+      (this.locking = true),
+        (this.enable = true),
         t.UIBase.anim_pop_out(
           this.root,
           Laya.Handler.create(this, () => {
-            e.locking = !1;
+            e.locking = false;
           })
         );
     }),
     (i.prototype.close = function() {
       const e = this;
-      (this.locking = !0),
+      (this.locking = true),
         t.UIBase.anim_pop_hide(
           this.root,
           Laya.Handler.create(this, () => {
-            (e.locking = !1), (e.enable = !1);
+            (e.locking = false), (e.enable = false);
           })
         );
     }),
@@ -84,14 +61,14 @@ let uiscript;
           t
         )
       )
-        return !1;
+        return false;
       const e = t.substr(6, 4);
       const i = t.substr(10, 2);
       const n = t.substr(12, 2);
       const a = Date.parse(`${i}-${n}-${e}`);
       const r = Date.now();
       const s = new Date(e, i, 0).getDate();
-      if (a > r || n > s) return !1;
+      if (a > r || n > s) return false;
       for (
         var o = new Array(
             7,
@@ -135,20 +112,20 @@ let uiscript;
       return h[17].toUpperCase() == l[c % 11].toUpperCase();
     }),
     (i.prototype.test_hk_id = t => {
-      if (10 != t.length) return !1;
-      if ('(' != t.charAt(7) && '（' != t.charAt(7)) return !1;
-      if (')' != t.charAt(9) && '）' != t.charAt(9)) return !1;
+      if (10 != t.length) return false;
+      if ('(' != t.charAt(7) && '（' != t.charAt(7)) return false;
+      if (')' != t.charAt(9) && '）' != t.charAt(9)) return false;
       let e = 0;
       t = t.toUpperCase();
       const i = 'A'.charCodeAt(0);
       const n = 'Z'.charCodeAt(0);
       const a = '0'.charCodeAt(0);
       const r = t.charCodeAt(0);
-      if (r < i || r > n) return !1;
+      if (r < i || r > n) return false;
       e += 8 * (r - i + 1);
       for (let s = 1; s <= 6; s++) {
         const o = t.charCodeAt(s) - a;
-        if (o < 0 || o > 9) return !1;
+        if (o < 0 || o > 9) return false;
         e += o * (8 - s);
       }
       return 0 == (e %= 11)
@@ -158,7 +135,7 @@ let uiscript;
         : 11 - e == t.charCodeAt(8) - a;
     }),
     (i.prototype.test_tw_id = t => {
-      if (10 != t.length) return !1;
+      if (10 != t.length) return false;
       t = t.toUpperCase();
       for (
         var e = 'ABCDEFGHJKLMNPQRSTUVXYWZIO', i = -1, n = 0;
@@ -169,7 +146,7 @@ let uiscript;
           i = n;
           break;
         }
-      if (-1 == i) return !1;
+      if (-1 == i) return false;
       for (
         var a = i + 10,
           r = Math.floor(a / 10),
@@ -181,7 +158,7 @@ let uiscript;
         n++
       ) {
         const h = t.charCodeAt(n) - o;
-        if (h < 0 || h > 9) return !1;
+        if (h < 0 || h > 9) return false;
         l += h * (9 - n);
       }
       const c = t.charCodeAt(9) - o;
@@ -206,7 +183,7 @@ let uiscript;
               (e, n) => {
                 e || n.error
                   ? t.UIMgr.Inst.showNetReqError('updateIDCardInfo', e, n)
-                  : ((i.renzhenged = !0),
+                  : ((i.renzhenged = true),
                     t.UI_LightTips.Inst.show(
                       game.Tools.strOfLocalization(2182)
                     ));
@@ -216,7 +193,7 @@ let uiscript;
           : t.UIMgr.Inst.ShowErrorInfo(game.Tools.strOfLocalization(2183));
       } else t.UIMgr.Inst.ShowErrorInfo(game.Tools.strOfLocalization(2181));
     }),
-    (i.renzhenged = !1),
+    (i.renzhenged = false),
     i
   ;
   })(t.UIBase);

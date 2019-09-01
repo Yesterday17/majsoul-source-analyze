@@ -35,18 +35,18 @@ let net;
       get() {
         return this.socket_.connected;
       },
-      enumerable: !0,
-      configurable: !0
+      enumerable: true,
+      configurable: true
     }),
     (e.prototype._onOpen = function(t) {
-      void 0 === t && (t = null),
+      undefined === t && (t = null),
         app.Log.log('socket连接建立成功'),
         app.Log.info_net('socket open success'),
         this.when_socket_event &&
           this.when_socket_event.runWith(Laya.Event.OPEN);
     }),
     (e.prototype._onReceiveMsg = function(t) {
-      if ((void 0 === t && (t = null), !t || 0 === t.length))
+      if ((undefined === t && (t = null), !t || 0 === t.length))
         return (
           app.Log.Error('!data || data.length === 0'),
           void app.Log.info_net(
@@ -56,7 +56,7 @@ let net;
       this.messages_.push(new Uint8Array(t)), this._checkMessage();
     }),
     (e.prototype._onClose = function(t) {
-      void 0 === t && (t = null),
+      undefined === t && (t = null),
         app.Log.log(`socket关闭 e:${t}`),
         app.Log.info_net(
           `socket关闭 e:${JSON.stringify(t)}, code:${t.code}, reason:${t.reason}, wasClean:${t.wasClean}`
@@ -65,7 +65,7 @@ let net;
           this.when_socket_event.runWith(Laya.Event.CLOSE);
     }),
     (e.prototype._onError = function(t) {
-      void 0 === t && (t = null),
+      undefined === t && (t = null),
         app.Log.log(`socket错误 e:${t}`),
         app.Log.info_net(`socket错误 e:${JSON.stringify(t)}`),
         this.when_socket_event &&

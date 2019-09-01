@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -47,7 +22,7 @@ var __extends =
               t.locking || t.renzheng();
             },
             null,
-            !1
+            false
           )),
           (this.root.getChildByName(
             'btn_close'
@@ -57,27 +32,27 @@ var __extends =
               t.locking || t.close();
             },
             null,
-            !1
+            false
           ));
       }),
       (i.prototype.show = function() {
         var e = this;
-        (this.locking = !0),
-          (this.enable = !0),
+        (this.locking = true),
+          (this.enable = true),
           t.UIBase.anim_pop_out(
             this.root,
             Laya.Handler.create(this, function() {
-              e.locking = !1;
+              e.locking = false;
             })
           );
       }),
       (i.prototype.close = function() {
         var e = this;
-        (this.locking = !0),
+        (this.locking = true),
           t.UIBase.anim_pop_hide(
             this.root,
             Laya.Handler.create(this, function() {
-              (e.locking = !1), (e.enable = !1);
+              (e.locking = false), (e.enable = false);
             })
           );
       }),
@@ -87,14 +62,14 @@ var __extends =
             t
           )
         )
-          return !1;
+          return false;
         var e = t.substr(6, 4),
           i = t.substr(10, 2),
           n = t.substr(12, 2),
           a = Date.parse(i + '-' + n + '-' + e),
           r = Date.now(),
           s = new Date(e, i, 0).getDate();
-        if (a > r || n > s) return !1;
+        if (a > r || n > s) return false;
         for (
           var o = new Array(
               7,
@@ -138,20 +113,20 @@ var __extends =
         return h[17].toUpperCase() == l[c % 11].toUpperCase();
       }),
       (i.prototype.test_hk_id = function(t) {
-        if (10 != t.length) return !1;
-        if ('(' != t.charAt(7) && '（' != t.charAt(7)) return !1;
-        if (')' != t.charAt(9) && '）' != t.charAt(9)) return !1;
+        if (10 != t.length) return false;
+        if ('(' != t.charAt(7) && '（' != t.charAt(7)) return false;
+        if (')' != t.charAt(9) && '）' != t.charAt(9)) return false;
         var e = 0;
         t = t.toUpperCase();
         var i = 'A'.charCodeAt(0),
           n = 'Z'.charCodeAt(0),
           a = '0'.charCodeAt(0),
           r = t.charCodeAt(0);
-        if (r < i || r > n) return !1;
+        if (r < i || r > n) return false;
         e += 8 * (r - i + 1);
         for (var s = 1; s <= 6; s++) {
           var o = t.charCodeAt(s) - a;
-          if (o < 0 || o > 9) return !1;
+          if (o < 0 || o > 9) return false;
           e += o * (8 - s);
         }
         return 0 == (e %= 11)
@@ -161,7 +136,7 @@ var __extends =
           : 11 - e == t.charCodeAt(8) - a;
       }),
       (i.prototype.test_tw_id = function(t) {
-        if (10 != t.length) return !1;
+        if (10 != t.length) return false;
         t = t.toUpperCase();
         for (
           var e = 'ABCDEFGHJKLMNPQRSTUVXYWZIO', i = -1, n = 0;
@@ -172,7 +147,7 @@ var __extends =
             i = n;
             break;
           }
-        if (-1 == i) return !1;
+        if (-1 == i) return false;
         for (
           var a = i + 10,
             r = Math.floor(a / 10),
@@ -184,7 +159,7 @@ var __extends =
           n++
         ) {
           var h = t.charCodeAt(n) - o;
-          if (h < 0 || h > 9) return !1;
+          if (h < 0 || h > 9) return false;
           l += h * (9 - n);
         }
         var c = t.charCodeAt(9) - o;
@@ -211,7 +186,7 @@ var __extends =
                 function(e, n) {
                   e || n.error
                     ? t.UIMgr.Inst.showNetReqError('updateIDCardInfo', e, n)
-                    : ((i.renzhenged = !0),
+                    : ((i.renzhenged = true),
                       t.UI_LightTips.Inst.show(
                         game.Tools.strOfLocalization(2182)
                       ));
@@ -221,7 +196,7 @@ var __extends =
             : t.UIMgr.Inst.ShowErrorInfo(game.Tools.strOfLocalization(2183));
         } else t.UIMgr.Inst.ShowErrorInfo(game.Tools.strOfLocalization(2181));
       }),
-      (i.renzhenged = !1),
+      (i.renzhenged = false),
       i
     );
   })(t.UIBase);

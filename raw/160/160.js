@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -67,23 +42,23 @@ var __extends =
             .getChildByName('effect')),
           (this.secen = Laya.loader.getRes('scene/hucutin.ls')),
           this.effect.addChild(this.secen),
-          (this.secen.visible = !0);
+          (this.secen.visible = true);
       }),
       (i.prototype._onShow = function(t) {
         var e = this;
-        (this.enable = !0),
-          game.Tools.charaPart(t, this.illust, 'half', this.rect, !0),
-          this.me.cutin.play(0, !1),
+        (this.enable = true),
+          game.Tools.charaPart(t, this.illust, 'half', this.rect, true),
+          this.me.cutin.play(0, false),
           view.AudioMgr.PlayAudio(206),
           Laya.timer.once(1100, this, function() {
-            e.secen.visible = !1;
+            e.secen.visible = false;
           }),
           Laya.timer.once(1800, this, function() {
             e._onHide();
           });
       }),
       (i.prototype._onHide = function() {
-        (this.enable = !1),
+        (this.enable = false),
           Laya.loader.clearTextureRes(this.illust.skin),
           this.destroy(),
           (i.Inst = null);

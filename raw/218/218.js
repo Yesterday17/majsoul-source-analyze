@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -32,7 +7,7 @@ var __extends =
         (t._root = null),
         (t._scrollview = null),
         (t._blackmask = null),
-        (t._locking = !1),
+        (t._locking = false),
         (t._showindexs = []),
         (i.Inst = t),
         t
@@ -94,9 +69,9 @@ var __extends =
                 return e._locking;
               },
               null,
-              !1
+              false
             ),
-            Laya.Handler.create(this, this.close, null, !1)
+            Laya.Handler.create(this, this.close, null, false)
           )),
           (this._scrollview = this._root.getChildByName('content').scriptMap[
             'capsui.CScrollView'
@@ -108,7 +83,7 @@ var __extends =
                 e.setItemValue(t.index, t.container);
               },
               null,
-              !1
+              false
             )
           ),
           (this._root.getChildByName(
@@ -119,15 +94,15 @@ var __extends =
               e._locking || (e._blackmask.hide(), e.close());
             },
             null,
-            !1
+            false
           )),
           (this._noinfo = this._root.getChildByName('noinfo'));
       }),
       (i.prototype.show = function() {
         var e = this;
         if (
-          ((this._locking = !0),
-          (this.enable = !0),
+          ((this._locking = true),
+          (this.enable = true),
           this._blackmask.show(),
           i.owned_title.length > 0)
         ) {
@@ -144,23 +119,23 @@ var __extends =
           })),
             this._scrollview.reset(),
             this._scrollview.addItem(i.owned_title.length),
-            (this._scrollview.me.visible = !0),
-            (this._noinfo.visible = !1);
-        } else (this._noinfo.visible = !0), (this._scrollview.me.visible = !1);
+            (this._scrollview.me.visible = true),
+            (this._noinfo.visible = false);
+        } else (this._noinfo.visible = true), (this._scrollview.me.visible = false);
         t.UIBase.anim_pop_out(
           this._root,
           Laya.Handler.create(this, function() {
-            e._locking = !1;
+            e._locking = false;
           })
         );
       }),
       (i.prototype.close = function() {
         var e = this;
-        (this._locking = !0),
+        (this._locking = true),
           t.UIBase.anim_pop_hide(
             this._root,
             Laya.Handler.create(this, function() {
-              (e._locking = !1), (e.enable = !1);
+              (e._locking = false), (e.enable = false);
             })
           );
       }),
@@ -181,11 +156,11 @@ var __extends =
             this,
             function() {
               a != GameMgr.Inst.account_data.title
-                ? (n.changeTitle(t), (e.getChildByName('using').visible = !0))
-                : (n.changeTitle(-1), (e.getChildByName('using').visible = !1));
+                ? (n.changeTitle(t), (e.getChildByName('using').visible = true))
+                : (n.changeTitle(-1), (e.getChildByName('using').visible = false));
             },
             null,
-            !1
+            false
           );
         }
       }),

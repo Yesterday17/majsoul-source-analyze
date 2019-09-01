@@ -1,33 +1,10 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let capsui;
 !(t => {
   const e = (t => {
     function e() {
       const e = t.call(this) || this;
       return (
-        (e.mousedowned = !1),
+        (e.mousedowned = false),
         (e.origin_scale_x = 1),
         (e.origin_scale_y = 1),
         (e.starttime = 0),
@@ -73,7 +50,7 @@ let capsui;
         (this.origin_scale_y = this.me.scaleY);
     }),
     (e.prototype.onDisable = function() {
-      (this.mousedowned = !1),
+      (this.mousedowned = false),
         Laya.Tween.clearAll(this.me),
         this.me.destroyed ||
           ((this.me.scaleX = this.origin_scale_x),
@@ -81,7 +58,7 @@ let capsui;
     }),
     (e.prototype.OnMouseDown = function() {
       this.mousedowned ||
-        ((this.mousedowned = !0),
+        ((this.mousedowned = true),
         (this.origin_x = this.me.scaleX),
         (this.starttime = Laya.timer.currTimer),
         Laya.timer.clear(this, this.DoAnim),
@@ -89,7 +66,7 @@ let capsui;
     }),
     (e.prototype.OnMouseUp = function() {
       this.mousedowned &&
-        ((this.mousedowned = !1),
+        ((this.mousedowned = false),
         (this.origin_x = this.me.scaleX),
         (this.starttime = Laya.timer.currTimer),
         Laya.timer.clear(this, this.DoAnim),

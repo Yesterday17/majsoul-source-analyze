@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   let e;
@@ -73,7 +50,7 @@ let uiscript;
         i.push('btn_cancel'),
         (this._oplist = i),
         this.showOp(i),
-        (this.enable = !0),
+        (this.enable = true),
         (this.state = e.normal),
         view.AudioMgr.PlayAudio(202);
     }),
@@ -105,7 +82,7 @@ let uiscript;
     }),
     (n.prototype.onClickDetail = function(e) {
       view.AudioMgr.PlayAudio(101),
-        (this.enable = !1),
+        (this.enable = false),
         e < this.com_add_gang.length
           ? app.NetAgent.sendReq2MJ(
               'FastTest',
@@ -152,7 +129,7 @@ let uiscript;
               },
               (t, e) => {}
             ),
-          (this.enable = !1);
+          (this.enable = false);
       else {
         for (var i = [], n = 0; n < this.com_add_gang.length; n++)
           i.push(this.com_add_gang[n]);
@@ -163,21 +140,21 @@ let uiscript;
       }
     }),
     (n.prototype.onLiqiBack = function() {
-      (this.container_btns.visible = !0),
-        (this.btn_cancel.visible = !1),
-        view.DesktopMgr.Inst.mainrole.LiQiSelect(null, !1),
+      (this.container_btns.visible = true),
+        (this.btn_cancel.visible = false),
+        view.DesktopMgr.Inst.mainrole.LiQiSelect(null, false),
         (this.state = e.normal);
     }),
     (n.prototype.onBtn_Liqi = function() {
-      (this.container_btns.visible = !1),
-        (this.btn_cancel.visible = !0),
+      (this.container_btns.visible = false),
+        (this.btn_cancel.visible = true),
         (this.btn_cancel.clickHandler = Laya.Handler.create(
           this,
           this.onLiqiBack
         ));
       for (var t = [], i = 0; i < this.liqi_data.length; i++)
         t.push(mjcore.MJPai.Create(this.liqi_data[i]));
-      view.DesktopMgr.Inst.mainrole.LiQiSelect(t, !0),
+      view.DesktopMgr.Inst.mainrole.LiQiSelect(t, true),
         (this.state = e.liqiing);
     }),
     (n.prototype.onBtn_Zimo = () => {
@@ -194,9 +171,9 @@ let uiscript;
         view.DesktopMgr.Inst.WhenDoOperation();
     }),
     (n.prototype.onBtn_BaBei = () => {
-      let e = !1;
+      let e = false;
       const i = view.DesktopMgr.Inst.mainrole;
-      i.last_tile && '4z' === i.last_tile.val.toString() && (e = !0),
+      i.last_tile && '4z' === i.last_tile.val.toString() && (e = true),
         app.NetAgent.sendReq2MJ(
           'FastTest',
           'inputOperation',
@@ -228,20 +205,20 @@ let uiscript;
           'FastTest',
           'inputOperation',
           {
-            cancel_operation: !0,
+            cancel_operation: true,
             timeuse: t.UI_DesktopInfo.Inst._timecd.timeuse
           },
           (t, e) => {}
         ),
         view.DesktopMgr.Inst.WhenDoOperation()),
-        (this.enable = !1);
+        (this.enable = false);
     }),
     (n.prototype.onDoubleClick = function(t) {
       return this.state == e.detail
-        ? (this.onDetailBack(), !1)
+        ? (this.onDetailBack(), false)
         : this.state == e.liqiing
-        ? (this.onLiqiBack(), !1)
-        : !!t || (this.onBtn_Cancel(), !1);
+        ? (this.onLiqiBack(), false)
+        : !!t || (this.onBtn_Cancel(), false);
     }),
     (n.prototype.onDisable = function() {
       Laya.timer.clearAll(this);

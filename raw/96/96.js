@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  View = laya.ui.View,
+var View = laya.ui.View,
   Dialog = laya.ui.Dialog,
   EffectAnimation = laya.display.EffectAnimation,
   ui;
@@ -62,7 +37,7 @@ var __extends =
                       {
                         value: -1,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'y',
                         index: 0
@@ -70,7 +45,7 @@ var __extends =
                       {
                         value: 167,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'y',
                         index: 14
@@ -78,7 +53,7 @@ var __extends =
                       {
                         value: 0,
                         tweenMethod: 'backIn',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'y',
                         index: 20
@@ -88,7 +63,7 @@ var __extends =
                       {
                         value: -1,
                         tweenMethod: 'backIn',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'x',
                         index: 0
@@ -96,7 +71,7 @@ var __extends =
                       {
                         value: -360,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'x',
                         index: 14
@@ -104,7 +79,7 @@ var __extends =
                       {
                         value: 0,
                         tweenMethod: 'backIn',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'x',
                         index: 20
@@ -114,7 +89,7 @@ var __extends =
                       {
                         value: 1,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'scaleY',
                         index: 0
@@ -122,7 +97,7 @@ var __extends =
                       {
                         value: 0.58,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'scaleY',
                         index: 7
@@ -130,7 +105,7 @@ var __extends =
                       {
                         value: 2,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'scaleY',
                         index: 20
@@ -140,7 +115,7 @@ var __extends =
                       {
                         value: 1,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'scaleX',
                         index: 0
@@ -148,7 +123,7 @@ var __extends =
                       {
                         value: 0.5,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'scaleX',
                         index: 7
@@ -156,7 +131,7 @@ var __extends =
                       {
                         value: 2,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'scaleX',
                         index: 20
@@ -164,7 +139,7 @@ var __extends =
                       {
                         value: 1,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'scaleX',
                         index: 31
@@ -174,7 +149,7 @@ var __extends =
                       {
                         value: 0,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'rotation',
                         index: 0
@@ -182,7 +157,7 @@ var __extends =
                       {
                         value: 0,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'rotation',
                         index: 14
@@ -192,7 +167,7 @@ var __extends =
                       {
                         value: 1,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'alpha',
                         index: 0
@@ -200,7 +175,7 @@ var __extends =
                       {
                         value: 1,
                         tweenMethod: 'backIn',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'alpha',
                         index: 20
@@ -223,7 +198,7 @@ var __extends =
                       {
                         value: 0,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'y',
                         index: 0
@@ -233,7 +208,7 @@ var __extends =
                       {
                         value: 0,
                         tweenMethod: 'backIn',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'x',
                         index: 0
@@ -241,7 +216,7 @@ var __extends =
                       {
                         value: 100,
                         tweenMethod: 'linearNone',
-                        tween: !0,
+                        tween: true,
                         target: 2,
                         key: 'x',
                         index: 10

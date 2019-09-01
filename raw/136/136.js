@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -33,7 +8,7 @@ var __extends =
       __extends(i, e),
       (i.show = function(e) {
         if (!this._inited) {
-          (this._complete = e), (this._inited = !0);
+          (this._complete = e), (this._inited = true);
           var n = new i();
           t.UIMgr.Inst.AddLobbyUI(n),
             Laya.timer.frameOnce(5, this, function() {
@@ -63,33 +38,33 @@ var __extends =
                     t,
                     function() {
                       Laya.LocalStorage.setItem('lang', t.lst[i].language),
-                        (t.enable = !1),
-                        t.me.destroy(!0),
+                        (t.enable = false),
+                        t.me.destroy(true),
                         Laya.Browser.window.conch ||
                           (Laya.Browser.window.location.href =
                             GameMgr.Inst.link_url);
                     },
                     null,
-                    !1
+                    false
                   ));
               },
               null,
-              !1
+              false
             )
           ),
           (this.me.getChildByName('jump').clickHandler = Laya.Handler.create(
             this,
             function() {
-              (t.enable = !1),
-                t.me.destroy(!0),
+              (t.enable = false),
+                t.me.destroy(true),
                 i._complete && i._complete.run();
             },
             null,
-            !1
+            false
           ));
       }),
       (i.prototype._show = function() {
-        (this.enable = !0),
+        (this.enable = true),
           this.scorllview.reset(),
           this.scorllview.addItem(this.lst.length);
         var t = '当前语言：';
@@ -112,7 +87,7 @@ var __extends =
         this.me.getChildByName('now').text = t;
       }),
       (i._ips = []),
-      (i._inited = !1),
+      (i._inited = false),
       (i._complete = null),
       i
     );

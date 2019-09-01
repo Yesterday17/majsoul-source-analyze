@@ -8,9 +8,9 @@ var game;
         (this.connect_state = t.EConnectState.none),
         (this.reconnect_count = 0),
         (this.reconnect_span = [500, 1e3, 3e3, 6e3, 1e4, 15e3]),
-        (this.playerreconnect = !1),
+        (this.playerreconnect = false),
         (this.lasterrortime = 0),
-        (this.load_over = !1),
+        (this.load_over = false),
         (this.loaded_player_count = 0),
         (this.real_player_count = 0),
         app.NetAgent.AddListener2MJ(
@@ -32,13 +32,13 @@ var game;
         get: function() {
           return null == this._Inst ? (this._Inst = new e()) : this._Inst;
         },
-        enumerable: !0,
-        configurable: !0
+        enumerable: true,
+        configurable: true
       }),
       (e.prototype.OpenConnect = function(e, i, n, a, r) {
         var s = this;
         uiscript.UI_Loading.Inst.show('enter_mj'),
-          t.Scene_Lobby.Inst.active && (t.Scene_Lobby.Inst.active = !1),
+          t.Scene_Lobby.Inst.active && (t.Scene_Lobby.Inst.active = false),
           this.Close(),
           view.BgmListMgr.stopBgm(),
           Laya.timer.once(500, this, function() {
@@ -46,20 +46,20 @@ var game;
               (s.token = e),
               (s.game_uuid = i),
               (s.server_location = n),
-              (GameMgr.Inst.ingame = !0),
+              (GameMgr.Inst.ingame = true),
               (GameMgr.Inst.mj_server_location = n),
               (GameMgr.Inst.mj_game_token = e),
               (GameMgr.Inst.mj_game_uuid = i),
               (s.playerreconnect = a),
               s._setState(t.EConnectState.tryconnect),
-              (s.load_over = !1),
+              (s.load_over = false),
               (s.loaded_player_count = 0),
               (s.real_player_count = 0),
               s._fetch_gateway(0);
           });
       }),
       (e.prototype.Close = function() {
-        (this.load_over = !1),
+        (this.load_over = false),
           app.Log.log('MJNetMgr close'),
           this._setState(t.EConnectState.none),
           app.NetAgent.Close2MJ(),
@@ -74,7 +74,7 @@ var game;
                 ? this._try_to_linknext()
                 : this.connect_state == t.EConnectState.connecting
                 ? view.DesktopMgr.Inst.active
-                  ? ((view.DesktopMgr.Inst.duringReconnect = !0),
+                  ? ((view.DesktopMgr.Inst.duringReconnect = true),
                     this._setState(t.EConnectState.reconnecting),
                     (this.reconnect_count = 0),
                     this._Reconnect())
@@ -112,7 +112,7 @@ var game;
                     ),
                     app.NetAgent.connect2MJ(
                       e.url,
-                      Laya.Handler.create(e, e._OnConnent, null, !1)
+                      Laya.Handler.create(e, e._OnConnent, null, false)
                     ));
                 }
               ),
@@ -137,7 +137,7 @@ var game;
                 t.Scene_MJ.Inst.ForceOut())
             : (app.NetAgent.connect2MJ(
                 this.urls[this.link_index].url,
-                Laya.Handler.create(this, this._OnConnent, null, !1)
+                Laya.Handler.create(this, this._OnConnent, null, false)
               ),
               (this.url = this.urls[this.link_index].url));
       }),
@@ -241,7 +241,7 @@ var game;
       (e.prototype._ConnectSuccess = function() {
         var e = this;
         app.Log.log('MJNetMgr _ConnectSuccess '),
-          (this.load_over = !1),
+          (this.load_over = false),
           app.NetAgent.sendReq2MJ(
             'FastTest',
             'authGame',
@@ -289,7 +289,7 @@ var game;
                         exp: 0,
                         views: [],
                         skin: 400101,
-                        is_upgraded: !1
+                        is_upgraded: false
                       }
                     };
                   else {
@@ -315,7 +315,7 @@ var game;
                         exp: 0,
                         views: [],
                         skin: 400101,
-                        is_upgraded: !1
+                        is_upgraded: false
                       }
                     });
                 (e.loaded_player_count = n.ready_id_list.length),
@@ -327,7 +327,7 @@ var game;
       (e.prototype._AuthSuccess = function(e, i, n) {
         var a = this;
         view.DesktopMgr.Inst && view.DesktopMgr.Inst.active
-          ? ((this.load_over = !0),
+          ? ((this.load_over = true),
             Laya.timer.once(500, this, function() {
               app.Log.log(
                 '重连信息1 round_id:' +
@@ -336,7 +336,7 @@ var game;
                   view.DesktopMgr.Inst.current_step
               ),
                 view.DesktopMgr.Inst.Reset(),
-                (view.DesktopMgr.Inst.duringReconnect = !0),
+                (view.DesktopMgr.Inst.duringReconnect = true),
                 uiscript.UI_Loading.Inst.setProgressVal(0.2),
                 app.NetAgent.sendReq2MJ(
                   'FastTest',
@@ -358,7 +358,7 @@ var game;
                           : (uiscript.UI_Loading.Inst.setProgressVal(0.3),
                             view.DesktopMgr.Inst.fetchLinks(),
                             view.DesktopMgr.Inst.Reset(),
-                            (view.DesktopMgr.Inst.duringReconnect = !0),
+                            (view.DesktopMgr.Inst.duringReconnect = true),
                             view.DesktopMgr.Inst.syncGameByStep(
                               i.game_restore
                             )));
@@ -378,7 +378,7 @@ var game;
                       ? Laya.timer.frameOnce(10, a, function() {
                           app.Log.log('重连信息2 round_id:-1 step:' + 1e6),
                             view.DesktopMgr.Inst.Reset(),
-                            (view.DesktopMgr.Inst.duringReconnect = !0),
+                            (view.DesktopMgr.Inst.duringReconnect = true),
                             app.NetAgent.sendReq2MJ(
                               'FastTest',
                               'syncGame',
@@ -403,7 +403,7 @@ var game;
                       : Laya.timer.frameOnce(10, a, function() {
                           app.Log.log('send enterGame'),
                             view.DesktopMgr.Inst.Reset(),
-                            (view.DesktopMgr.Inst.duringReconnect = !0),
+                            (view.DesktopMgr.Inst.duringReconnect = true),
                             app.NetAgent.sendReq2MJ(
                               'FastTest',
                               'enterGame',
@@ -432,7 +432,7 @@ var game;
                   return uiscript.UI_Loading.Inst.setProgressVal(0.1 + 0.8 * t);
                 },
                 null,
-                !1
+                false
               )
             );
       }),
@@ -450,14 +450,14 @@ var game;
                   Laya.Stat.currentMemorySize / 1024 / 1024 +
                   ' MB'
               ),
-              (this.load_over = !0),
+              (this.load_over = true),
               this.load_over &&
                 uiscript.UI_Loading.Inst.enable &&
                 uiscript.UI_Loading.Inst.showLoadCount(
                   this.loaded_player_count,
                   this.real_player_count
                 ),
-              (view.DesktopMgr.Inst.duringReconnect = !1),
+              (view.DesktopMgr.Inst.duringReconnect = false),
               view.DesktopMgr.Inst.StartChainAction(0));
       }),
       (e.prototype._PlayerReconnectSuccess = function(e) {

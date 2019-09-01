@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function e(e) {
@@ -31,7 +6,7 @@ var __extends =
         (this.btn_next_flag = 0),
           (this.btn_prev_flag = 0),
           (this.maskflag = 0),
-          (this.locking = !1),
+          (this.locking = false),
           (this.loadover = []),
           (this.pageid = []),
           (this.pageindex = 0),
@@ -64,7 +39,7 @@ var __extends =
           (this.btn1 = this.buttonCrew.getChildByName('btn1')),
           (this.btn2 = this.buttonCrew.getChildByName('btn2')),
           (this.btn3 = this.buttonCrew.getChildByName('btn3')),
-          (this.buttonCrew.visible = !1),
+          (this.buttonCrew.visible = false),
           (this.yijibg = this.me.getChildByName('yjbg')),
           (this.Dialogue = this.me.getChildByName('Dialogue')),
           (this.Dtext = this.Dialogue.getChildByName('content').getChildByName(
@@ -88,7 +63,7 @@ var __extends =
                   ((i.effectprev = 1), (i.btn_next_flag = 0), i.btnprev()));
             },
             null,
-            !1
+            false
           )),
           (this.btn_next.clickHandler = Laya.Handler.create(
             this,
@@ -112,7 +87,7 @@ var __extends =
               }
             },
             null,
-            !1
+            false
           )),
           (this.btn1.clickHandler = Laya.Handler.create(
             this,
@@ -120,7 +95,7 @@ var __extends =
               i.locking || i.changepage(i.pageindex, 0);
             },
             null,
-            !1
+            false
           )),
           (this.btn2.clickHandler = Laya.Handler.create(
             this,
@@ -128,7 +103,7 @@ var __extends =
               i.locking || i.changepage(i.pageindex, 1);
             },
             null,
-            !1
+            false
           )),
           (this.btn3.clickHandler = Laya.Handler.create(
             this,
@@ -136,7 +111,7 @@ var __extends =
               i.locking || i.changepage(i.pageindex, 2);
             },
             null,
-            !1
+            false
           )),
           (this.btn_back.clickHandler = Laya.Handler.create(
             this,
@@ -148,13 +123,13 @@ var __extends =
                   ((i.effectprev = 1), i.btnprev()));
             },
             null,
-            !1
+            false
           ));
       }
       return (
         (e.prototype.btnvisible = function(t, e) {
           this.buttonCrew.visible != e &&
-            (e ? i.Inst.me.ani1.play(0, !0) : i.Inst.me.ani1.stop()),
+            (e ? i.Inst.me.ani1.play(0, true) : i.Inst.me.ani1.stop()),
             (this.buttonCrew.visible = e);
           for (var n = 1; n < t + 1; n++) {
             var a = 'btn' + n;
@@ -180,10 +155,10 @@ var __extends =
         }),
         (e.prototype.show = function() {
           var t = this;
-          game.Scene_Lobby.Inst.change_bg('indoor', !1),
+          game.Scene_Lobby.Inst.change_bg('indoor', false),
             (this.effectnext = 1),
             (this.effectprev = 0),
-            (this.me.visible = !0);
+            (this.me.visible = true);
           var e = 'res/atlas/' + game.Tools.localUISrc('myres/course_ui.atlas');
           Laya.loader.load(
             e,
@@ -251,18 +226,18 @@ var __extends =
                     n = function(i) {
                       t.data.datas[i].page_id.length <= 13 &&
                         ((t.pageid[e] = i), e++),
-                        t.loadover.push(!1);
+                        t.loadover.push(false);
                       var n = game.Tools.localUISrc(t.data.datas[i].img);
                       Laya.loader.load(
                         n,
                         Laya.Handler.create(t, function() {
                           Laya.timer.frameOnce(3, t, function() {
-                            (t.loadover[i] = !0),
+                            (t.loadover[i] = true),
                               t.me.visible &&
                                 t.pageindex == i &&
-                                ((t.loading.visible = !1),
+                                ((t.loading.visible = false),
                                 (t.page.source = Laya.loader.getRes(n)),
-                                (t.page.visible = !0)),
+                                (t.page.visible = true)),
                               t.me.visible || Laya.loader.clearTextureRes(n);
                           });
                         })
@@ -273,7 +248,7 @@ var __extends =
                   a++
                 )
                   n(a);
-                (t.loadover[0] = !0), t.showPage(t.pageindex, 0);
+                (t.loadover[0] = true), t.showPage(t.pageindex, 0);
               })
             );
         }),
@@ -281,19 +256,19 @@ var __extends =
           (this.pageindex = t),
             (this.btn_prev.visible = 0 != t),
             (this.btn_next.visible = t != this.data.page_count - 1),
-            (this.yijibg.visible = !1),
-            (this.btn_exit.visible = !1),
-            (this.btn_back.visible = !1),
-            this.btnvisible(3, !1),
-            (this.img_correct.visible = !1),
-            (this.img_error.visible = !1),
+            (this.yijibg.visible = false),
+            (this.btn_exit.visible = false),
+            (this.btn_back.visible = false),
+            this.btnvisible(3, false),
+            (this.img_correct.visible = false),
+            (this.img_error.visible = false),
             t > 0
-              ? ((this.blackground.visible = !0),
-                (this.skip_text.visible = !1),
-                (this.btn_prev.visible = !0))
-              : ((this.blackground.visible = !1),
-                (this.skip_text.visible = !0)),
-            t == this.data.datas.length - 1 && (this.btn_exit.visible = !0),
+              ? ((this.blackground.visible = true),
+                (this.skip_text.visible = false),
+                (this.btn_prev.visible = true))
+              : ((this.blackground.visible = false),
+                (this.skip_text.visible = true)),
+            t == this.data.datas.length - 1 && (this.btn_exit.visible = true),
             this.chat_block.show(
               this.data.datas[t].text,
               'en' == GameMgr.client_language ? 10 : 5
@@ -306,15 +281,15 @@ var __extends =
                   ? ((i = 'extendRes/charactor/' + this.data.datas[t].img),
                     game.LoadMgr.setImgSkin(this.yijibg, i),
                     (this.yijibg.scaleX = parseFloat(this.data.datas[t].flip)),
-                    (this.blackground.visible = !1),
-                    (this.yijibg.visible = !0),
-                    (this.page.visible = !1))
-                  : ((this.page.visible = !0),
+                    (this.blackground.visible = false),
+                    (this.yijibg.visible = true),
+                    (this.page.visible = false))
+                  : ((this.page.visible = true),
                     (this.page.source = Laya.loader.getRes(
                       game.Tools.localUISrc(this.data.datas[t].img)
                     ))),
-                (this.loading.visible = !1))
-              : ((this.page.visible = !1), (this.loading.visible = !0)),
+                (this.loading.visible = false))
+              : ((this.page.visible = false), (this.loading.visible = true)),
             this.data.datas[t].answers &&
               null != this.data.datas[t].answers &&
               this.buttonChoose(t),
@@ -344,9 +319,9 @@ var __extends =
         (e.prototype.pinshan = function(t, e) {
           var i = this,
             n = this.buttonCrew.visible;
-          (this.btn_next.mouseEnabled = !1),
-            (this.btn_prev.mouseEnabled = !1),
-            (this.buttonCrew.visible = !1),
+          (this.btn_next.mouseEnabled = false),
+            (this.btn_prev.mouseEnabled = false),
+            (this.buttonCrew.visible = false),
             1 == e
               ? ((this.mask.x = 1700),
                 Laya.Tween.to(
@@ -355,8 +330,8 @@ var __extends =
                   250,
                   null,
                   Laya.Handler.create(this, function() {
-                    (i.btn_next.mouseEnabled = !0),
-                      (i.btn_prev.mouseEnabled = !0),
+                    (i.btn_next.mouseEnabled = true),
+                      (i.btn_prev.mouseEnabled = true),
                       (i.buttonCrew.visible = n),
                       (i.effectnext = 0);
                   })
@@ -369,47 +344,47 @@ var __extends =
                   250,
                   null,
                   Laya.Handler.create(this, function() {
-                    (i.btn_next.mouseEnabled = !0),
-                      (i.btn_prev.mouseEnabled = !0),
+                    (i.btn_next.mouseEnabled = true),
+                      (i.btn_prev.mouseEnabled = true),
                       (i.buttonCrew.visible = n),
                       (i.effectprev = 0);
                   })
                 ))
-              : ((this.mask.visible = !1),
+              : ((this.mask.visible = false),
                 (this.mask.x = -260),
-                (this.btn_next.mouseEnabled = !0),
-                (this.btn_prev.mouseEnabled = !0),
+                (this.btn_next.mouseEnabled = true),
+                (this.btn_prev.mouseEnabled = true),
                 (this.buttonCrew.visible = n));
         }),
         (e.prototype.buttonChoose = function(t) {
-          this.btnvisible(3, !0), (this.btn_next.visible = !1);
+          this.btnvisible(3, true), (this.btn_next.visible = false);
           for (var e = 0; e < 3; e++)
             if (null != this.data.datas[t].answers[e].flag) {
               if ('correct' == this.data.datas[t].answers[e].flag) {
                 (this.img_correct.x = this.data.datas[t].answers[e].x),
                   (this.img_correct.y = this.data.datas[t].answers[e].y),
-                  (this.img_correct.visible = !0),
-                  (this.btn_next.visible = !0),
+                  (this.img_correct.visible = true),
+                  (this.btn_next.visible = true),
                   (this.btn_next_flag = 1),
-                  this.btnvisible(3, !1),
-                  i.Inst.me.correct.play(0, !1);
+                  this.btnvisible(3, false),
+                  i.Inst.me.correct.play(0, false);
                 for (n = 0; n < this.data.datas.length; n++)
                   this.data.datas[n].page_id == this.data.datas[t].next &&
                     ((this.pagecorrect = n),
-                    (this.btn_prev.visible = !0),
+                    (this.btn_prev.visible = true),
                     (this.btn_prev_flag = 1),
                     (this.pagewrong = this.pagecorrect - 4));
               }
               if ('wrong' == this.data.datas[t].answers[e].flag) {
                 (this.img_error.x = this.data.datas[t].answers[e].x),
                   (this.img_error.y = this.data.datas[t].answers[e].y),
-                  (this.img_error.visible = !0),
-                  (this.btn_back.visible = !0),
-                  i.Inst.me.error.play(0, !1);
+                  (this.img_error.visible = true),
+                  (this.btn_back.visible = true),
+                  i.Inst.me.error.play(0, false);
                 for (var n = 0; n < this.data.datas.length; n++)
                   this.data.datas[n].page_id == this.data.datas[t].next &&
                     ((this.btn_prev_flag = 1), (this.pagewrong = n));
-                this.btnvisible(3, !1);
+                this.btnvisible(3, false);
               }
             }
         }),
@@ -421,12 +396,12 @@ var __extends =
         }),
         (e.prototype.onEnter = function() {
           (this.pageindex = 0),
-            (this.btn_back.mouseEnabled = !0),
-            (this.btn_prev.mouseEnabled = !0),
-            (this.mask.visible = !0);
+            (this.btn_back.mouseEnabled = true),
+            (this.btn_prev.mouseEnabled = true),
+            (this.mask.visible = true);
         }),
         (e.prototype.close = function() {
-          this.me.visible = !1;
+          this.me.visible = false;
           for (var t = 0; t < this.data.datas.length; t++)
             this.loadover[t] &&
               Laya.loader.clearTextureRes(
@@ -436,9 +411,9 @@ var __extends =
             Laya.loader.clearTextureRes(
               'res/atlas/' + game.Tools.localUISrc('myres/course_ui.atlas')
             ),
-            game.Scene_Lobby.Inst.change_bg('yard', !1),
-            this.chat_block.close(!1),
-            (this.mask.visible = !1);
+            game.Scene_Lobby.Inst.change_bg('yard', false),
+            this.chat_block.close(false),
+            (this.mask.visible = false);
         }),
         e
       );
@@ -450,7 +425,7 @@ var __extends =
           (t.root = null),
           (t.blackmask = null),
           (t.page_course = null),
-          (t.locking = !1),
+          (t.locking = false),
           (t.func_close = null),
           (n.Inst = t),
           t
@@ -492,7 +467,7 @@ var __extends =
                 t.close();
               },
               null,
-              !1
+              false
             )),
             (this.root
               .getChildByName('xinshouzhidao')
@@ -502,15 +477,15 @@ var __extends =
                 t.close();
               },
               null,
-              !1
+              false
             ));
         }),
         (n.prototype.show = function(e, i) {
           var n = this;
-          void 0 === e && (e = 0),
-            void 0 === i && (i = null),
-            (this.locking = !0),
-            (this.enable = !0),
+          undefined === e && (e = 0),
+            undefined === i && (i = null),
+            (this.locking = true),
+            (this.enable = true),
             this.page_course.onEnter(),
             t.UIBase.anim_alpha_in(
               this.root,
@@ -518,7 +493,7 @@ var __extends =
               300,
               0,
               Laya.Handler.create(this, function() {
-                n.locking = !1;
+                n.locking = false;
               })
             ),
             (this.blackmask.alpha = 0),
@@ -534,7 +509,7 @@ var __extends =
         }),
         (n.prototype.close = function() {
           var e = this;
-          (this.locking = !0),
+          (this.locking = true),
             Laya.Tween.to(this.blackmask, { alpha: 0 }, 150),
             t.UIBase.anim_alpha_out(
               this.root,
@@ -542,8 +517,8 @@ var __extends =
               150,
               0,
               Laya.Handler.create(this, function() {
-                (e.locking = !1),
-                  (e.enable = !1),
+                (e.locking = false),
+                  (e.enable = false),
                   e.func_close && e.func_close.run();
               })
             );

@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -52,9 +27,9 @@ var __extends =
         var a = null;
         'chs' == GameMgr.client_language
           ? ((a = n.getChildByName('container_name_chs')),
-            (n.getChildByName('container_name_en').visible = !1))
+            (n.getChildByName('container_name_en').visible = false))
           : ((a = n.getChildByName('container_name_en')),
-            (n.getChildByName('container_name_chs').visible = !1)),
+            (n.getChildByName('container_name_chs').visible = false)),
           (this.label_name = a.getChildByName('label_name')),
           (this.label_cv = a.getChildByName('label_cv')),
           (this.chat = new t.UI_Character_Chat(n.getChildByName('chat'))),
@@ -80,14 +55,14 @@ var __extends =
           (this.label_name.text = i['name_' + GameMgr.client_language]),
           (this.label_cv.text =
             'cv:' + i['desc_cv_' + GameMgr.client_language]),
-          this.chat.close(!0),
+          this.chat.close(true),
           this.close_sound(),
-          (this.btn_next.visible = !1),
+          (this.btn_next.visible = false),
           (this.illust.me.parent.alpha = 1),
           (this.illust.me.parent.y = -8),
-          (this.enable = !0),
-          (this.locking = !0),
-          this.me.JSin.play(0, !1),
+          (this.enable = true),
+          (this.locking = true),
+          this.me.JSin.play(0, false),
           Laya.timer.once((70 / 24) * 1e3, this, function() {
             (e.effect = game.FrontEffect.Inst.create_ui_effect(
               e.container_effect,
@@ -127,19 +102,19 @@ var __extends =
             }
             '' != n && e.chat.show(n),
               Laya.timer.once(1e3, e, function() {
-                (e.locking = !1), (e.btn_next.visible = !0);
+                (e.locking = false), (e.btn_next.visible = true);
               });
           });
       }),
       (i.prototype.close = function() {
         var t = this;
-        (this.locking = !0),
-          (this.btn_next.visible = !1),
-          this.me.JSout.play(0, !1),
-          this.chat.close(!1),
+        (this.locking = true),
+          (this.btn_next.visible = false),
+          this.me.JSout.play(0, false),
+          this.chat.close(false),
           this.close_sound(),
           Laya.timer.once(800, this, function() {
-            (t.locking = !1), (t.enable = !1);
+            (t.locking = false), (t.enable = false);
           }),
           this.effect && (this.effect.destory(), (this.effect = null));
       }),

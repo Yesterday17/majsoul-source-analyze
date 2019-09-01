@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (() => {
@@ -121,7 +98,7 @@ let uiscript;
         ]),
         (this.content.vScrollBarSkin = ''),
         this.scrollbar.init(null),
-        (this.scrollbar.islong = !0),
+        (this.scrollbar.islong = true),
         this.content.vScrollBar.on('change', this, () => {
           t.scrollbar.setVal(
             t.content.vScrollBar.value / t.content.vScrollBar.max,
@@ -133,7 +110,7 @@ let uiscript;
         this.cells.push(new e(this.content.getChildByName(`content${i}`)));
     }),
     (n.prototype.show = function() {
-      (this.enable = !0),
+      (this.enable = true),
         game.LoadMgr.setImgSkin(
           this.root.getChildByName('content').getChildByName('head'),
           'myres2/treasurehead/zhongxia_task.jpg'
@@ -174,7 +151,7 @@ let uiscript;
         this.scrollbar.setVal(0, this.content.height / this.toth);
     }),
     (n.prototype.hide = function() {
-      this.enable = !1;
+      this.enable = false;
     }),
     (n.activity_id = 1012),
     n

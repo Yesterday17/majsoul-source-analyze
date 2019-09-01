@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function(e) {
     function i() {
@@ -74,17 +49,17 @@ var __extends =
               e.locking || e.close();
             },
             null,
-            !1
+            false
           ));
       }),
       (i.prototype.show = function(t) {
         var e = this;
-        (this.enable = !0), (this.datas = t), Laya.timer.clearAll(this);
+        (this.enable = true), (this.datas = t), Laya.timer.clearAll(this);
         for (
           var i = function(i) {
               if (i < t.length) {
                 var a = t[i];
-                n.items[i].container.visible = !0;
+                n.items[i].container.visible = true;
                 var r = game.GameUtility.get_item_view(a.reward.id);
                 if (
                   (n.items[i].icon0.setSkin(r.icon),
@@ -96,16 +71,16 @@ var __extends =
                   n.items[i].icon1.setSkin(s.icon),
                     (n.items[i].name1.text = s.name),
                     (n.items[i].count1.text = a.replace.count.toString()),
-                    (n.items[i].icon1.me.visible = !0),
-                    (n.items[i].name1.visible = !0),
-                    (n.items[i].count1.visible = !0),
+                    (n.items[i].icon1.me.visible = true),
+                    (n.items[i].name1.visible = true),
+                    (n.items[i].count1.visible = true),
                     (n.items[i].icon1.me.alpha = 0),
                     (n.items[i].name1.alpha = 0),
                     (n.items[i].count1.alpha = 0);
                 } else
-                  (n.items[i].icon1.me.visible = !1),
-                    (n.items[i].name1.visible = !1),
-                    (n.items[i].count1.visible = !1);
+                  (n.items[i].icon1.me.visible = false),
+                    (n.items[i].name1.visible = false),
+                    (n.items[i].count1.visible = false);
                 (n.items[i].container.x =
                   (-210 * (t.length - 1)) / 2 + 210 * i + 788),
                   (n.items[i].container.y = 0),
@@ -125,7 +100,7 @@ var __extends =
                     }),
                     150 * i + 400
                   );
-              } else n.items[i].container.visible = !1;
+              } else n.items[i].container.visible = false;
             },
             n = this,
             a = 0;
@@ -133,13 +108,13 @@ var __extends =
           a++
         )
           i(a);
-        (this.btn_close.visible = !1),
+        (this.btn_close.visible = false),
           (this.root.alpha = 1),
           (this.root.scaleY = 1),
-          (this.locking = !0),
-          this.me.in.play(0, !1),
+          (this.locking = true),
+          this.me.in.play(0, false),
           Laya.timer.once(400 + 150 * t.length, this, function() {
-            (e.locking = !1), (e.btn_close.visible = !0), e.anim_change();
+            (e.locking = false), (e.btn_close.visible = true), e.anim_change();
           });
       }),
       (i.prototype.anim_change = function() {
@@ -169,10 +144,10 @@ var __extends =
       }),
       (i.prototype.close = function() {
         var t = this;
-        (this.locking = !0),
-          this.me.out.play(0, !1),
+        (this.locking = true),
+          this.me.out.play(0, false),
           Laya.timer.once(200, this, function() {
-            (t.locking = !1), (t.enable = !1), Laya.timer.clearAll(t);
+            (t.locking = false), (t.enable = false), Laya.timer.clearAll(t);
           });
       }),
       (i.Inst = null),

@@ -1,26 +1,3 @@
-const __extends =
-    this && this.__extends || (() => {
-      let t = (e, i) => (t =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          ((t, e) => {
-            t.__proto__ = e;
-          })) ||
-        ((t, e) => {
-          for (const i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-        }))(e, i);
-      return (e, i) => {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })();
-
 let uiscript;
 !(t => {
   const e = (t => {
@@ -42,23 +19,23 @@ let uiscript;
       for (i = 0; i < this.container_btns.numChildren; i++) {
         const e = this.container_btns.getChildAt(i);
         (this.op_btns[e.name] = e),
-          (e.visible = !1),
+          (e.visible = false),
           (e.clickHandler = new Laya.Handler(this, this.onClickOpBtn, [
             e.name
           ]));
       }
       (this.container_Detail = this.me.getChildByName('container_detail')),
-        (this.container_Detail.visible = !1);
+        (this.container_Detail.visible = false);
       for (var i = 0; i < 6; i++) {
         const n = this.container_Detail
           .getChildByName('container_chooses')
           .getChildByName(`c${i}`);
-        (n.visible = !1),
+        (n.visible = false),
           (n.clickHandler = laya.utils.Handler.create(
             this,
             this.onClickDetail,
             [i],
-            !1
+            false
           ));
       }
       (this.btn_detail_back = this.container_Detail.getChildByName(
@@ -68,10 +45,10 @@ let uiscript;
           this,
           this.onDetailBack,
           null,
-          !1
+          false
         )),
         (this.btn_cancel = this.me.getChildByName('btn_cancel')),
-        (this.btn_cancel.visible = !1),
+        (this.btn_cancel.visible = false),
         (this.label_title = this.container_Detail
           .getChildByName('container_title')
           .getChildByName('lab_title')),
@@ -82,36 +59,36 @@ let uiscript;
     (e.prototype.onClickDetail = t => {}),
     (e.prototype.onDetailBack = () => {}),
     (e.prototype.showOp = function(t) {
-      (this.container_Detail.visible = !1),
-        (this.container_btns.visible = !0),
-        (this.btn_cancel.visible = !1);
+      (this.container_Detail.visible = false),
+        (this.container_btns.visible = true),
+        (this.btn_cancel.visible = false);
       for (
         let e = this.container_btns.width, i = 0, n = 0, a = this.container_btns.numChildren - 1;
         a >= 0;
         a--
       ) {
         for (
-          var r = !1, s = this.container_btns.getChildAt(a), o = 0;
+          var r = false, s = this.container_btns.getChildAt(a), o = 0;
           o < t.length;
           o++
         )
           if (t[o] == s.name) {
-            r = !0;
+            r = true;
             break;
           }
         r
-          ? ((s.visible = !0),
+          ? ((s.visible = true),
             (s.x = e - s.width),
             (s.y = i),
             (e -= s.width + 0),
             3 == ++n &&
               ((i -= 180), (e = this.container_btns.width), (n = 0)))
-          : (s.visible = !1);
+          : (s.visible = false);
       }
       Laya.Tween.from(this.container_btns, { x: 940, alpha: 0 }, 160);
     }),
     (e.prototype.showDetail = function(t, e) {
-      (this.container_btns.visible = !1), (this.btn_cancel.visible = !1);
+      (this.container_btns.visible = false), (this.btn_cancel.visible = false);
       const i = this.container_Detail.getChildByName('container_title');
 
       const n =
@@ -135,23 +112,23 @@ let uiscript;
               ? ((_.skin = game.Tools.localUISrc(`${o + c[u]}.png`)),
                 (_.x = u * r),
                 (_.y = 0),
-                (_.visible = !0))
-              : (_.visible = !1);
+                (_.visible = true))
+              : (_.visible = false);
           }
           (h.width = c.length * r),
             0 != l && (a += s),
             (h.x = a),
             (a += h.width),
             (h.y = -23),
-            (h.visible = !0);
-        } else h.visible = !1;
+            (h.visible = true);
+        } else h.visible = false;
       }
       (n.width = a),
         (this.container_Detail.width = a + 240),
         (i.x = 0.5 * this.container_Detail.width),
         (n.x = 120),
         (this.btn_detail_back.x = this.container_Detail.width - 56),
-        (this.container_Detail.visible = !0),
+        (this.container_Detail.visible = true),
         (this.container_Detail.x = 960 - this.container_Detail.width / 2);
     }),
     e

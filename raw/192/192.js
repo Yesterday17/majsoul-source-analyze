@@ -1,29 +1,4 @@
-var __extends =
-    (this && this.__extends) ||
-    (function() {
-      var t = function(e, i) {
-        return (t =
-          Object.setPrototypeOf ||
-          ({ __proto__: [] } instanceof Array &&
-            function(t, e) {
-              t.__proto__ = e;
-            }) ||
-          function(t, e) {
-            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
-          })(e, i);
-      };
-      return function(e, i) {
-        function n() {
-          this.constructor = e;
-        }
-        t(e, i),
-          (e.prototype =
-            null === i
-              ? Object.create(i)
-              : ((n.prototype = i.prototype), new n()));
-      };
-    })(),
-  uiscript;
+var uiscript;
 !(function(t) {
   var e = (function() {
       function e(t) {
@@ -39,17 +14,17 @@ var __extends =
               i.Inst.matchLocking(e.match_id) || e.close();
             },
             null,
-            !1
+            false
           )),
           (this.match_id = -1),
-          (this.me.visible = !1);
+          (this.me.visible = false);
       }
       return (
         (e.prototype.setData = function(e, n) {
           (this.build_time = Laya.timer.currTimer),
             (this.match_id = e),
             (this.pos = n),
-            (this.me.visible = !0);
+            (this.me.visible = true);
           var a = cfg.desktop.matchmode.get(e);
           if (a) {
             switch (
@@ -80,7 +55,7 @@ var __extends =
             }
             this.label_mode.text = game.Tools.room_mode_desc(a.mode);
           } else (this.label_duanwei.text = ''), (this.label_mode.text = '');
-          (this.during_close = !1),
+          (this.during_close = false),
             (this.me.x = 0),
             (this.me.y = this.me.height * n),
             (this.bg.x = 5),
@@ -104,7 +79,7 @@ var __extends =
                         e = r.pos;
                       (r.match_id = -1),
                         (r.pos = -1),
-                        (r.me.visible = !1),
+                        (r.me.visible = false),
                         i.Inst.onCloseOver(t, e);
                     })
                   ));
@@ -124,7 +99,7 @@ var __extends =
         (e.prototype.close = function() {
           if (!this.during_close) {
             var e = this;
-            (this.during_close = !0),
+            (this.during_close = true),
               app.NetAgent.sendReq2Lobby(
                 'Lobby',
                 'cancelMatch',
@@ -132,19 +107,19 @@ var __extends =
                 function(n, a) {
                   n || a.error
                     ? (t.UIMgr.Inst.showNetReqError('cancelMatch', n, a),
-                      (e.during_close = !1))
+                      (e.during_close = false))
                     : t.UIBase.anim_alpha_out(
                         e.bg,
                         { x: 60, alpha: 0 },
                         150,
                         0,
                         Laya.Handler.create(e, function() {
-                          e.during_close = !1;
+                          e.during_close = false;
                           var t = e.match_id,
                             n = e.pos;
                           (e.match_id = -1),
                             (e.pos = -1),
-                            (e.me.visible = !1),
+                            (e.me.visible = false),
                             i.Inst.onCloseOver(t, n);
                         })
                       );
@@ -168,7 +143,7 @@ var __extends =
           (t.btn_open = null),
           (t.cells = []),
           (t.current_count = 0),
-          (t.inopen = !0),
+          (t.inopen = true),
           (t.start_time = 0),
           (t.bg_width0 = 337),
           (t.bg_width1 = 515),
@@ -188,7 +163,7 @@ var __extends =
             (this.cell_templete = this.panel_content.getChildByName(
               'templete'
             )),
-            (this.cell_templete.visible = !1);
+            (this.cell_templete.visible = false);
           for (var n = 0; n < 10; n++) {
             var a = this.cell_templete.scriptMap[
               'capsui.UICopy'
@@ -202,7 +177,7 @@ var __extends =
                 (i.inopen = !i.inopen), i.refreshshow();
               },
               null,
-              !1
+              false
             )),
             app.NetAgent.AddListener2Lobby(
               'NotifyMatchTimeout',
@@ -222,7 +197,7 @@ var __extends =
                   i.enable && i.onPiPeiOver();
                 },
                 null,
-                !1
+                false
               )
             );
         }),
@@ -236,8 +211,8 @@ var __extends =
               }
             if (n >= 0) {
               0 == this.current_count &&
-                ((this.inopen = !0),
-                (this.enable = !0),
+                ((this.inopen = true),
+                (this.enable = true),
                 (this.bg.width = this.bg_width1),
                 (this.bg.height = 60),
                 (this.start_time = Laya.timer.currTimer),
@@ -268,8 +243,8 @@ var __extends =
           var e = this.cell_templete.height;
           if (((this.img_arrow.rotation = this.inopen ? 0 : 180), this.inopen))
             if (this.bg.width < this.bg_width1 - 0.001)
-              if (((this.panel_content.visible = !1), 0 == this.current_count))
-                this.enable = !1;
+              if (((this.panel_content.visible = false), 0 == this.current_count))
+                this.enable = false;
               else {
                 o = (this.bg_width1 - this.bg.width) / 1;
                 Laya.Tween.to(
@@ -290,8 +265,8 @@ var __extends =
               if (a < 10)
                 (this.bg.height = n),
                   (this.panel_content.height = this.bg.height - 60),
-                  (this.panel_content.visible = !0),
-                  0 == this.current_count && (this.enable = !1);
+                  (this.panel_content.visible = true),
+                  0 == this.current_count && (this.enable = false);
               else {
                 o = a / 1;
                 Laya.Tween.to(
@@ -300,15 +275,15 @@ var __extends =
                   o,
                   null,
                   Laya.Handler.create(this, function() {
-                    (t.bg.height = n), 0 == t.current_count && (t.enable = !1);
+                    (t.bg.height = n), 0 == t.current_count && (t.enable = false);
                   })
                 ),
                   (this.panel_content.height = i - 59),
-                  (this.panel_content.visible = !0),
+                  (this.panel_content.visible = true),
                   Laya.Tween.to(this.panel_content, { height: n - 60 }, o);
               }
             }
-          else if (0 == this.current_count) this.enable = !1;
+          else if (0 == this.current_count) this.enable = false;
           else if (this.bg.height > 60.001) {
             o = (this.bg.height - 60) / 1;
             Laya.Tween.to(
@@ -320,7 +295,7 @@ var __extends =
                 (t.bg.height = 60), t.refreshshow();
               })
             ),
-              (this.panel_content.visible = !0),
+              (this.panel_content.visible = true),
               (this.panel_content.height = this.bg.height - 60),
               Laya.Tween.to(
                 this.panel_content,
@@ -328,11 +303,11 @@ var __extends =
                 o,
                 null,
                 Laya.Handler.create(this, function() {
-                  t.panel_content.visible = !1;
+                  t.panel_content.visible = false;
                 })
               );
           } else {
-            (this.panel_content.visible = !1), (this.bg.height = 60);
+            (this.panel_content.visible = false), (this.bg.height = 60);
             var r = this.bg.width,
               s = this.bg_width0;
             if (this.bg.width < s + 10) this.bg.width = s;
@@ -385,9 +360,9 @@ var __extends =
           Laya.Tween.clearAll(this), Laya.timer.clearAll(this);
         }),
         (n.prototype.onPiPeiOver = function() {
-          this.enable = !1;
+          this.enable = false;
           for (var t = 0; t < this.cells.length; t++)
-            (this.cells[t].me.visible = !1),
+            (this.cells[t].me.visible = false),
               (this.cells[t].match_id = -1),
               (this.cells[t].pos = -1);
           (this.current_count = 0), this.me.event('pipeiover');

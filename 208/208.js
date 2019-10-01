@@ -1,0 +1,111 @@
+var __extends =
+    this && this.__extends || (() => {
+      var t = (e, i) => (t =
+        Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array &&
+          ((t, e) => {
+            t.__proto__ = e;
+          })) ||
+        ((t, e) => {
+          for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+        }))(e, i);
+      return (e, i) => {
+        function n() {
+          this.constructor = e;
+        }
+        t(e, i);
+        n.prototype = i.prototype;
+        e.prototype =
+            null === i
+              ? Object.create(i)
+              : (new n());
+      };
+    })();
+
+var uiscript;
+!(t => {
+  var e = (t => {
+    class e {
+      constructor() {
+        var e = t.call(this, new ui.common.preventaddictionUI()) || this;
+        e.container_tips = null;
+        e.container_time = null;
+        e.label_time = null;
+        e.next_show_tip_time = 0;
+        e.tips0 = null;
+        e.tips1 = null;
+        e.tips2 = null;
+        return e;
+      }
+
+      onCreate() {
+        this.container_tips = this.me.getChildByName('container_tips');
+        this.container_time = this.me.getChildByName('container_time');
+        this.label_time = this.container_time.getChildByName('time');
+        this.tips0 = this.container_tips.getChildByName('l0');
+        this.tips1 = this.container_tips.getChildByName('l1');
+        this.tips2 = this.container_tips.getChildByName('l2');
+        Laya.timer.loop(1e3, this, this.timePass);
+      }
+
+      onEnable() {
+        this.next_show_tip_time = 0;
+        var t = Math.ceil(
+          ((Laya.timer.currTimer - GameMgr.Inst.account_refresh_time) / 1e3 +
+            GameMgr.Inst.account_data.anti_addiction.online_duration) /
+            60
+        );
+        this.refreshTime(t);
+        this.caluNextTipsTime(t);
+        this.container_tips.visible = !1;
+      }
+
+      timePass() {
+        var t = Math.ceil(
+          ((Laya.timer.currTimer - GameMgr.Inst.account_refresh_time) / 1e3 +
+            GameMgr.Inst.account_data.anti_addiction.online_duration) /
+            60
+        );
+        this.refreshTime(t);
+        this.tips0.visible = t < 180;
+        this.tips1.visible = t >= 180 && t < 300;
+        this.tips2.visible = t >= 300;
+
+        t < 180 &&
+          (this.tips0.text = game.Tools.strOfLocalization(2157, [
+            Math.floor(t / 60).toString()
+          ]));
+
+        this.container_tips.visible = !0;
+        t >= this.next_show_tip_time &&
+          (this.caluNextTipsTime(t));
+      }
+
+      caluNextTipsTime(t) {
+        this.next_show_tip_time =
+          t < 180
+            ? 60 * Math.ceil((t + 1) / 60)
+            : t < 300
+            ? 30 * Math.ceil((t - 180 + 1) / 30) + 180
+            : 15 * Math.ceil((t - 300 + 1) / 15) + 300;
+      }
+
+      refreshTime(t) {
+        var e = Math.floor(t / 60);
+        var i = t % 60;
+        var n = '';
+        e < 10 && (n += '0');
+        n += e.toString();
+        n += ':';
+        i < 10 && (n += '0');
+        n += i;
+        this.label_time.text = n;
+      }
+    }
+
+    __extends(e, t);
+
+    return e;
+  })(t.UIBase);
+  t.UI_PreventAddiction = e;
+})(uiscript || (uiscript = {}));

@@ -1,0 +1,101 @@
+var __extends =
+    (this && this.__extends) ||
+    (function() {
+      var t = function(e, i) {
+        return (t =
+          Object.setPrototypeOf ||
+          ({ __proto__: [] } instanceof Array &&
+            function(t, e) {
+              t.__proto__ = e;
+            }) ||
+          function(t, e) {
+            for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+          })(e, i);
+      };
+      return function(e, i) {
+        function n() {
+          this.constructor = e;
+        }
+        t(e, i),
+          (e.prototype =
+            null === i
+              ? Object.create(i)
+              : ((n.prototype = i.prototype), new n()));
+      };
+    })(),
+  uiscript;
+!(function(t) {
+  var e = (function(e) {
+    function i() {
+      var t = e.call(this, new ui.mj.liujuUI()) || this;
+      return (t.root = null), (t.img_title = null), t;
+    }
+    return (
+      __extends(i, e),
+      (i.prototype.onCreate = function() {
+        (this.root = this.me.getChildByName('root')),
+          (this.img_title = this.root.getChildByName('title'));
+      }),
+      (i.prototype.Show = function(t) {
+        var e = this;
+        this.data = t;
+        var i = '',
+          n = '';
+        switch (t.type) {
+          case mjcore.E_LiuJu.jiuzhongjiupai:
+            (i = 'jiuzhongjiupai'), (n = 'gameend_jiuzhongjiupai');
+            break;
+          case mjcore.E_LiuJu.sanjiahule:
+            i = 'sanjiahule';
+            break;
+          case mjcore.E_LiuJu.sifenglianda:
+            (i = 'sifenglianda'), (n = 'gameend_sifenglianda');
+            break;
+          case mjcore.E_LiuJu.sijializhi:
+            i = 'sijializhi';
+            break;
+          case mjcore.E_LiuJu.sigangsanle:
+            (i = 'sigangsanle'), (n = 'gameend_sigangliuju');
+        }
+        (this.img_title.skin = game.Tools.localUISrc(
+          'myres/mjdesktop/' + i + '.png'
+        )),
+          (this.enable = !0),
+          Laya.Tween.from(this.root, { alpha: 0 }, 500),
+          '' != n &&
+            (t.type == mjcore.E_LiuJu.jiuzhongjiupai
+              ? view.AudioMgr.PlayCharactorSound(
+                  view.DesktopMgr.Inst.player_datas[t.seat].character,
+                  n
+                )
+              : view.AudioMgr.PlayCharactorSound(
+                  view.DesktopMgr.Inst.main_role_character_info,
+                  n
+                )),
+          view.DesktopMgr.Inst.mode == view.EMJMode.play
+            ? Laya.timer.once(4e3, this, this.onBtnConfirm)
+            : Laya.timer.once(4e3, this, function() {
+                e.enable = !1;
+              });
+      }),
+      (i.prototype.onDisable = function() {
+        Laya.timer.clearAll(this);
+      }),
+      (i.prototype.onBtnConfirm = function() {
+        null != view.DesktopMgr.Inst.gameEndResult
+          ? (t.UIMgr.Inst.ShowGameEnd(), (this.enable = !1))
+          : (view.DesktopMgr.Inst.Reset(),
+            Laya.timer.once(200, this, function() {
+              app.NetAgent.sendReq2MJ(
+                'FastTest',
+                'confirmNewRound',
+                {},
+                function(t, e) {}
+              );
+            }));
+      }),
+      i
+    );
+  })(t.UIBase);
+  t.UI_LiuJu = e;
+})(uiscript || (uiscript = {}));

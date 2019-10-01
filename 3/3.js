@@ -1,0 +1,257 @@
+var uiscript;
+!(t => {
+  var e = (() => {
+    class e {
+      constructor(e, i, n) {
+        var a = this;
+        this.me = e;
+
+        this.label_gold = e
+            .getChildByName('container_tongbi')
+            .getChildByName('label_gold');
+
+        this.btn_gold = e
+            .getChildByName('container_tongbi')
+            .getChildByName('btn_plus');
+
+        this.label_gold.text = '0';
+
+        e.getChildByName('container_tongbi') &&
+          ((this.btn_gold.clickHandler = Laya.Handler.create(
+            this,
+            () => {
+              (n && n.run()) ||
+                (t.UI_PiPeiYuYue.Inst.enable
+                  ? t.UI_Popout.PopOutNoTitle(
+                      game.Tools.strOfLocalization(204),
+                      null
+                    )
+                  : i &&
+                    i.runWith(
+                      Laya.Handler.create(
+                        a,
+                        () => {
+                          t.UI_Recharge.Inst.show('tongbi');
+                        },
+                        null,
+                        !1
+                      )
+                    ));
+            },
+            null,
+            !1
+          )));
+
+        this.label_diamond = e
+            .getChildByName('container_huiyu')
+            .getChildByName('label_gold');
+
+        this.btn_diamond = e
+            .getChildByName('container_huiyu')
+            .getChildByName('btn_plus');
+
+        this.label_diamond.text = '0';
+
+        this.btn_diamond.clickHandler = Laya.Handler.create(
+            this,
+            () => {
+              (n && n.run()) ||
+                (t.UI_PiPeiYuYue.Inst.enable
+                  ? t.UI_Popout.PopOutNoTitle(
+                      game.Tools.strOfLocalization(204),
+                      null
+                    )
+                  : i &&
+                    i.runWith(
+                      Laya.Handler.create(
+                        a,
+                        () => {
+                          t.UI_Recharge.Inst.show('huiyu');
+                        },
+                        null,
+                        !1
+                      )
+                    ));
+            },
+            null,
+            !1
+          );
+
+        e
+            .getChildByName('container_huiyu')
+            .getChildByName('btn_info').clickHandler = new Laya.Handler(
+            this,
+            () => {
+              t.UI_Lobby.Inst.locking || t.UI_checkhuiyu.Inst.show(e, i, n);
+            }
+          );
+
+        e.getChildByName('container_huiyu') &&
+          (('chs' == GameMgr.client_language && (e
+            .getChildByName('container_huiyu')
+            .getChildByName('btn_info').mouseEnabled = !1)));
+
+        if (
+          (e.getChildByName('container_huishi'))
+        ) {
+          this.label_huishi = e
+            .getChildByName('container_huishi')
+            .getChildByName('label_gold');
+          var r = e.getChildByName('container_huishi').getChildByName('btn_plus');
+
+          game.LoadMgr.setImgSkin(
+            e.getChildByName('container_huishi').getChildByName('icon'),
+            cfg.item_definition.item.find(302014).icon_transparent
+          );
+
+          this.label_huishi.text = '0';
+          r.clickHandler = Laya.Handler.create(
+              this,
+              () => {
+                (n && n.run()) ||
+                  (t.UI_PiPeiYuYue.Inst.enable
+                    ? t.UI_Popout.PopOutNoTitle(
+                        game.Tools.strOfLocalization(204),
+                        null
+                      )
+                    : i &&
+                      i.runWith(
+                        Laya.Handler.create(
+                          a,
+                          () => {
+                            t.UI_Recharge.Inst.show('huishi');
+                          },
+                          null,
+                          !1
+                        )
+                      ));
+              },
+              null,
+              !1
+            );
+        }
+
+        this.label_xinyang = e
+            .getChildByName('container_xinyang')
+            .getChildByName('label_gold');
+
+        e
+            .getChildByName('container_xinyang')
+            .getChildByName('icon').skin = game.Tools.localUISrc(
+            'myres/lobby/xycoin.png'
+          );
+
+        e.getChildByName('container_xinyang') &&
+          ((this.label_huishi.text = '0'));
+
+        app.NetAgent.AddListener2Lobby(
+          'NotifyAccountUpdate',
+          Laya.Handler.create(
+            this,
+            ({update}) => {
+              var i = update;
+              if (i && i.numerical) {
+                for (var n = 0; n < i.numerical.length; n++) {
+                  var r = i.numerical[n].id;
+                  var s = i.numerical[n].final;
+                  switch (r) {
+                    case 100002:
+                      a.label_gold && (a.label_gold.text = a.money2Desc(s));
+                  }
+                }
+                Laya.timer.frameOnce(1, a, () => {
+                  a.label_diamond &&
+                    (a.label_diamond.text = a.money2Desc(
+                      t.UI_Bag.get_item_count(100001)
+                    ));
+
+                  a.label_huishi &&
+                    (a.label_huishi.text = a.money2Desc(
+                      t.UI_Bag.get_item_count(302014)
+                    ));
+                });
+              }
+            },
+            null,
+            !1
+          )
+        );
+      }
+
+      onEnable() {
+        this.label_diamond &&
+          (this.label_diamond.text = this.money2Desc(
+            t.UI_Bag.get_item_count(100001)
+          ));
+
+        this.label_gold &&
+          (this.label_gold.text = this.money2Desc(
+            GameMgr.Inst.account_data.gold
+          ));
+
+        this.label_huishi &&
+          (this.label_huishi.text = this.money2Desc(
+            t.UI_Bag.get_item_count(302014)
+          ));
+
+        this.label_xinyang &&
+          (this.label_xinyang.text = this.money2Desc(
+            t.UI_Bag.get_item_count(302014)
+          ));
+
+        'chs' != GameMgr.client_language &&
+            (this.me.getChildByName('container_huishi').visible = !1);
+
+        this.label_huishi &&
+          (('chs' == GameMgr.client_language &&
+          this.me.getChildByName('container_xinyang') && (this.me.getChildByName('container_xinyang').visible = !1)));
+      }
+
+      money2Desc(t) {
+        if (t < 1e6) return t.toString();
+        if (
+          'chs' == GameMgr.client_language ||
+          'jp' == GameMgr.client_language
+        ) {
+          if (t < 1e8) {
+            for (var e = (t / 1e4).toFixed(3), i = 0, n = 0; n < e.length; n++)
+              if ('.' == e[n]) {
+                i = n;
+                break;
+              }
+            return (
+              (e = i >= 4 ? e.substr(0, 4) : e.substr(0, 5)) +
+              game.Tools.strOfLocalization(2148)
+            );
+          }
+          for (var e = (t / 1e8).toFixed(3), i = 0, n = 0; n < e.length; n++)
+            if ('.' == e[n]) {
+              i = n;
+              break;
+            }
+          return (
+            (e = i >= 4 ? e.substr(0, 4) : e.substr(0, 5)) +
+            game.Tools.strOfLocalization(2149)
+          );
+        }
+        if (t < 1e9) {
+          for (var e = (t / 1e6).toFixed(3), i = 0, n = 0; n < e.length; n++)
+            if ('.' == e[n]) {
+              i = n;
+              break;
+            }
+          return `${e = i >= 4 ? e.substr(0, 4) : e.substr(0, 5)}M`;
+        }
+        for (var e = (t / 1e9).toFixed(3), i = 0, n = 0; n < e.length; n++)
+          if ('.' == e[n]) {
+            i = n;
+            break;
+          }
+        return `${e = i >= 4 ? e.substr(0, 4) : e.substr(0, 5)}B`;
+      }
+    }
+
+    return e;
+  })();
+  t.UI_Money = e;
+})(uiscript || (uiscript = {}));

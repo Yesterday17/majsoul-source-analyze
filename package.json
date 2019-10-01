@@ -9,9 +9,8 @@
     "start": "node split.js"
   },
   "dependencies": {
-    "prettier": "^1.18.2"
-  },
-  "devDependencies": {
+    "jscodeshift": "^0.6.4",
+    "prettier": "^1.18.2",
     "lebab": "^3.1.0",
     "node-fetch": "^2.6.0"
   }

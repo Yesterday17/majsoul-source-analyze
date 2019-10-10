@@ -82,37 +82,47 @@ var net;
       this.workingMessage_ = this.messages_.shift();
       this._handleMsg(this.workingMessage_);
       this.workingMessage_ = null;
-      if (!this.workingMessage_ && 0 !== this.messages_.length)
+      if (!this.workingMessage_ && this.messages_.length !== 0)
         return this._checkMessage();
     }
 
-    _handleMsg(e) {
-      var i = { type: e[0] };
-      i.reqIndex = e[1] + (e[2] << 8);
+    _handleMsg(msg) {
+      var i = { type: msg[0] };
+      // msg2 msg1
+      // msg2 is the higher 8 bits
+      // msg1 is the lower 8 bits
+      // u16int
+      i.reqIndex = msg[1] + (msg[2] << 8);
       switch (i.type) {
         case t.HeaderType.REQUEST:
         case t.HeaderType.RESPONSE:
-          if (e.length < 3) throw new Error("ERR_INVALID_MESSAGE_LENGTH");
-          e = e.slice(3);
+          if (msg.length < 3) throw new Error("ERR_INVALID_MESSAGE_LENGTH");
+          msg = msg.slice(3);
           break;
         case t.HeaderType.NOTIFY:
-          e = e.slice(1);
+          msg = msg.slice(1);
           break;
         default:
           return void console.error("net", `unknown headerType: ${i.type}`);
       }
+      // so in fact, only response and notify can be handled
       switch (i.type) {
         case t.HeaderType.REQUEST:
           throw new Error("ERR_CLIENT_UNABLE_TO_HANDLE_REQUEST");
         case t.HeaderType.RESPONSE:
-          var n = t.MessageWrapper.decodeRpc(e);
-          return this.requestClientHandle_.emitResponse(i.reqIndex, n.data);
+          var wrapper = t.MessageWrapper.decodeRpc(msg);
+          // wrapper: {name: string, data: byte[]}
+          return this.requestClientHandle_.emitResponse(
+            i.reqIndex,
+            wrapper.data
+          );
         case t.HeaderType.NOTIFY:
-          var a = t.MessageWrapper.decodeMessage(e);
+          var a = t.MessageWrapper.decodeMessage(msg);
           var r = this.handler_[a.$type.fullName];
           if (!r) return void app.Log.Error(`消息:${a.$type.fullName}未被监听`);
           for (var s = 0; s < r.length; s++)
             try {
+              // execute handler
               r[s].runWith(a);
             } catch (t) {
               app.Log.Error(
@@ -131,32 +141,32 @@ var net;
       }
     }
 
-    _requestMessage(e, i, n) {
+    _requestMessage(method, packet, n) {
       this.requestIndex_ = (this.requestIndex_ + 1) % 60007;
 
       app.Log.info_net(
-        `_requestMessage method:${e}, index:${this.requestIndex_}`
+        `_requestMessage method:${method}, index:${this.requestIndex_}`
       );
 
-      this._sendRpc(e, {
+      this._sendRpc(method, {
         header: {
           type: t.HeaderType.REQUEST,
           reqIndex: this.requestIndex_
         },
-        packet: i
+        packet: packet
       });
 
-      this.requestClientHandle_.waitResponseCb(e, this.requestIndex_, n);
+      this.requestClientHandle_.waitResponseCb(method, this.requestIndex_, n);
     }
 
     _registerService(e) {
-      var i = this;
+      var _this = this;
       var n = t.ProtobufManager.lookupService(`lq.${e}`);
       if (!n) throw new Error(`ERR_SERVICE_NOT_FOUND, name=${e}`);
-      var a = n.create(({ fullName }, e, n) => {
-        i._requestMessage(fullName, e, n);
+      var service = n.create(({ fullName }, packet, s) => {
+        _this._requestMessage(fullName, packet, s);
       });
-      this.services_[e] = a;
+      this.services_[e] = service;
     }
 
     _sendMessage({ header, packet }) {
@@ -215,6 +225,7 @@ var net;
       }
     }
 
+    // shouldn't it be set?
     addSocketLister(t) {
       this.when_socket_event = t;
     }

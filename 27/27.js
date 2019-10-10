@@ -5,7 +5,7 @@ var net;
       static loadProto(t) {
         this.root = protobuf.Root.fromJSON(t);
         this.root.resolveAll();
-        console.log('loadProto finished');
+        console.log("loadProto finished");
       }
 
       static lookup(t, e) {
@@ -29,9 +29,8 @@ var net;
       }
 
       static lookupMethod(t) {
-        'string' == typeof t && (t = t.split('.'));
-        if ((0 === t.length))
-          return null;
+        "string" == typeof t && (t = t.split("."));
+        if (0 === t.length) return null;
         var e = this.lookupService(t.slice(0, -1));
         if (!e) return null;
         var i = t[t.length - 1];

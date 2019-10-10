@@ -9,27 +9,27 @@ var GameMgr = (() => {
       this.root_front_scene_effect = null;
       this.root_front_effect = null;
       this.logined = !1;
-      this.link_url = '';
-      this.account = '';
-      this.password = '';
+      this.link_url = "";
+      this.account = "";
+      this.password = "";
       this.sociotype = 0;
-      this.player_name = '';
-      this.access_token = '';
+      this.player_name = "";
+      this.access_token = "";
       this.account_id = -1;
       this.account_setting = {};
       this.account_data = null;
       this.account_numerical_resource = null;
-      this.yostar_accessToken = '';
+      this.yostar_accessToken = "";
       this.player_in_haiwai = !1;
       this.commonview_slot = {};
-      this.mjp_view = '';
+      this.mjp_view = "";
       this.mjp_item_id = 0;
-      this.mj_server_location = '';
-      this.mj_game_token = '';
-      this.mj_game_uuid = '';
+      this.mj_server_location = "";
+      this.mj_game_token = "";
+      this.mj_game_uuid = "";
       this.ingame = !1;
       this.beinvited_roomid = -1;
-      this.outsee_paipuid = '';
+      this.outsee_paipuid = "";
       this.custom_match_id = 0;
       this.account_refresh_time = 0;
       this._current_scene = null;
@@ -43,14 +43,14 @@ var GameMgr = (() => {
       this.comment_allow = 0;
       this.server_time_delta = 0;
       this.client_endpoint = null;
-      this._ad_str = '';
-      this._mail_account = '';
+      this._ad_str = "";
+      this._mail_account = "";
       t.Inst = this;
 
       t._inRes =
-          !!Laya.Browser.window.conch ||
-          (!document.getElementById('environment') ||
-            'dev' != document.getElementById('environment').innerText);
+        !!Laya.Browser.window.conch ||
+        (!document.getElementById("environment") ||
+          "dev" != document.getElementById("environment").innerText);
 
       Laya3D.init(1920, 1080, !0);
       Laya.stage.scaleMode = Laya.Stage.SCALE_SHOWALL;
@@ -61,65 +61,60 @@ var GameMgr = (() => {
 
       Laya.stage.alignH = Laya.Stage.ALIGN_CENTER;
       Laya.stage.alignV = Laya.Stage.ALIGN_MIDDLE;
-      Laya.stage.bgColor = '#000000';
+      Laya.stage.bgColor = "#000000";
       t._inRes || Laya.Stat.show();
 
       Laya.loader.load(
-            'client_language.txt',
-            Laya.Handler.create(this, () => {
-              var i = Laya.loader.getRes('client_language.txt');
+        "client_language.txt",
+        Laya.Handler.create(this, () => {
+          var i = Laya.loader.getRes("client_language.txt");
 
-              t.client_language =
-                'en' === i ? 'en' : 'jp' === i ? 'jp' : 'chs';
+          t.client_language = "en" === i ? "en" : "jp" === i ? "jp" : "chs";
 
-              e.init();
-              t.iniOSWebview
-                ? Laya.timer.once(500, e, () => {
-                    e.load0();
-                  })
-                : e.load0();
-            })
-          );
+          e.init();
+          t.iniOSWebview
+            ? Laya.timer.once(500, e, () => {
+                e.load0();
+              })
+            : e.load0();
+        })
+      );
 
       this._statisticinfo = {};
       this.pendinglink()
         ? (Laya.Browser.window.location.href = this.link_url)
-        : (Laya.timer.loop(
-        1e4,
-        this,
-        () => {
-          if (
-            game.LobbyNetMgr.Inst.connect_state ==
-            game.EConnectState.connecting
-          ) {
-            var t = [];
-            for (var i in e._statisticinfo)
-              t.push({ key: parseInt(i), value: e._statisticinfo[i] });
-            t.length > 0 && (e._statisticinfo = {});
-          }
-        },
-        null,
-        !1
-      ));
+        : Laya.timer.loop(
+            1e4,
+            this,
+            () => {
+              if (
+                game.LobbyNetMgr.Inst.connect_state ==
+                game.EConnectState.connecting
+              ) {
+                var t = [];
+                for (var i in e._statisticinfo)
+                  t.push({ key: parseInt(i), value: e._statisticinfo[i] });
+                t.length > 0 && (e._statisticinfo = {});
+              }
+            },
+            null,
+            !1
+          );
     }
 
     init() {
-      var e = Laya.LocalStorage.getItem('fpsmode');
+      var e = Laya.LocalStorage.getItem("fpsmode");
 
       e =
-          !Laya.Browser.onMobile || t.inConch || t.iniOSWebview
-            ? 'fast'
-            : 'slow';
+        !Laya.Browser.onMobile || t.inConch || t.iniOSWebview ? "fast" : "slow";
 
-      (e && '' != e) ||
-        (Laya.LocalStorage.setItem('fpsmode', e));
+      (e && "" != e) || Laya.LocalStorage.setItem("fpsmode", e);
 
       Laya.stage.frameRate = e;
-      var i = Laya.LocalStorage.getItem('dddddcv');
+      var i = Laya.LocalStorage.getItem("dddddcv");
       i = game.Tools.generateUUID();
 
-      (i && '' != i) ||
-        (Laya.LocalStorage.setItem('dddddcv', i));
+      (i && "" != i) || Laya.LocalStorage.setItem("dddddcv", i);
 
       t.device_id = i;
       Laya.Browser.window.onerror = this.handleWindowError;
@@ -135,80 +130,72 @@ var GameMgr = (() => {
       this._scene_lobby = new game.Scene_Lobby();
       this._scene_mj = new game.Scene_MJ();
       view.AudioMgr.init();
-      var n = Laya.LocalStorage.getItem('click_prefer');
-      view.DesktopMgr.click_prefer = n && '1' == n ? 1 : 0;
-      var a = Laya.LocalStorage.getItem('double_click_pass');
-      view.DesktopMgr.double_click_pass = a && '1' == a ? 1 : 0;
-      if (
-        ('en' == t.client_language)
-      ) {
+      var n = Laya.LocalStorage.getItem("click_prefer");
+      view.DesktopMgr.click_prefer = n && "1" == n ? 1 : 0;
+      var a = Laya.LocalStorage.getItem("double_click_pass");
+      view.DesktopMgr.double_click_pass = a && "1" == a ? 1 : 0;
+      if ("en" == t.client_language) {
         view.DesktopMgr.en_mjp = !0;
-        'false' == game.LocalStorage.getItem('en_mjp') &&
+        "false" == game.LocalStorage.getItem("en_mjp") &&
           (view.DesktopMgr.en_mjp = !1);
       } else view.DesktopMgr.en_mjp = !1;
-      var r = Laya.LocalStorage.getItem('_pre_room');
-      r && '' != r && (this.beinvited_roomid = parseInt(r));
-      this.outsee_paipuid = Laya.LocalStorage.getItem('_pre_paipu');
-      this.outsee_paipuid || (this.outsee_paipuid = '');
+      var r = Laya.LocalStorage.getItem("_pre_room");
+      r && "" != r && (this.beinvited_roomid = parseInt(r));
+      this.outsee_paipuid = Laya.LocalStorage.getItem("_pre_paipu");
+      this.outsee_paipuid || (this.outsee_paipuid = "");
       this.trasform_storage();
-      if (
-        (Laya.Browser.window.conch)
-      ) {
-        var s = Laya.PlatformClass.createClass('layaair.majsoul.mjmgr');
+      if (Laya.Browser.window.conch) {
+        var s = Laya.PlatformClass.createClass("layaair.majsoul.mjmgr");
         var o = s.newObject();
 
         o.callWithBack(function(t) {
           var e = JSON.parse(t);
           this._fastin = !0;
-          Laya.LocalStorage.setItem('_pre_sociotype', e.type);
+          Laya.LocalStorage.setItem("_pre_sociotype", e.type);
 
-          e.type &&
-            (Laya.LocalStorage.setItem('_pre_code', e.code));
+          e.type && Laya.LocalStorage.setItem("_pre_code", e.code);
 
-          Laya.LocalStorage.setItem('_pre_st', '');
-        }, 'getSocioCode');
+          Laya.LocalStorage.setItem("_pre_st", "");
+        }, "getSocioCode");
 
-        s.call('clearSocioCode');
-        s.call('initWXPay', 'wxa81767d38cb2f4ff');
+        s.call("clearSocioCode");
+        s.call("initWXPay", "wxa81767d38cb2f4ff");
         o.callWithBack(e => {
           t._in_china = !0;
           t._in_google_play = !0;
-          'ingoogleplay' == e &&
-            ((t._in_china = !1));
-        }, 'getAppConfig');
+          "ingoogleplay" == e && (t._in_china = !1);
+        }, "getAppConfig");
       }
     }
 
     trasform_storage() {
       this._fastin = !0;
-      Laya.LocalStorage.setItem('_pre_sociotype', t);
-      (t = Laya.LocalStorage.getItem('_pre_st')) &&
-        '' != t &&
-        (Laya.LocalStorage.setItem('_pre_st', ''));
+      Laya.LocalStorage.setItem("_pre_sociotype", t);
+      (t = Laya.LocalStorage.getItem("_pre_st")) &&
+        "" != t &&
+        Laya.LocalStorage.setItem("_pre_st", "");
       this._fastin = !0;
-      Laya.LocalStorage.setItem('_pre_sociotype', t);
-      (t = Laya.LocalStorage.getItem('_pre_xdsfdl')) &&
-        '' != t &&
-        (Laya.LocalStorage.setItem('_pre_xdsfdl', ''));
-      game.LocalStorage.setItem('yostar_uid', t);
-      (t = Laya.LocalStorage.getItem('_pre_uid')) &&
-        '' != t &&
-        (Laya.LocalStorage.removeItem('_pre_uid'));
-      var t = Laya.LocalStorage.getItem('_pre_token');
-      game.LocalStorage.setItem('yostar_token', t);
-      t &&
-        '' != t &&
-        (Laya.LocalStorage.removeItem('_pre_token'));
-      var e = Laya.LocalStorage.getItem('_pre_state');
+      Laya.LocalStorage.setItem("_pre_sociotype", t);
+      (t = Laya.LocalStorage.getItem("_pre_xdsfdl")) &&
+        "" != t &&
+        Laya.LocalStorage.setItem("_pre_xdsfdl", "");
+      game.LocalStorage.setItem("yostar_uid", t);
+      (t = Laya.LocalStorage.getItem("_pre_uid")) &&
+        "" != t &&
+        Laya.LocalStorage.removeItem("_pre_uid");
+      var t = Laya.LocalStorage.getItem("_pre_token");
+      game.LocalStorage.setItem("yostar_token", t);
+      t && "" != t && Laya.LocalStorage.removeItem("_pre_token");
+      var e = Laya.LocalStorage.getItem("_pre_state");
       this._fastin = !0;
-      Laya.LocalStorage.setItem('_pre_sociotype', '3');
+      Laya.LocalStorage.setItem("_pre_sociotype", "3");
 
       !e ||
-        '' == e ||
-        ('xdsfdl3' != e && 'xdsfdl4' != e) ||
-        (Laya.LocalStorage.setItem('_pre_st', ''));
+        "" == e ||
+        ("xdsfdl3" != e && "xdsfdl4" != e) ||
+        Laya.LocalStorage.setItem("_pre_st", "");
 
-      Laya.LocalStorage.setItem('_pre_state', '');
+      Laya.LocalStorage.setItem("_pre_state", "");
     }
 
     load0() {
@@ -216,44 +203,34 @@ var GameMgr = (() => {
       window && window.conch && window.loadingView.loading(30);
       t.iniOSWebview &&
         Laya.Browser.window.wkbridge.callNative &&
-        Laya.Browser.window.wkbridge.callNative(
-          'setloadrate',
-          '30',
-          () => {}
-        );
+        Laya.Browser.window.wkbridge.callNative("setloadrate", "30", () => {});
       var i = () => {
         game.ResourceVersion.init(
           Laya.Handler.create(e, () => {
             window && window.conch && window.loadingView.loading(40);
             t.iniOSWebview &&
               Laya.Browser.window.wkbridge.callNative(
-                'setloadrate',
-                '40',
+                "setloadrate",
+                "40",
                 () => {}
               );
-            var i = 'res/atlas/bitmapfont.atlas';
+            var i = "res/atlas/bitmapfont.atlas";
 
-            'jp' == t.client_language
-              ? (i = 'res/atlas/bitmapfont/jp.atlas')
-              : 'en' == t.client_language &&
-                (i = 'res/atlas/bitmapfont/en.atlas');
+            "jp" == t.client_language
+              ? (i = "res/atlas/bitmapfont/jp.atlas")
+              : "en" == t.client_language &&
+                (i = "res/atlas/bitmapfont/en.atlas");
 
             Laya.loader.create(
               i,
               Laya.Handler.create(e, () => {
                 var i = [];
                 i =
-                  'jp' == t.client_language
-                    ? ['jp_haolong', 'jp_jiye']
-                    : 'en' == t.client_language
-                    ? ['en_haolong', 'en_hanyi', 'en_shuhun']
-                    : [
-                        'fengyu',
-                        'hanyi',
-                        'haolong',
-                        'youyuan',
-                        'youyuan_bold'
-                      ];
+                  "jp" == t.client_language
+                    ? ["jp_haolong", "jp_jiye"]
+                    : "en" == t.client_language
+                    ? ["en_haolong", "en_hanyi", "en_shuhun"]
+                    : ["fengyu", "hanyi", "haolong", "youyuan", "youyuan_bold"];
                 var n = 0;
 
                 var a = () => {
@@ -267,7 +244,7 @@ var GameMgr = (() => {
 
                   t.iniOSWebview &&
                     Laya.Browser.window.wkbridge.callNative(
-                      'setloadrate',
+                      "setloadrate",
                       Math.floor(40 + (n / i.length) * 20).toString(),
                       () => {}
                     );
@@ -275,7 +252,7 @@ var GameMgr = (() => {
                   n == i.length && Laya.timer.frameOnce(2, e, e.load1);
                 };
 
-                if ('chs' == t.client_language)
+                if ("chs" == t.client_language)
                   for (
                     var r = t => {
                         var n = new Laya.BitmapFont();
@@ -316,15 +293,15 @@ var GameMgr = (() => {
           })
         );
       };
-      t._client_region = 'mainland';
-      if ('chs' == t.client_language) {
-        var n = '';
-        n = t.inConch ? '../../../region/region.txt' : '../region/region.txt';
+      t._client_region = "mainland";
+      if ("chs" == t.client_language) {
+        var n = "";
+        n = t.inConch ? "../../../region/region.txt" : "../region/region.txt";
         Laya.loader.load(
           n,
           Laya.Handler.create(this, () => {
             var e = Laya.loader.getRes(n);
-            t._client_region = e && 'hk' === e ? 'hk' : 'mainland';
+            t._client_region = e && "hk" === e ? "hk" : "mainland";
             i();
           })
         );
@@ -334,35 +311,33 @@ var GameMgr = (() => {
     load1() {
       var e = this;
       game.LoadMgr.httpload(
-        'config.json',
-        'json',
+        "config.json",
+        "json",
         !1,
-        Laya.Handler.create(this, ({success, data}) => {
+        Laya.Handler.create(this, ({ success, data }) => {
           window && window.conch && window.loadingView.loading(70);
 
           t.iniOSWebview &&
             Laya.Browser.window.wkbridge.callNative(
-              'setloadrate',
-              '70',
+              "setloadrate",
+              "70",
               () => {}
             );
 
-          if (
-            (success)
-          ) {
+          if (success) {
             var n = data;
             t.config_data = n;
             Laya.loader.load(
-              'res/proto/liqi.json',
+              "res/proto/liqi.json",
               new Laya.Handler(e, () => {
                 window && window.conch && window.loadingView.loading(80);
                 t.iniOSWebview &&
                   Laya.Browser.window.wkbridge.callNative(
-                    'setloadrate',
-                    '80',
+                    "setloadrate",
+                    "80",
                     () => {}
                   );
-                var i = Laya.loader.getRes('res/proto/liqi.json');
+                var i = Laya.loader.getRes("res/proto/liqi.json");
                 if (i) {
                   net.ProtobufManager.loadProto(i);
                   net.MessageWrapper.initWrapper();
@@ -370,13 +345,13 @@ var GameMgr = (() => {
                   window && window.conch && window.loadingView.loading(85);
                   t.iniOSWebview &&
                     Laya.Browser.window.wkbridge.callNative(
-                      'setloadrate',
-                      '85',
+                      "setloadrate",
+                      "85",
                       () => {}
                     );
-                  var n = '';
+                  var n = "";
                   n = `uiconfig/ui_${t.client_language}.json`;
-                  'chs' != t.client_language && e.loadUStarLogin();
+                  "chs" != t.client_language && e.loadUStarLogin();
                   Laya.loader.load(
                     n,
                     Laya.Handler.create(e, () => {
@@ -390,8 +365,8 @@ var GameMgr = (() => {
 
                           t.iniOSWebview &&
                             Laya.Browser.window.wkbridge.callNative(
-                              'setloadrate',
-                              '100',
+                              "setloadrate",
+                              "100",
                               () => {}
                             );
 
@@ -401,38 +376,36 @@ var GameMgr = (() => {
                     })
                   );
                 } else
-                  console.error(
-                    'load protobuf failed: liqiDescriptor is null'
-                  );
+                  console.error("load protobuf failed: liqiDescriptor is null");
               })
             );
-          } else app.Log.Error('未找到配置文件：config.json');
+          } else app.Log.Error("未找到配置文件：config.json");
         })
       );
     }
 
     loadUStarLogin() {
-      var e = document.createElement('script');
+      var e = document.createElement("script");
       e.src = `${t.config_data.yo_service_url}/js/${t.config_data.yo_sdk_js}`;
-      var i = document.getElementsByTagName('script')[0];
+      var i = document.getElementsByTagName("script")[0];
       i.parentNode.insertBefore(e, i);
     }
 
     loadExcel(t) {
       var e = this;
       Laya.loader.load(
-        'res/proto/config.proto',
+        "res/proto/config.proto",
         new Laya.Handler(this, () => {
           uiscript.UI_Remind.Inst && uiscript.UI_Remind.Inst.setprocess(1);
           Laya.loader.load(
-            'res/config/lqc.lqbin',
+            "res/config/lqc.lqbin",
             new Laya.Handler(e, () => {
               uiscript.UI_Remind.Inst && uiscript.UI_Remind.Inst.setprocess(2);
-              var e = Laya.loader.getRes('res/proto/config.proto');
+              var e = Laya.loader.getRes("res/proto/config.proto");
               if (e) {
                 uiscript.UI_Remind.Inst &&
                   uiscript.UI_Remind.Inst.setprocess(3);
-                var i = Laya.loader.getRes('res/config/lqc.lqbin');
+                var i = Laya.loader.getRes("res/config/lqc.lqbin");
                 if (i) {
                   uiscript.UI_Remind.Inst &&
                     uiscript.UI_Remind.Inst.setprocess(4);
@@ -452,8 +425,9 @@ var GameMgr = (() => {
                     uiscript.UI_Remind.Inst.setprocess(6);
 
                   t && t.run();
-                } else console.error('load bincontent failed: bindata is null');
-              } else console.error('load configProto failed: configProto is null');
+                } else console.error("load bincontent failed: bindata is null");
+              } else
+                console.error("load configProto failed: configProto is null");
             }),
             null,
             Laya.Loader.BUFFER
@@ -463,60 +437,58 @@ var GameMgr = (() => {
     }
 
     pendinglink() {
-      var e = '';
+      var e = "";
 
-      document.getElementById('game_link') &&
-        (e = document.getElementById('game_link').innerText);
+      document.getElementById("game_link") &&
+        (e = document.getElementById("game_link").innerText);
 
       e && (this.link_url = e);
-      t.inConch && (this.link_url = 'https://majsoul.union-game.com/0/');
+      t.inConch && (this.link_url = "https://majsoul.union-game.com/0/");
       var i = Laya.Browser.window.location.href;
       var n = {};
       if (i) {
-        i.indexOf('#') > 0 && (i = i.substr(0, i.indexOf('#')));
-        var a = i.indexOf('?');
+        i.indexOf("#") > 0 && (i = i.substr(0, i.indexOf("#")));
+        var a = i.indexOf("?");
         this.beinvited_roomid = -1;
         if (a >= 0) {
           e || (this.link_url = i.substr(0, a));
           for (
             var r = i.substring(a + 1, i.length),
-              s = (r = (r = r.replace('#_=_', '')).replace('#', '')).split('&'),
+              s = (r = (r = r.replace("#_=_", "")).replace("#", "")).split("&"),
               o = 0;
             o < s.length;
             o++
           )
-            if ((a = s[o].indexOf('=')) > 0) {
+            if ((a = s[o].indexOf("=")) > 0) {
               var l = s[o].substring(0, a);
               var h = s[o].substring(a + 1, s[o].length);
               n[l] = h;
             }
-        } else this.outsee_paipuid = '';
+        } else this.outsee_paipuid = "";
 
-        this.link_url.includes('index.html') &&
-            (this.link_url = this.link_url.substr(
-              0,
-              this.link_url.indexOf('index.html')
-            ));
+        this.link_url.includes("index.html") &&
+          (this.link_url = this.link_url.substr(
+            0,
+            this.link_url.indexOf("index.html")
+          ));
 
         e ||
-          ('/' != this.link_url.charAt(this.link_url.length - 1) &&
-          (this.link_url += '/'));
+          ("/" != this.link_url.charAt(this.link_url.length - 1) &&
+            (this.link_url += "/"));
       }
       var c = !1;
-      var u = '';
-      '' != u && (u += '&');
+      var u = "";
+      "" != u && (u += "&");
 
-      'mv_' == _.substr(0, 3) ||
-        ('utm_' == _.substr(0, 4)
+      "mv_" == _.substr(0, 3) ||
+        ("utm_" == _.substr(0, 4)
           ? (u += `${_}=${n[_]}`)
           : Laya.LocalStorage.setItem(`_pre_${_}`, n[_]));
 
-      for (var _ in n)
-        c = !0;
-      Laya.LocalStorage.setItem('__ad_s', u);
+      for (var _ in n) c = !0;
+      Laya.LocalStorage.setItem("__ad_s", u);
 
-      u &&
-        (Laya.LocalStorage.setItem('__ad_t', Date.now().toString()));
+      u && Laya.LocalStorage.setItem("__ad_t", Date.now().toString());
 
       return c;
     }
@@ -532,19 +504,17 @@ var GameMgr = (() => {
     initUIRoot() {
       this.uimgr = new uiscript.UIMgr();
       this.uimgr.init();
-      if (
-        (t.iniOSWebview)
-      ) {
+      if (t.iniOSWebview) {
         var e = this;
-        Laya.Browser.window.wkbridge.callNative('getappversion', '', t => {
+        Laya.Browser.window.wkbridge.callNative("getappversion", "", t => {
           game.LoadMgr.httpload(
-            'iOSver',
-            'text',
+            "iOSver",
+            "text",
             !1,
-            Laya.Handler.create(e, ({success, data}) => {
+            Laya.Handler.create(e, ({ success, data }) => {
               Laya.Browser.window.wkbridge.callNative(
-                'closeloadview',
-                '',
+                "closeloadview",
+                "",
                 () => {}
               );
 
@@ -581,8 +551,9 @@ var GameMgr = (() => {
               })
             );
           else {
-            var i =
-              `res/atlas${'chs' == t.client_language ? '' : `/${t.client_language}`}/myres/start_show.atlas`;
+            var i = `res/atlas${
+              "chs" == t.client_language ? "" : `/${t.client_language}`
+            }/myres/start_show.atlas`;
             Laya.loader.create(
               i,
               Laya.Handler.create(e, () => {
@@ -632,17 +603,17 @@ var GameMgr = (() => {
       uiscript.UI_Recharge.init();
       uiscript.UI_Activity_Yueka.Init();
 
-      app.NetAgent.sendReq2Lobby('Lobby', 'fetchCommentSetting', {}, (e, i) => {
+      app.NetAgent.sendReq2Lobby("Lobby", "fetchCommentSetting", {}, (e, i) => {
         e || i.error
-          ? uiscript.UIMgr.Inst.showNetReqError('fetchCommentSetting', e, i)
+          ? uiscript.UIMgr.Inst.showNetReqError("fetchCommentSetting", e, i)
           : (t.comment_allow = i.comment_allow);
       });
 
       this.commonview_slot = {};
 
-      app.NetAgent.sendReq2Lobby('Lobby', 'fetchCommonView', {}, (e, i) => {
+      app.NetAgent.sendReq2Lobby("Lobby", "fetchCommonView", {}, (e, i) => {
         if (e || i.error)
-          uiscript.UIMgr.Inst.showNetReqError('fetchCommonView', e, i);
+          uiscript.UIMgr.Inst.showNetReqError("fetchCommonView", e, i);
         else {
           if (i.slots)
             for (var n = 0; n < i.slots.length; n++)
@@ -657,13 +628,13 @@ var GameMgr = (() => {
       });
 
       app.NetAgent.sendReq2Lobby(
-        'Lobby',
-        'fetchAccountSettings',
+        "Lobby",
+        "fetchAccountSettings",
         {},
-        (e, {error, settings}) => {
+        (e, { error, settings }) => {
           t.account_setting = [];
           if (e || error);
-          else if ((settings))
+          else if (settings)
             for (var n = 0; n < settings.length; n++)
               t.account_setting[settings[n].key] = settings[n].value;
         }
@@ -672,64 +643,71 @@ var GameMgr = (() => {
       this.last_mod_name_time = 0;
 
       app.NetAgent.sendReq2Lobby(
-        'Lobby',
-        'fetchModNicknameTime',
+        "Lobby",
+        "fetchModNicknameTime",
         {},
-        (e, {error, last_mod_time}) => {
+        (e, { error, last_mod_time }) => {
           e ||
             error ||
             (last_mod_time && (t.last_mod_name_time = last_mod_time));
         }
       );
 
-      app.NetAgent.sendReq2Lobby('Lobby', 'fetchMisc', {}, (t, {error, recharged_list, faiths}) => {
-        if (t || error)
-          cfg.mall.goods.forEach(({cny}) => {
-            uiscript.UI_Recharge.new_recharge_list[cny] = 1;
-          });
-        else {
-          if (recharged_list)
-            for (var i = 0; i < recharged_list.length; i++)
-              uiscript.UI_Recharge.new_recharge_list[recharged_list[i]] = 1;
-          faiths && uiscript.UI_Treasure.on_chest_count_change(faiths);
+      app.NetAgent.sendReq2Lobby(
+        "Lobby",
+        "fetchMisc",
+        {},
+        (t, { error, recharged_list, faiths }) => {
+          if (t || error)
+            cfg.mall.goods.forEach(({ cny }) => {
+              uiscript.UI_Recharge.new_recharge_list[cny] = 1;
+            });
+          else {
+            if (recharged_list)
+              for (var i = 0; i < recharged_list.length; i++)
+                uiscript.UI_Recharge.new_recharge_list[recharged_list[i]] = 1;
+            faiths && uiscript.UI_Treasure.on_chest_count_change(faiths);
+          }
         }
-      });
+      );
 
-      app.NetAgent.sendReq2Lobby('Lobby', 'fetchIDCardInfo', {}, (e, {error, country, is_authed}) => {
-        t.player_in_haiwai = !1;
-        t.player_in_haiwai = !0;
-        e || error
-          ? (uiscript.UI_ShiMingRenZheng.renzhenged = !1)
-          : 'CN' == country
-          ? (uiscript.UI_ShiMingRenZheng.renzhenged = is_authed)
-          : (uiscript.UI_ShiMingRenZheng.renzhenged = is_authed);
-      });
+      app.NetAgent.sendReq2Lobby(
+        "Lobby",
+        "fetchIDCardInfo",
+        {},
+        (e, { error, country, is_authed }) => {
+          t.player_in_haiwai = !1;
+          t.player_in_haiwai = !0;
+          e || error
+            ? (uiscript.UI_ShiMingRenZheng.renzhenged = !1)
+            : "CN" == country
+            ? (uiscript.UI_ShiMingRenZheng.renzhenged = is_authed)
+            : (uiscript.UI_ShiMingRenZheng.renzhenged = is_authed);
+        }
+      );
     }
 
     gameInit() {
       var t = this;
       view.BgmListMgr.init();
 
-      app.NetAgent.sendReq2Lobby('Lobby', 'fetchServerTime', {}, (e, i) => {
+      app.NetAgent.sendReq2Lobby("Lobby", "fetchServerTime", {}, (e, i) => {
         e || i.error
-          ? uiscript.UIMgr.Inst.showNetReqError('fetchServerTime', e, i)
-          : (t.server_time_delta =
-              1e3 * i.server_time - Laya.timer.currTimer);
+          ? uiscript.UIMgr.Inst.showNetReqError("fetchServerTime", e, i)
+          : (t.server_time_delta = 1e3 * i.server_time - Laya.timer.currTimer);
       });
 
-      app.NetAgent.sendReq2Lobby('Lobby', 'fetchServerSettings', {}, (t, e) => {
+      app.NetAgent.sendReq2Lobby("Lobby", "fetchServerSettings", {}, (t, e) => {
         app.Log.log(`fetchServerSettings: ${JSON.stringify(e)}`);
         uiscript.UI_Recharge.open_payment = !1;
-        uiscript.UI_Recharge.payment_info = '';
+        uiscript.UI_Recharge.payment_info = "";
         uiscript.UI_Recharge.open_wx = !0;
         uiscript.UI_Recharge.wx_type = 0;
         uiscript.UI_Recharge.open_alipay = !0;
         uiscript.UI_Recharge.alipay_type = 0;
         if (t || e.error)
-          uiscript.UIMgr.Inst.showNetReqError('fetchServerSettings', t, e);
-        else if (
-          (e.settings && e.settings.payment_setting)
-        ) {
+          uiscript.UIMgr.Inst.showNetReqError("fetchServerSettings", t, e);
+        else if (e.settings && e.settings.payment_setting) {
           var i = e.settings.payment_setting;
           i.open_payment && (uiscript.UI_Recharge.open_payment = !0);
 
@@ -743,26 +721,34 @@ var GameMgr = (() => {
           i.wechat.disable_create && (uiscript.UI_Recharge.open_wx = !1);
 
           i.wechat &&
-            ((null != i.wechat.payment_source_platform && (uiscript.UI_Recharge.wx_type = i.wechat.payment_source_platform)));
+            (null != i.wechat.payment_source_platform &&
+              (uiscript.UI_Recharge.wx_type =
+                i.wechat.payment_source_platform));
 
-          i.alipay.disable_create &&
-              (uiscript.UI_Recharge.open_alipay = !1);
+          i.alipay.disable_create && (uiscript.UI_Recharge.open_alipay = !1);
 
           i.alipay &&
-            ((null != i.alipay.payment_source_platform && (uiscript.UI_Recharge.alipay_type = i.alipay.payment_source_platform)));
+            (null != i.alipay.payment_source_platform &&
+              (uiscript.UI_Recharge.alipay_type =
+                i.alipay.payment_source_platform));
         }
       });
 
-      app.NetAgent.sendReq2Lobby('Lobby', 'fetchConnectionInfo', {}, (e, {error, client_endpoint}) => {
-        e || error || (t.client_endpoint = client_endpoint);
-      });
+      app.NetAgent.sendReq2Lobby(
+        "Lobby",
+        "fetchConnectionInfo",
+        {},
+        (e, { error, client_endpoint }) => {
+          e || error || (t.client_endpoint = client_endpoint);
+        }
+      );
 
       app.PlayerBehaviorStatistic.init();
       this.account_data.nickname && this.fetch_login_info();
       uiscript.UI_Info.Init();
 
       app.NetAgent.AddListener2Lobby(
-        'NotifyAccountUpdate',
+        "NotifyAccountUpdate",
         Laya.Handler.create(
           this,
           e => {
@@ -809,21 +795,21 @@ var GameMgr = (() => {
       );
 
       app.NetAgent.AddListener2Lobby(
-        'NotifyAnotherLogin',
+        "NotifyAnotherLogin",
         Laya.Handler.create(this, t => {
           uiscript.UI_AnotherLogin.Inst.show();
         })
       );
 
       app.NetAgent.AddListener2Lobby(
-        'NotifyAccountLogout',
+        "NotifyAccountLogout",
         Laya.Handler.create(this, t => {
           uiscript.UI_Hanguplogout.Inst.show();
         })
       );
 
       app.NetAgent.AddListener2Lobby(
-        'NotifyClientMessage',
+        "NotifyClientMessage",
         Laya.Handler.create(this, t => {
           app.Log.log(`收到消息：${JSON.stringify(t)}`);
           t.type == game.EFriendMsgType.room_invite &&
@@ -832,17 +818,15 @@ var GameMgr = (() => {
       );
 
       app.NetAgent.AddListener2Lobby(
-        'NotifyServerSetting',
-        Laya.Handler.create(this, ({settings}) => {
+        "NotifyServerSetting",
+        Laya.Handler.create(this, ({ settings }) => {
           uiscript.UI_Recharge.open_payment = !1;
-          uiscript.UI_Recharge.payment_info = '';
+          uiscript.UI_Recharge.payment_info = "";
           uiscript.UI_Recharge.open_wx = !0;
           uiscript.UI_Recharge.wx_type = 0;
           uiscript.UI_Recharge.open_alipay = !0;
           uiscript.UI_Recharge.alipay_type = 0;
-          if (
-            (settings && settings.payment_setting)
-          ) {
+          if (settings && settings.payment_setting) {
             var e = settings.payment_setting;
             e.open_payment && (uiscript.UI_Recharge.open_payment = !0);
 
@@ -853,32 +837,34 @@ var GameMgr = (() => {
             null != e.payment_info &&
               (uiscript.UI_Recharge.payment_info = e.payment_info);
 
-            e.wechat.disable_create &&
-                (uiscript.UI_Recharge.open_wx = !1);
+            e.wechat.disable_create && (uiscript.UI_Recharge.open_wx = !1);
 
             e.wechat &&
-              ((null != e.wechat.payment_source_platform && (uiscript.UI_Recharge.wx_type = e.wechat.payment_source_platform)));
+              (null != e.wechat.payment_source_platform &&
+                (uiscript.UI_Recharge.wx_type =
+                  e.wechat.payment_source_platform));
 
-            e.alipay.disable_create &&
-                (uiscript.UI_Recharge.open_alipay = !1);
+            e.alipay.disable_create && (uiscript.UI_Recharge.open_alipay = !1);
 
             e.alipay &&
-              ((null != e.alipay.payment_source_platform && (uiscript.UI_Recharge.alipay_type = e.alipay.payment_source_platform)));
+              (null != e.alipay.payment_source_platform &&
+                (uiscript.UI_Recharge.alipay_type =
+                  e.alipay.payment_source_platform));
           }
         })
       );
 
       app.NetAgent.AddListener2Lobby(
-        'NotifyVipLevelChange',
+        "NotifyVipLevelChange",
         Laya.Handler.create(this, t => {
           uiscript.UI_Sushe.send_gift_limit = t.gift_limit;
           game.FriendMgr.friend_max_count = t.friend_max_count;
 
           uiscript.UI_Shop.shopinfo.zhp.free_refresh.limit =
-              t.zhp_free_refresh_limit;
+            t.zhp_free_refresh_limit;
 
           uiscript.UI_Shop.shopinfo.zhp.cost_refresh.limit =
-              t.zhp_cost_refresh_limit;
+            t.zhp_cost_refresh_limit;
 
           uiscript.UI_PaiPu.collect_limit = t.record_collect_limit;
         })
@@ -889,8 +875,8 @@ var GameMgr = (() => {
           var e = (Laya.timer.currTimer - t._last_heatbeat_time) / 1e3;
 
           app.NetAgent.sendReq2Lobby(
-            'Lobby',
-            'heatbeat',
+            "Lobby",
+            "heatbeat",
             { no_operation_counter: e },
             () => {}
           );
@@ -904,14 +890,11 @@ var GameMgr = (() => {
         t.clientHeatBeat();
         t._pre_mouse_point.x = e.x;
         (e.x == t._pre_mouse_point.x && e.y == t._pre_mouse_point.y) ||
-          ((t._pre_mouse_point.y = e.y));
+          (t._pre_mouse_point.y = e.y);
       });
 
       Laya.timer.loop(1e3, this, () => {
-        Laya.LocalStorage.setItem(
-          'dolllt',
-          game.Tools.currentTime.toString()
-        );
+        Laya.LocalStorage.setItem("dolllt", game.Tools.currentTime.toString());
       });
     }
 
@@ -919,10 +902,10 @@ var GameMgr = (() => {
       var e = this;
       this.gameInit();
       this.logined = !0;
-      Laya.LocalStorage.setItem('_pre_room', '');
-      Laya.LocalStorage.setItem('_pre_paipu', '');
+      Laya.LocalStorage.setItem("_pre_room", "");
+      Laya.LocalStorage.setItem("_pre_paipu", "");
 
-      (t.Inst.account_data.nickname && '' != t.Inst.account_data.nickname) ||
+      (t.Inst.account_data.nickname && "" != t.Inst.account_data.nickname) ||
         uiscript.UI_XinShouYinDao.pre_load();
 
       this._scene_lobby.addLoadListenter(
@@ -952,17 +935,15 @@ var GameMgr = (() => {
 
     updateAccountInfo() {
       var e = this;
-      app.NetAgent.sendReq2Lobby('Lobby', 'fetchAccountInfo', {}, (i, n) => {
+      app.NetAgent.sendReq2Lobby("Lobby", "fetchAccountInfo", {}, (i, n) => {
         if (i || n.error)
-          uiscript.UIMgr.Inst.showNetReqError('fetchAccountInfo', i, n);
+          uiscript.UIMgr.Inst.showNetReqError("fetchAccountInfo", i, n);
         else {
           app.Log.log(`UpdateAccount: ${JSON.stringify(n)}`);
           t.Inst.account_refresh_time = Laya.timer.currTimer;
           t.Inst.account_data[a] = n.account[a];
           for (var a in n.account)
-            if (
-              ('platform_diamond' == a)
-            )
+            if ("platform_diamond" == a)
               for (var r = n.account[a], s = 0; s < r.length; s++)
                 e.account_numerical_resource[r[s].id] = r[s].count;
           uiscript.UI_Lobby.Inst.refreshInfo();
@@ -984,43 +965,43 @@ var GameMgr = (() => {
     }
 
     updateRoom() {
-      app.NetAgent.sendReq2Lobby('Lobby', 'fetchRoom', {}, (t, e) => {
+      app.NetAgent.sendReq2Lobby("Lobby", "fetchRoom", {}, (t, e) => {
         t || e.error
-          ? uiscript.UIMgr.Inst.showNetReqError('fetchRoom', t, e)
+          ? uiscript.UIMgr.Inst.showNetReqError("fetchRoom", t, e)
           : uiscript.UI_WaitingRoom.Inst.updateData(e.room);
       });
     }
 
     EnterMJ() {
       this._current_scene &&
-          this._current_scene.active &&
-          (this._current_scene.active = !1);
+        this._current_scene.active &&
+        (this._current_scene.active = !1);
 
       this._current_scene = this._scene_mj;
       this._current_scene !== this._scene_mj &&
-        ((this._current_scene.active = !0));
+        (this._current_scene.active = !0);
     }
 
     EnterLobby() {
       var t = this;
       this._current_scene && (this._current_scene.active = !1);
       this._current_scene = this._scene_lobby;
-      uiscript.UI_Loading.Inst.show('enter_lobby');
+      uiscript.UI_Loading.Inst.show("enter_lobby");
       uiscript.UI_Loading.Inst.close();
       this._current_scene !== this._scene_lobby
-        ? (this._scene_lobby.buildScene(
-        Laya.Handler.create(this, () => {
-          uiscript.UI_Loading.Inst.close();
-          t._current_scene.active = !0;
-          game.Scene_MJ.Inst.load_common_texture2d();
-        }),
-        Laya.Handler.create(
-          this,
-          t => uiscript.UI_Loading.Inst.setProgressVal(t),
-          null,
-          !1
-        )
-      ))
+        ? this._scene_lobby.buildScene(
+            Laya.Handler.create(this, () => {
+              uiscript.UI_Loading.Inst.close();
+              t._current_scene.active = !0;
+              game.Scene_MJ.Inst.load_common_texture2d();
+            }),
+            Laya.Handler.create(
+              this,
+              t => uiscript.UI_Loading.Inst.setProgressVal(t),
+              null,
+              !1
+            )
+          )
         : (this._current_scene.active = !0);
     }
 
@@ -1032,37 +1013,37 @@ var GameMgr = (() => {
       );
 
       this.duringPaipu = !0;
-      uiscript.UI_Loading.Inst.show('enter_mj');
+      uiscript.UI_Loading.Inst.show("enter_mj");
       this.duringPaipu
-        ? app.Log.Error('已经在看牌谱了')
-        : (app.NetAgent.sendReq2Lobby(
-        'Lobby',
-        'fetchGameRecord',
-        { game_uuid: t },
-        (t, a) => {
-          uiscript.UIMgr.Inst.showNetReqError('fetchGameRecord', t, a);
-          uiscript.UI_Loading.Inst.close(null);
-          uiscript.UIMgr.Inst.showLobby();
-          if (t || a.error)
-            n.duringPaipu = !1;
-          else {
-            uiscript.UI_Loading.Inst.setProgressVal(0.1);
-            var r = a.head;
-            var s = [null, null, null, null];
-            var o = game.Tools.strOfLocalization(2003);
-            var l = r.config.mode;
-            l.extendinfo && (o = game.Tools.strOfLocalization(2004));
+        ? app.Log.Error("已经在看牌谱了")
+        : app.NetAgent.sendReq2Lobby(
+            "Lobby",
+            "fetchGameRecord",
+            { game_uuid: t },
+            (t, a) => {
+              uiscript.UIMgr.Inst.showNetReqError("fetchGameRecord", t, a);
+              uiscript.UI_Loading.Inst.close(null);
+              uiscript.UIMgr.Inst.showLobby();
+              if (t || a.error) n.duringPaipu = !1;
+              else {
+                uiscript.UI_Loading.Inst.setProgressVal(0.1);
+                var r = a.head;
+                var s = [null, null, null, null];
+                var o = game.Tools.strOfLocalization(2003);
+                var l = r.config.mode;
+                l.extendinfo && (o = game.Tools.strOfLocalization(2004));
 
-            1 === l.detail_rule.ai_level &&
-                (o = game.Tools.strOfLocalization(2003));
+                1 === l.detail_rule.ai_level &&
+                  (o = game.Tools.strOfLocalization(2003));
 
-            l.detail_rule &&
-              l.detail_rule.ai_level &&
-              ((2 === l.detail_rule.ai_level && (o = game.Tools.strOfLocalization(2004))));
-            for (c = 0; c < r.accounts.length; c++) {
-              var h = r.accounts[c];
+                l.detail_rule &&
+                  l.detail_rule.ai_level &&
+                  (2 === l.detail_rule.ai_level &&
+                    (o = game.Tools.strOfLocalization(2004)));
+                for (c = 0; c < r.accounts.length; c++) {
+                  var h = r.accounts[c];
 
-              h.character = {
+                  h.character = {
                     charid: h.avatar_id,
                     level: 0,
                     exp: 0,
@@ -1072,107 +1053,106 @@ var GameMgr = (() => {
                     is_upgraded: !1
                   };
 
-              h.avatar_id = h.character.skin;
-              h.character
-                ? (s[h.seat] = h)
-                : (s[h.seat] = h);
-            }
-            for (var c = 0; c < s.length; c++)
-              null == s[c] &&
-                (s[c] = {
-                  nickname: o,
-                  avatar_id: 400101,
-                  level: { id: 10101 },
-                  level3: { id: 20101 },
-                  character: {
-                    charid: 200001,
-                    level: 0,
-                    exp: 0,
-                    views: [],
-                    skin: 400101,
-                    is_upgraded: !1
-                  }
+                  h.avatar_id = h.character.skin;
+                  h.character ? (s[h.seat] = h) : (s[h.seat] = h);
+                }
+                for (var c = 0; c < s.length; c++)
+                  null == s[c] &&
+                    (s[c] = {
+                      nickname: o,
+                      avatar_id: 400101,
+                      level: { id: 10101 },
+                      level3: { id: 20101 },
+                      character: {
+                        charid: 200001,
+                        level: 0,
+                        exp: 0,
+                        views: [],
+                        skin: 400101,
+                        is_upgraded: !1
+                      }
+                    });
+
+                var u = Laya.Handler.create(n, t => {
+                  game.Scene_Lobby.Inst.active &&
+                    (game.Scene_Lobby.Inst.active = !1);
+
+                  game.Scene_MJ.Inst.openMJRoom(
+                    r.config,
+                    s,
+                    Laya.Handler.create(n, () => {
+                      n.duringPaipu = !1;
+                      view.DesktopMgr.Inst.initRoom(
+                        JSON.parse(JSON.stringify(r.config)),
+                        s,
+                        e,
+                        view.EMJMode.paipu,
+                        Laya.Handler.create(n, () => {
+                          view.DesktopMgr.Inst.paipu_config = i;
+                          uiscript.UI_Replay.Inst.initData(t);
+                          uiscript.UI_Replay.Inst.enable = !0;
+
+                          Laya.timer.once(1e3, n, () => {
+                            n.EnterMJ();
+                          });
+
+                          Laya.timer.once(1500, n, () => {
+                            view.DesktopMgr.player_link_state = [
+                              view.ELink_State.READY,
+                              view.ELink_State.READY,
+                              view.ELink_State.READY,
+                              view.ELink_State.READY
+                            ];
+
+                            uiscript.UI_DesktopInfo.Inst.refreshLinks();
+                            uiscript.UI_Loading.Inst.close();
+                          });
+
+                          Laya.timer.once(1e3, n, () => {
+                            uiscript.UI_Replay.Inst.nextStep(!0);
+                          });
+                        })
+                      );
+                    }),
+                    Laya.Handler.create(
+                      n,
+                      t =>
+                        uiscript.UI_Loading.Inst.setProgressVal(0.1 + 0.9 * t),
+                      null,
+                      !1
+                    )
+                  );
                 });
 
-            var u = Laya.Handler.create(n, t => {
-              game.Scene_Lobby.Inst.active &&
-                (game.Scene_Lobby.Inst.active = !1);
-
-              game.Scene_MJ.Inst.openMJRoom(
-                r.config,
-                s,
-                Laya.Handler.create(n, () => {
-                  n.duringPaipu = !1;
-                  view.DesktopMgr.Inst.initRoom(
-                    JSON.parse(JSON.stringify(r.config)),
-                    s,
-                    e,
-                    view.EMJMode.paipu,
-                    Laya.Handler.create(n, () => {
-                      view.DesktopMgr.Inst.paipu_config = i;
-                      uiscript.UI_Replay.Inst.initData(t);
-                      uiscript.UI_Replay.Inst.enable = !0;
-
-                      Laya.timer.once(1e3, n, () => {
-                        n.EnterMJ();
-                      });
-
-                      Laya.timer.once(1500, n, () => {
-                        view.DesktopMgr.player_link_state = [
-                          view.ELink_State.READY,
-                          view.ELink_State.READY,
-                          view.ELink_State.READY,
-                          view.ELink_State.READY
-                        ];
-
-                        uiscript.UI_DesktopInfo.Inst.refreshLinks();
-                        uiscript.UI_Loading.Inst.close();
-                      });
-
-                      Laya.timer.once(1e3, n, () => {
-                        uiscript.UI_Replay.Inst.nextStep(!0);
-                      });
-                    })
-                  );
-                }),
-                Laya.Handler.create(
-                  n,
-                  t => uiscript.UI_Loading.Inst.setProgressVal(
-                    0.1 + 0.9 * t
-                  ),
-                  null,
-                  !1
-                )
-              );
-            });
-
-            var _ = {};
-            _.record = r;
-            _.game = net.MessageWrapper.decodeMessage(a.data);
-            a.data && a.data.length
-              ? (u.runWith(_))
-              : game.LoadMgr.httpload(
-                  a.data_url,
-                  'arraybuffer',
-                  !1,
-                  Laya.Handler.create(n, ({success, data}) => {
-                    uiscript.UIMgr.Inst.ShowErrorInfo(game.Tools.strOfLocalization(2005) + a.data_url);
-                    uiscript.UI_Loading.Inst.close(null);
-                    uiscript.UIMgr.Inst.showLobby();
-                    if (success) {
-                      var e = new Laya.Byte();
-                      e.writeArrayBuffer(data);
-                      var i = net.MessageWrapper.decodeMessage(
-                        e.getUint8Array(0, e.length)
-                      );
-                      _.game = i;
-                      u.runWith(_);
-                    } else n.duringPaipu = !1;
-                  })
-                );
-          }
-        }
-      ));
+                var _ = {};
+                _.record = r;
+                _.game = net.MessageWrapper.decodeMessage(a.data);
+                a.data && a.data.length
+                  ? u.runWith(_)
+                  : game.LoadMgr.httpload(
+                      a.data_url,
+                      "arraybuffer",
+                      !1,
+                      Laya.Handler.create(n, ({ success, data }) => {
+                        uiscript.UIMgr.Inst.ShowErrorInfo(
+                          game.Tools.strOfLocalization(2005) + a.data_url
+                        );
+                        uiscript.UI_Loading.Inst.close(null);
+                        uiscript.UIMgr.Inst.showLobby();
+                        if (success) {
+                          var e = new Laya.Byte();
+                          e.writeArrayBuffer(data);
+                          var i = net.MessageWrapper.decodeMessage(
+                            e.getUint8Array(0, e.length)
+                          );
+                          _.game = i;
+                          u.runWith(_);
+                        } else n.duringPaipu = !1;
+                      })
+                    );
+              }
+            }
+          );
     }
 
     BehavioralStatistics(t, e) {
@@ -1186,8 +1166,8 @@ var GameMgr = (() => {
       (Laya.timer.currTimer - this._last_heatbeat_time) / 1e3 > 2400 &&
         game.LobbyNetMgr.Inst.isOK &&
         app.NetAgent.sendReq2Lobby(
-          'Lobby',
-          'heatbeat',
+          "Lobby",
+          "heatbeat",
           { no_operation_counter: 0 },
           () => {}
         );
@@ -1201,7 +1181,7 @@ var GameMgr = (() => {
 
     onFatalError(e, i) {
       void 0 === i && (i = !0);
-      app.Log.Error('onFatalError');
+      app.Log.Error("onFatalError");
       var n = {};
       n.timestamp = Math.floor(Date.now() / 1e3);
       n.fatal = !0;
@@ -1214,35 +1194,31 @@ var GameMgr = (() => {
       a.standardinfo = n;
       a.fatalerror = e;
       t.inRelease && (a.logs = app.Log.getCacheLog());
-      if (
-        (t.inRelease)
-      ) {
+      if (t.inRelease) {
         new Laya.HttpRequest().send(
           t.error_url,
           `data=${JSON.stringify(a)}`,
-          'post'
+          "post"
         );
       } else app.Log.Error(JSON.stringify(a));
       i && uiscript.UIMgr.Inst.showFE();
     }
 
     onXiangGongError(e) {
-      app.Log.Error('相公了');
+      app.Log.Error("相公了");
       var i = {};
       i.timestamp = Math.floor(Date.now() / 1e3);
-      i.type = 'xiangong';
+      i.type = "xiangong";
       t.Inst && (i.account_id = t.Inst.account_id);
       i.client_version = game.ResourceVersion.version;
       i.device = game.Tools.deviceInfo;
       t.inRelease && (i.logs = app.Log.getCacheLog());
       i.detail = e;
-      if (
-        (t.inRelease)
-      ) {
+      if (t.inRelease) {
         new Laya.HttpRequest().send(
           t.error_url,
           `data=${JSON.stringify(i)}`,
-          'post'
+          "post"
         );
       } else app.Log.Error(JSON.stringify(i));
     }
@@ -1252,7 +1228,7 @@ var GameMgr = (() => {
         new Laya.HttpRequest().send(
           t.error_url,
           `data=${JSON.stringify(e)}`,
-          'post'
+          "post"
         );
       } else app.Log.Error(JSON.stringify(e));
     }
@@ -1262,21 +1238,17 @@ var GameMgr = (() => {
     }
 
     load_mjp_view(e) {
-      var i = 'mjp_default';
+      var i = "mjp_default";
       var n = cfg.item_definition.view.get(e);
       n && (i = n.res_name);
-      view.DesktopMgr.en_mjp && (i += '_0');
+      view.DesktopMgr.en_mjp && (i += "_0");
       this.mjp_item_id = e;
-      if (
-        (i != this.mjp_view)
-      ) {
-        var a = 'res/atlas/';
-        'chs' != t.client_language && (a += `${t.client_language}/`);
+      if (i != this.mjp_view) {
+        var a = "res/atlas/";
+        "chs" != t.client_language && (a += `${t.client_language}/`);
 
-        '' != this.mjp_view &&
-          Laya.loader.clearRes(
-            `${a}myres2/mjp/${this.mjp_view}/ui.atlas`
-          );
+        "" != this.mjp_view &&
+          Laya.loader.clearRes(`${a}myres2/mjp/${this.mjp_view}/ui.atlas`);
 
         this.mjp_view = i;
         Laya.loader.load([`${a}myres2/mjp/${this.mjp_view}/ui.atlas`]);
@@ -1284,7 +1256,7 @@ var GameMgr = (() => {
     }
   }
 
-  Object.defineProperty(t, 'inRelease', {
+  Object.defineProperty(t, "inRelease", {
     get() {
       return this._inRes;
     },
@@ -1292,7 +1264,7 @@ var GameMgr = (() => {
     configurable: !0
   });
 
-  Object.defineProperty(t, 'inConch', {
+  Object.defineProperty(t, "inConch", {
     get() {
       return Laya.Browser.window.conch;
     },
@@ -1300,7 +1272,7 @@ var GameMgr = (() => {
     configurable: !0
   });
 
-  Object.defineProperty(t, 'iniOSWebview', {
+  Object.defineProperty(t, "iniOSWebview", {
     get() {
       return Laya.Browser.window.wkbridge;
     },
@@ -1308,17 +1280,17 @@ var GameMgr = (() => {
     configurable: !0
   });
 
-  Object.defineProperty(t, 'inHttps', {
+  Object.defineProperty(t, "inHttps", {
     get() {
       return (
-        this.iniOSWebview || 'https:' == Laya.Browser.window.location.protocol
+        this.iniOSWebview || "https:" == Laya.Browser.window.location.protocol
       );
     },
     enumerable: !0,
     configurable: !0
   });
 
-  Object.defineProperty(t, 'inChina', {
+  Object.defineProperty(t, "inChina", {
     get() {
       return this._in_china;
     },
@@ -1326,7 +1298,7 @@ var GameMgr = (() => {
     configurable: !0
   });
 
-  Object.defineProperty(t, 'inGooglePlay', {
+  Object.defineProperty(t, "inGooglePlay", {
     get() {
       return this._in_google_play;
     },
@@ -1334,7 +1306,7 @@ var GameMgr = (() => {
     configurable: !0
   });
 
-  Object.defineProperty(t, 'ClientRegion', {
+  Object.defineProperty(t, "ClientRegion", {
     get() {
       return this._client_region;
     },
@@ -1342,17 +1314,17 @@ var GameMgr = (() => {
     configurable: !0
   });
 
-  t.encodeP = t => CryptoJS.HmacSHA256(t, 'lailai').toString();
+  t.encodeP = t => CryptoJS.HmacSHA256(t, "lailai").toString();
 
   t._inRes = !0;
-  t.error_url = 'http://47.98.236.52:5031/api/v0/client_report_message';
+  t.error_url = "http://47.98.236.52:5031/api/v0/client_report_message";
   t.Inst = null;
   t.config_data = {};
-  t.device_id = '';
+  t.device_id = "";
   t._in_china = !0;
   t._in_google_play = !1;
-  t._client_region = 'mainland';
-  t.client_language = 'chs';
+  t._client_region = "mainland";
+  t.client_language = "chs";
   return t;
 })();
 new GameMgr();
